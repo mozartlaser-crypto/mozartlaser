@@ -4,30 +4,30 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>mozArt Laser</title>
-
-  <!-- Link external CSS -->
   <link rel="stylesheet" href="css/navbar.css">
-
-  <style>
-    body {
-     
-      margin: 0;
-      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
-    }
-
-   
- .hero {
-  height: 100vh;                  /* full viewport height */
-  width: 100%;                     /* full width */
-  margin: 0;                       /* remove any default margin */
-  padding: 0;                      /* remove padding */
-  background: url("images/DSC_0142.jpg") no-repeat center top; /* top aligns image to top */
-  background-size: cover;  /* stretch image to cover area, keeping aspect ratio */
-background-repeat: no-repeat;
-background-position: top center;
-	 
+  <link rel="stylesheet" href="css/style.css"> <!-- optional for hero/text-bar -->
+	
+	<style>/* Reset body/html */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
 }
 
+/* HERO IMAGE */
+.hero {
+  height: 100vh;  /* full viewport height */
+  width: 100%;
+  background-image: url("images/DSC_0142.jpg");
+  background-repeat: no-repeat;
+  background-position: top center; /* sticks to top */
+  background-size: cover;          /* stretches horizontally & vertically */
+  margin: 0;
+  padding: 0;
+}
+
+/* WHITE TEXT BAR */
 .text-bar {
   width: 100%;
   background: white;
@@ -44,17 +44,20 @@ background-position: top center;
 
 .text-bar h1 {
   margin-bottom: 8px;
-}
-	  
-	  
-  </style>
+}</style>
+	
+	
+	
+	
+	
+	
 </head>
 <body>
-							<div>
+
   <!-- SITE HEADER -->
   <header class="site-header" id="siteHeader" role="banner" aria-label="Main site header">
     <div class="header-inner">
-      <img src="images/mozartlaserlogo.png" alt="MozartLaser" class="logo">
+      <img src="images/mozartlaserlogo.png" alt="MozartLaser" class="logo"> 
       <nav class="main-nav" aria-label="Main navigation">
         <ul>
           <li><a href="#home">Home</a></li>
@@ -63,31 +66,34 @@ background-position: top center;
           <li><a href="#contact">Contact</a></li>
         </ul>
       </nav>
-   							 </div>
+    </div>
   </header>
+
+  <!-- HERO IMAGE SECTION -->
+  <section class="hero"></section>
+
+  <!-- WHITE TEXT BAR UNDER HERO -->
+  <section class="text-bar">
+    <h1>Welcome to Mozart Laser</h1>
+    <p>Custom engravings with precision and style.</p>
+  </section>
 
   <!-- PAGE CONTENT -->
   <main class="page-content" id="mainContent" tabindex="-1">
-<!-- HERO IMAGE SECTION -->
-<section class="hero">
-  <!-- No text here, just the background image -->
-</section>
-
-<!-- WHITE TEXT BAR UNDERNEATH -->
-<section class="text-bar">
-  <h1>Welcome to Mozart Laser</h1>
-  <p>Custom engravings with precision and style.</p>
-</section>
+    <h2 id="home">Hello — this website is currently under development</h2>
+    <!-- additional content goes here -->
   </main>
 
-  <!-- Shrink-on-scroll script -->
   <script>
+    // Shrink-on-scroll header
     (function(){
       const header = document.getElementById('siteHeader');
       if(!header) return;
 
       const SHRINK_THRESHOLD = 48; 
-      let ticking = false;
+      let lastScrollY = 0, ticking = false;
+
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
       function updateHeader(scrollY){
         if (scrollY > SHRINK_THRESHOLD) header.classList.add('shrink');
@@ -96,9 +102,9 @@ background-position: top center;
       }
 
       function onScroll(){
-        const scrollY = window.scrollY || window.pageYOffset;
+        lastScrollY = window.scrollY || window.pageYOffset;
         if (!ticking) {
-          window.requestAnimationFrame(()=> updateHeader(scrollY));
+          window.requestAnimationFrame(()=> updateHeader(lastScrollY));
           ticking = true;
         }
       }
@@ -107,6 +113,6 @@ background-position: top center;
       updateHeader(window.scrollY || window.pageYOffset);
     })();
   </script>
-								</div>
+
 </body>
 </html>
