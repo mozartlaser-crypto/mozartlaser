@@ -5,150 +5,42 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>mozArt Laser</title>
 
-<dr>
-	
-	<style>
-	body {
-  background-image: url("images/DSC_0142.jpg");
-  background-size: cover;      /* Makes it cover the whole screen */
-  background-repeat: no-repeat; /* Prevents tiling */
-  background-position: center;  /* Centers the image */
-		
-		
-}
-	</style>
-</dr>
-	
-	
-	
-	
-	
+  <!-- Link external CSS -->
+  <link rel="stylesheet" href="css/navbar.css">
+
   <style>
-    /* -----------------------
-       CSS VARIABLES & BASE
-       ----------------------- */
-    :root{
-      --header-height: 100px;        /* default header height */
-      --header-height-shrink: 64px;  /* height after shrink */
-      --header-padding-x: 20px;
-      --transition-fast: 220ms;
-      --glass-blur: 10px;
-      --glass-color: rgba(255,255,255,0.45); /* light theme glass */
-      --text-color: #111;
+    body {
+      background-image: url("images/DSC_0142.jpg");
+      background-size: cover;      /* Makes it cover the whole screen */
+      background-repeat: no-repeat; /* Prevents tiling */
+      background-position: center;  /* Centers the image */
+      margin: 0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
     }
 
-    /* basic page reset */
-    * { box-sizing: border-box; }
-    html,body { height:100%; margin:0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; color:var(--text-color); }
+    /* text box styling */
+    .text-box {
+      display: inline-block;   /* box only as wide as text inside */
+      background: white;
+      padding: 20px 40px;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
 
-    /* -----------------------
-       HEADER (fixed top)
-       ----------------------- */
-    header.site-header{
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: var(--header-height);
-      padding: 0 var(--header-padding-x);
+    /* hero section */
+    .hero {
+      height: 100vh;   /* full screen */
       display: flex;
+      justify-content: center;
       align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      z-index: 1200;
-
-      /* glass look (primary) */
-      background-color: var(--glass-color);
-      -webkit-backdrop-filter: blur(var(--glass-blur));
-      backdrop-filter: blur(var(--glass-blur));
-      border-bottom: 1px solid rgba(0,0,0,0.06);
-
-      /* smooth animated changes */
-      transition: height var(--transition-fast) ease,
-                  background-color var(--transition-fast) ease,
-                  box-shadow var(--transition-fast) ease,
-                  padding var(--transition-fast) ease;
-      will-change: height, background-color;
+      background: url('background.jpg') no-repeat center center/cover;
     }
 
-    /* shrink state */
-    header.site-header.shrink{
-      height: var(--header-height-shrink);
-      background-color: rgba(255,255,255,0.28); /* slightly different glass */
-      box-shadow: 0 6px 18px rgba(10,10,10,0.06);
-    }
-
-    /* inner layout */
-    .header-inner{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      width:100%;
-      max-width:1200px;
-      margin:0 auto;
-    }
-
-    /* logo */
-    .logo a{
-      text-decoration:none;
-      color:var(--text-color);
-      font-weight:700;
-      font-size:1.25rem;
-      letter-spacing:0.2px;
-      display:inline-block;
-      transform-origin: left center;
-      transition: transform var(--transition-fast) ease, font-size var(--transition-fast) ease;
-    }
-
-    /* scale the logo slightly on shrink */
-    header.site-header.shrink .logo a{
-      transform: scale(0.94);
-      font-size:1rem;
-    }
-
-    /* nav */
-    nav.main-nav ul{
-      list-style:none;
-      display:flex;
-      gap: 14px;
-      margin:0;
-      padding:0;
-      align-items:center;
-    }
-    nav.main-nav a{
-      text-decoration:none;
-      color:var(--text-color);
-      padding:8px 10px;
-      border-radius:8px;
-      font-size:0.95rem;
-      transition: background var(--transition-fast);
-    }
-    nav.main-nav a:focus,
-    nav.main-nav a:hover{
-      background: rgba(0,0,0,0.06);
-      outline: none;
-    }
-
-    /* ensure page content doesn't hide under header */
-    /* Use a padding-top a little larger than --header-height */
-    .page-content{
-      padding-top: calc(var(--header-height) + 16px);
-      max-width:1200px;
-      margin:0 auto;
-    }
-
-    /* responsive tweaks */
-    @media (max-width:720px){
-      :root{
-        --header-height: 84px;
-        --header-height-shrink: 56px;
-      }
-      nav.main-nav ul{ display:none; } /* keep simple: you would add a mobile menu here */
-    }
-
-    /* respects users who prefer reduced motion */
-    @media (prefers-reduced-motion: reduce){
-      * { transition: none !important; animation: none !important; }
+    /* spacer for scrolling */
+    .spacer {
+      height: 500px;
+      background: transparent;
     }
   </style>
 </head>
@@ -157,23 +49,7 @@
   <!-- SITE HEADER -->
   <header class="site-header" id="siteHeader" role="banner" aria-label="Main site header">
     <div class="header-inner">
-		<img src="images/mozartlaserlogo.png" alt="MozartLaser" class="logo"> 
-	  
-	  <style>header {
-  display: flex;
-  align-items: center;
-  padding: 10px;
-}
-
-.logo {
-  height: 50px; /* adjust size */
-  width: auto;
-}</style>
-	  
-	  
-  </div>
-	  
-<div>
+      <img src="images/mozartlaserlogo.png" alt="MozartLaser" class="logo">
       <nav class="main-nav" aria-label="Main navigation">
         <ul>
           <li><a href="#home">Home</a></li>
@@ -187,37 +63,23 @@
 
   <!-- PAGE CONTENT -->
   <main class="page-content" id="mainContent" tabindex="-1">
-    <h1 id="home">Hello — this website is currently under development</h1>
-  
-    <!-- filler content -->
-   
+    <section class="hero">
+      <div class="text-box">
+        <h1>Welcome to Mozart Laser</h1>
+        <p>Custom engravings with precision and style.</p>
+      </div>
+    </section>
+    <section class="spacer"></section>
   </main>
 
-	
-	<style> .text-box {
-  display: inline-block;   /* box only as wide as text inside */
-  background: white;       /* white background */
-  padding: 10px 20px;      /* spacing around text */
-  border-radius: 8px;      /* optional: rounded corners */
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2); /* optional: drop shadow */
-}</style>
-
-	
+  <!-- Shrink-on-scroll script -->
   <script>
-    /*
-      Shrink-on-scroll script — efficient (uses requestAnimationFrame),
-      respects user's reduced-motion preference and adds/removes a class.
-    */
-
     (function(){
       const header = document.getElementById('siteHeader');
       if(!header) return;
 
-      const SHRINK_THRESHOLD = 48; // px scrolled before header shrinks
-      let lastScrollY = 0, ticking = false;
-
-      // If user prefers reduced motion, don't animate — still allow the class toggle.
-      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const SHRINK_THRESHOLD = 48; 
+      let ticking = false;
 
       function updateHeader(scrollY){
         if (scrollY > SHRINK_THRESHOLD) header.classList.add('shrink');
@@ -226,62 +88,16 @@
       }
 
       function onScroll(){
-        lastScrollY = window.scrollY || window.pageYOffset;
+        const scrollY = window.scrollY || window.pageYOffset;
         if (!ticking) {
-          window.requestAnimationFrame(()=> updateHeader(lastScrollY));
+          window.requestAnimationFrame(()=> updateHeader(scrollY));
           ticking = true;
         }
       }
 
-      // Use a passive listener for better scrolling performance
       window.addEventListener('scroll', onScroll, {passive: true});
-
-      // Run once on load in case the page is already scrolled (back/refresh)
       updateHeader(window.scrollY || window.pageYOffset);
-
-      // Optional: on resize re-check header (if you dynamically compute sizes)
-      window.addEventListener('resize', () => {
-        // small debounce-ish approach
-        if (ticking) return;
-        ticking = true;
-        window.requestAnimationFrame(()=> {
-          updateHeader(window.scrollY || window.pageYOffset);
-        });
-      }, {passive:true});
     })();
-	   </script>
-	<section class="hero">
-  <div class="text-box">
-    <h1>Welcome to Mozart Laser</h1>
-    <p>Custom engravings with precision and style.</p>
-  </div>
-</section>
-
-<section class="spacer"></section> <!-- creates scroll space -->
-	<style>.hero {
-  height: 100vh;   /* full screen */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: url('background.jpg') no-repeat center center/cover;
-}
-
-.text-box {
-  display: inline-block;
-  background: white;
-  padding: 20px 40px;
-  border-radius: 10px;
-  text-align: center;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-}
-
-.spacer {
-  height: 500px;  /* adjust as needed to allow scrolling */
-  background: transparent; /* no white box here */
-	
-	
-}</style>
-	
-	
+  </script>
 </body>
 </html>
