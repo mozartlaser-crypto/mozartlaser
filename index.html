@@ -1,26 +1,213 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>moArt Laser</title>
-</head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>mozArt Laser</title>
 
+  <style>
+    /* -----------------------
+       CSS VARIABLES & BASE
+       ----------------------- */
+    :root{
+      --header-height: 100px;        /* default header height */
+      --header-height-shrink: 64px;  /* height after shrink */
+      --header-padding-x: 20px;
+      --transition-fast: 220ms;
+      --glass-blur: 10px;
+      --glass-color: rgba(255,255,255,0.45); /* light theme glass */
+      --text-color: #111;
+    }
+
+    /* basic page reset */
+    * { box-sizing: border-box; }
+    html,body { height:100%; margin:0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; color:var(--text-color); }
+
+    /* -----------------------
+       HEADER (fixed top)
+       ----------------------- */
+    header.site-header{
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: var(--header-height);
+      padding: 0 var(--header-padding-x);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      z-index: 1200;
+
+      /* glass look (primary) */
+      background-color: var(--glass-color);
+      -webkit-backdrop-filter: blur(var(--glass-blur));
+      backdrop-filter: blur(var(--glass-blur));
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+
+      /* smooth animated changes */
+      transition: height var(--transition-fast) ease,
+                  background-color var(--transition-fast) ease,
+                  box-shadow var(--transition-fast) ease,
+                  padding var(--transition-fast) ease;
+      will-change: height, background-color;
+    }
+
+    /* shrink state */
+    header.site-header.shrink{
+      height: var(--header-height-shrink);
+      background-color: rgba(255,255,255,0.28); /* slightly different glass */
+      box-shadow: 0 6px 18px rgba(10,10,10,0.06);
+    }
+
+    /* inner layout */
+    .header-inner{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      width:100%;
+      max-width:1200px;
+      margin:0 auto;
+    }
+
+    /* logo */
+    .logo a{
+      text-decoration:none;
+      color:var(--text-color);
+      font-weight:700;
+      font-size:1.25rem;
+      letter-spacing:0.2px;
+      display:inline-block;
+      transform-origin: left center;
+      transition: transform var(--transition-fast) ease, font-size var(--transition-fast) ease;
+    }
+
+    /* scale the logo slightly on shrink */
+    header.site-header.shrink .logo a{
+      transform: scale(0.94);
+      font-size:1rem;
+    }
+
+    /* nav */
+    nav.main-nav ul{
+      list-style:none;
+      display:flex;
+      gap: 14px;
+      margin:0;
+      padding:0;
+      align-items:center;
+    }
+    nav.main-nav a{
+      text-decoration:none;
+      color:var(--text-color);
+      padding:8px 10px;
+      border-radius:8px;
+      font-size:0.95rem;
+      transition: background var(--transition-fast);
+    }
+    nav.main-nav a:focus,
+    nav.main-nav a:hover{
+      background: rgba(0,0,0,0.06);
+      outline: none;
+    }
+
+    /* ensure page content doesn't hide under header */
+    /* Use a padding-top a little larger than --header-height */
+    .page-content{
+      padding-top: calc(var(--header-height) + 16px);
+      max-width:1200px;
+      margin:0 auto;
+    }
+
+    /* responsive tweaks */
+    @media (max-width:720px){
+      :root{
+        --header-height: 84px;
+        --header-height-shrink: 56px;
+      }
+      nav.main-nav ul{ display:none; } /* keep simple: you would add a mobile menu here */
+    }
+
+    /* respects users who prefer reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      * { transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
 <body>
-<p> 
-<div>
-	<h1 class="centered-heading">mozArt Laser</h1>
-	<style>
-	.centered-heading {text-align: center; }
-	</style>
-</div>
-	
-<div>
-	<h3 class="centered-heading">Quality Laser Engraving</h3>
-	<style>
-		.centered-heading {text-align: center; }
-	</style>
-</div>
-</p>
-	
+
+  <!-- SITE HEADER -->
+  <header class="site-header" id="siteHeader" role="banner" aria-label="Main site header">
+    <div class="header-inner">
+      <div class="logo"><a href="/">MozartLaser</a></div>
+
+      <nav class="main-nav" aria-label="Main navigation">
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#products">Products</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- PAGE CONTENT -->
+  <main class="page-content" id="mainContent" tabindex="-1">
+    <h1 id="home">Hello — this website is currently under development</h1>
+  
+    <!-- filler content -->
+    <section style="height:1800px; background:linear-gradient(#fff,#f4f7fb); padding:20px;">
+      <p>blablablabalbalbalbikUbefkjhbf,hzsbj,fh</p>
+    </section>
+  </main>
+
+  <script>
+    /*
+      Shrink-on-scroll script — efficient (uses requestAnimationFrame),
+      respects user's reduced-motion preference and adds/removes a class.
+    */
+
+    (function(){
+      const header = document.getElementById('siteHeader');
+      if(!header) return;
+
+      const SHRINK_THRESHOLD = 48; // px scrolled before header shrinks
+      let lastScrollY = 0, ticking = false;
+
+      // If user prefers reduced motion, don't animate — still allow the class toggle.
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      function updateHeader(scrollY){
+        if (scrollY > SHRINK_THRESHOLD) header.classList.add('shrink');
+        else header.classList.remove('shrink');
+        ticking = false;
+      }
+
+      function onScroll(){
+        lastScrollY = window.scrollY || window.pageYOffset;
+        if (!ticking) {
+          window.requestAnimationFrame(()=> updateHeader(lastScrollY));
+          ticking = true;
+        }
+      }
+
+      // Use a passive listener for better scrolling performance
+      window.addEventListener('scroll', onScroll, {passive: true});
+
+      // Run once on load in case the page is already scrolled (back/refresh)
+      updateHeader(window.scrollY || window.pageYOffset);
+
+      // Optional: on resize re-check header (if you dynamically compute sizes)
+      window.addEventListener('resize', () => {
+        // small debounce-ish approach
+        if (ticking) return;
+        ticking = true;
+        window.requestAnimationFrame(()=> {
+          updateHeader(window.scrollY || window.pageYOffset);
+        });
+      }, {passive:true});
+    })();
+  </script>
 </body>
 </html>
