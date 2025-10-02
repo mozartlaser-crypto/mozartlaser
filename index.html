@@ -10,29 +10,43 @@
 
   <style>
     body {
-      background-image: url("images/DSC_0142.jpg");
-      background-size: cover;      /* Makes it cover the whole screen */
-      background-repeat: no-repeat; /* Prevents tiling */
-      background-position: center;  /* Centers the image */
+     
       margin: 0;
       font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
     }
 
    
  .hero {
-  min-height: 100vh; /* takes at least full screen height */
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  height: 100vh;                  /* full viewport height */
+  width: 100%;                     /* full width */
+  margin: 0;                       /* remove any default margin */
+  padding: 0;                      /* remove padding */
+  background: url("images/DSC_0142.jpg") no-repeat center top; /* top aligns image to top */
+  background-size: cover;  /* stretch image to cover area, keeping aspect ratio */
+background-repeat: no-repeat;
+background-position: top center;
+	 
 }
 
 .text-bar {
+  width: 100%;
   background: white;
+  padding: 20px 0;
   text-align: center;
-  padding: 20px;
-  font-size: 1.2rem;
   box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-    }
+}
+
+.text-bar h1,
+.text-bar p {
+  margin: 0;
+  line-height: 1.4;
+}
+
+.text-bar h1 {
+  margin-bottom: 8px;
+}
+	  
+	  
   </style>
 </head>
 <body>
@@ -54,10 +68,12 @@
 
   <!-- PAGE CONTENT -->
   <main class="page-content" id="mainContent" tabindex="-1">
-   <section class="hero">
-  <!-- hero just holds the background image -->
+<!-- HERO IMAGE SECTION -->
+<section class="hero">
+  <!-- No text here, just the background image -->
 </section>
 
+<!-- WHITE TEXT BAR UNDERNEATH -->
 <section class="text-bar">
   <h1>Welcome to Mozart Laser</h1>
   <p>Custom engravings with precision and style.</p>
