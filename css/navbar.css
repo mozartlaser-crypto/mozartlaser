@@ -1,0 +1,115 @@
+/* -----------------------
+   Navbar Styles
+   ----------------------- */
+
+:root {
+  --header-height: 100px;        /* default header height */
+  --header-height-shrink: 64px;  /* height after shrink */
+  --header-padding-x: 20px;
+  --transition-fast: 220ms;
+  --glass-blur: 10px;
+  --glass-color: rgba(255,255,255,0.45); /* light theme glass */
+  --text-color: #111;
+}
+
+/* reset */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  height: 100%;
+  color: var(--text-color);
+}
+
+/* header (fixed top glass look) */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--header-height);
+  padding: 0 var(--header-padding-x);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  z-index: 1200;
+
+  background-color: var(--glass-color);
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  backdrop-filter: blur(var(--glass-blur));
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+
+  transition: height var(--transition-fast) ease,
+              background-color var(--transition-fast) ease,
+              box-shadow var(--transition-fast) ease,
+              padding var(--transition-fast) ease;
+}
+
+/* shrink state */
+.site-header.shrink {
+  height: var(--header-height-shrink);
+  background-color: rgba(255,255,255,0.28);
+  box-shadow: 0 6px 18px rgba(10,10,10,0.06);
+}
+
+/* inner layout */
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* logo */
+.logo {
+  height: 50px;
+  width: auto;
+}
+
+/* nav menu */
+.main-nav ul {
+  list-style: none;
+  display: flex;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+}
+
+.main-nav a {
+  text-decoration: none;
+  color: var(--text-color);
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  transition: background var(--transition-fast);
+}
+
+.main-nav a:hover,
+.main-nav a:focus {
+  background: rgba(0,0,0,0.06);
+  outline: none;
+}
+
+/* page padding so header doesn't overlap content */
+.page-content {
+  padding-top: calc(var(--header-height) + 16px);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* responsive */
+@media (max-width:720px) {
+  :root {
+    --header-height: 84px;
+    --header-height-shrink: 56px;
+  }
+  .main-nav ul {
+    display: none; /* you’d replace this with a hamburger menu later */
+  }
+}
