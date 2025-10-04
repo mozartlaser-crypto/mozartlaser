@@ -173,7 +173,7 @@ function showSlide(index) {
 let interval = setInterval(() => {
   let nextIndex = (currentIndex + 1) % slides.length;
   showSlide(nextIndex);
-}, 5000);
+}, 7000);
 
 // Dot click
 dots.forEach(dot => {
@@ -183,7 +183,7 @@ dots.forEach(dot => {
     interval = setInterval(() => {
       let nextIndex = (currentIndex + 1) % slides.length;
       showSlide(nextIndex);
-    }, 5000);
+    }, 7000);
   });
 });
 
