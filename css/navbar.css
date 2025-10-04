@@ -121,7 +121,7 @@ html, body {
     width: 200px;
     overflow: hidden;
     max-height: 0;                 /* hidden by default */
-    transition: max-height 0.4s ease-in-out;
+    transition: max-height 0.2s ease-in-out;
     background: var(--glass-color);
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
