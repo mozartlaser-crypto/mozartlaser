@@ -94,5 +94,61 @@ html, body {
     --header-height: 84px;
     --header-height-shrink: 56px;
   }
-  .main-nav ul { display: none; } /* mobile menu later */
+
+  .hamburger {
+    display: flex;
+    cursor: pointer;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 28px;
+    height: 22px;
+  }
+
+  .hamburger span {
+    display: block;
+    height: 3px;
+    width: 100%;
+    background: var(--text-color);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+
+  /* Mobile nav slide-down */
+  .main-nav {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 200px;
+    overflow: hidden;
+    max-height: 0;                 /* hidden by default */
+    transition: max-height 0.4s ease-in-out;
+    background: var(--glass-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+
+  .main-nav.show {
+    max-height: 500px;             /* enough to fit all links */
+  }
+
+  .main-nav ul {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 10px 0;
+  }
+
+  .main-nav ul li {
+    margin: 0;
+    padding: 0;
+  }
+
+  .main-nav ul li a {
+    padding: 12px 16px;
+    border-radius: 0;
+  }
+}
+.hamburger { display: none; } /* hide by default */
+@media (max-width:720px) {
+  .hamburger { display: flex; }
 }
