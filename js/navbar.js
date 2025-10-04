@@ -87,3 +87,33 @@ hamburger.addEventListener('click', () => {
   const expanded = hamburger.getAttribute('aria-expanded') === 'true';
   hamburger.setAttribute('aria-expanded', !expanded);
 });
+document.addEventListener("DOMContentLoaded", function() {
+  const header = document.getElementById("siteHeader");
+  const hamburger = document.querySelector(".hamburger");
+  const nav = document.querySelector(".main-nav");
+
+  // Shrinking header on scroll (if you have that feature)
+  let lastScrollTop = 0;
+  window.addEventListener("scroll", function() {
+    const scrollTop = window.scrollY;
+    if (scrollTop > lastScrollTop && scrollTop > 50) {
+      header.classList.add("shrink");
+    } else {
+      header.classList.remove("shrink");
+    }
+    lastScrollTop = scrollTop;
+  });
+
+  // Toggle mobile menu
+  hamburger.addEventListener("click", function(e) {
+    e.stopPropagation(); // prevent the click from triggering document listener
+    nav.classList.toggle("show");
+  });
+
+  // Close menu when clicking outside
+  document.addEventListener("click", function(e) {
+    if (nav.classList.contains("show") && !nav.contains(e.target) && !hamburger.contains(e.target)) {
+      nav.classList.remove("show");
+    }
+  });
+});
