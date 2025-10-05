@@ -89,7 +89,44 @@ padding: 0 20px;
   max-width: 1200px;
   margin: 0 auto;
 }
+.cart-icon img {
+  width: 32px;      /* or whatever size fits your header */
+  height: 32px;     /* keep it square */
+  object-fit: contain; /* prevents distortion if the image isn’t perfectly square */
+  display: block;   /* removes inline spacing issues */
+}
 
+.header-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.cart-icon {
+  position: relative; /* or absolute if you want to float it exactly */
+}
+.cart-icon {
+  position: relative;
+  display: flex;
+  flex-direction: column;  /* stack icon and count vertically */
+  align-items: center;     /* center horizontally */
+  cursor: pointer;
+}
+
+.cart-icon img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+#cart-count {
+  margin-top: 4px;         /* space between icon and number */
+  font-size: 0.85rem;
+  font-weight: bold;
+  color: #111;             /* or whatever color fits your header */
+  text-align: center;
+}
 /* RESPONSIVE */
 @media (max-width:720px) {
   :root {
