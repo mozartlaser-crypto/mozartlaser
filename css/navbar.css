@@ -49,8 +49,8 @@ html, body {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-position: relative;
-padding: 0 20px;
+  position: relative;
+  padding: 0 20px;
 }
 
 /* LOGO */
@@ -89,52 +89,46 @@ padding: 0 20px;
   max-width: 1200px;
   margin: 0 auto;
 }
-.cart-icon img {
-  width: 32px;      /* or whatever size fits your header */
-  height: 32px;     /* keep it square */
-  object-fit: contain; /* prevents distortion if the image isn’t perfectly square */
-  display: block;   /* removes inline spacing issues */
-}
 
-.header-inner {
+/* CART ICON */
+.cart-icon {
+  position: absolute;
+  top: 26px;             /* normal header height */
+  right: 20px;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
-  position: relative;
-}
-
-.cart-icon {
-  position: relative; /* or absolute if you want to float it exactly */
-}
-.cart-icon {
-  position: relative;
-  display: flex;
-  flex-direction: column;  /* stack icon and count vertically */
-  align-items: center;     /* center horizontally */
   cursor: pointer;
+  transition: top var(--transition-fast) ease;
 }
 
-.cart-icon img {
-  width: 32px;
-  height: 32px;
-  object-fit: contain;
+.site-header.shrink .cart-icon {
+  top: 10px;             /* when header shrinks */
 }
 
-#cart-count {
-  margin-top: 4px;         /* space between icon and number */
-  font-size: 0.85rem;
-  font-weight: bold;
-  color: #111;             /* or whatever color fits your header */
-  text-align: center;
-}
+
 /* RESPONSIVE */
 @media (max-width:720px) {
   :root {
     --header-height: 84px;
     --header-height-shrink: 56px;
-	--glass-color: rgba(255,255,255,0.9); /* 45% opacity */
+    --glass-color: rgba(255,255,255,0.9);
+  }
+@media (max-width: 720px) {
+  .cart-icon {
+    position: absolute;
+    right: 10px; /* push it all the way to the edge */
+    top: 55%;
+    transform: translateY(-50%);
   }
 
+  .hamburger {
+    position: absolute;
+    right: 40px; /* move hamburger slightly left so both fit side-by-side */
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
   .hamburger {
     display: flex;
     cursor: pointer;
@@ -160,7 +154,7 @@ padding: 0 20px;
     right: 0;
     width: 200px;
     overflow: hidden;
-    max-height: 0;                 /* hidden by default */
+    max-height: 0;                 
     transition: max-height 0.2s ease-in-out;
     background: var(--glass-color);
     border-radius: 8px;
@@ -168,7 +162,7 @@ padding: 0 20px;
   }
 
   .main-nav.show {
-    max-height: 500px;             /* enough to fit all links */
+    max-height: 500px;            
   }
 
   .main-nav ul {
@@ -188,7 +182,8 @@ padding: 0 20px;
     border-radius: 0;
   }
 }
-.hamburger { display: none; } /* hide by default */
+
+.hamburger { display: none; } 
 @media (max-width:720px) {
   .hamburger { display: flex; }
 }

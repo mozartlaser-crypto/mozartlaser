@@ -1,79 +1,98 @@
-/* CSS Document */
-/* CSS */
+/* --- Base Footer Styles --- */
 .site-footer {
-  background: rgba(255, 255, 255, 0.6); /* white with 10% opacity */
-  backdrop-filter: blur(10px);           /* frosted glass effect */
-  color: #fff;                           /* text color */
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10px);
+  color: #fff;
   padding: 40px 20px;
   text-align: center;
-  font-family:Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, 'sans-serif'serif;/* Change to any font you want */
-  border-top: 1px solid rgba(255,255,255,0.2); /* subtle border */
+  font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, 'sans-serif', serif;
+  border-top: 1px solid rgba(255,255,255,0.2);
+  margin-top: 40px;
+  border-radius: 12px;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  position: relative;
+  width: 90%;
 }
 
-.site-footer a {
-  color: black;
-  text-decoration: none;
-  margin: 0 10px;
-  transition: color 0.3s;
+/* --- Social Links Layout --- */
+.social-links {
+  display: flex;
+  justify-content: center; /* centers icons horizontally */
+  align-items: center;
+  gap: 20px; /* spacing between icons */
+  flex-wrap: wrap; /* wraps on small screens */
+  margin-bottom: 10px;
 }
 
-.site-footer a:hover {
-  color: #1da1f2; /* highlight on hover */
+/* --- Social Link Container --- */
+.social-links a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 56px;
+  height: 56px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 12px;
+  transition: transform 0.2s ease, background 0.2s ease;
 }
 
-.social-links a img {
-  width: 32px;   /* size of social icons */
-  height: 32px;
-  margin: 0 8px;
-  vertical-align: middle;
+.social-links a:hover {
+  background: rgba(255,255,255,0.3);
+  transform: scale(1.1);
 }
 
+/* --- Footer Text --- */
 .footer-links {
   margin-top: 10px;
   font-size: 0.9em;
 }
 
+/* --- Footer Layout Adjustments --- */
+.site-footer {
+  padding: 1px 1px;        /* reduce height */
+  border-radius: 12px;
+}
+
+/* --- Social Icon Sizing --- */
+.social-links a {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 72px;     /* increase size for better visibility */
+  height: 72px;
+  margin: 0 12px;
+}
+
+.social-links a img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+}
+
+/* Optional: fine-tune specific icons */
+.social-links a img[src*="instagram"] {
+  transform: scale(0.6); /* subtle correction */
+}
+
+/* Center icons vertically within the footer */
+.site-footer .social-links {
+  display: flex;
+  justify-content: center;  /* center horizontally */
+  align-items: center;      /* center vertically */
+  height: 100%;             /* make sure it fills the footer height */
+}
+.site-footer .social-links {
+  margin-top: 8px; /* adjust this number until it looks perfect */
+}
 .site-footer p {
-  margin: 15px 0 5px;
-  font-size: 0.9em;
-}
-/* Extra footer styling */
-.site-footer {
-  margin-top: 40px;           /* pushes it lower from content above */
-  padding: 20px;              /* space inside the footer */
-  border-radius: 12px;        /* rounded corners */
-  max-width: 1200px;          /* optional: keeps footer from stretching too wide */
-  margin-left: auto;           /* center horizontally */
-  margin-right: auto;
-  background: rgba(255, 255, 255, 0.2); /* glassy */
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px); /* Safari support */
-}
-
-/* Glassy bottom bar footer */
-.site-footer {
-  position: relative;            /* stick to bottom of viewport */
-  bottom: 0px;               /* distance from page bottom */
-  left: 0px;                  /* center horizontally */
-  width: 90%;                 /* almost full width */
-  max-width: 1200px;          /* optional max width */
-  padding: 15px 20px;         /* internal spacing */
-  border-radius: 16px;        /* rounded corners */
-  background: rgba(255, 255, 255, 0.2); /* glassy effect */
-  backdrop-filter: blur(10px);           /* frosted glass */
-  -webkit-backdrop-filter: blur(10px);   /* Safari support */
-  box-shadow: 0 4px 15px rgba(0,0,0,0.2); /* subtle shadow for depth */
-  text-align: center;
-  z-index: 1000;              /* stays on top of other content */
-}
-
-/* Social icons inside footer */
-.site-footer .social-links a img {
-  width: 32px;
-  height: 32px;
-  margin: 0 8px;
-  vertical-align: middle;
-}
-p {
-	color: white;
+    color: #111; /* or any dark color that shows on the footer background */
+    margin-bottom: 15px;   /* optional, to remove extra spacing */
 }
