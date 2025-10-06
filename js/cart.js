@@ -118,7 +118,7 @@ checkoutButton.addEventListener('click', async () => {
     }
 
     // Send cart directly (simple format) to backend
-    const response = await fetch("http://localhost:4242/create-checkout-session", {
+    const response = await fetch("https://mozart-backend.onrender.com/create-checkout-session", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ items: cart })  // <-- send cart array
