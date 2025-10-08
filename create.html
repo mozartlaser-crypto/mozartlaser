@@ -103,9 +103,9 @@ button.next-step:hover, button.prev-step:hover, button#add-to-cart:hover { backg
       <p class="step-desc">Select the type of engraving you'd like to create.</p>
       <select id="product-type" class="input-field" required>
         <option value="">Select...</option>
-        <option value="coin">Coin</option>
+        <option value="coin">Wooden Coin</option>
         <option value="bookmark">Bookmark</option>
-        <option value="plaque">Plaque</option>
+        <option value="plaque">Wood Plaque</option>
       </select>
       <button class="next-step" data-next="step2">Next</button>
     </div>
@@ -125,29 +125,45 @@ button.next-step:hover, button.prev-step:hover, button#add-to-cart:hover { backg
       <button class="next-step" data-next="step3">Next</button>
     </div>
 
-    <!-- Step 3 -->
-    <div class="step" id="step3">
-      <h2>Step 3: Customize Your Design</h2>
-      <p class="step-desc">Tell us exactly what to engrave and where you'd like it.</p>
+   <!-- Step 3: Customization -->
+<div id="step3" class="step">
+  <h2>Step 3: Customize Your Engraving</h2>
+  
+  <label for="custom-text">Engraved Text</label>
+  <input type="text" id="custom-text" class="input-field" placeholder="Enter text for engraving (optional)">
+  
+  <label for="font-select">Font (required if text entered)</label>
+  <select id="font-select" class="input-field" disabled>
+    <option value="">-- Select a Font --</option>
+    <option value="serif">Serif</option>
+    <option value="sans-serif">Sans Serif</option>
+    <option value="script">Script</option>
+    <option value="monospace">Monospace</option>
+  </select>
+  
+  <label for="text-location">Text Placement (only necassary if you entered text)</label>
+  <input type="text" id="text-location" class="input-field" placeholder="Describe where the text should be placed">
+  
+  <label for="upload-file">Upload Design or Image</label>
+  <input type="file" id="upload-file" accept="image/*" class="input-field">
+  <button type="button" id="delete-file">Delete File</button>
+  <p style="font-size: 0.9em; color: #555; margin-top: 5px;">
+    Please upload a file only if you want a design or image.<br>
+    Designs should be clear black-and-white line art.<br>
+    Images should be simple, with a clear, distinct subject.
+  </p>
 
-      <label for="custom-text">Engraved Text:</label>
-      <input type="text" id="custom-text" class="input-field" required placeholder="Text to engrave (e.g. 'Happy Birthday')">
+  <label for="file-placement">File Placement (only necassary if you uploaded a file)</label>
+  <input type="text" id="file-placement" class="input-field" placeholder="Describe how the design/image should be placed">
 
-      <label for="text-location">Text Placement:</label>
-      <input type="text" id="text-location" class="input-field" required placeholder="e.g. bottom right, centered, top left">
+  <label for="additional-desc">Additional Description</label>
+  <textarea id="additional-desc" class="input-field" rows="3" placeholder="Any other details about your design?"></textarea>
 
-      <label for="additional-desc">Additional Description:</label>
-      <textarea id="additional-desc" rows="3" class="input-field" required placeholder="Any special requests, layout details, or preferences..."></textarea>
-
-      <label for="upload-file">Upload Your Design (JPEG file only) <span style="color:red;">*</span>:</label>
-      <div style="position: relative; display:flex; align-items:center; gap:10px;">
-        <input type="file" id="upload-file" class="input-field" accept="image/*" required>
-        <button type="button" id="delete-file" style="background:#d9534f;color:#fff;border:none;padding:8px 12px;border-radius:6px;cursor:pointer;">Delete</button>
-      </div>
-
-      <button class="prev-step" data-prev="step2">Back</button>
-      <button class="next-step" data-next="step4">Next</button>
-    </div>
+  <div class="buttons">
+    <button type="button" class="prev-step" data-prev="step2">Back</button>
+    <button type="button" class="next-step" data-next="step4">Next</button>
+  </div>
+</div>
 
     <!-- Step 4 -->
     <div class="step" id="step4">

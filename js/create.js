@@ -12,6 +12,8 @@
     const addToCartBtn = document.getElementById('add-to-cart');
     const uploadFileInput = document.getElementById('upload-file');
     const deleteFileBtn = document.getElementById('delete-file');
+    const textField = document.getElementById('custom-text');
+    const fontSelect = document.getElementById('font-select');
 
     const prices = {
       coin: 25,
@@ -67,19 +69,43 @@
     function validateStep(stepEl) {
       if (!stepEl) return true;
       let ok = true;
-      const requiredFields = Array.from(stepEl.querySelectorAll('select[required], input[required], textarea[required]'));
 
-      requiredFields.forEach(field => {
-        if (field.id === 'plaque-shape') {
-          if (!field.value) { field.classList.add('error'); ok = false; return; } 
-          else { field.classList.remove('error'); }
+      // Special rules for step3
+      if (stepEl.id === 'step3') {
+        const text = textField.value.trim();
+        const design = uploadFileInput.files.length > 0;
+        const desc = document.getElementById('additional-desc').value.trim();
+        const placement = document.getElementById('file-placement').value.trim();
+
+        // Must have at least one filled
+        if (!text && !design && !desc && !placement) {
+          alert("Please fill at least one field: text, upload a design, file placement, or add a description.");
+          return false;
         }
-        if (field.id === 'upload-file' && !uploadFileInput.files[0]) { field.classList.add('error'); ok = false; return; }
-        if (!field.value.trim() && field.id !== 'upload-file') { field.classList.add('error'); ok = false; } 
-        else { field.classList.remove('error'); }
+
+        // If text is filled but no font selected
+        if (text && !fontSelect.value) {
+          alert("Please select a font for your text.");
+          fontSelect.classList.add('error');
+          return false;
+        } else {
+          fontSelect.classList.remove('error');
+        }
+        return true;
+      }
+
+      // Default required fields
+      const requiredFields = Array.from(stepEl.querySelectorAll('select[required], input[required], textarea[required]'));
+      requiredFields.forEach(field => {
+        if (!field.value.trim()) {
+          field.classList.add('error');
+          ok = false;
+        } else {
+          field.classList.remove('error');
+        }
       });
 
-      if (!ok) alert('Please fill out all required fields (including uploading a design image).');
+      if (!ok) alert('Please fill out all required fields.');
       return ok;
     }
 
@@ -141,19 +167,27 @@
         document.getElementById('f-price').value = currentPrice.toFixed(2);
         if (uploadFileInput.files[0]) document.getElementById('f-design').files = uploadFileInput.files;
 
-        // Add to cart logic
         const details = [
           `Type: ${productSelect.value}`,
-          productSelect.value==='plaque'?`Shape: ${plaqueSelect.value}`:'',
-          document.getElementById('custom-text').value?`Text: "${document.getElementById('custom-text').value}"`:'',
+          productSelect.value === 'plaque' ? `Shape: ${plaqueSelect.value}` : '',
+          document.getElementById('custom-text').value ? `Text: "${document.getElementById('custom-text').value}"` : ''
         ].filter(Boolean).join(', ');
 
         if (window.addToCart) window.addToCart(`Custom Engraving (${details})`, currentPrice);
         if (typeof window.openCartPanel === 'function') window.openCartPanel();
 
-        // Submit form to hidden iframe (silent)
+        // Submit form silently
         document.getElementById('sendForm').submit();
         alert('Order added to cart! You may exit create mode');
+      });
+    }
+
+    // FONT FIELD BEHAVIOR – fixed location
+    if (textField && fontSelect) {
+      fontSelect.disabled = false; // Always enabled
+      textField.addEventListener('input', () => {
+        const hasText = textField.value.trim() !== '';
+        fontSelect.required = hasText;
       });
     }
 
