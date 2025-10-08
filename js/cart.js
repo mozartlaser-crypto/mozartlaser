@@ -19,7 +19,8 @@ let cart = JSON.parse(localStorage.getItem('cart')) || [];
 // ============================
 // OPEN / CLOSE CART PANEL
 // ============================
-cartIcon.addEventListener('click', () => {
+cartIcon.addEventListener('click', (e) => {
+  e.stopPropagation(); // prevent outside click from firing
   cartPanel.classList.add('show');
 });
 
@@ -60,6 +61,7 @@ function addToCart(name, price) {
 
   updateCart();
   saveCart();
+  cartPanel.classList.add('show'); // keep cart open after adding
 }
 
 // ============================
@@ -87,10 +89,12 @@ function updateCart() {
     removeBtn.style.fontSize = '0.8rem';
     removeBtn.style.cursor = 'pointer';
 
-    removeBtn.addEventListener('click', () => {
+    removeBtn.addEventListener('click', (e) => {
+      e.stopPropagation(); // prevent closing cart
       cart.splice(index, 1);
       saveCart();
       updateCart();
+      cartPanel.classList.add('show'); // ensure cart stays open
     });
 
     li.appendChild(removeBtn);
@@ -117,11 +121,10 @@ checkoutButton.addEventListener('click', async () => {
       return;
     }
 
-    // Send cart directly (simple format) to backend
     const response = await fetch("https://mozart-backend.onrender.com/create-checkout-session", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ items: cart })  // <-- send cart array
+      body: JSON.stringify({ items: cart })
     });
 
     const session = await response.json();
