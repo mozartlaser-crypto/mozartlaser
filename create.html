@@ -107,7 +107,7 @@ button.next-step:hover, button.prev-step:hover, button#add-to-cart:hover { backg
         <option value="bookmark">Bookmark</option>
         <option value="plaque">Wood Plaque</option>
       </select>
-      <button class="next-step" data-next="step2">Next</button>
+      <button type="button" class="next-step" data-next="step2">Next</button>
     </div>
 
     <!-- Step 2 -->
@@ -121,8 +121,8 @@ button.next-step:hover, button.prev-step:hover, button#add-to-cart:hover { backg
         <option value="square">Square</option>
         <option value="none">I did not choose plaque</option>
       </select>
-      <button class="prev-step" data-prev="step1">Back</button>
-      <button class="next-step" data-next="step3">Next</button>
+      <button type="button" class="prev-step" data-prev="step1">Back</button>
+      <button type="button" class="next-step" data-next="step3">Next</button>
     </div>
 
    <!-- Step 3: Customization -->
@@ -133,7 +133,8 @@ button.next-step:hover, button.prev-step:hover, button#add-to-cart:hover { backg
   <input type="text" id="custom-text" class="input-field" placeholder="Enter text for engraving (optional)">
   
   <label for="font-select">Font (required if text entered)</label>
-  <select id="font-select" class="input-field" disabled>
+  <!-- Font is enabled so users can pre-select if they want -->
+  <select id="font-select" class="input-field">
     <option value="">-- Select a Font --</option>
     <option value="serif">Serif</option>
     <option value="sans-serif">Sans Serif</option>
@@ -145,8 +146,10 @@ button.next-step:hover, button.prev-step:hover, button#add-to-cart:hover { backg
   <input type="text" id="text-location" class="input-field" placeholder="Describe where the text should be placed">
   
   <label for="upload-file">Upload Design or Image</label>
-  <input type="file" id="upload-file" accept="image/*" class="input-field">
-  <button type="button" id="delete-file">Delete File</button>
+  <div style="display:flex; gap:8px; align-items:center;">
+    <input type="file" id="upload-file" accept="image/*" class="input-field" style="flex:1;">
+    <button type="button" id="delete-file" style="background:#d9534f;color:#fff;border:none;padding:8px 12px;border-radius:6px;cursor:pointer;">Delete</button>
+  </div>
   <p style="font-size: 0.9em; color: #555; margin-top: 5px;">
     Please upload a file only if you want a design or image.<br>
     Designs should be clear black-and-white line art.<br>
@@ -171,8 +174,8 @@ button.next-step:hover, button.prev-step:hover, button#add-to-cart:hover { backg
       <p class="step-desc">Check your selections below before adding to cart.</p>
       <div id="summary" style="text-align:left;"></div>
       <p id="total-price">Total: $0.00</p>
-      <button class="prev-step" data-prev="step3">Back</button>
-      <button id="add-to-cart">Add to Cart</button>
+      <button type="button" class="prev-step" data-prev="step3">Back</button>
+      <button type="button" id="add-to-cart">Add to Cart</button>
     </div>
   </div>
 </main>
@@ -180,7 +183,7 @@ button.next-step:hover, button.prev-step:hover, button#add-to-cart:hover { backg
 <!-- Hidden iframe for form submission -->
 <iframe name="submit-frame" style="display:none;"></iframe>
 
-<!-- Hidden form -->
+<!-- Hidden form (populated and submitted to FormBackend silently) -->
 <form id="sendForm" style="display:none;" 
       method="POST" 
       action="https://www.formbackend.com/f/8a1738ba071ca12a" 
@@ -188,13 +191,23 @@ button.next-step:hover, button.prev-step:hover, button#add-to-cart:hover { backg
       target="submit-frame">
   <input type="hidden" name="subject" value="New Custom Order from Mozart Laser">
   <input type="hidden" name="from_name" value="MozartLaser.com">
+
+  <!-- Basic fields -->
   <input type="hidden" name="product" id="f-product">
   <input type="hidden" name="shape" id="f-shape">
-  <input type="hidden" name="text" id="f-text">
-  <input type="hidden" name="location" id="f-location">
-  <input type="hidden" name="description" id="f-description">
-  <input type="hidden" name="price" id="f-price">
-  <input type="file" name="design" id="f-design" style="display:none;">
+
+  <!-- Step 3 fields -->
+  <input type="hidden" name="engraved_text" id="f-text">
+  <input type="hidden" name="font" id="f-font">
+  <input type="hidden" name="text_location" id="f-location">
+  <input type="hidden" name="file_placement" id="f-file-placement">
+  <input type="hidden" name="additional_description" id="f-description">
+
+  <!-- file input must be present in the form for FormBackend to receive file -->
+  <input type="file" name="design_file" id="f-design" style="display:none;">
+
+  <!-- other metadata -->
+  <input type="hidden" name="total_price" id="f-price">
   <input type="hidden" name="replyto" id="f-email">
 </form>
 
