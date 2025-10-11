@@ -205,29 +205,39 @@ dots.forEach(dot => {
 });
 
 showSlide(0);
-	
-	  // --- Swipe gesture support ---
-    let startX = 0;
+	// --- Swipe gesture support for hero slides ---
+const sliderContainer = document.querySelector('.hero-slider'); // wrap your .hero-slide elements
+let startX = 0;
 
-    imageContainer.addEventListener('touchstart', (e) => {
-      startX = e.touches[0].clientX;
-    });
+if (sliderContainer) {
+  sliderContainer.addEventListener('touchstart', (e) => {
+    startX = e.touches[0].clientX;
+  });
 
-    imageContainer.addEventListener('touchend', (e) => {
-      const endX = e.changedTouches[0].clientX;
-      const diff = startX - endX;
+  sliderContainer.addEventListener('touchend', (e) => {
+    const endX = e.changedTouches[0].clientX;
+    const diff = startX - endX;
 
-      if (Math.abs(diff) > 50) {
-        if (diff > 0) {
-          // Swipe left
-          currentIndex = (currentIndex + 1) % images.length;
-        } else {
-          // Swipe right
-          currentIndex = (currentIndex - 1 + images.length) % images.length;
-        }
-        changeImage(currentIndex);
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) {
+        // Swipe left → next slide
+        let next = (currentIndex + 1) % slides.length;
+        showSlide(next);
+      } else {
+        // Swipe right → previous slide
+        let prev = (currentIndex - 1 + slides.length) % slides.length;
+        showSlide(prev);
       }
-    });
+
+      // reset interval so it doesn’t conflict
+      clearInterval(interval);
+      interval = setInterval(() => {
+        let next = (currentIndex + 1) % slides.length;
+        showSlide(next);
+      }, 7000);
+    }
+  });
+}
 </script>
 
 <!-- FOOTER -->
