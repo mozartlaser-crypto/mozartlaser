@@ -17,6 +17,7 @@ html, body {
 }
 
 /* HEADER */
+/* Base header (expanded) */
 .site-header {
   position: fixed;
   top: 0;
@@ -28,19 +29,27 @@ html, body {
   align-items: center;
   justify-content: space-between;
   z-index: 1200;
-  background-color: var(--glass-color);
+  background-color: rgba(255,255,255,0.8); /* more solid than before */
   backdrop-filter: blur(var(--glass-blur));
   border-bottom: 1px solid rgba(0,0,0,0.06);
-  transition: height var(--transition-fast) ease, background-color var(--transition-fast) ease, box-shadow var(--transition-fast) ease, padding var(--transition-fast) ease;
+  transition: height var(--transition-fast) ease,
+              background-color var(--transition-fast) ease,
+              box-shadow var(--transition-fast) ease,
+              padding var(--transition-fast) ease,
+              transform var(--transition-fast) ease;
 }
 
-/* SHRINK */
+/* Shrink header when scrolling down past threshold */
 .site-header.shrink {
   height: var(--header-height-shrink);
-  background-color: rgba(255,255,255,0.28);
+  background-color: rgba(255,255,255,0.5); /* slightly less opaque when shrunk */
   box-shadow: 0 6px 18px rgba(10,10,10,0.06);
 }
 
+/* Hide effect (optional small upward shift) */
+.site-header.hide {
+  transform: translateY(-40px); /* partially retracts */
+}
 /* INNER HEADER */
 .header-inner {
   display: flex;

@@ -5,25 +5,20 @@ document.addEventListener("DOMContentLoaded", function() {
 
   if (!header || !hamburger || !nav) return;
 
-  // ================================
-  // SHRINK/SHOW HEADER ON SCROLL
-  // ================================
   const SHRINK_THRESHOLD = 48;
   let lastScrollY = window.scrollY || window.pageYOffset;
   let ticking = false;
 
   function updateHeader(scrollY) {
-    // Shrink header if scrolling past threshold
-    if (scrollY > SHRINK_THRESHOLD) header.classList.add("shrink");
-    else header.classList.remove("shrink");
-
-    // Show navbar if scrolling up, hide if scrolling down
-    if (scrollY < lastScrollY) {
-      // Scrolling up
-      header.classList.remove("hide");
+    if (scrollY <= 0) {
+      // Top of page → fully expanded
+      header.classList.remove("shrink");
     } else if (scrollY > lastScrollY) {
-      // Scrolling down
-      header.classList.add("hide");
+      // Scrolling down → contracted
+      header.classList.add("shrink");
+    } else if (scrollY < lastScrollY) {
+      // Scrolling up → fully expanded
+      header.classList.remove("shrink");
     }
 
     lastScrollY = scrollY;
@@ -41,19 +36,15 @@ document.addEventListener("DOMContentLoaded", function() {
   window.addEventListener("scroll", onScroll, { passive: true });
   updateHeader(lastScrollY);
 
-  // ================================
   // HAMBURGER TOGGLE
-  // ================================
   hamburger.addEventListener("click", function(e) {
-    e.stopPropagation(); // prevents the click from closing immediately
+    e.stopPropagation();
     nav.classList.toggle("show");
     const expanded = hamburger.getAttribute("aria-expanded") === "true";
     hamburger.setAttribute("aria-expanded", !expanded);
   });
 
-  // ================================
   // CLOSE MENU WHEN CLICKING OUTSIDE
-  // ================================
   document.addEventListener("click", function(e) {
     if (nav.classList.contains("show") && !nav.contains(e.target) && !hamburger.contains(e.target)) {
       nav.classList.remove("show");
