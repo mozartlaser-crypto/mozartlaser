@@ -10,8 +10,8 @@
 <link rel="stylesheet" href="css/cart.css">
 <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;700&display=swap" rel="stylesheet">
 
-
 <style>
+/* (Your original CSS preserved) */
 /* dropdown arrow styling */
 select.input-field {
   -webkit-appearance: none !important;
@@ -49,10 +49,10 @@ select, input[type="text"], input[type="file"], textarea {
 }
 select:focus, input:focus, textarea:focus { border-color:#111; outline:none; }
 
-button.next-step, button.prev-step, button#add-to-cart {
+button.next-step, button.prev-step, button#add-to-cart, button#add-to-cart-custom {
   background-color:#111; color:#fff; border:none; border-radius:8px; padding:12px 25px; margin:10px; cursor:pointer; font-size:1rem;
 }
-button.next-step:hover, button.prev-step:hover, button#add-to-cart:hover { background-color:#333; }
+button.next-step:hover, button.prev-step:hover, button#add-to-cart:hover, button#add-to-cart-custom:hover { background-color:#333; }
 
 #total-price { font-size:1.3rem; font-weight:500; margin-top:15px; text-align:right; }
 
@@ -66,6 +66,19 @@ button.next-step:hover, button.prev-step:hover, button#add-to-cart:hover { backg
 /* error highlight */
 .error { border-color: #d9534f !important; box-shadow: 0 0 0 4px rgba(217,83,79,0.06) !important; }
 
+/* small util */
+.row { display:flex; gap:12px; align-items:center; justify-content:center; flex-wrap:wrap; }
+.option-card {
+  border: 1px solid #eee; border-radius:10px; padding:14px; width:100%; max-width:380px; cursor:pointer;
+  transition: box-shadow 0.18s, transform 0.12s; text-align:left;
+}
+.option-card:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.06); transform: translateY(-4px); }
+.option-radio { margin-right:12px; transform: scale(1.15); }
+.option-title { font-weight:600; margin-bottom:6px; }
+.option-desc { color:#666; font-size:0.95rem; }
+
+/* ensure textarea looks good on mobile */
+textarea.input-field { min-height:90px; resize:vertical; }
 </style>
 </head>
 <body>
@@ -88,7 +101,7 @@ button.next-step:hover, button.prev-step:hover, button#add-to-cart:hover { backg
 </header>
 
 <!-- CART PANEL -->
-<div class="cart-panel" id="cart-panel">
+<div class="cart-panel" id="cart-panel" style="display:none;">
   <h3>Shopping Cart</h3>
   <ul id="cart-items"></ul>
   <p>Total: $<span id="cart-total">0.00</span></p>
@@ -99,86 +112,150 @@ button.next-step:hover, button.prev-step:hover, button#add-to-cart:hover { backg
 <!-- BUILDER -->
 <main>
   <div class="builder-container">
-    <!-- Step 1 -->
+
+    <!-- STEP 1: CHOOSE FLOW -->
     <div class="step active" id="step1">
-      <h2>Step 1: Choose a Product</h2>
-      <p class="step-desc">Select the type of engraving you'd like to create.</p>
-      <select id="product-type" class="input-field" required>
-        <option value="">Select...</option>
-        <option value="coin">Wooden Coin</option>
-        <option value="bookmark">Bookmark</option>
-        <option value="plaque">Wood Plaque</option>
-      </select>
-      <button type="button" class="next-step" data-next="step2">Next</button>
+      <h2>Step 1: Choose What You Want to Do</h2>
+      <p class="step-desc">Pick an option. "Customize a Product" lets you choose an existing product and request changes. "Create your own" starts the fully-custom flow.</p>
+
+      <div class="row" style="justify-content:space-between;">
+        <label class="option-card" id="opt-customize" title="Pick this to modify an existing product">
+          <div style="display:flex; align-items:center;">
+            <input type="radio" name="create-mode" value="customize" class="option-radio" id="mode-customize" checked>
+            <div>
+              <div class="option-title">Customize one of our products</div>
+              <div class="option-desc">Select a product and tell us the changes you want (faster process).</div>
+            </div>
+          </div>
+        </label>
+
+        <label class="option-card" id="opt-full" title="Pick this to make a fully custom product">
+          <div style="display:flex; align-items:center;">
+            <input type="radio" name="create-mode" value="full" class="option-radio" id="mode-full">
+            <div>
+              <div class="option-title">Create your own (fully custom)</div>
+              <div class="option-desc">Start from scratch — choose product type, shape, text, and upload a design.</div>
+            </div>
+          </div>
+        </label>
+      </div>
+
+      <div style="margin-top:18px; text-align:left; max-width:480px; margin-left:auto; margin-right:auto;">
+        <label id="select-existing-label" for="select-existing">If customizing, pick a product:</label>
+        <select id="select-existing" class="input-field">
+          <option value="">-- Select a product to customize (optional) --</option>
+          <option value="Cross with Scripture">Cross with Scripture — Plaque</option>
+          <option value="Train Plaque">Train Plaque — Plaque</option>
+          <option value="Leather Wallet">Leather Wallet — Coin-sized</option>
+        </select>
+      </div>
+
+      <div style="margin-top:20px;">
+        <button type="button" class="next-step" id="step1-next">Next</button>
+      </div>
     </div>
 
-    <!-- Step 2 -->
+    <!-- STEP 2: FULL FLOW (Customize Your Engraving) -->
     <div class="step" id="step2">
-      <h2>Step 2: Choose Plaque Shape</h2>
-      <p class="step-desc" id="step2-desc">If you selected a plaque, choose its orientation and shape.</p>
-      <select id="plaque-shape" class="input-field" required>
-        <option value="">Select...</option>
-        <option value="rect-portrait">Rectangular (Portrait)</option>
-        <option value="rect-landscape">Rectangular (Landscape)</option>
-        <option value="square">Square</option>
-        <option value="none">I did not choose plaque</option>
+      <h2>Step 2: Customize Your Engraving</h2>
+      <label for="custom-text">Engraved Text</label>
+      <input type="text" id="custom-text" class="input-field" placeholder="Enter text for engraving (optional)">
+
+      <label for="font-select">Font (required if text entered)</label>
+      <select id="font-select" class="input-field">
+        <option value="">-- Select a Font --</option>
+        <option value="serif">Serif</option>
+        <option value="sans-serif">Sans Serif</option>
+        <option value="script">Script</option>
+        <option value="monospace">Monospace</option>
       </select>
-      <button type="button" class="prev-step" data-prev="step1">Back</button>
-      <button type="button" class="next-step" data-next="step3">Next</button>
+
+      <label for="text-location">Text Placement (only necessary if you entered text)</label>
+      <input type="text" id="text-location" class="input-field" placeholder="Describe where the text should be placed">
+
+      <label for="upload-file">Upload Design or Image</label>
+      <div style="display:flex; gap:8px; align-items:center;">
+        <input type="file" id="upload-file" accept="image/*" class="input-field" style="flex:1;">
+        <button type="button" id="delete-file" style="background:#d9534f;color:#fff;border:none;padding:8px 12px;border-radius:6px;cursor:pointer;">Delete</button>
+      </div>
+      <p style="font-size: 0.9em; color: #555; margin-top: 5px;">
+        Please upload a file only if you want a design or image.<br>
+        Designs should be clear black-and-white line art.<br>
+        Images should be simple, with a clear, distinct subject.
+      </p>
+
+      <label for="file-placement">File Placement (only necessary if you uploaded a file)</label>
+      <input type="text" id="file-placement" class="input-field" placeholder="Describe how the design/image should be placed">
+
+      <label for="additional-desc">Additional Description</label>
+      <textarea id="additional-desc" class="input-field" rows="3" placeholder="Any other details about your design?"></textarea>
+
+      <div class="buttons">
+        <button type="button" class="prev-step" data-prev="step1">Back</button>
+        <button type="button" class="next-step" data-next="step3">Next</button>
+      </div>
     </div>
 
-   <!-- Step 3: Customization -->
-<div id="step3" class="step">
-  <h2>Step 3: Customize Your Engraving</h2>
-  
-  <label for="custom-text">Engraved Text</label>
-  <input type="text" id="custom-text" class="input-field" placeholder="Enter text for engraving (optional)">
-  
-  <label for="font-select">Font (required if text entered)</label>
-  <!-- Font is enabled so users can pre-select if they want -->
-  <select id="font-select" class="input-field">
-    <option value="">-- Select a Font --</option>
-    <option value="serif">Serif</option>
-    <option value="sans-serif">Sans Serif</option>
-    <option value="script">Script</option>
-    <option value="monospace">Monospace</option>
-  </select>
-  
-  <label for="text-location">Text Placement (only necessary if you entered text)</label>
-  <input type="text" id="text-location" class="input-field" placeholder="Describe where the text should be placed">
-  
-  <label for="upload-file">Upload Design or Image</label>
-  <div style="display:flex; gap:8px; align-items:center;">
-    <input type="file" id="upload-file" accept="image/*" class="input-field" style="flex:1;">
-    <button type="button" id="delete-file" style="background:#d9534f;color:#fff;border:none;padding:8px 12px;border-radius:6px;cursor:pointer;">Delete</button>
-  </div>
-  <p style="font-size: 0.9em; color: #555; margin-top: 5px;">
-    Please upload a file only if you want a design or image.<br>
-    Designs should be clear black-and-white line art.<br>
-    Images should be simple, with a clear, distinct subject.
-  </p>
+    <!-- STEP 2 CUSTOMIZE: short flow for customizing existing product -->
+    <div class="step" id="step2_custom">
+      <h2>Step 2: Describe Changes</h2>
+      <p class="step-desc">Tell us what you'd like changed from the selected product, and upload a design if needed.</p>
 
-  <label for="file-placement">File Placement (only necessary if you uploaded a file)</label>
-  <input type="text" id="file-placement" class="input-field" placeholder="Describe how the design/image should be placed">
+      <p><strong>Selected product:</strong> <span id="selected-product-text">None</span></p>
 
-  <label for="additional-desc">Additional Description</label>
-  <textarea id="additional-desc" class="input-field" rows="3" placeholder="Any other details about your design?"></textarea>
+      <label for="custom-changes">Requested changes / notes</label>
+      <textarea id="custom-changes" class="input-field" rows="4" placeholder="Describe the changes (text edits, size, placement, etc.)"></textarea>
 
-  <div class="buttons">
-    <button type="button" class="prev-step" data-prev="step2">Back</button>
-    <button type="button" class="next-step" data-next="step4">Next</button>
-  </div>
-</div>
+      <label for="upload-file-custom">Upload Design or Image (optional)</label>
+      <div style="display:flex; gap:8px; align-items:center;">
+        <input type="file" id="upload-file-custom" accept="image/*" class="input-field" style="flex:1;">
+        <button type="button" id="delete-file-custom" style="background:#d9534f;color:#fff;border:none;padding:8px 12px;border-radius:6px;cursor:pointer;">Delete</button>
+      </div>
 
-    <!-- Step 4 -->
-    <div class="step" id="step4">
-      <h2>Step 4: Review & Add to Cart</h2>
+      <label for="file-placement-custom">File Placement (optional)</label>
+      <input type="text" id="file-placement-custom" class="input-field" placeholder="Describe how the design/image should be placed">
+
+      <div class="buttons">
+        <button type="button" class="prev-step" data-prev="step1">Back</button>
+        <button type="button" class="next-step" data-next="step3_custom">Next</button>
+      </div>
+    </div>
+
+    <!-- STEP 3: FULL FLOW review -->
+    <div class="step" id="step3">
+      <h2>Step 3: Review & Add to Cart</h2>
       <p class="step-desc">Check your selections below before adding to cart.</p>
       <div id="summary" style="text-align:left;"></div>
       <p id="total-price">Total: $0.00</p>
-      <button type="button" class="prev-step" data-prev="step3">Back</button>
+		<!-- Add to both Step 3 sections -->
+<div class="verify-section" style="margin-top:20px; text-align:left;">
+  <label for="verify-name">Your Name</label>
+  <input type="text" id="verify-name" class="input-field" placeholder="Enter your name" required>
+
+  <label for="verify-email">Your Email</label>
+  <input type="email" id="verify-email" class="input-field" placeholder="Enter your email" required>
+</div>
+      <button type="button" class="prev-step" data-prev="step2">Back</button>
       <button type="button" id="add-to-cart">Add to Cart</button>
     </div>
+
+    <!-- STEP 3 CUSTOM: customize review -->
+    <div class="step" id="step3_custom">
+      <h2>Step 3: Review & Add to Cart</h2>
+      <p class="step-desc">Confirm your customizations and add to cart.</p>
+      <div id="summary_custom" style="text-align:left;"></div>
+      <p id="total-price-custom">Total: $0.00</p>
+	<div class="verify-section" style="margin-top:20px; text-align:left;">
+  <label for="verify-name-custom">Your Name</label>
+  <input type="text" id="verify-name-custom" class="input-field" placeholder="Enter your name" required>
+
+  <label for="verify-email-custom">Your Email</label>
+  <input type="email" id="verify-email-custom" class="input-field" placeholder="Enter your email" required>
+</div>
+      <button type="button" class="prev-step" data-prev="step2_custom">Back</button>
+      <button type="button" id="add-to-cart-custom">Add to Cart</button>
+    </div>
+
   </div>
 </main>
 
@@ -186,26 +263,32 @@ button.next-step:hover, button.prev-step:hover, button#add-to-cart:hover { backg
 <iframe name="submit-frame" style="display:none;"></iframe>
 
 <!-- Hidden form (populated and submitted to FormBackend silently) -->
-<form id="sendForm" style="display:none;" 
-      method="POST" 
-      action="https://www.formbackend.com/f/8a1738ba071ca12a" 
-      enctype="multipart/form-data" 
+<form id="sendForm" style="display:none;"
+      method="POST"
+      action="https://www.formbackend.com/f/8a1738ba071ca12a"
+      enctype="multipart/form-data"
       target="submit-frame">
   <input type="hidden" name="subject" value="New Custom Order from Mozart Laser">
   <input type="hidden" name="from_name" value="MozartLaser.com">
 
-  <!-- Basic fields -->
+  <!-- Generic fields -->
+  <input type="hidden" name="flow_type" id="f-flow-type"> <!-- 'full' or 'customize' -->
   <input type="hidden" name="product" id="f-product">
   <input type="hidden" name="shape" id="f-shape">
 
-  <!-- Step 3 fields -->
+  <!-- Full flow fields -->
   <input type="hidden" name="engraved_text" id="f-text">
   <input type="hidden" name="font" id="f-font">
   <input type="hidden" name="text_location" id="f-location">
   <input type="hidden" name="file_placement" id="f-file-placement">
   <input type="hidden" name="additional_description" id="f-description">
 
-  <!-- file input must be present in the form for FormBackend to receive file -->
+  <!-- Customize-flow fields -->
+  <input type="hidden" name="selected_product" id="f-selected-product">
+  <input type="hidden" name="custom_changes" id="f-custom-changes">
+  <input type="hidden" name="custom_file_placement" id="f-custom-file-placement">
+
+  <!-- file input must be present for file submissions -->
   <input type="file" name="design_file" id="f-design" style="display:none;">
 
   <!-- other metadata -->
