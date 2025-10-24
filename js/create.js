@@ -90,9 +90,9 @@ document.addEventListener('DOMContentLoaded', () => {
         <option value="Wallet">Wallet</option>
       `;
     } else {
-      selectExistingLabel.textContent = "If customizing, pick a product:";
+      selectExistingLabel.textContent = "Choose a product";
       selectExisting.innerHTML = `
-        <option value="">-- Select a product to customize (optional) --</option>
+        <option value="">-- Select a product to customize --</option>
         <option value="Cross with Scripture">Cross with Scripture — Plaque</option>
         <option value="Train Plaque">Train Plaque — Plaque</option>
         <option value="Leather Wallet">Leather Wallet — Coin-sized</option>
@@ -204,7 +204,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const hasFile = uploadFileCustom.files && uploadFileCustom.files.length > 0;
     const placement = filePlacementCustom.value.trim();
     if (!changes && !hasFile && !placement) {
-      alert('Please describe requested changes, or upload a file (at least one).');
+      alert('Please describe requested changes or upload a file!');
       return false;
     }
     return true;
@@ -363,7 +363,7 @@ document.addEventListener('DOMContentLoaded', () => {
       window.addToCart(`Customized: ${selectExisting.value || 'Custom Product'}`, currentPrice);
       if (typeof window.openCartPanel === 'function') window.openCartPanel();
 
-      alert('Customized order added to cart and submitted.');
+      alert('Customized order added to cart!');
       showStep('step1');
     });
   }
