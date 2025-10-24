@@ -240,17 +240,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Step 1 branching
   step1Next.addEventListener('click', () => {
-    const mode = modeFull.checked ? 'full' : 'customize';
-    if (mode === 'customize') {
-      hiddenFlowType.value = 'customize';
-      selectedProductText.textContent = selectExisting.value || 'None';
-      showStep('step2_custom');
-    } else {
-      hiddenFlowType.value = 'full';
-      hiddenSelectedProduct.value = '';
-      showStep('step2');
-    }
-  });
+  const mode = modeFull.checked ? 'full' : 'customize';
+  const selectedVal = selectExisting.value.trim();
+
+  // VALIDATION: require dropdown selection for both flows
+  if (!selectedVal) {
+    alert('Please select a product before continuing.');
+    selectExisting.classList.add('error');
+    return;
+  }
+  selectExisting.classList.remove('error');
+
+  if (mode === 'full') {
+    showStep('step2');
+  } else {
+    selectedProductText.textContent = selectedVal;
+    showStep('step2_custom');
+  }
+});
 
   // Next / Prev buttons
   document.querySelectorAll('.next-step').forEach(btn => {
