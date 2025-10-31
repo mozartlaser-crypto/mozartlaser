@@ -186,16 +186,40 @@ document.addEventListener('DOMContentLoaded', () => {
     const hasFile = uploadFileInput.files && uploadFileInput.files.length > 0;
     const placement = filePlacementInput.value.trim();
     const desc = additionalDesc.value.trim();
+    const textPos = textLocation.value.trim();
+
+    // Ensure at least one field is filled
     if (!txt && !hasFile && !placement && !desc) {
       alert("Please fill at least one of: engraved text, upload file, file placement, or additional description.");
       return false;
     }
-    if (txt && (!fontSelect.value || fontSelect.value.trim() === '')) {
-      alert('Please choose a font when adding engraved text.');
-      fontSelect.classList.add('error');
-      return false;
+
+    // If text is entered, require font and text placement
+    if (txt) {
+      let valid = true;
+      if (!fontSelect.value || fontSelect.value.trim() === '') {
+        fontSelect.classList.add('error');
+        valid = false;
+      } else {
+        fontSelect.classList.remove('error');
+      }
+
+      if (!textPos) {
+        textLocation.classList.add('error');
+        valid = false;
+      } else {
+        textLocation.classList.remove('error');
+      }
+
+      if (!valid) {
+        alert('Please choose a font and specify text placement when adding engraved text.');
+        return false;
+      }
+    } else {
+      fontSelect.classList.remove('error');
+      textLocation.classList.remove('error');
     }
-    fontSelect.classList.remove('error');
+
     return true;
   }
 
@@ -240,24 +264,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Step 1 branching
   step1Next.addEventListener('click', () => {
-  const mode = modeFull.checked ? 'full' : 'customize';
-  const selectedVal = selectExisting.value.trim();
+    const mode = modeFull.checked ? 'full' : 'customize';
+    const selectedVal = selectExisting.value.trim();
 
-  // VALIDATION: require dropdown selection for both flows
-  if (!selectedVal) {
-    alert('Please select a product before continuing.');
-    selectExisting.classList.add('error');
-    return;
-  }
-  selectExisting.classList.remove('error');
+    // VALIDATION: require dropdown selection for both flows
+    if (!selectedVal) {
+      alert('Please select a product before continuing.');
+      selectExisting.classList.add('error');
+      return;
+    }
+    selectExisting.classList.remove('error');
 
-  if (mode === 'full') {
-    showStep('step2');
-  } else {
-    selectedProductText.textContent = selectedVal;
-    showStep('step2_custom');
-  }
-});
+    if (mode === 'full') {
+      showStep('step2');
+    } else {
+      selectedProductText.textContent = selectedVal;
+      showStep('step2_custom');
+    }
+  });
 
   // Next / Prev buttons
   document.querySelectorAll('.next-step').forEach(btn => {
@@ -279,7 +303,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Update summaries
+  // Update summaries on input/change
   [selectExisting, textField, fontSelect, textLocation, filePlacementInput, additionalDesc].forEach(el => { if (!el) return; el.addEventListener('input', updateSummary); el.addEventListener('change', updateSummary); });
   [selectExisting, customChanges, filePlacementCustom].forEach(el => { if (!el) return; el.addEventListener('input', updateSummaryCustom); el.addEventListener('change', updateSummaryCustom); });
   if (uploadFileInput) uploadFileInput.addEventListener('change', updateSummary);
@@ -291,10 +315,15 @@ document.addEventListener('DOMContentLoaded', () => {
     addToCartBtn.addEventListener('click', () => {
       const nameEl = document.getElementById('verify-name');
       const emailEl = document.getElementById('verify-email');
-      if (!validateVerification(nameEl, emailEl)) return;
-      if (!validateFullStep2()) { showStep('step2'); return; }
+
+      // Update summary first
       updateSummary();
 
+      // Validation
+      if (!validateVerification(nameEl, emailEl)) return;
+      if (!validateFullStep2()) { showStep('step2'); return; }
+
+      // Fill hidden fields
       hiddenFlowType.value = 'full';
       hiddenProduct.value = selectExisting.value || '';
       hiddenShape.value = selectExisting.value || '';
@@ -305,7 +334,7 @@ document.addEventListener('DOMContentLoaded', () => {
       hiddenDescription.value = additionalDesc.value.trim() || '';
       hiddenPrice.value = Number(currentPrice).toFixed(2);
 
-      // ✅ Ensure name gets sent
+      // Ensure name gets sent
       let hiddenName = document.getElementById('f-name');
       if (!hiddenName) {
         hiddenName = document.createElement('input');
@@ -324,7 +353,7 @@ document.addEventListener('DOMContentLoaded', () => {
       window.addToCart(`Custom Engraving (${selectExisting.value || 'Custom'})`, currentPrice);
       if (typeof window.openCartPanel === 'function') window.openCartPanel();
 
-      alert('Order added to cart and submitted.');
+      alert('Order added to cart');
       showStep('step1');
     });
   }
@@ -335,10 +364,15 @@ document.addEventListener('DOMContentLoaded', () => {
     addToCartCustomBtn.addEventListener('click', () => {
       const nameEl = document.getElementById('verify-name-custom');
       const emailEl = document.getElementById('verify-email-custom');
-      if (!validateVerification(nameEl, emailEl)) return;
-      if (!validateCustomizeStep2()) { showStep('step2_custom'); return; }
+
+      // Update summary first
       updateSummaryCustom();
 
+      // Validation
+      if (!validateVerification(nameEl, emailEl)) return;
+      if (!validateCustomizeStep2()) { showStep('step2_custom'); return; }
+
+      // Fill hidden fields
       hiddenFlowType.value = 'customize';
       hiddenSelectedProduct.value = selectExisting.value || '';
       hiddenCustomChanges.value = customChanges.value.trim() || '';
