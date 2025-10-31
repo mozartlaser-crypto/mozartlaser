@@ -1,5 +1,5 @@
 // ============================
-// CART HANDLING LOGIC
+// CART HANDLING LOGIC (Optimized)
 // ============================
 
 // Elements
@@ -17,21 +17,30 @@ const checkoutButton = document.getElementById('checkout');
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
 // ============================
-// OPEN / CLOSE CART PANEL
+// SHOW / HIDE CART PANEL
 // ============================
+function showCart() {
+  cartPanel.classList.add('show');          // show immediately
+  requestAnimationFrame(updateCart);        // update DOM asynchronously
+}
+
+function hideCart() {
+  cartPanel.classList.remove('show');
+}
+
+// Open cart on icon click
 cartIcon.addEventListener('click', (e) => {
-  e.stopPropagation(); // prevent outside click from firing
-  cartPanel.classList.add('show');
+  e.stopPropagation();
+  showCart();
 });
 
-closeCartBtn.addEventListener('click', () => {
-  cartPanel.classList.remove('show');
-});
+// Close cart on button click
+closeCartBtn.addEventListener('click', hideCart);
 
 // Hide cart when clicking outside
 document.addEventListener('click', (e) => {
   if (!cartPanel.contains(e.target) && !cartIcon.contains(e.target)) {
-    cartPanel.classList.remove('show');
+    hideCart();
   }
 });
 
@@ -47,10 +56,7 @@ function saveCart() {
 // ============================
 function addToCart(name, price) {
   price = parseFloat(price);
-  if (isNaN(price)) {
-    console.error("Invalid price for item:", name, price);
-    return;
-  }
+  if (isNaN(price)) return;
 
   const existingItem = cart.find(item => item.name === name);
   if (existingItem) {
@@ -59,9 +65,10 @@ function addToCart(name, price) {
     cart.push({ name, price, quantity: 1 });
   }
 
-  updateCart();
-  saveCart();
-  cartPanel.classList.add('show'); // keep cart open after adding
+  showCart();               // show panel instantly
+  requestAnimationFrame(() => {
+    saveCart();
+  });
 }
 
 // ============================
@@ -90,11 +97,10 @@ function updateCart() {
     removeBtn.style.cursor = 'pointer';
 
     removeBtn.addEventListener('click', (e) => {
-      e.stopPropagation(); // prevent closing cart
+      e.stopPropagation();
       cart.splice(index, 1);
       saveCart();
-      updateCart();
-      cartPanel.classList.add('show'); // ensure cart stays open
+      requestAnimationFrame(updateCart);  // update asynchronously
     });
 
     li.appendChild(removeBtn);

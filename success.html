@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="css/footer.css">
 <link rel="stylesheet" href="css/cart.css">
 <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;700&display=swap" rel="stylesheet">
-<script src="js/cart-send.js"></script>
+<script src="js/js/cart-send.js"></script>
 <script src="https://js.stripe.com/v3/"></script>
 <title>Success!</title>
 <style>
@@ -166,5 +166,15 @@
     <p>&copy; 2025 Mozart Laser. All rights reserved.</p>
   </div>
 </footer>
+	<script src="js/navbar.js"></script>
+<script src="js/cart.js"></script>
+	<script>
+  // Disable cart icon on success page
+  const cartIcon = document.getElementById('cart-icon');
+  if (cartIcon) {
+    cartIcon.style.pointerEvents = 'none';
+    cartIcon.style.opacity = '0.4'; // optional, to make it look disabled
+  }
+</script>
 </body>
 </html>
