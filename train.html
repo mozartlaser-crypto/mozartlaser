@@ -39,23 +39,31 @@
       margin: auto;
     }
 
-    /* Image Section */
+    /* ================= IMAGE SECTION (FIXED SIZE) ================= */
+
     .product-images {
       position: relative;
       width: 500px;
+      height: 600px;               /* Taller container */
       max-width: 90vw;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       overflow: hidden;
+      border-radius: 12px;
+      background: #f0f0f0;         /* Prevents visual jump */
     }
 
     .product-images img {
-      width: 100%;
-      height: auto;
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;         /* KEY FIX */
       border-radius: 10px;
-      object-fit: cover;
       transition: transform 0.4s ease;
     }
 
-    /* Dots and Pill Background */
+    /* ================= DOTS ================= */
+
     .dots {
       position: absolute;
       bottom: 15px;
@@ -68,8 +76,7 @@
     .dots::before {
       content: "";
       position: absolute;
-      bottom: 0;
-      transform: translateY(25%);
+      bottom: -7px;
       width: 100px;
       height: 28px;
       background: rgba(0, 0, 0, 0.4);
@@ -91,7 +98,8 @@
       background: white;
     }
 
-    /* Product Info */
+    /* ================= PRODUCT INFO ================= */
+
     .product-info {
       flex: 1;
       max-width: 500px;
@@ -100,6 +108,10 @@
 
     .product-info h1 {
       font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    .product-info h3 {
       margin-bottom: 15px;
     }
 
@@ -111,6 +123,7 @@
     .buttons {
       display: flex;
       gap: 15px;
+      flex-wrap: wrap;
     }
 
     .buttons button {
@@ -131,29 +144,20 @@
       background: #333;
     }
 
-    .add-cart {
+    .add-cart,
+    .customize-btn {
       background: white;
       color: black;
       border: 1px solid black;
     }
 
-    .add-cart:hover {
+    .add-cart:hover,
+    .customize-btn:hover {
       background: #eee;
     }
-  .customize-btn {
-  background: white;
-  color: black;
-  border: 1px solid black;
-  padding: 12px 25px;
-  border-radius: 999px;
-  cursor: pointer;
-  transition: all 0.3s;
-}
 
-.customize-btn:hover {
-  background: #eee;
-}
-    /* Mobile */
+    /* ================= MOBILE ================= */
+
     @media (max-width: 768px) {
       .product-container {
         flex-direction: column;
@@ -168,26 +172,16 @@
         justify-content: center;
       }
 
+      .product-images {
+        width: 90vw;
+        height: 90vw; /* stays square-ish on mobile */
+      }
+
       .dots::before {
         width: 80px;
         height: 26px;
       }
     }
-	  .product-images {
-  position: relative;
-  width: 500px;
-  max-width: 90vw;
-  aspect-ratio: 1 / 1; /* Makes it a perfect square — adjust if needed */
-  overflow: hidden;
-}
-
-.product-images img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* Prevents stretching */
-  border-radius: 10px;
-  transition: transform 0.4s ease;
-}
   </style>
 </head>
 <body>
@@ -202,7 +196,7 @@
         <li><a href="index.html" class="active">Home</a></li>
         <li><a href="products.html">Products</a></li>
         <li><a href="create.html">Create</a></li>
-        <li><a href="contact.html">Contact</a></li>
+        <li><a href="About.html">About</a></li>
       </ul>
     </nav>
     <div class="hamburger"><span></span><span></span><span></span></div>
