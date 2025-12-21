@@ -62,13 +62,13 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function updatePrice() {
-    if (!selectExisting) { currentPrice = 20; return; }
-    if (modeCustomize && modeCustomize.checked) currentPrice = 25;
+    if (!selectExisting) { currentPrice = 25.00; return; }
+    if (modeCustomize && modeCustomize.checked) currentPrice = 34.99;
     else {
       const product = selectExisting.value || '';
-      if (product.includes('Plaque')) currentPrice = 40;
-      else if (product.includes('Coin')) currentPrice = 25;
-      else if (product.includes('Wallet')) currentPrice = 35;
+      if (product.includes('Plaque')) currentPrice = 39.99;
+      else if (product.includes('Coin')) currentPrice = 12.99;
+      else if (product.includes('Wallet')) currentPrice = 29.99;
       else currentPrice = 20;
     }
     const step3Price = $('#total-price');
@@ -86,6 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <option value="Wallet - Minimalist">Wallet - Minimalist</option>
         <option value="Detailed Classic Train Engraving">Detailed Classic Train Engraving</option>
         <option value="Cross Design with John 14:27">Cross Design with John 14:27</option>
+		<option Value="Laser Engraved Wooden Dove Plaque - Psalm 46:5">Laser Engraved Wooden Dove Plaque - Psalm 46:5</option>
       `;
     } else {
       selectExisting.innerHTML = `
