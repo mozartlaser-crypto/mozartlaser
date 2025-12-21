@@ -82,8 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (modeCustomize && modeCustomize.checked) {
       selectExisting.innerHTML = `
         <option value="">-- Choose a Product to Customize --</option>
-        <option value="Coin - Dragon">Coin - Dragon</option>
-        <option value="Wallet - Minimalist">Wallet - Minimalist</option>
+        <option value="Leather Wallet">Leather Wallet</option>
         <option value="Detailed Classic Train Engraving">Detailed Classic Train Engraving</option>
         <option value="Cross Design with John 14:27">Cross Design with John 14:27</option>
 		<option Value="Laser Engraved Wooden Dove Plaque - Psalm 46:5">Laser Engraved Wooden Dove Plaque - Psalm 46:5</option>
@@ -93,8 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <option value="">-- Select Product Type --</option>
         <option value="Plaque (Horizontal)">Plaque (Horizontal)</option>
         <option value="Plaque (Vertical)">Plaque (Vertical)</option>
-        <option value="Coin">Coin</option>
-        <option value="Wallet">Wallet</option>
+        <option value="Leather Wallet">Leather Wallet</option>
       `;
     }
     updatePrice();
