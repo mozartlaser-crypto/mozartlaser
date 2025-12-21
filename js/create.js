@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
     "Laser Engraved Wooden Dove Plaque - Psalm 46:5": 34.99,
     "Cross Design with John 14:27": 34.99,
     "Detailed Classic Train Engraving": 29.99,
-    "Wings like Eagles Isaish 40:31 Wooden Plaque": 34.99,
+    "Wings Like Eagles Isaiah 40:31 Plaque": 34.99,
     "“Be Still” Psalm 46:10 – Wooden Sword Scripture Plaque": 24.99,
   };
 
