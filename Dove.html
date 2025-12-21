@@ -19,73 +19,83 @@
   <script src="https://js.stripe.com/v3/"></script>
 
   <style>
-    body {
-      font-family: 'Poppins', sans-serif;
+     /* 🔒 HARD RESET — prevents mobile zoom + sideways scroll */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    html, body {
       margin: 0;
       padding: 0;
+      width: 100%;
+      overflow-x: hidden;
+      font-family: 'Poppins', sans-serif;
       background-color: #f9f9f9;
       color: #111;
     }
 
+    /* Layout */
     .product-container {
       display: flex;
       flex-wrap: wrap;
-      align-items: center;
       justify-content: center;
-      padding: 60px 20px;
+      align-items: center;
       gap: 40px;
+      padding: 60px 16px;
       max-width: 1200px;
-      margin: auto;
+      margin: 0 auto;
     }
 
     /* Image Section */
     .product-images {
-  width: 500px;        /* fixed width */
-  height: 500px;       /* fixed height */
-  display: flex;       /* center the image */
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  overflow: hidden;
-  border-radius: 10px;
-}
+      width: 100%;
+      max-width: 500px;
+      aspect-ratio: 1 / 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+      margin: 0 auto;
+    }
 
-.product-images img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;  /* scales image inside container without cropping */
-  transition: transform 0.4s ease;
-}
-    /* Dots and Pill Background */
+    .product-images img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 12px;
+    }
+
+    /* Image Dots */
     .dots {
       position: absolute;
-      bottom: 15px;
+      bottom: 14px;
       width: 100%;
       display: flex;
       justify-content: center;
-      z-index: 10;
+      z-index: 5;
     }
 
     .dots::before {
       content: "";
       position: absolute;
-      bottom: 0;
-      transform: translateY(25%);
-      width: 100px;
-      height: 28px;
-      background: rgba(0, 0, 0, 0.4);
+      width: 90px;
+      height: 26px;
+      background: rgba(0,0,0,0.4);
       border-radius: 999px;
       z-index: -1;
+      top: 50%;
+      transform: translateY(-50%);
     }
 
     .dot {
       width: 12px;
       height: 12px;
       margin: 0 5px;
-      background: rgba(255, 255, 255, 0.5);
+      background: rgba(255,255,255,0.5);
       border-radius: 50%;
       cursor: pointer;
-      transition: background-color 0.3s;
     }
 
     .dot.active {
@@ -94,33 +104,34 @@
 
     /* Product Info */
     .product-info {
-      flex: 1;
+      width: 100%;
       max-width: 500px;
       text-align: left;
     }
 
     .product-info h1 {
       font-size: 2rem;
-      margin-bottom: 15px;
+      margin-bottom: 12px;
     }
 
     .product-info p {
       line-height: 1.6;
-      margin-bottom: 30px;
+      margin-bottom: 28px;
     }
 
+    /* Buttons */
     .buttons {
       display: flex;
-      gap: 15px;
+      flex-wrap: wrap;
+      gap: 14px;
     }
 
     .buttons button {
-      padding: 12px 25px;
+      padding: 12px 26px;
       font-size: 1rem;
-      border: none;
       border-radius: 999px;
       cursor: pointer;
-      transition: all 0.3s;
+      border: none;
     }
 
     .buy-now {
@@ -128,34 +139,14 @@
       color: white;
     }
 
-    .buy-now:hover {
-      background: #333;
-    }
-
-    .add-cart {
-      background: white;
-      color: black;
-      border: 1px solid black;
-    }
-
-    .add-cart:hover {
-      background: #eee;
-    }
-
+    .add-cart,
     .customize-btn {
       background: white;
       color: black;
       border: 1px solid black;
-      padding: 12px 25px;
-      border-radius: 999px;
-      cursor: pointer;
-      transition: all 0.3s;
     }
 
-    .customize-btn:hover {
-      background: #eee;
-    }
-
+    /* Mobile */
     @media (max-width: 768px) {
       .product-container {
         flex-direction: column;
@@ -168,11 +159,6 @@
 
       .buttons {
         justify-content: center;
-      }
-
-      .dots::before {
-        width: 80px;
-        height: 26px;
       }
     }
   </style>
@@ -210,14 +196,14 @@
 
 <div class="product-container">
   <!-- Image Section -->
-<div class="product-images" id="imageContainer" style="width:500px; height:500px; display:flex; justify-content:center; align-items:center; overflow:hidden; position:relative;">
-  <img id="product-img" src="" alt="Product Image" style="max-width:100%; max-height:100%; object-fit:contain; border-radius:10px;">
-  <div class="dots">
-    <span class="dot active" data-index="0"></span>
-    <span class="dot" data-index="1"></span>
-    <span class="dot" data-index="2"></span>
+  <div class="product-images" id="imageContainer">
+    <img id="product-img" src="" alt="Product Image">
+    <div class="dots">
+      <span class="dot active" data-index="0"></span>
+      <span class="dot" data-index="1"></span>
+      <span class="dot" data-index="2"></span>
+    </div>
   </div>
-</div>
 
   <!-- Info Section -->
   <div class="product-info">
@@ -235,23 +221,19 @@
 
 <script>
   const images = [
-    "Product Images/Dove/Front view.jpg",
-    "Product Images/Dove/Side-view.jpg",
-    "Product Images/Dove/Display.JPG"
+    "Product Images/Dove with Psalm/Front view.jpg",
+    "Product Images/Dove with Psalm/Side-view.jpg",
+    "Product Images/Dove with Psalm/Display.JPG"
   ];
   const imgEl = document.getElementById('product-img');
   const dots = document.querySelectorAll('.dot');
   const imageContainer = document.getElementById('imageContainer');
   let currentIndex = 0;
 
-  // Set first image on page load
   imgEl.src = images[0];
 
-  // Dot click handling
   dots.forEach((dot, index) => {
-    dot.addEventListener('click', () => {
-      changeImage(index);
-    });
+    dot.addEventListener('click', () => changeImage(index));
   });
 
   function changeImage(index) {
@@ -261,7 +243,6 @@
     currentIndex = index;
   }
 
-  // Swipe support
   let startX = 0;
   imageContainer.addEventListener('touchstart', (e) => startX = e.touches[0].clientX);
   imageContainer.addEventListener('touchend', (e) => {
@@ -272,14 +253,10 @@
     }
   });
 
-  // Add to Cart
   document.getElementById("addToCart").addEventListener("click", () => {
-    const name = "Laser Engraved Wooden Dove Plaque - Psalm 46:5";
-    const price = 25.00;
-    addToCart(name, price);
+    addToCart("Laser Engraved Wooden Dove Plaque - Psalm 46:5", 25.00);
   });
 
-  // Buy Now
   document.getElementById('buyNow').addEventListener('click', async () => {
     const button = document.getElementById('buyNow');
     const name = button.dataset.name;

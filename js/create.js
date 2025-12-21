@@ -147,16 +147,40 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  function validateFullStep2() {
-    const text = (textField && textField.value || '').trim();
-    const font = (fontSelect && fontSelect.value) || '';
-    const desc = (additionalDesc && additionalDesc.value || '').trim();
-    const hasFile = uploadFileInput && uploadFileInput.files.length > 0;
-    if (!text && !desc && !hasFile) { alert('Enter text, file, or description.'); return false; }
-    if (text && !font) { alert('Select a font.'); return false; }
-    if (hasFile && filePlacementInput && !filePlacementInput.value.trim()) { alert('Describe file placement.'); return false; }
-    return true;
+ function validateFullStep2() {
+  const text = (textField && textField.value || '').trim();
+  const font = (fontSelect && fontSelect.value) || '';
+  const textPlacement = (textLocation && textLocation.value || '').trim();
+  const desc = (additionalDesc && additionalDesc.value || '').trim();
+  const hasFile = uploadFileInput && uploadFileInput.files.length > 0;
+  const filePlacement = (filePlacementInput && filePlacementInput.value || '').trim();
+
+  // Must provide at least one input
+  if (!text && !desc && !hasFile) {
+    alert('Enter text, upload a file, or add a description.');
+    return false;
   }
+
+  // If text is entered, font AND text placement are required
+  if (text) {
+    if (!font) {
+      alert('Select a font for your text.');
+      return false;
+    }
+    if (!textPlacement) {
+      alert('Describe where the text should be placed.');
+      return false;
+    }
+  }
+
+  // If a file is uploaded, file placement is required
+  if (hasFile && !filePlacement) {
+    alert('Describe where the uploaded file should be placed.');
+    return false;
+  }
+
+  return true;
+}
 
   function validateCustomStep2() {
     const selected = selectExisting && selectExisting.value;
