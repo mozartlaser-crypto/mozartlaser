@@ -1,6 +1,6 @@
 // js/create.js
 // ============================
-// CREATE.JS — Combined version with edit-product, add-to-cart, and font dropdown working
+// CREATE.JS — Fully fixed with separate flows for existing products and fully custom products
 // ============================
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -20,8 +20,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // Elements
   // ---------------------
   const steps = Array.from(document.querySelectorAll('.step'));
-  const modeCustomize = $('#mode-customize');
-  const modeFull = $('#mode-full');
+  const modeCustomize = $('#mode-customize'); // customize existing
+  const modeFull = $('#mode-full');           // create your own / full custom
   const selectExisting = $('#select-existing');
   const uploadFileInput = $('#upload-file');
   const uploadFileCustom = $('#upload-file-custom');
@@ -52,6 +52,23 @@ document.addEventListener('DOMContentLoaded', () => {
   const hiddenEmail = $('#f-email');
 
   // ---------------------
+  // Separate product lists
+  // ---------------------
+  const existingProductPrices = {
+    "Laser Engraved Wooden Dove Plaque - Psalm 46:5": 34.99,
+    "Cross Design with John 14:27": 34.99,
+    "Detailed Classic Train Engraving": 29.99,
+    "Wings like Eagles Isaish 40:31 Wooden Plaque": 34.99,
+    "“Be Still” Psalm 46:10 – Wooden Sword Scripture Plaque": 24.99,
+  };
+
+  const fullCustomPrices = {
+    "Wooden Plaque (Horizontal)": 39.99,
+    "Wooden Plaque (Vertical)": 34.99,
+    "Custom Leather Wallet": 44.99,
+  };
+
+  // ---------------------
   // Utility functions
   // ---------------------
   function showStep(stepId) {
@@ -62,15 +79,21 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function updatePrice() {
-    if (!selectExisting) { currentPrice = 25.00; return; }
-    if (modeCustomize && modeCustomize.checked) currentPrice = 34.99;
-    else {
-      const product = selectExisting.value || '';
-      if (product.includes('Plaque')) currentPrice = 39.99;
-      else if (product.includes('Coin')) currentPrice = 12.99;
-      else if (product.includes('Wallet')) currentPrice = 29.99;
-      else currentPrice = 20;
+    if (!selectExisting) return;
+
+    const product = selectExisting.value || '';
+
+    // Explicit mode handling
+    if (modeFull && modeFull.checked) {
+      // Create your own / full custom
+      currentPrice = fullCustomPrices[product] ?? 34.99;
+    } else if (modeCustomize && modeCustomize.checked) {
+      // Customize existing
+      currentPrice = existingProductPrices[product] ?? 20.00;
+    } else {
+      currentPrice = 20.00; // fallback
     }
+
     const step3Price = $('#total-price');
     if (step3Price) step3Price.textContent = `Total: $${currentPrice}`;
     const step3CustomPrice = $('#total-price-custom');
@@ -79,22 +102,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function populateSelectForMode() {
     if (!selectExisting) return;
-    if (modeCustomize && modeCustomize.checked) {
-      selectExisting.innerHTML = `
-        <option value="">-- Choose a Product to Customize --</option>
-        <option value="Leather Wallet">Leather Wallet</option>
-        <option value="Detailed Classic Train Engraving">Detailed Classic Train Engraving</option>
-        <option value="Cross Design with John 14:27">Cross Design with John 14:27</option>
-		<option Value="Laser Engraved Wooden Dove Plaque - Psalm 46:5">Laser Engraved Wooden Dove Plaque - Psalm 46:5</option>
-      `;
-    } else {
-      selectExisting.innerHTML = `
-        <option value="">-- Select Product Type --</option>
-        <option value="Plaque (Horizontal)">Plaque (Horizontal)</option>
-        <option value="Plaque (Vertical)">Plaque (Vertical)</option>
-        <option value="Leather Wallet">Leather Wallet</option>
-      `;
+
+    let optionsHtml = '';
+    if (modeFull && modeFull.checked) {
+      // Create your own / full custom products
+      optionsHtml = '<option value="">-- Choose a Custom Product --</option>';
+      for (const productName in fullCustomPrices) {
+        optionsHtml += `<option value="${productName}">${productName}</option>`;
+      }
+    } else if (modeCustomize && modeCustomize.checked) {
+      // Existing products for customization
+      optionsHtml = '<option value="">-- Select Product --</option>';
+      for (const productName in existingProductPrices) {
+        optionsHtml += `<option value="${productName}">${productName}</option>`;
+      }
     }
+
+    selectExisting.innerHTML = optionsHtml;
     updatePrice();
   }
 
@@ -376,13 +400,19 @@ document.addEventListener('DOMContentLoaded', () => {
   const stepParam = urlParams.get('step');
   const modeParam = urlParams.get('mode');
 
+  // set mode first
   if (modeParam === 'template' && modeCustomize) modeCustomize.checked = true;
+  else if (modeParam === 'full' && modeFull) modeFull.checked = true;
+
+  // then populate select
   populateSelectForMode();
 
+  // select product if provided
   if (productParam) selectProductByName(productParam);
 
+  // show step
   if (stepParam === '2') {
-    if (modeParam === 'template') showStep('step2_custom');
+    if (modeCustomize && modeCustomize.checked) showStep('step2_custom');
     else showStep('step2');
   } else {
     showStep('step1');
