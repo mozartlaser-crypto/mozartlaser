@@ -287,65 +287,123 @@ document.addEventListener('DOMContentLoaded', () => {
   // ---------------------
   // Add to cart buttons
   // ---------------------
-  const addToCartBtn = $('#add-to-cart');
-  if (addToCartBtn) {
-    addToCartBtn.addEventListener('click', () => {
-      const name = ($('#verify-name') && $('#verify-name').value.trim()) || '';
-      const email = ($('#verify-email') && $('#verify-email').value.trim()) || '';
-      if (!name || !email) return alert('Enter name and email.');
 
-      const productName = selectExisting ? selectExisting.value || 'Custom Product' : 'Custom Product';
-      addToCartVisual(productName, currentPrice);
+function resetAllFields() {
+  // Text inputs
+  if (textField) textField.value = '';
+  if (textLocation) textLocation.value = '';
+  if (additionalDesc) additionalDesc.value = '';
+  if (customChanges) customChanges.value = '';
+  if (selectExisting) selectExisting.value = '';
 
-      if (hiddenFlowType) hiddenFlowType.value = 'create-your-own';
-      if (hiddenProduct) hiddenProduct.value = selectExisting ? selectExisting.value : '';
-      if (hiddenText) hiddenText.value = textField ? textField.value : '';
-      if (hiddenFont) hiddenFont.value = fontSelect ? fontSelect.value : '';
-      if (hiddenLocation) hiddenLocation.value = textLocation ? textLocation.value : '';
-      if (hiddenFilePlacement) hiddenFilePlacement.value = filePlacementInput ? filePlacementInput.value : '';
-      if (hiddenDescription) hiddenDescription.value = additionalDesc ? additionalDesc.value : '';
-      if (hiddenPrice) hiddenPrice.value = `$${currentPrice}`;
-      if (hiddenEmail) hiddenEmail.value = email;
+  // Email inputs
+  const emailInput = $('#verify-email');
+  const emailInputCustom = $('#verify-email-custom');
+  const emailConfirmInput = $('#verify-email-confirm');
+  const emailConfirmInputCustom = $('#verify-email-confirm-custom');
+  const nameInput = $('#verify-name');
+  const nameInputCustom = $('#verify-name-custom');
+  if (emailInput) emailInput.value = '';
+  if (emailInputCustom) emailInputCustom.value = '';
+  if (emailConfirmInput) emailConfirmInput.value = '';
+  if (emailConfirmInputCustom) emailConfirmInputCustom.value = '';
+  if (nameInput) nameInput.value = '';
+  if (nameInputCustom) nameInputCustom.value = '';
 
-      copyFileIntoHiddenInput(uploadFileInput);
+  // File inputs
+  if (uploadFileInput) uploadFileInput.value = '';
+  if (uploadFileCustom) uploadFileCustom.value = '';
+  if (filePlacementInput) filePlacementInput.value = '';
+  if (filePlacementCustom) filePlacementCustom.value = '';
 
-      if (sendForm) {
-        try { sendForm.submit(); } catch (e) { console.warn('Form submit failed', e); }
-      }
+  // Reset summaries
+  const summary = $('#summary');
+  const summaryCustom = $('#summary_custom');
+  if (summary) summary.innerHTML = '';
+  if (summaryCustom) summaryCustom.innerHTML = '';
 
-      alert('Your custom product has been added to the Cart!');
-      showStep('step1');
-    });
-  }
+  // Reset selected product text
+  if (selectedProductText) selectedProductText.textContent = 'None';
 
-  const addToCartCustomBtn = $('#add-to-cart-custom');
-  if (addToCartCustomBtn) {
-    addToCartCustomBtn.addEventListener('click', () => {
-      const name = ($('#verify-name-custom') && $('#verify-name-custom').value.trim()) || '';
-      const email = ($('#verify-email-custom') && $('#verify-email-custom').value.trim()) || '';
-      if (!name || !email) return alert('Enter name and email.');
+  // Reset price
+  currentPrice = 20;
+  const step3Price = $('#total-price');
+  const step3CustomPrice = $('#total-price-custom');
+  if (step3Price) step3Price.textContent = `Total: $${currentPrice}`;
+  if (step3CustomPrice) step3CustomPrice.textContent = `Total: $${currentPrice}`;
+}
 
-      const productName = selectExisting ? selectExisting.value || 'Custom Product' : 'Custom Product';
-      addToCartVisual(productName, currentPrice);
 
-      if (hiddenFlowType) hiddenFlowType.value = 'customize';
-      if (hiddenSelectedProduct) hiddenSelectedProduct.value = selectExisting ? selectExisting.value : '';
-      if (hiddenCustomChanges) hiddenCustomChanges.value = customChanges ? customChanges.value : '';
-      if (hiddenCustomFilePlacement) hiddenCustomFilePlacement.value = filePlacementCustom ? filePlacementCustom.value : '';
-      if (hiddenPrice) hiddenPrice.value = `$${currentPrice}`;
-      if (hiddenEmail) hiddenEmail.value = email;
 
-      copyFileIntoHiddenInput(uploadFileCustom);
 
-      if (sendForm) {
-        try { sendForm.submit(); } catch (e) { console.warn('Form submit failed', e); }
-      }
 
-      alert('Your customization has been added to the Cart!');
-      showStep('step1');
-    });
-  }
 
+ const addToCartBtn = $('#add-to-cart');
+if (addToCartBtn) {
+  addToCartBtn.addEventListener('click', () => {
+    const name = ($('#verify-name')?.value.trim()) || '';
+    const email = ($('#verify-email')?.value.trim()) || '';
+    const emailConfirm = ($('#verify-email-confirm')?.value.trim()) || '';
+
+    if (!name || !email) return alert('Enter name and email.');
+    if (email !== emailConfirm) return alert('Emails do not match.');
+
+    const productName = selectExisting ? selectExisting.value || 'Custom Product' : 'Custom Product';
+    addToCartVisual(productName, currentPrice);
+
+    if (hiddenFlowType) hiddenFlowType.value = 'create-your-own';
+    if (hiddenProduct) hiddenProduct.value = selectExisting ? selectExisting.value : '';
+    if (hiddenText) hiddenText.value = textField ? textField.value : '';
+    if (hiddenFont) hiddenFont.value = fontSelect ? fontSelect.value : '';
+    if (hiddenLocation) hiddenLocation.value = textLocation ? textLocation.value : '';
+    if (hiddenFilePlacement) hiddenFilePlacement.value = filePlacementInput ? filePlacementInput.value : '';
+    if (hiddenDescription) hiddenDescription.value = additionalDesc ? additionalDesc.value : '';
+    if (hiddenPrice) hiddenPrice.value = `$${currentPrice}`;
+    if (hiddenEmail) hiddenEmail.value = email;
+
+    copyFileIntoHiddenInput(uploadFileInput);
+
+    if (sendForm) try { sendForm.submit(); } catch(e){ console.warn(e); }
+
+    alert('Your custom product has been added to the Cart!');
+	resetAllFields();
+    showStep('step1');
+  });
+}
+
+ const addToCartCustomBtn = $('#add-to-cart-custom');
+if (addToCartCustomBtn) {
+  addToCartCustomBtn.addEventListener('click', () => {
+    const name = ($('#verify-name-custom')?.value.trim()) || '';
+    const email = ($('#verify-email-custom')?.value.trim()) || '';
+    const emailConfirm = ($('#verify-email-confirm-custom')?.value.trim()) || '';
+
+    if (!name || !email) return alert('Enter name and email.');
+    if (email !== emailConfirm) return alert('Emails do not match.');
+
+    if (!validateCustomStep2()) return; // keep existing step2 validation
+
+    const productName = selectExisting ? selectExisting.value || 'Custom Product' : 'Custom Product';
+    addToCartVisual(productName, currentPrice);
+
+    if (hiddenFlowType) hiddenFlowType.value = 'customize';
+    if (hiddenSelectedProduct) hiddenSelectedProduct.value = selectExisting ? selectExisting.value : '';
+    if (hiddenCustomChanges) hiddenCustomChanges.value = customChanges ? customChanges.value : '';
+    if (hiddenCustomFilePlacement) hiddenCustomFilePlacement.value = filePlacementCustom ? filePlacementCustom.value : '';
+    if (hiddenPrice) hiddenPrice.value = `$${currentPrice}`;
+    if (hiddenEmail) hiddenEmail.value = email;
+
+    copyFileIntoHiddenInput(uploadFileCustom);
+
+    if (sendForm) {
+      try { sendForm.submit(); } catch (e) { console.warn('Form submit failed', e); }
+    }
+
+    alert('Your customization has been added to the Cart!');
+	resetAllFields;
+    showStep('step1');
+  });
+}
   // ---------------------
   // Font dropdown
   // ---------------------
