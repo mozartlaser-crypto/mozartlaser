@@ -321,7 +321,7 @@ File: ${uploadFileInput?.files?.[0]?.name || 'None'}
     copyFileIntoHiddenInput(uploadFileInput);
     sendForm?.submit();
 
-    alert('Your custom product has been added to the Cart! If you proceed with your order, an email with a sample design of your customization will be sent to you within 1 business day. YOU MUST RESPOND within 3 business days approving or requesting changes or your order will be automatically refunded!');
+    alert('Your custom product has been added to the Cart! If you proceed with your order, an email with a sample design of your customization will be sent to you within 1 business day. YOU MUST RESPOND within 3 business days or your order will be automatically refunded!');
     resetAllFields();
     showStep('step1');
   });
@@ -351,7 +351,7 @@ Placement: ${filePlacementCustom?.value || 'None'}
     copyFileIntoHiddenInput(uploadFileCustom);
     sendForm?.submit();
 
-    alert('Your customization has been added to the Cart! If you proceed with your order, an email with a sample design of your customization will be sent to you within 1 business day. YOU MUST RESPOND within 3 business days approving or requesting changes or your order will be automatically refunded!');
+    alert('Your customization has been added to the Cart! If you proceed with your order, an email with a sample design of your customization will be sent to you within 1 business day. YOU MUST RESPOND within 3 business days or your order will be automatically refunded!');
     resetAllFields();
     showStep('step1');
   });
