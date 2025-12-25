@@ -1,6 +1,6 @@
 // js/create.js
 // ============================
-// CREATE.JS — Fully fixed with separate flows for existing products and fully custom products
+// CREATE.JS — Updated fully with all requested changes
 // ============================
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -32,9 +32,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const textField = $('#custom-text');
   const fontSelect = $('#font-select');
   const textLocation = $('#text-location');
-  const additionalDesc = $('#additional-desc');
   const customChanges = $('#custom-changes');
-  const selectedProductText = $('#selected-product-text');
+  const selectedProductTextFull = $('#selected-product-text-full');
+  const selectedProductTextCustom = $('#selected-product-text');
+  const productPreviewFull = $('#product-preview-full');
+  const productPreviewCustom = $('#product-preview-custom');
   const sendForm = $('#sendForm');
 
   // Hidden fields
@@ -44,7 +46,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const hiddenFont = $('#f-font');
   const hiddenLocation = $('#f-location');
   const hiddenFilePlacement = $('#f-file-placement');
-  const hiddenDescription = $('#f-description');
   const hiddenSelectedProduct = $('#f-selected-product');
   const hiddenCustomChanges = $('#f-custom-changes');
   const hiddenCustomFilePlacement = $('#f-custom-file-placement');
@@ -52,20 +53,27 @@ document.addEventListener('DOMContentLoaded', () => {
   const hiddenEmail = $('#f-email');
 
   // ---------------------
-  // Separate product lists
+  // Product prices
   // ---------------------
   const existingProductPrices = {
-    "Wooden Dove Plaque - Psalm 46:5": 34.99,
-    "Cross Design with Bible Verse": 34.99,
-    "Detailed Classic Train Engraving": 29.99,
-    "“Wings Like Eagles” - Isaiah 40:31 Wooden Eagle Plaque": 34.99,
-    "“Be Still” Psalm 46:10 – Wooden Sword Scripture Plaque": 24.99,
+    "Cross with Scripture": 34.99,
+    "Train Plaque": 29.99,
+    "Leather Wallet": 44.99
   };
 
   const fullCustomPrices = {
     "Wooden Plaque (Horizontal)": 39.99,
     "Wooden Plaque (Vertical)": 34.99,
-    "Custom Leather Wallet": 44.99,
+    "Custom Leather Wallet": 44.99
+  };
+
+  const productImages = {
+    "Cross with Scripture": "images/cross.png",
+    "Train Plaque": "images/train.png",
+    "Leather Wallet": "images/wallet.png",
+    "Wooden Plaque (Horizontal)": "images/placeholder.png",
+    "Wooden Plaque (Vertical)": "images/placeholder.png",
+    "Custom Leather Wallet": "images/placeholder.png"
   };
 
   // ---------------------
@@ -79,116 +87,56 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function updatePrice() {
-    if (!selectExisting) return;
-
-    const product = selectExisting.value || '';
-
-    // Explicit mode handling
-    if (modeFull && modeFull.checked) {
-      // Create your own / full custom
+    const product = selectExisting?.value || '';
+    if (modeFull?.checked) {
       currentPrice = fullCustomPrices[product] ?? 34.99;
-    } else if (modeCustomize && modeCustomize.checked) {
-      // Customize existing
+    } else if (modeCustomize?.checked) {
       currentPrice = existingProductPrices[product] ?? 20.00;
     } else {
-      currentPrice = 20.00; // fallback
+      currentPrice = 20.00;
     }
 
-    const step3Price = $('#total-price');
-    if (step3Price) step3Price.textContent = `Total: $${currentPrice}`;
-    const step3CustomPrice = $('#total-price-custom');
-    if (step3CustomPrice) step3CustomPrice.textContent = `Total: $${currentPrice}`;
+    $('#total-price') && ($('#total-price').textContent = `Total: $${currentPrice}`);
+    $('#total-price-custom') && ($('#total-price-custom').textContent = `Total: $${currentPrice}`);
   }
 
   function populateSelectForMode() {
     if (!selectExisting) return;
-
-    let optionsHtml = '';
-    if (modeFull && modeFull.checked) {
-      // Create your own / full custom products
-      optionsHtml = '<option value="">-- Choose a Custom Product --</option>';
-      for (const productName in fullCustomPrices) {
-        optionsHtml += `<option value="${productName}">${productName}</option>`;
-      }
-    } else if (modeCustomize && modeCustomize.checked) {
-      // Existing products for customization
-      optionsHtml = '<option value="">-- Select Product --</option>';
-      for (const productName in existingProductPrices) {
-        optionsHtml += `<option value="${productName}">${productName}</option>`;
-      }
+    let html = '';
+    if (modeFull?.checked) {
+      html = '<option value="">-- Choose a Custom Product --</option>';
+      for (const p in fullCustomPrices) html += `<option value="${p}">${p}</option>`;
+    } else if (modeCustomize?.checked) {
+      html = '<option value="">-- Select Product --</option>';
+      for (const p in existingProductPrices) html += `<option value="${p}">${p}</option>`;
     }
-
-    selectExisting.innerHTML = optionsHtml;
+    selectExisting.innerHTML = html;
     updatePrice();
   }
 
-  function selectProductByName(name) {
-    if (!selectExisting) return;
-    populateSelectForMode();
-    const option = Array.from(selectExisting.options).find(o => o.value === name);
-    if (option) {
-      selectExisting.value = name;
-      if (selectedProductText) selectedProductText.textContent = name;
-      if (hiddenSelectedProduct) hiddenSelectedProduct.value = name;
-      updatePrice();
+  function updateSelectedProductDisplay() {
+    const name = selectExisting?.value || 'None';
+    if (modeFull?.checked) {
+      selectedProductTextFull.textContent = name;
+      productPreviewFull.src = productImages[name] || 'images/placeholder.png';
+    } else if (modeCustomize?.checked) {
+      selectedProductTextCustom.textContent = name;
+      productPreviewCustom.src = productImages[name] || 'images/placeholder.png';
     }
+    updatePrice();
   }
 
   function copyFileIntoHiddenInput(input) {
     if (!sendForm) return;
     const fileField = sendForm.querySelector('input[type="file"]');
     if (!fileField) return;
-    if (input && input.files && input.files.length > 0) {
+    if (input?.files?.length > 0) {
       const dt = new DataTransfer();
       dt.items.add(input.files[0]);
       fileField.files = dt.files;
     } else {
       try { fileField.value = ''; } catch (e) {}
     }
-  }
-
- function validateFullStep2() {
-  const text = (textField && textField.value || '').trim();
-  const font = (fontSelect && fontSelect.value) || '';
-  const textPlacement = (textLocation && textLocation.value || '').trim();
-  const desc = (additionalDesc && additionalDesc.value || '').trim();
-  const hasFile = uploadFileInput && uploadFileInput.files.length > 0;
-  const filePlacement = (filePlacementInput && filePlacementInput.value || '').trim();
-
-  // Must provide at least one input
-  if (!text && !desc && !hasFile) {
-    alert('Enter text, upload a file, or add a description.');
-    return false;
-  }
-
-  // If text is entered, font AND text placement are required
-  if (text) {
-    if (!font) {
-      alert('Select a font for your text.');
-      return false;
-    }
-    if (!textPlacement) {
-      alert('Describe where the text should be placed.');
-      return false;
-    }
-  }
-
-  // If a file is uploaded, file placement is required
-  if (hasFile && !filePlacement) {
-    alert('Describe where the uploaded file should be placed.');
-    return false;
-  }
-
-  return true;
-}
-
-  function validateCustomStep2() {
-    const selected = selectExisting && selectExisting.value;
-    const changes = (customChanges && customChanges.value || '').trim();
-    const hasFile = uploadFileCustom && uploadFileCustom.files.length > 0;
-    if (!selected) { alert('Select a product to customize.'); return false; }
-    if (!changes && !hasFile) { alert('Describe changes or upload a file.'); return false; }
-    return true;
   }
 
   function escapeHtml(str) {
@@ -200,65 +148,79 @@ document.addEventListener('DOMContentLoaded', () => {
       .replaceAll("'", '&#039;');
   }
 
+  function validateFullStep2() {
+    const text = textField?.value.trim() || '';
+    const font = fontSelect?.value || '';
+    const loc = textLocation?.value.trim() || '';
+    const hasFile = uploadFileInput?.files?.length > 0;
+
+    if (!text && !hasFile) { alert('Enter text or upload a file.'); return false; }
+    if (text && (!font || !loc)) { alert('Font and placement required for text.'); return false; }
+    if (hasFile && !filePlacementInput?.value.trim()) { alert('Describe where the uploaded file should be placed.'); return false; }
+    return true;
+  }
+
+  function validateCustomStep2() {
+    const selected = selectExisting?.value || '';
+    const changes = customChanges?.value.trim() || '';
+    const hasFile = uploadFileCustom?.files?.length > 0;
+    if (!selected) { alert('Select a product to customize.'); return false; }
+    if (!changes && !hasFile) { alert('Describe changes or upload a file.'); return false; }
+    return true;
+  }
+
   function populateStep3Summary() {
     const s = $('#summary');
     if (s) {
-      const text = (textField && textField.value.trim()) || 'None';
-      const font = (fontSelect && fontSelect.value) || 'None';
-      const loc = (textLocation && textLocation.value.trim()) || 'None';
-      const fileName = (uploadFileInput && uploadFileInput.files.length > 0) ? uploadFileInput.files[0].name : 'None';
-      const desc = (additionalDesc && additionalDesc.value.trim()) || 'None';
+      const text = textField?.value.trim() || 'None';
+      const font = fontSelect?.value || 'None';
+      const loc = textLocation?.value.trim() || 'None';
+      const fileName = uploadFileInput?.files?.[0]?.name || 'None';
       s.innerHTML = `
         <p><strong>Engraved Text:</strong> ${escapeHtml(text)}</p>
         <p><strong>Font:</strong> ${escapeHtml(font)}</p>
         <p><strong>Text Placement:</strong> ${escapeHtml(loc)}</p>
         <p><strong>Uploaded File:</strong> ${escapeHtml(fileName)}</p>
-        <p><strong>Additional Description:</strong> ${escapeHtml(desc)}</p>
         <p><strong>Price:</strong> $${currentPrice}</p>
       `;
     }
 
     const sc = $('#summary_custom');
     if (sc) {
-      const selected = selectExisting && selectExisting.value || 'None';
-      const changes = (customChanges && customChanges.value.trim()) || 'None';
-      const fileNameCustom = (uploadFileCustom && uploadFileCustom.files.length > 0) ? uploadFileCustom.files[0].name : 'None';
-      const placementCustom = (filePlacementCustom && filePlacementCustom.value.trim()) || 'None';
+      const sel = selectExisting?.value || 'None';
+      const changes = customChanges?.value.trim() || 'None';
+      const fileName = uploadFileCustom?.files?.[0]?.name || 'None';
+      const placement = filePlacementCustom?.value.trim() || 'None';
       sc.innerHTML = `
-        <p><strong>Selected Product:</strong> ${escapeHtml(selected)}</p>
+        <p><strong>Selected Product:</strong> ${escapeHtml(sel)}</p>
         <p><strong>Requested Changes:</strong> ${escapeHtml(changes)}</p>
-        <p><strong>Uploaded File:</strong> ${escapeHtml(fileNameCustom)}</p>
-        <p><strong>File Placement:</strong> ${escapeHtml(placementCustom)}</p>
+        <p><strong>Uploaded File:</strong> ${escapeHtml(fileName)}</p>
+        <p><strong>File Placement:</strong> ${escapeHtml(placement)}</p>
         <p><strong>Price:</strong> $${currentPrice}</p>
       `;
     }
   }
 
   // ---------------------
-  // Step navigation click handler
+  // Step navigation
   // ---------------------
   document.addEventListener('click', (ev) => {
-    const btn = ev.target.closest && ev.target.closest('.next-step, .prev-step');
+    const btn = ev.target.closest('.next-step, .prev-step');
     if (!btn) return;
     ev.preventDefault();
 
     if (btn.classList.contains('next-step')) {
       if (btn.id === 'step1-next') {
-        if (!selectExisting) return alert('Missing product selector.');
-        if (modeCustomize && modeCustomize.checked) {
-          if (!selectExisting.value) return alert('Select a product.');
-          showStep('step2_custom');
-        } else {
-          showStep('step2');
-        }
+        if (!selectExisting?.value) return alert('Select a product.');
+        if (modeCustomize?.checked) showStep('step2_custom');
+        else showStep('step2');
         return;
       }
 
       const nextId = btn.getAttribute('data-next');
       if (nextId === 'step3' && !validateFullStep2()) return;
       if (nextId === 'step3_custom' && !validateCustomStep2()) return;
-      if (nextId) showStep(nextId);
-      populateStep3Summary();
+      if (nextId) { showStep(nextId); populateStep3Summary(); }
     }
 
     if (btn.classList.contains('prev-step')) {
@@ -270,234 +232,145 @@ document.addEventListener('DOMContentLoaded', () => {
   // ---------------------
   // File delete buttons
   // ---------------------
-  if (deleteFileBtn && uploadFileInput) deleteFileBtn.addEventListener('click', () => uploadFileInput.value = '');
-  if (deleteFileCustom && uploadFileCustom) deleteFileCustom.addEventListener('click', () => uploadFileCustom.value = '');
+  deleteFileBtn?.addEventListener('click', () => uploadFileInput.value = '');
+  deleteFileCustom?.addEventListener('click', () => uploadFileCustom.value = '');
 
   // ---------------------
   // Mode toggle listeners
   // ---------------------
-  if (modeCustomize) modeCustomize.addEventListener('change', populateSelectForMode);
-  if (modeFull) modeFull.addEventListener('change', populateSelectForMode);
+  modeCustomize?.addEventListener('change', populateSelectForMode);
+  modeFull?.addEventListener('change', populateSelectForMode);
+  selectExisting?.addEventListener('change', updateSelectedProductDisplay);
 
-  if (selectExisting) selectExisting.addEventListener('change', () => {
+  // ---------------------
+  // Add to cart
+  // ---------------------
+  function resetAllFields() {
+    textField.value = '';
+    textLocation.value = '';
+    customChanges.value = '';
+    selectExisting.value = '';
+    uploadFileInput.value = '';
+    uploadFileCustom.value = '';
+    filePlacementInput.value = '';
+    filePlacementCustom.value = '';
+    $('#verify-email') && ($('#verify-email').value = '');
+    $('#verify-email-confirm') && ($('#verify-email-confirm').value = '');
+    $('#verify-email-custom') && ($('#verify-email-custom').value = '');
+    $('#verify-email-confirm-custom') && ($('#verify-email-confirm-custom').value = '');
+    $('#verify-name') && ($('#verify-name').value = '');
+    $('#verify-name-custom') && ($('#verify-name-custom').value = '');
+    selectedProductTextFull.textContent = 'None';
+    selectedProductTextCustom.textContent = 'None';
+    productPreviewFull.src = 'images/placeholder.png';
+    productPreviewCustom.src = 'images/placeholder.png';
+    $('#summary') && ($('#summary').innerHTML = '');
+    $('#summary_custom') && ($('#summary_custom').innerHTML = '');
     updatePrice();
-    if (selectedProductText) selectedProductText.textContent = selectExisting.value || 'None';
-  });
+  }
 
-  // ---------------------
-  // Add to cart buttons
-  // ---------------------
-
-function resetAllFields() {
-  // Text inputs
-  if (textField) textField.value = '';
-  if (textLocation) textLocation.value = '';
-  if (additionalDesc) additionalDesc.value = '';
-  if (customChanges) customChanges.value = '';
-  if (selectExisting) selectExisting.value = '';
-
-  // Email inputs
-  const emailInput = $('#verify-email');
-  const emailInputCustom = $('#verify-email-custom');
-  const emailConfirmInput = $('#verify-email-confirm');
-  const emailConfirmInputCustom = $('#verify-email-confirm-custom');
-  const nameInput = $('#verify-name');
-  const nameInputCustom = $('#verify-name-custom');
-  if (emailInput) emailInput.value = '';
-  if (emailInputCustom) emailInputCustom.value = '';
-  if (emailConfirmInput) emailConfirmInput.value = '';
-  if (emailConfirmInputCustom) emailConfirmInputCustom.value = '';
-  if (nameInput) nameInput.value = '';
-  if (nameInputCustom) nameInputCustom.value = '';
-
-  // File inputs
-  if (uploadFileInput) uploadFileInput.value = '';
-  if (uploadFileCustom) uploadFileCustom.value = '';
-  if (filePlacementInput) filePlacementInput.value = '';
-  if (filePlacementCustom) filePlacementCustom.value = '';
-
-  // Reset summaries
-  const summary = $('#summary');
-  const summaryCustom = $('#summary_custom');
-  if (summary) summary.innerHTML = '';
-  if (summaryCustom) summaryCustom.innerHTML = '';
-
-  // Reset selected product text
-  if (selectedProductText) selectedProductText.textContent = 'None';
-
-  // Reset price
-  currentPrice = 20;
-  const step3Price = $('#total-price');
-  const step3CustomPrice = $('#total-price-custom');
-  if (step3Price) step3Price.textContent = `Total: $${currentPrice}`;
-  if (step3CustomPrice) step3CustomPrice.textContent = `Total: $${currentPrice}`;
-}
-
-
-
-
-
-
- const addToCartBtn = $('#add-to-cart');
-if (addToCartBtn) {
-  addToCartBtn.addEventListener('click', () => {
-    const name = ($('#verify-name')?.value.trim()) || '';
-    const email = ($('#verify-email')?.value.trim()) || '';
-    const emailConfirm = ($('#verify-email-confirm')?.value.trim()) || '';
-
+  $('#add-to-cart-full')?.addEventListener('click', () => {
+    const name = $('#verify-name')?.value.trim();
+    const email = $('#verify-email')?.value.trim();
+    const emailConfirm = $('#verify-email-confirm')?.value.trim();
     if (!name || !email) return alert('Enter name and email.');
     if (email !== emailConfirm) return alert('Emails do not match.');
+    if (!validateFullStep2()) return;
 
-    const productName = selectExisting ? selectExisting.value || 'Custom Product' : 'Custom Product';
-    addToCartVisual(productName, currentPrice);
+    addToCartVisual(selectExisting?.value || 'Custom Product', currentPrice);
 
-    if (hiddenFlowType) hiddenFlowType.value = 'create-your-own';
-    if (hiddenProduct) hiddenProduct.value = selectExisting ? selectExisting.value : '';
-    if (hiddenText) hiddenText.value = textField ? textField.value : '';
-    if (hiddenFont) hiddenFont.value = fontSelect ? fontSelect.value : '';
-    if (hiddenLocation) hiddenLocation.value = textLocation ? textLocation.value : '';
-    if (hiddenFilePlacement) hiddenFilePlacement.value = filePlacementInput ? filePlacementInput.value : '';
-    if (hiddenDescription) hiddenDescription.value = additionalDesc ? additionalDesc.value : '';
-    if (hiddenPrice) hiddenPrice.value = `$${currentPrice}`;
-    if (hiddenEmail) hiddenEmail.value = email;
-
+    hiddenFlowType.value = 'create-your-own';
+    hiddenProduct.value = selectExisting?.value || '';
+    hiddenText.value = textField?.value || '';
+    hiddenFont.value = fontSelect?.value || '';
+    hiddenLocation.value = textLocation?.value || '';
+    hiddenFilePlacement.value = filePlacementInput?.value || '';
+    hiddenPrice.value = `$${currentPrice}`;
+    hiddenEmail.value = email;
     copyFileIntoHiddenInput(uploadFileInput);
-
-    if (sendForm) try { sendForm.submit(); } catch(e){ console.warn(e); }
+    sendForm?.submit();
 
     alert('Your custom product has been added to the Cart!');
-	resetAllFields();
+    resetAllFields();
     showStep('step1');
   });
-}
 
- const addToCartCustomBtn = $('#add-to-cart-custom');
-if (addToCartCustomBtn) {
-  addToCartCustomBtn.addEventListener('click', () => {
-    const name = ($('#verify-name-custom')?.value.trim()) || '';
-    const email = ($('#verify-email-custom')?.value.trim()) || '';
-    const emailConfirm = ($('#verify-email-confirm-custom')?.value.trim()) || '';
-
+  $('#add-to-cart-custom')?.addEventListener('click', () => {
+    const name = $('#verify-name-custom')?.value.trim();
+    const email = $('#verify-email-custom')?.value.trim();
+    const emailConfirm = $('#verify-email-confirm-custom')?.value.trim();
     if (!name || !email) return alert('Enter name and email.');
     if (email !== emailConfirm) return alert('Emails do not match.');
+    if (!validateCustomStep2()) return;
 
-    if (!validateCustomStep2()) return; // keep existing step2 validation
+    addToCartVisual(selectExisting?.value || 'Custom Product', currentPrice);
 
-    const productName = selectExisting ? selectExisting.value || 'Custom Product' : 'Custom Product';
-    addToCartVisual(productName, currentPrice);
-
-    if (hiddenFlowType) hiddenFlowType.value = 'customize';
-    if (hiddenSelectedProduct) hiddenSelectedProduct.value = selectExisting ? selectExisting.value : '';
-    if (hiddenCustomChanges) hiddenCustomChanges.value = customChanges ? customChanges.value : '';
-    if (hiddenCustomFilePlacement) hiddenCustomFilePlacement.value = filePlacementCustom ? filePlacementCustom.value : '';
-    if (hiddenPrice) hiddenPrice.value = `$${currentPrice}`;
-    if (hiddenEmail) hiddenEmail.value = email;
-
+    hiddenFlowType.value = 'customize';
+    hiddenSelectedProduct.value = selectExisting?.value || '';
+    hiddenCustomChanges.value = customChanges?.value || '';
+    hiddenCustomFilePlacement.value = filePlacementCustom?.value || '';
+    hiddenPrice.value = `$${currentPrice}`;
+    hiddenEmail.value = email;
     copyFileIntoHiddenInput(uploadFileCustom);
-
-    if (sendForm) {
-      try { sendForm.submit(); } catch (e) { console.warn('Form submit failed', e); }
-    }
+    sendForm?.submit();
 
     alert('Your customization has been added to the Cart!');
-	resetAllFields;
+    resetAllFields();
     showStep('step1');
   });
-}
+
   // ---------------------
-  // Font dropdown
+  // Font dropdown (same as before)
   // ---------------------
   function createFontDropdown() {
     if (!fontSelect) return;
-    try {
-      const select = fontSelect;
-      const container = document.createElement('div');
-      container.classList.add('custom-select');
-      select.style.display = 'none';
-
-      const selectedDiv = document.createElement('div');
-      selectedDiv.classList.add('select-selected');
-      selectedDiv.textContent = select.options[select.selectedIndex]?.text || 'Choose a font';
-      container.appendChild(selectedDiv);
-
-      const optionsDiv = document.createElement('div');
-      optionsDiv.classList.add('select-items', 'select-hide');
-
-      for (let i = 0; i < select.options.length; i++) {
-        const option = select.options[i];
-        const optionDiv = document.createElement('div');
-        optionDiv.textContent = option.text;
-        optionDiv.style.fontFamily = option.value ? (option.value.includes(' ') ? `'${option.value}'` : option.value) : '';
-        if (!option.value) optionDiv.style.color = '#999';
-
-        optionDiv.addEventListener('click', function () {
-          select.selectedIndex = i;
-          select.value = option.value;
-          select.dispatchEvent(new Event('change'));
-          selectedDiv.textContent = option.text;
-          selectedDiv.style.fontFamily = option.value ? optionDiv.style.fontFamily : '';
-          closeAllSelect();
-        });
-
-        optionsDiv.appendChild(optionDiv);
-      }
-
-      container.appendChild(optionsDiv);
-      select.parentNode.insertBefore(container, select.nextSibling);
-
-      selectedDiv.addEventListener('click', function (e) {
-        e.stopPropagation();
-        closeAllSelect(this);
-        optionsDiv.classList.toggle('select-hide');
-        this.classList.toggle('select-arrow-active');
+    const select = fontSelect;
+    const container = document.createElement('div');
+    container.classList.add('custom-select');
+    select.style.display = 'none';
+    const selectedDiv = document.createElement('div');
+    selectedDiv.classList.add('select-selected');
+    selectedDiv.textContent = select.options[select.selectedIndex]?.text || 'Choose a font';
+    container.appendChild(selectedDiv);
+    const optionsDiv = document.createElement('div');
+    optionsDiv.classList.add('select-items', 'select-hide');
+    for (let i = 0; i < select.options.length; i++) {
+      const option = select.options[i];
+      const optionDiv = document.createElement('div');
+      optionDiv.textContent = option.text;
+      optionDiv.style.fontFamily = option.value ? (option.value.includes(' ') ? `'${option.value}'` : option.value) : '';
+      if (!option.value) optionDiv.style.color = '#999';
+      optionDiv.addEventListener('click', () => {
+        select.selectedIndex = i;
+        select.value = option.value;
+        select.dispatchEvent(new Event('change'));
+        selectedDiv.textContent = option.text;
+        selectedDiv.style.fontFamily = option.value ? optionDiv.style.fontFamily : '';
+        closeAllSelect();
       });
-
-      function closeAllSelect(except) {
-        document.querySelectorAll('.select-items').forEach(el => {
-          if (el.previousSibling !== except) el.classList.add('select-hide');
-        });
-        document.querySelectorAll('.select-selected').forEach(el => {
-          if (el !== except) el.classList.remove('select-arrow-active');
-        });
-      }
-
-      document.addEventListener('click', closeAllSelect);
-    } catch (err) {
-      console.warn('Font dropdown init failed:', err);
+      optionsDiv.appendChild(optionDiv);
     }
+    container.appendChild(optionsDiv);
+    select.parentNode.insertBefore(container, select.nextSibling);
+    selectedDiv.addEventListener('click', (e) => {
+      e.stopPropagation();
+      closeAllSelect(selectedDiv);
+      optionsDiv.classList.toggle('select-hide');
+      selectedDiv.classList.toggle('select-arrow-active');
+    });
+    function closeAllSelect(except) {
+      document.querySelectorAll('.select-items').forEach(el => { if (el.previousSibling !== except) el.classList.add('select-hide'); });
+      document.querySelectorAll('.select-selected').forEach(el => { if (el !== except) el.classList.remove('select-arrow-active'); });
+    }
+    document.addEventListener('click', closeAllSelect);
   }
   createFontDropdown();
 
-  if (fontSelect) {
-    for (let opt of fontSelect.options) {
-      if (opt.value) opt.style.fontFamily = opt.value.includes(' ') ? `'${opt.value}'` : opt.value;
-    }
-  }
-
   // ---------------------
-  // Startup: handle URL params
+  // Startup
   // ---------------------
-  const urlParams = new URLSearchParams(window.location.search);
-  const productParam = urlParams.get('product');
-  const stepParam = urlParams.get('step');
-  const modeParam = urlParams.get('mode');
-
-  // set mode first
-  if (modeParam === 'template' && modeCustomize) modeCustomize.checked = true;
-  else if (modeParam === 'full' && modeFull) modeFull.checked = true;
-
-  // then populate select
   populateSelectForMode();
-
-  // select product if provided
-  if (productParam) selectProductByName(productParam);
-
-  // show step
-  if (stepParam === '2') {
-    if (modeCustomize && modeCustomize.checked) showStep('step2_custom');
-    else showStep('step2');
-  } else {
-    showStep('step1');
-  }
+  updateSelectedProductDisplay();
+  showStep('step1');
 
 });

@@ -98,7 +98,11 @@ function updateCart() {
 
     removeBtn.addEventListener('click', (e) => {
       e.stopPropagation();
-      cart.splice(index, 1);
+      if (item.quantity > 1) {
+        item.quantity--;          // decrease quantity by 1
+      } else {
+        cart.splice(index, 1);    // remove completely if quantity is 1
+      }
       saveCart();
       requestAnimationFrame(updateCart);  // update asynchronously
     });

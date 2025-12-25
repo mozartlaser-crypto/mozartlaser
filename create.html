@@ -12,145 +12,47 @@
 
 <style>
 /* (kept your styles exactly as provided) */
-.custom-select {
-  position: relative;
-  font-family: Arial;
-  user-select: none;
-  width: 100%;
-}
-
-.select-selected {
-  background-color: #eee;
-  padding: 8px 12px;
-  border: 1px solid #ccc;
-  cursor: pointer;
-  color: #333;
-  text-align: left;
-  position: relative;
-}
-
-.select-selected.placeholder {
-  color: #aaa;
-}
-
-.select-selected::after {
-  content: "\25BC";
-  position: absolute;
-  right: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 0.6em;
-  pointer-events: none;
-}
-
-.select-selected.select-arrow-active::after {
-  transform: translateY(-50%) rotate(180deg);
-}
-
-.select-items {
-  position: absolute;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-top: none;
-  z-index: 99;
-  width: 100%;
-  max-height: 200px;
-  overflow-y: auto;
-}
-
-.select-items div {
-  padding: 8px 12px;
-  cursor: pointer;
-  text-align: left;
-}
-
-.select-items div:hover {
-  background-color: #f1f1f1;
-}
-
+.custom-select { position: relative; font-family: Arial; user-select: none; width: 100%; }
+.select-selected { background-color: #eee; padding: 8px 12px; border: 1px solid #ccc; cursor: pointer; color: #333; text-align: left; position: relative; }
+.select-selected.placeholder { color: #aaa; }
+.select-selected::after { content: "\25BC"; position: absolute; right: 12px; top: 50%; transform: translateY(-50%); font-size: 0.6em; pointer-events: none; }
+.select-selected.select-arrow-active::after { transform: translateY(-50%) rotate(180deg); }
+.select-items { position: absolute; background-color: #fff; border: 1px solid #ccc; border-top: none; z-index: 99; width: 100%; max-height: 200px; overflow-y: auto; }
+.select-items div { padding: 8px 12px; cursor: pointer; text-align: left; }
+.select-items div:hover { background-color: #f1f1f1; }
 .select-hide { display: none; }
 .select-selected { border-radius: 6px; }
 .select-items { border-radius: 0 0 6px 6px; }
-
-select.input-field {
-  -webkit-appearance: none !important;
-  -moz-appearance: none !important;
-  appearance: none !important;
-  background-color: #fafafa !important;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23333' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E") !important;
-  background-repeat: no-repeat !important;
-  background-position: right 12px center !important;
-  background-size: 16px !important;
-  padding-right: 44px !important;
-  cursor: pointer !important;
-}
+select.input-field { -webkit-appearance: none !important; -moz-appearance: none !important; appearance: none !important; background-color: #fafafa !important; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23333' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E") !important; background-repeat: no-repeat !important; background-position: right 12px center !important; background-size: 16px !important; padding-right: 44px !important; cursor: pointer !important; }
 select.input-field::-ms-expand { display: none !important; }
-
 html, body { margin:0; padding:0; height:100%; font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; background-color: #f7f7f7; }
 .builder-container { max-width: 850px; margin: 120px auto; background:#fff; border-radius:16px; box-shadow:0 6px 24px rgba(0,0,0,0.1); padding:40px 60px; text-align:center; transition: all 0.4s ease; }
 .step { display: none; }
 .step.active { display: block; animation: fadeIn 0.45s ease; }
 @keyframes fadeIn { from {opacity:0; transform:translateY(15px);} to {opacity:1; transform:translateY(0);} }
-
 h2 { font-weight: 300; font-size:2rem; margin-bottom:10px; }
 p.step-desc { color:#666; font-size:1rem; margin-bottom:25px; }
-
-select, input[type="text"], input[type="file"], textarea {
-  width:100%;
-  padding:12px;
-  border-radius:8px;
-  border:1px solid #ccc;
-  margin-top:8px;
-  margin-bottom:20px;
-  font-size:1rem;
-  transition:0.18s;
-}
+select, input[type="text"], input[type="file"], textarea { width:100%; padding:12px; border-radius:8px; border:1px solid #ccc; margin-top:8px; margin-bottom:20px; font-size:1rem; transition:0.18s; }
 select:focus, input:focus, textarea:focus { border-color:#111; outline:none; }
-
-button.next-step, button.prev-step, button#add-to-cart, button#add-to-cart-custom {
-  background-color:#111; color:#fff; border:none; border-radius:8px; padding:12px 25px; margin:10px; cursor:pointer; font-size:1rem;
-}
+button.next-step, button.prev-step, button#add-to-cart-full, button#add-to-cart-custom { background-color:#111; color:#fff; border:none; border-radius:8px; padding:12px 25px; margin:10px; cursor:pointer; font-size:1rem; }
 button.next-step:hover, button.prev-step:hover, button#add-to-cart:hover, button#add-to-cart-custom:hover { background-color:#333; }
-
 #total-price { font-size:1.3rem; font-weight:500; margin-top:15px; text-align:right; }
-
 @media (max-width:600px) { .builder-container { padding:30px 20px; } }
-
 .input-field { width:100%; padding:12px; margin-bottom:16px; border:1px solid #ccc; border-radius:8px; background-color:#fafafa; font-size:1rem; color:#333; transition:border-color 0.18s ease, box-shadow 0.18s ease; appearance:none; }
 .input-field:focus { outline:none; border-color:#5c6bc0; box-shadow:0 0 0 3px rgba(92,107,192,0.12); }
-
 .error { border-color: #d9534f !important; box-shadow: 0 0 0 4px rgba(217,83,79,0.06) !important; }
-
 .row { display:flex; gap:12px; align-items:center; justify-content:center; flex-wrap:wrap; }
-.option-card {
-  border: 1px solid #eee; border-radius:10px; padding:14px; width:100%; max-width:380px; cursor:pointer;
-  transition: box-shadow 0.18s, transform 0.12s; text-align:left;
-}
+.option-card { border: 1px solid #eee; border-radius:10px; padding:14px; width:100%; max-width:380px; cursor:pointer; transition: box-shadow 0.18s, transform 0.12s; text-align:left; }
 .option-card:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.06); transform: translateY(-4px); }
 .option-radio { margin-right:12px; transform: scale(1.15); }
 .option-title { font-weight:600; margin-bottom:6px; }
 .option-desc { color:#666; font-size:0.95rem; }
-
 textarea.input-field { min-height:90px; resize:vertical; }
 #summary, #summary_custom { min-height: 120px; }
-
-.select-existing-container {
-  margin-top: 18px;
-  text-align: center;
-  max-width: 480px;
-  margin-left: auto;
-  margin-right: auto;
-}
-.select-existing-container label {
-  display: block;
-  font-weight: 500;
-  margin-bottom: 6px;
-}
-
-@media (max-width: 650px) {
-  .step1-options { flex-direction: column; align-items: center; }
-  .step1-options .option-card { max-width: 100%; }
-}
+.select-existing-container { margin-top: 18px; text-align: center; max-width: 480px; margin-left: auto; margin-right: auto; }
+.select-existing-container label { display: block; font-weight: 500; margin-bottom: 6px; }
+@media (max-width: 650px) { .step1-options { flex-direction: column; align-items: center; } .step1-options .option-card { max-width: 100%; } }
+.product-preview { width: 100%; max-width: 400px; margin: 15px auto; display:block; border:1px solid #ccc; border-radius:8px; }
 </style>
 </head>
 <body>
@@ -158,9 +60,7 @@ textarea.input-field { min-height:90px; resize:vertical; }
 <!-- HEADER -->
 <header class="site-header" id="siteHeader">
   <div class="header-inner">
-    <a href="index.html">
-      <img src="images/mozartlaserlogo.png" alt="MozartLaser" class="logo">
-    </a>
+    <a href="index.html"><img src="images/mozartlaserlogo.png" alt="MozartLaser" class="logo"></a>
     <nav class="main-nav">
       <ul>
         <li><a href="index.html" class="active">Home</a></li>
@@ -232,9 +132,13 @@ textarea.input-field { min-height:90px; resize:vertical; }
       </div>
     </div>
 
-    <!-- STEP 2: FULL FLOW (Customize Your Engraving) -->
+    <!-- STEP 2 FULL FLOW -->
     <div class="step" id="step2">
       <h2>Step 2: Customize Your Engraving</h2>
+
+      <p><strong>Selected product:</strong> <span id="selected-product-text-full">None</span></p>
+      <img src="images/placeholder.png" id="product-preview-full" class="product-preview" alt="Product Preview">
+
       <label for="custom-text">Engraved Text</label>
       <input type="text" id="custom-text" class="input-field" placeholder="Enter text for engraving (optional)">
 
@@ -251,7 +155,15 @@ textarea.input-field { min-height:90px; resize:vertical; }
         <option value="Source Code Pro" style="font-family: 'Source Code Pro', monospace;">Source Code Pro</option>
       </select>
 
-      <label for="text-location">Text Placement (only necessary if you entered text - where do you want your text positioned?)</label>
+      <label for="font-size-select">Font Size (required if text entered)</label>
+      <select id="font-size-select" name="font-size" class="input-field">
+        <option value="">-- Select Font Size --</option>
+        <option value="Small">Small</option>
+        <option value="Medium">Medium</option>
+        <option value="Large">Large</option>
+      </select>
+
+      <label for="text-location">Text Placement (only necessary if you entered text)</label>
       <input type="text" id="text-location" class="input-field" placeholder="Describe where the text should be placed">
 
       <label for="upload-file">Upload Design or Image (optional)</label>
@@ -259,17 +171,15 @@ textarea.input-field { min-height:90px; resize:vertical; }
         <input type="file" id="upload-file" accept="image/*" class="input-field" style="flex:1;">
         <button type="button" id="delete-file" style="background:#d9534f;color:#fff;border:none;padding:8px 12px;border-radius:6px;cursor:pointer;">Delete</button>
       </div>
-      <p style="font-size: 0.9em; color: #555; margin-top: 5px;">
+      <p style="font-size:0.9em; color:#555; margin-top:5px;">
         Please upload a file only if you want a design or image.<br>
         Designs should be clear black-and-white line art.<br>
-        Images should be simple, with a clear, distinct subject.
+        Images should be simple, with a clear, distinct subject.<br>
+        <strong>Graphic design additional at an additional fee - please email mozartlaser@gmail.com</strong>
       </p>
 
       <label for="file-placement">File Placement (only necessary if you uploaded a file)</label>
       <input type="text" id="file-placement" class="input-field" placeholder="Describe how the design/image should be placed">
-
-      <label for="additional-desc">Additional Description</label>
-      <textarea id="additional-desc" class="input-field" rows="3" placeholder="Any other details about your design?"></textarea>
 
       <div class="buttons">
         <button class="prev-step" data-prev="step1">Back</button>
@@ -277,12 +187,17 @@ textarea.input-field { min-height:90px; resize:vertical; }
       </div>
     </div>
 
-    <!-- STEP 2 CUSTOMIZE: short flow for customizing existing product -->
+    <!-- STEP 2 CUSTOMIZE FLOW -->
     <div class="step" id="step2_custom">
       <h2>Step 2: Describe Changes</h2>
       <p class="step-desc">Tell us what you'd like changed from the selected product, and upload a design if needed.</p>
 
       <p><strong>Selected product:</strong> <span id="selected-product-text">None</span></p>
+      <img src="images/placeholder.png" id="product-preview-custom" class="product-preview" alt="Product Preview">
+
+      <p style="font-size:0.9em; color:#555; margin-bottom:10px;">
+        If uploading an image, please ensure designs are clear black-and-white line art. Images should be simple, with a clear, distinct subject.
+      </p>
 
       <label for="custom-changes">Requested changes / notes</label>
       <textarea id="custom-changes" class="input-field" rows="4" placeholder="Describe the changes (text edits, size, placement, etc.)"></textarea>
@@ -302,7 +217,7 @@ textarea.input-field { min-height:90px; resize:vertical; }
       </div>
     </div>
 
-    <!-- STEP 3: FULL FLOW review -->
+    <!-- STEP 3 FULL REVIEW -->
     <div class="step" id="step3">
       <h2>Step 3: Review & Add to Cart</h2>
       <p class="step-desc">Check your selections below before adding to cart.</p>
@@ -312,17 +227,16 @@ textarea.input-field { min-height:90px; resize:vertical; }
       <div class="verify-section" style="margin-top:20px; text-align:left;">
         <label for="verify-name">Your Full Name</label>
         <input type="text" id="verify-name" class="input-field" placeholder="Enter your full name" required>
-
         <label for="verify-email">Your Email</label>
         <input type="email" id="verify-email" class="input-field" placeholder="Enter your email" required>
-		<label for="verify-email-confirm">Confirm Email</label>
-		<input type="email" id="verify-email-confirm" class="input-field" placeholder="Re-enter your email" required>
+        <label for="verify-email-confirm">Confirm Email</label>
+        <input type="email" id="verify-email-confirm" class="input-field" placeholder="Re-enter your email" required>
       </div>
       <button type="button" class="prev-step" data-prev="step2">Back</button>
-      <button type="button" id="add-to-cart">Add to Cart</button>
+      <button type="button" id="add-to-cart-full">Add to Cart</button>
     </div>
 
-    <!-- STEP 3 CUSTOM: customize review -->
+    <!-- STEP 3 CUSTOM REVIEW -->
     <div class="step" id="step3_custom">
       <h2>Step 3: Review & Add to Cart</h2>
       <p class="step-desc">Confirm your customizations and add to cart.</p>
@@ -332,11 +246,10 @@ textarea.input-field { min-height:90px; resize:vertical; }
       <div class="verify-section" style="margin-top:20px; text-align:left;">
         <label for="verify-name-custom">Your Full Name</label>
         <input type="text" id="verify-name-custom" class="input-field" placeholder="Enter your full name" required>
-
         <label for="verify-email-custom">Your Email</label>
         <input type="email" id="verify-email-custom" class="input-field" placeholder="Enter your email" required>
-		<label for="verify-email-confirm-custom">Confirm Email</label>
-		<input type="email" id="verify-email-confirm-custom" class="input-field" placeholder="Re-enter your email" required>
+        <label for="verify-email-confirm-custom">Confirm Email</label>
+        <input type="email" id="verify-email-confirm-custom" class="input-field" placeholder="Re-enter your email" required>
       </div>
       <button type="button" class="prev-step" data-prev="step2_custom">Back</button>
       <button type="button" id="add-to-cart-custom">Add to Cart</button>
@@ -348,7 +261,7 @@ textarea.input-field { min-height:90px; resize:vertical; }
 <!-- Hidden iframe for form submission -->
 <iframe name="submit-frame" style="display:none;"></iframe>
 
-<!-- Hidden form (populated and submitted to FormBackend silently) -->
+<!-- Hidden form (FormBackend) -->
 <form id="sendForm" style="display:none;"
       method="POST"
       action="https://www.formbackend.com/f/8a1738ba071ca12a"
@@ -356,28 +269,19 @@ textarea.input-field { min-height:90px; resize:vertical; }
       target="submit-frame">
   <input type="hidden" name="subject" value="New Custom Order from Mozart Laser">
   <input type="hidden" name="from_name" value="MozartLaser.com">
-
-  <!-- Generic fields -->
   <input type="hidden" name="flow_type" id="f-flow-type">
   <input type="hidden" name="product" id="f-product">
   <input type="hidden" name="shape" id="f-shape">
-
-  <!-- Full flow fields -->
   <input type="hidden" name="engraved_text" id="f-text">
   <input type="hidden" name="font" id="f-font">
+  <input type="hidden" name="font_size" id="f-font-size">
   <input type="hidden" name="text_location" id="f-location">
   <input type="hidden" name="file_placement" id="f-file-placement">
   <input type="hidden" name="additional_description" id="f-description">
-
-  <!-- Customize-flow fields -->
   <input type="hidden" name="selected_product" id="f-selected-product">
   <input type="hidden" name="custom_changes" id="f-custom-changes">
   <input type="hidden" name="custom_file_placement" id="f-custom-file-placement">
-
-  <!-- file input must be present for file submissions -->
   <input type="file" name="design_file" id="f-design" style="display:none;">
-
-  <!-- other metadata -->
   <input type="hidden" name="total_price" id="f-price">
   <input type="hidden" name="replyto" id="f-email">
 </form>
