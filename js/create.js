@@ -69,6 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
     "Detailed Classic Train Engraving": 29.99,
     "“Wings Like Eagles” - Isaiah 40:31 Wooden Eagle Plaque": 34.99,
     "“Be Still” Psalm 46:10 – Wooden Sword Scripture Plaque": 24.99,
+	  "Wooden Cutting Board with Ship":79.99,
 
   };
 
@@ -84,6 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
     "Detailed Classic Train Engraving": "Product Images/Train/Front-view.jpg",
    "“Wings Like Eagles” - Isaiah 40:31 Wooden Eagle Plaque": "Product Images/Eagle with Isaiah/Front view.jpg",
 	 "“Be Still” Psalm 46:10 – Wooden Sword Scripture Plaque": "Product Images/Sword with Psalm/Front view.jpg",
+	  "Wooden Cutting Board with Ship": "Product Images/Ship/Front view.jpg",
 	  
     "Wooden Plaque (Horizontal)": "images/placeholder.png",
     "Wooden Plaque (Vertical)": "images/placeholder.png",
@@ -410,12 +412,42 @@ Placement: ${filePlacementCustom?.value || 'None'}
     document.addEventListener('click', closeAllSelect);
   }
   createFontDropdown();
+// ---------------------
+// URL bootstrap (IMPORTANT)
+// ---------------------
+function bootstrapFromURL() {
+  const params = new URLSearchParams(window.location.search);
+  const mode = params.get('mode');
+  const product = params.get('product');
+  const step = params.get('step');
 
+  if (mode === 'template') {
+    modeCustomize.checked = true;
+    modeFull.checked = false;
+  } else if (mode === 'full') {
+    modeFull.checked = true;
+    modeCustomize.checked = false;
+  }
+
+  populateSelectForMode();
+
+  if (product && selectExisting) {
+    selectExisting.value = product;
+    updateSelectedProductDisplay();
+  }
+
+  if (step === '2') {
+    if (mode === 'template') {
+      showStep('step2_custom');
+    } else {
+      showStep('step2');
+    }
+  } else {
+    showStep('step1');
+  }
+}
   // ---------------------
   // Startup
   // ---------------------
-  populateSelectForMode();
-  updateSelectedProductDisplay();
-  showStep('step1');
-
+  bootstrapFromURL();
 });
