@@ -17,7 +17,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;700&display=swap" rel="stylesheet">
 <script src="js/cart-send.js"></script>
 <script src="https://js.stripe.com/v3/"></script>
-<!-- Keep consistent font across pages -->
+
 <style>
 html, body {
   margin: 0;
@@ -26,12 +26,10 @@ html, body {
   font-family: 'Poppins', sans-serif;
 }
 
-/* Space below header */
 .page-content {
-  padding-top: 100px; /* adjust if header height changes */
+  padding-top: 100px;
 }
 
-/* PRODUCT GRID */
 .products-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -41,7 +39,6 @@ html, body {
   margin: 0 auto;
 }
 
-/* PRODUCT CARD */
 .product-card {
   background: white;
   border-radius: 12px;
@@ -49,6 +46,7 @@ html, body {
   text-align: center;
   padding: 15px;
   transition: transform 0.2s ease;
+  cursor: pointer;
 }
 
 .product-card:hover {
@@ -72,7 +70,6 @@ html, body {
   color: #555;
 }
 
-/* BUTTON GROUP */
 .button-group {
   display: flex;
   gap: 10px;
@@ -97,27 +94,26 @@ html, body {
   line-height: 1;
 }
 
-/* Add to Cart */
 .button-group > .add-to-cart {
   background-color: #111;
   color: #fff;
   border-color: #111;
 }
+
 .button-group > .add-to-cart:hover {
   background-color: #333;
 }
 
-/* See Details */
 .button-group > .details-btn {
   background-color: #fff;
   color: #111;
   border-color: #ccc;
 }
+
 .button-group > .details-btn:hover {
   background-color: #f3f3f3;
 }
 
-/* Mobile adjustments */
 @media (max-width: 480px) {
   .button-group {
     flex-direction: column;
@@ -128,26 +124,27 @@ html, body {
     width: 100%;
   }
 }
-	#categoryFilter {
+
+#categoryFilter {
   padding: 6px 10px;
   font-size: 0.95rem;
   border-radius: 6px;
   border: 1px solid #ccc;
 }
-	.hidden {
+
+.hidden {
   display: none !important;
 }
 </style>
 </head>
 
 <body>
-<!-- SITE HEADER -->	
+
 <header class="site-header" id="siteHeader">
   <div class="header-inner">
     <a href="index.html">
-  <img src="images/mozartlaserlogo.png" alt="MozartLaser" class="logo">
-</a>
-    
+      <img src="images/mozartlaserlogo.png" alt="MozartLaser" class="logo">
+    </a>
     <nav class="main-nav">
       <ul>
         <li><a href="index.html">Home</a></li>
@@ -156,22 +153,17 @@ html, body {
         <li><a href="About.html">About</a></li>
       </ul>
     </nav>
-
-    <!-- hamburger -->
     <div class="hamburger">
-      <span></span>
-      <span></span>
-      <span></span>
+      <span></span><span></span><span></span>
     </div>
   </div>
-	<!-- inside header-inner -->
-<div class="cart-icon" id="cart-icon">
-  <img src="images/cart-icon.png" alt="Cart">
-  <span id="cart-count">0</span>
-</div>
-	</header>
 
-<!-- CART PANEL -->
+  <div class="cart-icon" id="cart-icon">
+    <img src="images/cart-icon.png" alt="Cart">
+    <span id="cart-count">0</span>
+  </div>
+</header>
+
 <div class="cart-panel" id="cart-panel">
   <h3>Shopping Cart</h3>
   <ul id="cart-items"></ul>
@@ -180,47 +172,37 @@ html, body {
   <button id="close-cart">Close</button>
 </div>
 
-<!-- PAGE CONTENT -->
 <main class="page-content" id="mainContent">
-  <h2 style="text-align:center; margin-top:20px; font-weight: 100; font-size: 32px;">Our Products</h2>
-	
-	<!--filter by -->
-	 <div style="text-align:center; margin: 20px 0;">
-  <label for="categoryFilter" style="margin-right:8px;">Filter by:</label>
-  <select id="categoryFilter">
-    <option value="all">All Products</option>
-    <option value="scripture">Scripture</option>
-    <option value="art">Art</option>
-  </select>
-</div>
-	
-	<!-- products -->
+  <h2 style="text-align:center; margin-top:20px; font-weight:100; font-size:32px;">Our Products</h2>
+
+  <div style="text-align:center; margin:20px 0;">
+    <label for="categoryFilter">Filter by:</label>
+    <select id="categoryFilter">
+      <option value="all">All Products</option>
+      <option value="scripture">Scripture</option>
+      <option value="art">Art</option>
+    </select>
+  </div>
 
   <section class="products-grid">
-    
-	 
-    <!-- Product 1 -->
-   <div class="product-card" data-category="scripture">
-	   <br>
-      <img src="Product Images/Rose on Cross/Front view.jpg" alt="Plaque with Cross and Scripture verse">
+
+    <div class="product-card" data-category="scripture" data-link="Rose on Cross.html">
+      <br>
+      <img src="Product Images/Rose on Cross/Front view.jpg">
       <h3>Cross Design with John 14:27</h3>
-		<h3>$25.00</h3>
-      <p>Wooden plaque with an ornate cross and Scripture verse. </p>
+      <h3>$25.00</h3>
+      <p>Wooden plaque with an ornate cross and Scripture verse.</p>
       <div class="button-group">
         <button class="add-to-cart" data-id="1" data-name="Cross with Scripture" data-price="25.00">Add to Cart</button>
         <a href="Rose on Cross.html" class="details-btn">See Details</a>
       </div>
     </div>
 
-   
-
-    <!-- Product 3 -->
-    <div class="product-card" data-category="scripture">
-		<br><br><br>
-      <img src="Product Images/Dove with Psalm/Front view.jpg" alt="Mozartlaserlogo">
-		
+    <div class="product-card" data-category="scripture" data-link="Dove.html">
+      <br><br><br>
+      <img src="Product Images/Dove with Psalm/Front view.jpg">
       <h3>Wooden Dove Plaque - Psalm 46:5</h3>
-		<h3>$25.00</h3>
+      <h3>$25.00</h3>
       <p>Christian Wall Décor Gift</p>
       <div class="button-group">
         <button class="add-to-cart" data-id="3" data-name="Wooden Dove Plaque - Psalm 46:5" data-price="25.00">Add to Cart</button>
@@ -228,86 +210,79 @@ html, body {
       </div>
     </div>
 
-    <!-- Product 4 -->
-    <div class="product-card" data-category="scripture">
-		<br><br><br>
-      <img src="Product Images/Eagle with Isaiah/Front view.jpg" alt="Isaiah 40:31 underneath engraved image beautiful eagle flying over mountains">
+    <div class="product-card" data-category="scripture" data-link="Eagle with Isaiah.html">
+      <br><br><br>
+      <img src="Product Images/Eagle with Isaiah/Front view.jpg">
       <h3>"Wings Like Eagles” - Isaiah 40:31 Eagle Plaque</h3>
-		<h3>$25.00</h3>
+      <h3>$25.00</h3>
       <p>Laser Engraved Wooden Scripture Plaque with Eagle and Isaiah 40:31</p>
       <div class="button-group">
-        <button class="add-to-cart" data-id="4" data-name="Wings Like Eagles - Isaish 40:31 Wooden Plaque" data-price="25.00">Add to Cart</button>
+        <button class="add-to-cart" data-id="4" data-name="Wings Like Eagles - Isaiah 40:31 Wooden Plaque" data-price="25.00">Add to Cart</button>
         <a href="Eagle with Isaiah.html" class="details-btn">See Details</a>
       </div>
     </div>
-	  
-	   <!-- Product 5 -->
-    <div class="product-card" data-category="scripture">
-		<br><br>
-      <img src="Product Images/Sword with Psalm/Front view.jpg" alt="An ornate sword with Psalm 46:10 underneath">
+
+    <div class="product-card" data-category="scripture" data-link="Sword with Psalm.html">
+      <br><br>
+      <img src="Product Images/Sword with Psalm/Front view.jpg">
       <h3>“Be Still” Psalm 46:10 – Wooden Sword Scripture Plaque</h3>
-		<h3>$20.00</h3>
+      <h3>$20.00</h3>
       <p>Laser Engraved Wooden Scripture Plaque with Sword and Psalm 46:10</p>
       <div class="button-group">
         <button class="add-to-cart" data-id="5" data-name="“Be Still” Psalm 46:10 – Wooden Sword Scripture Plaque" data-price="20.00">Add to Cart</button>
         <a href="Sword with Psalm.html" class="details-btn">See Details</a>
       </div>
     </div>
-	  
-	  <!-- Product 2 -->
-   <div class="product-card" data-category="art">
-		<br><br>
-      <img src="Product Images/Train/Front-view.jpg" alt="Detailed Classic Train Engraving">
-		<br><br><br><br><br>
+
+    <div class="product-card" data-category="art" data-link="train.html">
+      <br><br>
+      <img src="Product Images/Train/Front-view.jpg">
+      <br><br><br><br><br>
       <h3>Detailed Classic Train Engraving</h3>
-		<h3>$19.99</h3>
-      <p>Wooden Plaque with detailed engraving of a classic steam engine. </p>
+      <h3>$19.99</h3>
+      <p>Wooden Plaque with detailed engraving of a classic steam engine.</p>
       <div class="button-group">
         <button class="add-to-cart" data-id="2" data-name="Train Plaque" data-price="19.99">Add to Cart</button>
         <a href="train.html" class="details-btn">See Details</a>
       </div>
     </div>
-    <!-- Add more products here as needed -->
+
   </section>
 </main>
 
-	
-<!-- FOOTER -->
 <footer class="site-footer">
   <div class="footer-content">
     <div class="social-links">
-      <a href="https://facebook.com" target="_blank" aria-label="Facebook"><img src="images/facebook-icon.png" alt="Facebook"></a>
-	 <a href="https://instagram.com" target="_blank" aria-label="Instagram"><img src="images/instagram-icon.png" alt="Instagram"></a>
-      <a href="https://X.com" target="_blank" aria-label="X"><img src="images/X-icon.png" alt="X"></a>
-     
+      <a href="https://facebook.com"><img src="images/facebook-icon.png"></a>
+      <a href="https://instagram.com"><img src="images/instagram-icon.png"></a>
+      <a href="https://X.com"><img src="images/X-icon.png"></a>
     </div>
     <p>&copy; 2025 Mozart Laser. All rights reserved.</p>
   </div>
 </footer>
 
-<!-- SCRIPTS -->
 <script src="js/navbar.js"></script>
 <script src="js/cart.js"></script>
+
 <script>
+document.querySelectorAll('.product-card').forEach(card => {
+  card.addEventListener('click', () => {
+    const link = card.dataset.link;
+    if (link) window.location.href = link;
+  });
+});
+
+document.querySelectorAll('.product-card button, .product-card a').forEach(el => {
+  el.addEventListener('click', e => e.stopPropagation());
+});
+
 document.getElementById('categoryFilter').addEventListener('change', function () {
   const selected = this.value;
-  const products = document.querySelectorAll('.product-card');
-
-  products.forEach(card => {
-   if (selected === 'all' || card.dataset.category === selected) {
-  card.style.display = 'grid'; // keep grid behavior
-} else {
-  card.style.display = 'none';
-}
-						products.forEach(card => {
-  if (selected === 'all' || card.dataset.category === selected) {
-    card.classList.remove('hidden');
-  } else {
-    card.classList.add('hidden');
-  }
-});
+  document.querySelectorAll('.product-card').forEach(card => {
+    card.classList.toggle('hidden', selected !== 'all' && card.dataset.category !== selected);
   });
 });
 </script>
+
 </body>
 </html>
