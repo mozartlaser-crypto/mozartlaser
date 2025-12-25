@@ -1,6 +1,6 @@
 // js/create.js
 // ============================
-// CREATE.JS — Updated fully with all requested changes
+// CREATE.JS — Fully Fixed Version
 // ============================
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // State & helpers
   // ---------------------
   let currentPrice = 20;
+  let selectedFont = ''; 
   const $ = (sel) => document.querySelector(sel);
 
   function addToCartVisual(productName, price) {
@@ -20,30 +21,37 @@ document.addEventListener('DOMContentLoaded', () => {
   // Elements
   // ---------------------
   const steps = Array.from(document.querySelectorAll('.step'));
-  const modeCustomize = $('#mode-customize'); // customize existing
-  const modeFull = $('#mode-full');           // create your own / full custom
+  const modeCustomize = $('#mode-customize');
+  const modeFull = $('#mode-full');
   const selectExisting = $('#select-existing');
+
   const uploadFileInput = $('#upload-file');
   const uploadFileCustom = $('#upload-file-custom');
   const deleteFileBtn = $('#delete-file');
   const deleteFileCustom = $('#delete-file-custom');
+
   const filePlacementInput = $('#file-placement');
   const filePlacementCustom = $('#file-placement-custom');
+
   const textField = $('#custom-text');
   const fontSelect = $('#font-select');
+  const textSizeSelect = $('#font-size-select'); // fixed reference
   const textLocation = $('#text-location');
   const customChanges = $('#custom-changes');
+
   const selectedProductTextFull = $('#selected-product-text-full');
   const selectedProductTextCustom = $('#selected-product-text');
+
   const productPreviewFull = $('#product-preview-full');
   const productPreviewCustom = $('#product-preview-custom');
+
   const sendForm = $('#sendForm');
 
-  // Hidden fields
   const hiddenFlowType = $('#f-flow-type');
   const hiddenProduct = $('#f-product');
   const hiddenText = $('#f-text');
   const hiddenFont = $('#f-font');
+  const hiddenTextSize = $('#f-font-size');
   const hiddenLocation = $('#f-location');
   const hiddenFilePlacement = $('#f-file-placement');
   const hiddenSelectedProduct = $('#f-selected-product');
@@ -53,12 +61,15 @@ document.addEventListener('DOMContentLoaded', () => {
   const hiddenEmail = $('#f-email');
 
   // ---------------------
-  // Product prices
+  // Product prices & images
   // ---------------------
   const existingProductPrices = {
-    "Cross with Scripture": 34.99,
-    "Train Plaque": 29.99,
-    "Leather Wallet": 44.99
+    "Wooden Dove Plaque - Psalm 46:5": 34.99,
+    "Cross Design with Bible Verse": 34.99,
+    "Detailed Classic Train Engraving": 29.99,
+    "“Wings Like Eagles” - Isaiah 40:31 Wooden Eagle Plaque": 34.99,
+    "“Be Still” Psalm 46:10 – Wooden Sword Scripture Plaque": 24.99,
+
   };
 
   const fullCustomPrices = {
@@ -68,9 +79,12 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const productImages = {
-    "Cross with Scripture": "images/cross.png",
-    "Train Plaque": "images/train.png",
-    "Leather Wallet": "images/wallet.png",
+   	"Wooden Dove Plaque - Psalm 46:5":"Product Images/Dove with Psalm/Front view.jpg",
+	 "Cross Design with Bible Verse": "Product Images/Rose on Cross/Front view.jpg",
+    "Detailed Classic Train Engraving": "Product Images/Train/Front-view.jpg",
+   "“Wings Like Eagles” - Isaiah 40:31 Wooden Eagle Plaque": "Product Images/Eagle with Isaiah/Front view.jpg",
+	 "“Be Still” Psalm 46:10 – Wooden Sword Scripture Plaque": "Product Images/Sword with Psalm/Front view.jpg",
+	  
     "Wooden Plaque (Horizontal)": "images/placeholder.png",
     "Wooden Plaque (Vertical)": "images/placeholder.png",
     "Custom Leather Wallet": "images/placeholder.png"
@@ -88,13 +102,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function updatePrice() {
     const product = selectExisting?.value || '';
-    if (modeFull?.checked) {
-      currentPrice = fullCustomPrices[product] ?? 34.99;
-    } else if (modeCustomize?.checked) {
-      currentPrice = existingProductPrices[product] ?? 20.00;
-    } else {
-      currentPrice = 20.00;
-    }
+    if (modeFull?.checked) currentPrice = fullCustomPrices[product] ?? 34.99;
+    else if (modeCustomize?.checked) currentPrice = existingProductPrices[product] ?? 20.00;
+    else currentPrice = 20.00;
 
     $('#total-price') && ($('#total-price').textContent = `Total: $${currentPrice}`);
     $('#total-price-custom') && ($('#total-price-custom').textContent = `Total: $${currentPrice}`);
@@ -148,15 +158,20 @@ document.addEventListener('DOMContentLoaded', () => {
       .replaceAll("'", '&#039;');
   }
 
+  // ---------------------
+  // Validation
+  // ---------------------
   function validateFullStep2() {
     const text = textField?.value.trim() || '';
-    const font = fontSelect?.value || '';
+    const font = selectedFont;
+    const size = textSizeSelect?.value || '';
     const loc = textLocation?.value.trim() || '';
     const hasFile = uploadFileInput?.files?.length > 0;
+    const filePlacement = filePlacementInput?.value.trim() || '';
 
     if (!text && !hasFile) { alert('Enter text or upload a file.'); return false; }
-    if (text && (!font || !loc)) { alert('Font and placement required for text.'); return false; }
-    if (hasFile && !filePlacementInput?.value.trim()) { alert('Describe where the uploaded file should be placed.'); return false; }
+    if (text && (!font || !size || !loc)) { alert('Font, size, and placement required for text.'); return false; }
+    if (hasFile && !filePlacement) { alert('Describe where the uploaded file should be placed.'); return false; }
     return true;
   }
 
@@ -173,13 +188,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const s = $('#summary');
     if (s) {
       const text = textField?.value.trim() || 'None';
-      const font = fontSelect?.value || 'None';
+      const font = selectedFont || 'None';
+      const size = textSizeSelect?.value || 'None';
       const loc = textLocation?.value.trim() || 'None';
       const fileName = uploadFileInput?.files?.[0]?.name || 'None';
+      const placementVal = filePlacementInput?.value.trim() || 'None';
       s.innerHTML = `
         <p><strong>Engraved Text:</strong> ${escapeHtml(text)}</p>
         <p><strong>Font:</strong> ${escapeHtml(font)}</p>
+        <p><strong>Text Size:</strong> ${escapeHtml(size)}</p>
         <p><strong>Text Placement:</strong> ${escapeHtml(loc)}</p>
+        <p><strong>File Placement:</strong> ${escapeHtml(placementVal)}</p>
         <p><strong>Uploaded File:</strong> ${escapeHtml(fileName)}</p>
         <p><strong>Price:</strong> $${currentPrice}</p>
       `;
@@ -216,7 +235,6 @@ document.addEventListener('DOMContentLoaded', () => {
         else showStep('step2');
         return;
       }
-
       const nextId = btn.getAttribute('data-next');
       if (nextId === 'step3' && !validateFullStep2()) return;
       if (nextId === 'step3_custom' && !validateCustomStep2()) return;
@@ -243,17 +261,19 @@ document.addEventListener('DOMContentLoaded', () => {
   selectExisting?.addEventListener('change', updateSelectedProductDisplay);
 
   // ---------------------
-  // Add to cart
+  // Add to cart functions
   // ---------------------
   function resetAllFields() {
     textField.value = '';
     textLocation.value = '';
+    textSizeSelect.value = '';
     customChanges.value = '';
     selectExisting.value = '';
     uploadFileInput.value = '';
     uploadFileCustom.value = '';
     filePlacementInput.value = '';
     filePlacementCustom.value = '';
+    selectedFont = '';
     $('#verify-email') && ($('#verify-email').value = '');
     $('#verify-email-confirm') && ($('#verify-email-confirm').value = '');
     $('#verify-email-custom') && ($('#verify-email-custom').value = '');
@@ -277,12 +297,23 @@ document.addEventListener('DOMContentLoaded', () => {
     if (email !== emailConfirm) return alert('Emails do not match.');
     if (!validateFullStep2()) return;
 
-    addToCartVisual(selectExisting?.value || 'Custom Product', currentPrice);
+    const textSize = textSizeSelect?.value || 'None';
+    const fullCustomizations = `
+Text: ${textField?.value || 'None'},
+Font: ${selectedFont || 'None'},
+Size: ${textSize},
+Placement: ${textLocation?.value || 'None'},
+File Placement: ${filePlacementInput?.value || 'None'},
+File: ${uploadFileInput?.files?.[0]?.name || 'None'}
+`;
+
+    addToCartVisual(`${selectExisting?.value || 'Custom Product'} — ${fullCustomizations}`, currentPrice);
 
     hiddenFlowType.value = 'create-your-own';
     hiddenProduct.value = selectExisting?.value || '';
     hiddenText.value = textField?.value || '';
-    hiddenFont.value = fontSelect?.value || '';
+    hiddenFont.value = selectedFont || '';
+    hiddenTextSize.value = textSize;
     hiddenLocation.value = textLocation?.value || '';
     hiddenFilePlacement.value = filePlacementInput?.value || '';
     hiddenPrice.value = `$${currentPrice}`;
@@ -290,7 +321,7 @@ document.addEventListener('DOMContentLoaded', () => {
     copyFileIntoHiddenInput(uploadFileInput);
     sendForm?.submit();
 
-    alert('Your custom product has been added to the Cart!');
+    alert('Your custom product has been added to the Cart! If you proceed with your order, an email with a sample design of your customization will be sent to you within 1 business day. YOU MUST RESPOND within 3 business days approving or requesting changes or your order will be automatically refunded!');
     resetAllFields();
     showStep('step1');
   });
@@ -303,7 +334,13 @@ document.addEventListener('DOMContentLoaded', () => {
     if (email !== emailConfirm) return alert('Emails do not match.');
     if (!validateCustomStep2()) return;
 
-    addToCartVisual(selectExisting?.value || 'Custom Product', currentPrice);
+    const customCustomizations = `
+Changes: ${customChanges?.value || 'None'},
+File: ${uploadFileCustom?.files?.[0]?.name || 'None'},
+Placement: ${filePlacementCustom?.value || 'None'}
+`;
+
+    addToCartVisual(`${selectExisting?.value || 'Custom Product'} — ${customCustomizations}`, currentPrice);
 
     hiddenFlowType.value = 'customize';
     hiddenSelectedProduct.value = selectExisting?.value || '';
@@ -314,13 +351,13 @@ document.addEventListener('DOMContentLoaded', () => {
     copyFileIntoHiddenInput(uploadFileCustom);
     sendForm?.submit();
 
-    alert('Your customization has been added to the Cart!');
+    alert('Your customization has been added to the Cart! If you proceed with your order, an email with a sample design of your customization will be sent to you within 1 business day. YOU MUST RESPOND within 3 business days approving or requesting changes or your order will be automatically refunded!');
     resetAllFields();
     showStep('step1');
   });
 
   // ---------------------
-  // Font dropdown (same as before)
+  // Custom font dropdown
   // ---------------------
   function createFontDropdown() {
     if (!fontSelect) return;
@@ -328,12 +365,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const container = document.createElement('div');
     container.classList.add('custom-select');
     select.style.display = 'none';
+
     const selectedDiv = document.createElement('div');
     selectedDiv.classList.add('select-selected');
     selectedDiv.textContent = select.options[select.selectedIndex]?.text || 'Choose a font';
+    selectedFont = select.options[select.selectedIndex]?.text || '';
     container.appendChild(selectedDiv);
+
     const optionsDiv = document.createElement('div');
     optionsDiv.classList.add('select-items', 'select-hide');
+
     for (let i = 0; i < select.options.length; i++) {
       const option = select.options[i];
       const optionDiv = document.createElement('div');
@@ -343,25 +384,29 @@ document.addEventListener('DOMContentLoaded', () => {
       optionDiv.addEventListener('click', () => {
         select.selectedIndex = i;
         select.value = option.value;
-        select.dispatchEvent(new Event('change'));
         selectedDiv.textContent = option.text;
         selectedDiv.style.fontFamily = option.value ? optionDiv.style.fontFamily : '';
+        selectedFont = option.text; 
         closeAllSelect();
       });
       optionsDiv.appendChild(optionDiv);
     }
+
     container.appendChild(optionsDiv);
     select.parentNode.insertBefore(container, select.nextSibling);
+
     selectedDiv.addEventListener('click', (e) => {
       e.stopPropagation();
       closeAllSelect(selectedDiv);
       optionsDiv.classList.toggle('select-hide');
       selectedDiv.classList.toggle('select-arrow-active');
     });
+
     function closeAllSelect(except) {
       document.querySelectorAll('.select-items').forEach(el => { if (el.previousSibling !== except) el.classList.add('select-hide'); });
       document.querySelectorAll('.select-selected').forEach(el => { if (el !== except) el.classList.remove('select-arrow-active'); });
     }
+
     document.addEventListener('click', closeAllSelect);
   }
   createFontDropdown();
