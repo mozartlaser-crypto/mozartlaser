@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+/mozartlaser<!DOCTYPE html>
 <html lang="en">
 <head>
 <!-- Google tag (gtag.js) -->
@@ -28,169 +28,28 @@
   <script src="https://js.stripe.com/v3/"></script>
 
 
+  <script src="https://js.stripe.com/v3/"></script>
   <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f9f9f9;
-      color: #111;
-    }
-
-    .product-container {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: center;
-      padding: 60px 20px;
-      gap: 40px;
-      max-width: 1200px;
-      margin: auto;
-    }
-
-    /* ================= IMAGE SECTION (FIXED SIZE) ================= */
-
-    .product-images {
-      position: relative;
-      width: 500px;
-      height: 600px;               /* Taller container */
-      max-width: 90vw;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      border-radius: 12px;
-      background: #f0f0f0;         /* Prevents visual jump */
-    }
-
-    .product-images img {
-      max-width: 100%;
-      max-height: 100%;
-      object-fit: contain;         /* KEY FIX */
-      border-radius: 10px;
-      transition: transform 0.4s ease;
-    }
-
-    /* ================= DOTS ================= */
-
-    .dots {
-      position: absolute;
-      bottom: 15px;
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      z-index: 10;
-    }
-
-    .dots::before {
-      content: "";
-      position: absolute;
-      bottom: -7px;
-      width: 100px;
-      height: 28px;
-      background: rgba(0, 0, 0, 0.4);
-      border-radius: 999px;
-      z-index: -1;
-    }
-
-    .dot {
-      width: 12px;
-      height: 12px;
-      margin: 0 5px;
-      background: rgba(255, 255, 255, 0.5);
-      border-radius: 50%;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
-
-    .dot.active {
-      background: white;
-    }
-
-    /* ================= PRODUCT INFO ================= */
-
-    .product-info {
-      flex: 1;
-      max-width: 500px;
-      text-align: left;
-    }
-
-    .product-info h1 {
-      font-size: 2rem;
-      margin-bottom: 10px;
-    }
-
-    .product-info h3 {
-      margin-bottom: 15px;
-    }
-
-    .product-info p {
-      line-height: 1.6;
-      margin-bottom: 30px;
-    }
-
-    .buttons {
-      display: flex;
-      gap: 15px;
-      flex-wrap: wrap;
-    }
-
-    .buttons button {
-      padding: 12px 25px;
-      font-size: 1rem;
-      border: none;
-      border-radius: 999px;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-
-    .buy-now {
-      background: black;
-      color: white;
-    }
-
-    .buy-now:hover {
-      background: #333;
-    }
-
-    .add-cart,
-    .customize-btn {
-      background: white;
-      color: black;
-      border: 1px solid black;
-    }
-
-    .add-cart:hover,
-    .customize-btn:hover {
-      background: #eee;
-    }
-
-    /* ================= MOBILE ================= */
-
-    @media (max-width: 768px) {
-      .product-container {
-        flex-direction: column;
-        text-align: center;
-      }
-
-      .product-info {
-        text-align: center;
-      }
-
-      .buttons {
-        justify-content: center;
-      }
-
-      .product-images {
-        width: 90vw;
-        height: 90vw; /* stays square-ish on mobile */
-      }
-
-      .dots::before {
-        width: 80px;
-        height: 26px;
-      }
-    }
+    body { font-family: 'Poppins', sans-serif; margin:0; padding:0; background:#f9f9f9; color:#111; }
+    .product-container { display:flex; flex-wrap:wrap; align-items:center; justify-content:center; padding:60px 20px; gap:40px; max-width:1200px; margin:auto; }
+    .product-images { position:relative; width:500px; height:600px; max-width:90vw; display:flex; align-items:center; justify-content:center; overflow:hidden; border-radius:12px; background:#f0f0f0; }
+    .product-images img { max-width:100%; max-height:100%; object-fit:contain; border-radius:10px; transition:transform 0.4s ease; }
+    .dots { position:absolute; bottom:15px; width:100%; display:flex; justify-content:center; z-index:10; }
+    .dots::before { content:""; position:absolute; bottom:-7px; width:100px; height:28px; background:rgba(0,0,0,0.4); border-radius:999px; z-index:-1; }
+    .dot { width:12px; height:12px; margin:0 5px; background:rgba(255,255,255,0.5); border-radius:50%; cursor:pointer; transition:background-color 0.3s; }
+    .dot.active { background:white; }
+    .product-info { flex:1; max-width:500px; text-align:left; }
+    .product-info h1 { font-size:2rem; margin-bottom:10px; }
+    .product-info h3 { margin-bottom:15px; }
+    .product-info p { line-height:1.6; margin-bottom:30px; }
+    .buttons { display:flex; gap:15px; flex-wrap:wrap; }
+    .buttons button { padding:12px 25px; font-size:1rem; border:none; border-radius:999px; cursor:pointer; transition:all 0.3s; }
+    .buy-now { background:black; color:white; }
+    .buy-now:hover { background:#333; }
+    .add-cart, .customize-btn { background:white; color:black; border:1px solid black; }
+    .add-cart:hover, .customize-btn:hover { background:#eee; }
+    @media(max-width:768px){.product-container{flex-direction:column;text-align:center;}.product-info{text-align:center;}.buttons{justify-content:center;}.product-images{width:90vw;height:90vw;}.dots::before{width:80px;height:26px;}}
+  </style>
   </style>
 </head>
 <body>
@@ -350,9 +209,9 @@ document.getElementById("customizeThis").addEventListener("click", () => {
 <footer class="site-footer">
   <div class="footer-content">
     <div class="social-links">
-      <a href="https://facebook.com" target="_blank" aria-label="Facebook"><img src="images/facebook-icon.png" alt="Facebook"></a>
-	 <a href="https://instagram.com" target="_blank" aria-label="Instagram"><img src="images/instagram-icon.png" alt="Instagram"></a>
-      <a href="https://X.com" target="_blank" aria-label="X"><img src="images/X-icon.png" alt="X"></a>
+      <a href="https://facebook.com/mozartlaser" target="_blank" aria-label="Facebook"><img src="images/facebook-icon.png" alt="Facebook"></a>
+	 <a href="https://instagram.com/mozartlaser" target="_blank" aria-label="Instagram"><img src="images/instagram-icon.png" alt="Instagram"></a>
+      <a href="https://X.com/mozartlaser" target="_blank" aria-label="X"><img src="images/X-icon.png" alt="X"></a>
      
     </div>
     <p>&copy; 2025 Mozart Laser. All rights reserved.</p>
