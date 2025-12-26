@@ -70,6 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
     "“Wings Like Eagles” - Isaiah 40:31 Wooden Eagle Plaque": 34.99,
     "“Be Still” Psalm 46:10 – Wooden Sword Scripture Plaque": 24.99,
 	  "Wooden Cutting Board with Ship":79.99,
+	  "Golden Gate Bridge Plaque":41.99,
 
   };
 
@@ -86,6 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
    "“Wings Like Eagles” - Isaiah 40:31 Wooden Eagle Plaque": "Product Images/Eagle with Isaiah/Front view.jpg",
 	 "“Be Still” Psalm 46:10 – Wooden Sword Scripture Plaque": "Product Images/Sword with Psalm/Front view.jpg",
 	  "Wooden Cutting Board with Ship": "Product Images/Ship/Front view.jpg",
+	  "Golden Gate Bridge Plaque":"Product Images/Golden Gate Bridge/Front view.jpg",
 	  
     "Wooden Plaque (Horizontal)": "Product Images/Blank Samples/Horizontal.jpg",
     "Wooden Plaque (Vertical)": "Product Images/Blank Samples/Vertical.jpg",
