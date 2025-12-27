@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	 "“Be Still” Psalm 46:10 – Wooden Sword Scripture Plaque": "Product Images/Sword with Psalm/Front view.jpg",
 	  "Wooden Cutting Board with Ship": "Product Images/Ship/Front view.jpg",
 	  "Golden Gate Bridge Plaque":"Product Images/Golden Gate Bridge/Front view.jpg",
-	  "Custom Animal Plaque": "Product Images/Animal Plaque/Front view.jpg",
+	  "Custom Animal Plaque": "Product Images/Animal Plaque/Display.JPG",
 	  
     "Wooden Plaque (Horizontal)": "Product Images/Blank Samples/Horizontal.jpg",
     "Wooden Plaque (Vertical)": "Product Images/Blank Samples/Vertical.jpg",
