@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	  
     "Wooden Plaque (Horizontal)": "Product Images/Blank Samples/Horizontal.jpg",
     "Wooden Plaque (Vertical)": "Product Images/Blank Samples/Vertical.jpg",
-    "Custom Leather Wallet": "images/placeholder.png"
+    "Custom Leather Wallet": "Product Images/Blank Samples/Wallet.jpg"
   };
 
   // ---------------------
