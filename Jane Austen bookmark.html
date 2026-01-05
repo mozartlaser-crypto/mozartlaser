@@ -12,7 +12,7 @@
 </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mozart Laser Product Details - Golden Gate Bridge Plaque</title>
+  <title>Mozart Laser Product Details - Jane Austen Quote Bookmark</title>
   <link rel="stylesheet" href="products/style.css">
   <meta name="description" content="High-quality custom laser engravings by Mozart Laser. Personal, professional, and precision-crafted designs." />
   <meta name="keywords" content="laser engraving, custom engravings, Mozart Laser, personalized gifts, wood engravings" />
@@ -94,13 +94,13 @@
 
   <!-- Info Section -->
   <div class="product-info">
-    <h1>Golden Gate Bridge Plaque</h1>
-    <h3>$34.99</h3>
-    <p>Detailed Image of the Golden Gate Bridge engraved in Wood</p>
+    <h1>Jane Austen Quote Bookmark</h1>
+    <h3>$7.99</h3>
+    <p>Bookmark with a literary design and beautiful quote from Jane Austen. The bookmark is finished with a high quality woodstain and sealent.</p>
 
     <div class="buttons">
-      <button class="customize-btn" id="customizeThis" data-product="Golden Gate Bridge Plaque">Customize This Product</button>
-      <button class="buy-now" id="buyNow" data-name="Golden Gate Bridge Plaque" data-price="34.99">Buy Now</button>
+     
+      <button class="buy-now" id="buyNow" data-name="Jane Austen Quote Bookmark" data-price="7.99">Buy Now</button>
       <button class="add-cart" id="addToCart">Add to Cart</button>
     </div>
   </div>
@@ -108,9 +108,9 @@
 
 <script>
   const images = [
-    "Product Images/Golden Gate Bridge/Front view.jpg",
-    "Product Images/Golden Gate Bridge/Side view.jpg",
-    "Product Images/Golden Gate Bridge/Display.JPG",
+    "Product Images/Jane Austen bookmark/Front view.jpg",
+    "Product Images/Jane Austen bookmark/Book view.jpg",
+    "Product Images/Jane Austen bookmark/Book view.jpg",
   ];
   const imgEl = document.getElementById('product-img');
   const dots = document.querySelectorAll('.dot');
@@ -141,7 +141,7 @@
   });
 
   document.getElementById("addToCart").addEventListener("click", () => {
-    addToCart("Golden Gate Bridge Plaque", 34.99);
+    addToCart("Jane Austen Quote Bookmark", 7.99);
   });
 
   document.getElementById('buyNow').addEventListener('click', async () => {
@@ -163,7 +163,7 @@
   });
 
   document.getElementById("customizeThis").addEventListener("click", () => {
-    const productName = "Golden Gate Bridge Plaque";
+    const productName = "Jane Austen Quote Bookmark";
     window.location.href = `create.html?mode=template&product=${encodeURIComponent(productName)}&step=2`;
   });
 </script>

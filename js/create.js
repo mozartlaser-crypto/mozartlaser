@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
     "“Be Still” Psalm 46:10 – Wooden Sword Scripture Plaque": 24.99,
 	  "Wooden Cutting Board with Ship":79.99,
 	  "Golden Gate Bridge Plaque":41.99,
-	  "Custom Animal Plaque":34.99,
+	  "Custom Animal Plaque":24.99,
 	  "Avalon Bay, Catalina Island Laser Engraved Plaque": 19.99
 
   };
