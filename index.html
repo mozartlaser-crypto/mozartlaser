@@ -36,7 +36,7 @@ html, body {
   width: 100%;
   height: 70vh;
   overflow: hidden;
-  margin-top: 70px; /* push hero BELOW header */
+  margin-top: 70px;
 }
 
 .hero-slide {
@@ -47,8 +47,8 @@ html, body {
   height: 100%;
   background-size: contain;
   background-position: center;
-	 background-repeat: no-repeat;  /* no tiling */
-  background-color: white; 
+  background-repeat: no-repeat;
+  background-color: white;
   opacity: 0;
   transition: opacity 1s ease-in-out;
 }
@@ -154,14 +154,14 @@ html, body {
 /* MOBILE HERO FIX */
   @media (max-width: 768px) {
   .hero {
-    height: 500px;        /* small but usable */
+    height: 500px;
     padding: 0;
   }
 
   .hero-slide {
     position: absolute;
     inset: 0;
-    background-size: 90% auto;  /* 🔥 key line */
+    background-size: 90% auto;
     background-position: center;
     background-repeat: no-repeat;
   }
@@ -174,7 +174,81 @@ html, body {
     padding: 6px 14px;
   }
 }
-	
+
+/* =====================
+   SCROLL ANIMATIONS
+   ===================== */
+
+/* Base state: hidden, further down, slightly scaled */
+.reveal {
+  opacity: 0;
+  transform: translateY(60px) scale(0.97);
+  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Staggered children */
+.reveal-stagger > * {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal-stagger.visible > *:nth-child(1) { opacity: 1; transform: translateY(0); transition-delay: 0s; }
+.reveal-stagger.visible > *:nth-child(2) { opacity: 1; transform: translateY(0); transition-delay: 0.15s; }
+.reveal-stagger.visible > *:nth-child(3) { opacity: 1; transform: translateY(0); transition-delay: 0.3s; }
+.reveal-stagger.visible > *:nth-child(4) { opacity: 1; transform: translateY(0); transition-delay: 0.45s; }
+.reveal-stagger.visible > *:nth-child(5) { opacity: 1; transform: translateY(0); transition-delay: 0.6s; }
+
+/* Text bar */
+.text-bar h1 {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.1s, transform 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.1s;
+}
+.text-bar p {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.28s, transform 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.28s;
+}
+.text-bar.visible h1,
+.text-bar.visible p {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Button hover lift */
+.btn-large {
+  transition: transform 0.25s ease, opacity 0.2s ease, background 0.2s ease, box-shadow 0.25s ease;
+}
+.btn-large:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 10px 28px rgba(0,0,0,0.18);
+}
+
+/* Section divider */
+.section-rule {
+  width: 0;
+  height: 2px;
+  background: #e0e0e0;
+  margin: 0 auto 40px;
+  transition: width 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.section-rule.visible {
+  width: 80px;
+}
+
+/* Video wipe-in from bottom */
+.video-section {
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path 1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.video-section.visible {
+  clip-path: inset(0% 0 0 0);
+}
+
   </style>
 </head>
 <body>
@@ -223,7 +297,7 @@ html, body {
   <p style="font-size: 21px; font-weight: 200">Custom engravings with precision and style.</p>
 </section>
 
-<section class="video-section">
+<section class="video-section reveal">
   <video autoplay muted loop playsinline>
     <source src="videos/laser.mp4" type="video/mp4">
     Your browser does not support the video tag.
@@ -231,23 +305,24 @@ html, body {
 </section>
 
 <main class="page-content" id="mainContent" tabindex="-1">
-  <section style="padding: 60px 20px; max-width: 900px; margin: auto; text-align: center;">
+  <section style="padding: 60px 20px; max-width: 900px; margin: auto; text-align: center;" class="reveal">
     <h2 style="font-weight: 400; font-size: 32px; margin-bottom: 20px;">Custom Engraving Made Simple</h2>
+    <hr class="section-rule">
     <p style="font-size: 19px; line-height: 1.7; font-weight: 300;">
-      Whether you’re personalizing a gift, creating décor, or designing something completely unique—Mozart Laser makes it easy.
+      Whether you're personalizing a gift, creating décor, or designing something completely unique—Mozart Laser makes it easy.
       Every engraving is crafted with care using professional equipment and clean, modern design workflows.
     </p>
   </section>
 
-  <div class="button-center">
+  <div class="button-center reveal">
     <a href="create.html" class="btn-large btn-black">Create</a>
     <a href="products.html" class="btn-large btn-white">Products</a>
   </div>
 
   <section style="padding: 60px 20px; background: #fafafa;">
     <div style="max-width: 1100px; margin: auto;">
-      <h2 style="text-align: center; font-weight: 400; font-size: 30px; margin-bottom: 40px;">What We Offer</h2>
-      <ul style="list-style: none; padding: 0; max-width: 800px; margin: auto; font-size: 19px; font-weight: 300; line-height: 1.8;">
+      <h2 style="text-align: center; font-weight: 400; font-size: 30px; margin-bottom: 40px;" class="reveal">What We Offer</h2>
+      <ul style="list-style: none; padding: 0; max-width: 800px; margin: auto; font-size: 19px; font-weight: 300; line-height: 1.8;" class="reveal-stagger">
         <li>• High-quality wood engravings</li>
         <li>• Personalized gifts for any occasion</li>
         <li>• Clean, precise graphics created with professional tools</li>
@@ -256,8 +331,9 @@ html, body {
     </div>
   </section>
 
-  <section style="padding: 60px 20px; max-width: 900px; margin: auto; text-align: center;">
+  <section style="padding: 60px 20px; max-width: 900px; margin: auto; text-align: center;" class="reveal">
     <h2 style="font-weight: 400; font-size: 30px; margin-bottom: 20px;">How It Works</h2>
+    <hr class="section-rule">
     <p style="font-size: 19px; line-height: 1.7; font-weight: 300;">
       Pick from pre-designed products or build something from scratch. Our Create tool guides you through choosing your style,
       adding text or graphics, and sending the final design straight to us for engraving.
@@ -274,7 +350,7 @@ const dots = document.querySelectorAll('.dot');
 let currentIndex = 0;
 
 function showSlide(index) {
-  index = Number(index); // Ensure index is a number
+  index = Number(index);
   slides.forEach((s, i) => s.classList.toggle('active', i === index));
   dots.forEach((d, i) => d.classList.toggle('active', i === index));
   currentIndex = index;
@@ -296,7 +372,6 @@ dots.forEach(dot => {
   });
 });
 
-// Swipe support
 const sliderContainer = document.querySelector('.hero');
 let startX = 0;
 
@@ -328,6 +403,33 @@ if (sliderContainer) {
 }
 
 showSlide(0);
+
+/* =====================
+   SCROLL ANIMATION OBSERVER
+   ===================== */
+const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-stagger, .text-bar, .section-rule');
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      /* For section-rule inside a reveal, trigger it too */
+      const rule = entry.target.querySelector('.section-rule');
+      if (rule) rule.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, {
+  threshold: 0.15
+});
+
+revealEls.forEach(el => observer.observe(el));
+
+/* Text bar triggers immediately since it's near top */
+const textBar = document.querySelector('.text-bar');
+if (textBar) {
+  setTimeout(() => textBar.classList.add('visible'), 100);
+}
 </script>
 
 <footer class="site-footer">
