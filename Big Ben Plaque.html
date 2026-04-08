@@ -12,7 +12,7 @@
 </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mozart Laser Product Details - Ship Cutting Board</title>
+  <title>Mozart Laser Product Details - Big Ben Plaque</title>
   <link rel="stylesheet" href="products/style.css">
   <meta name="description" content="High-quality custom laser engravings by Mozart Laser. Personal, professional, and precision-crafted designs." />
   <meta name="keywords" content="laser engraving, custom engravings, Mozart Laser, personalized gifts, wood engravings" />
@@ -94,13 +94,22 @@
 
   <!-- Info Section -->
   <div class="product-info">
-    <h1>Wooden Cutting Board with Ship</h1>
-    <h3>$74.99</h3>
-    <p>Ornate Acacia Wood Cutting Board with highly detailed ship engraving.</p>
+    <h1>Big Ben Plaque</h1>
+    <h3>$16.99</h3>
+    <p>Capture the iconic beauty of London with this finely laser-engraved Big Ben wood plaque. Crafted on natural wood, each piece highlights the intricate architectural details of the historic clock tower with stunning precision, while the organic grain ensures every plaque is truly one of a kind.
+
+The warm tones of the wood combined with the detailed engraving create a classic, vintage aesthetic—perfect for adding character to any room. Whether displayed on a wall, shelf, or desk, this piece brings a sense of history and sophistication to your space.
+<br>
+<strong>Features:</strong><br>
+	•	Precision laser-engraved for sharp, detailed artwork<br>
+	•	Natural wood grain—no two pieces are identical<br>
+	•	Lightweight and easy to display<br>
+	•	Perfect for home décor, office spaces, or gifts
+</p>
 
     <div class="buttons">
-      <button class="customize-btn" id="customizeThis" data-product="Wooden Cutting Board with Ship">Customize This Product</button>
-      <button class="buy-now" id="buyNow" data-name="Wooden Cutting Board with Ship" data-price="74.99">Buy Now</button>
+      <button class="customize-btn" id="customizeThis" data-product="Big Ben Plaque">Customize This Product</button>
+      <button class="buy-now" id="buyNow" data-name="Big Ben Plaque" data-price="16.99">Buy Now</button>
       <button class="add-cart" id="addToCart">Add to Cart</button>
     </div>
   </div>
@@ -108,9 +117,9 @@
 
 <script>
   const images = [
-    "Product Images/Ship/Front view.jpg",
-    "Product Images/Ship/Side view.jpg",
-    "Product Images/Ship/Display.JPG",
+    "Product Images/Big Ben Plaque/Front view.jpg",
+    "Product Images/Big Ben Plaque/Side view.jpg",
+    "Product Images/Big Ben Plaque/Display.JPG",
   ];
   const imgEl = document.getElementById('product-img');
   const dots = document.querySelectorAll('.dot');
@@ -141,7 +150,7 @@
   });
 
   document.getElementById("addToCart").addEventListener("click", () => {
-    addToCart("Wooden Cutting Board with Ship", 74.99);
+    addToCart("Big Ben Plaque", 16.99);
   });
 
   document.getElementById('buyNow').addEventListener('click', async () => {
@@ -163,7 +172,7 @@
   });
 
   document.getElementById("customizeThis").addEventListener("click", () => {
-    const productName = "Wooden Cutting Board with Ship";
+    const productName = "Big Ben Plaque";
     window.location.href = `create.html?mode=template&product=${encodeURIComponent(productName)}&step=2`;
   });
 </script>
