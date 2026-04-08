@@ -7,7 +7,6 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-GNESH4PWH6');
 </script>
   <meta charset="utf-8" />
@@ -38,13 +37,10 @@ html, body {
   overflow: hidden;
   margin-top: 70px;
 }
-
 .hero-slide {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
@@ -52,11 +48,7 @@ html, body {
   opacity: 0;
   transition: opacity 1s ease-in-out;
 }
-
-.hero-slide.active {
-  opacity: 1;
-  z-index: 1;
-}
+.hero-slide.active { opacity: 1; z-index: 1; }
 
 /* DOTS */
 .hero .dots {
@@ -65,42 +57,34 @@ html, body {
   width: fit-content;
   left: 50%;
   transform: translateX(-50%);
-  text-align: center;
   z-index: 10;
-  background: rgba(0, 0, 0, 0.25);
+  background: rgba(0,0,0,0.25);
   padding: 6px 14px;
   border-radius: 20px;
   backdrop-filter: blur(4px);
 }
 .hero .dot {
   display: inline-block;
-  width: 12px;
-  height: 12px;
+  width: 12px; height: 12px;
   margin: 0 6px;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255,255,255,0.5);
   border-radius: 50%;
   cursor: pointer;
   transition: background-color 0.3s;
 }
-.hero .dot.active {
-  background-color: rgba(255, 255, 255, 1);
-}
+.hero .dot.active { background-color: rgba(255,255,255,1); }
 
-/* TEXT BAR */
+/* TEXT BAR — warm cream */
 .text-bar {
   width: 100%;
-  background: white;
-  padding: 20px 0;
+  background: #f5f0eb;
+  padding: 28px 0;
   text-align: center;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.10);
 }
-.text-bar h1, .text-bar p {
-  margin: 0;
-  line-height: 1.4;
-}
-.text-bar h1 {
-  margin-bottom: 8px;
-}
+.text-bar h1, .text-bar p { margin: 0; line-height: 1.4; }
+.text-bar h1 { margin-bottom: 8px; color: #1a1a1a; }
+.text-bar p { color: #666; }
 
 /* VIDEO SECTION */
 .video-section {
@@ -119,12 +103,92 @@ html, body {
   object-fit: cover;
 }
 
+/* SECTION: plain white */
+.section-white {
+  padding: 90px 20px;
+  background: #fff;
+  text-align: center;
+}
+
+/* SECTION: dark charcoal */
+.section-dark {
+  padding: 90px 20px;
+  background: #1a1a1a;
+  text-align: center;
+}
+.section-dark h2 {
+  color: #f5f0eb;
+  font-weight: 400;
+  font-size: 30px;
+  margin-bottom: 12px;
+}
+
+/* SECTION: warm cream */
+.section-warm {
+  padding: 90px 20px;
+  background: #f5f0eb;
+  text-align: center;
+}
+.section-warm h2 {
+  color: #1a1a1a;
+  font-weight: 400;
+  font-size: 30px;
+  margin-bottom: 12px;
+}
+.section-warm p {
+  color: #555;
+  font-size: 19px;
+  line-height: 1.7;
+  font-weight: 300;
+  max-width: 800px;
+  margin: auto;
+}
+
+/* OFFER CARDS */
+.offer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 24px;
+  max-width: 1000px;
+  margin: 40px auto 0;
+}
+.offer-card {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.11);
+  border-radius: 16px;
+  padding: 40px 24px 32px;
+  text-align: center;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+.offer-card:hover {
+  background: rgba(255,255,255,0.10);
+  transform: translateY(-4px);
+}
+.offer-card .offer-icon {
+  font-size: 2.2rem;
+  margin-bottom: 16px;
+  display: block;
+}
+.offer-card h3 {
+  color: #f5f0eb;
+  font-weight: 400;
+  font-size: 1.1rem;
+  margin: 0 0 10px;
+}
+.offer-card p {
+  color: #999;
+  font-size: 0.95rem;
+  line-height: 1.65;
+  font-weight: 300;
+  margin: 0;
+}
+
 /* Buttons */
 .button-center {
   display: flex;
   justify-content: center;
   gap: 20px;
-  margin-top: 40px;
+  margin-top: 48px;
 }
 .btn-large {
   padding: 18px 40px;
@@ -132,123 +196,96 @@ html, body {
   border-radius: 40px;
   text-decoration: none;
   display: inline-block;
-  transition: 0.2s ease;
   font-weight: 600;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, opacity 0.2s ease, background 0.2s ease;
 }
-.btn-black {
-  background: black;
-  color: white;
-}
+.btn-black { background: #1a1a1a; color: white; }
 .btn-black:hover {
-  opacity: 0.3;
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 10px 28px rgba(0,0,0,0.25);
 }
-.btn-white {
-  background: white;
-  color: black;
-  border: 2px solid black;
-}
+.btn-white { background: white; color: #1a1a1a; border: 2px solid #1a1a1a; }
 .btn-white:hover {
-  background: grey;
+  background: #ede8e2;
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 10px 28px rgba(0,0,0,0.12);
 }
 
-/* MOBILE HERO FIX */
-  @media (max-width: 768px) {
-  .hero {
-    height: 500px;
-    padding: 0;
-  }
+/* Section dividers */
+.section-rule {
+  width: 0;
+  height: 2px;
+  margin: 0 auto 36px;
+  transition: width 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.section-rule.light { background: #c8bfb4; }
+.section-rule.dark  { background: rgba(255,255,255,0.18); }
+.section-rule.visible { width: 80px; }
 
+/* MOBILE */
+@media (max-width: 768px) {
+  .hero { height: 500px; padding: 0; }
   .hero-slide {
-    position: absolute;
-    inset: 0;
+    position: absolute; inset: 0;
     background-size: 90% auto;
     background-position: center;
     background-repeat: no-repeat;
   }
+  .hero .dots { bottom: 10px; }
+  .offer-grid { grid-template-columns: 1fr 1fr; }
 }
-  .hero .dots {
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(0,0,0,0.25);
-    padding: 6px 14px;
-  }
+@media (max-width: 480px) {
+  .offer-grid { grid-template-columns: 1fr; }
+  .button-center { flex-direction: column; align-items: center; }
 }
 
 /* =====================
    SCROLL ANIMATIONS
    ===================== */
-
-/* Base state: hidden, further down, slightly scaled */
 .reveal {
   opacity: 0;
   transform: translateY(60px) scale(0.97);
-  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .reveal.visible {
   opacity: 1;
   transform: translateY(0) scale(1);
 }
 
-/* Staggered children */
 .reveal-stagger > * {
   opacity: 0;
-  transform: translateY(50px);
-  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  transform: translateY(50px) scale(0.97);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.reveal-stagger.visible > *:nth-child(1) { opacity: 1; transform: translateY(0); transition-delay: 0s; }
-.reveal-stagger.visible > *:nth-child(2) { opacity: 1; transform: translateY(0); transition-delay: 0.15s; }
-.reveal-stagger.visible > *:nth-child(3) { opacity: 1; transform: translateY(0); transition-delay: 0.3s; }
-.reveal-stagger.visible > *:nth-child(4) { opacity: 1; transform: translateY(0); transition-delay: 0.45s; }
-.reveal-stagger.visible > *:nth-child(5) { opacity: 1; transform: translateY(0); transition-delay: 0.6s; }
+.reveal-stagger.visible > *:nth-child(1) { opacity:1; transform:translateY(0) scale(1); transition-delay:0s; }
+.reveal-stagger.visible > *:nth-child(2) { opacity:1; transform:translateY(0) scale(1); transition-delay:0.13s; }
+.reveal-stagger.visible > *:nth-child(3) { opacity:1; transform:translateY(0) scale(1); transition-delay:0.26s; }
+.reveal-stagger.visible > *:nth-child(4) { opacity:1; transform:translateY(0) scale(1); transition-delay:0.39s; }
 
 /* Text bar */
 .text-bar h1 {
   opacity: 0;
   transform: translateY(30px);
-  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.1s, transform 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.1s;
+  transition: opacity 0.8s cubic-bezier(0.22,1,0.36,1) 0.1s,
+              transform 0.8s cubic-bezier(0.22,1,0.36,1) 0.1s;
 }
 .text-bar p {
   opacity: 0;
   transform: translateY(24px);
-  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.28s, transform 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.28s;
+  transition: opacity 0.8s cubic-bezier(0.22,1,0.36,1) 0.28s,
+              transform 0.8s cubic-bezier(0.22,1,0.36,1) 0.28s;
 }
 .text-bar.visible h1,
-.text-bar.visible p {
-  opacity: 1;
-  transform: translateY(0);
-}
+.text-bar.visible p { opacity:1; transform:translateY(0); }
 
-/* Button hover lift */
-.btn-large {
-  transition: transform 0.25s ease, opacity 0.2s ease, background 0.2s ease, box-shadow 0.25s ease;
-}
-.btn-large:hover {
-  transform: translateY(-5px) scale(1.05);
-  box-shadow: 0 10px 28px rgba(0,0,0,0.18);
-}
-
-/* Section divider */
-.section-rule {
-  width: 0;
-  height: 2px;
-  background: #e0e0e0;
-  margin: 0 auto 40px;
-  transition: width 1.1s cubic-bezier(0.22, 1, 0.36, 1);
-}
-.section-rule.visible {
-  width: 80px;
-}
-
-/* Video wipe-in from bottom */
+/* Video wipe-in */
 .video-section {
   clip-path: inset(100% 0 0 0);
   transition: clip-path 1s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.video-section.visible {
-  clip-path: inset(0% 0 0 0);
-}
-
+.video-section.visible { clip-path: inset(0% 0 0 0); }
   </style>
 </head>
 <body>
@@ -280,11 +317,11 @@ html, body {
   <button id="close-cart">Close</button>
 </div>
 
+<!-- HERO -->
 <section class="hero">
   <div class="hero-slide" style="background-image: url('Product Images/Ship/Front view.jpg');"></div>
-  <div class="hero-slide active" style="background-image: url('Product Images/Rose on Cross/Front view.jpg');"></div>
-  <div class="hero-slide" style="background-image: url('Product Images/Eagle with Isaiah/Side view.jpg');"></div>
-
+  <div class="hero-slide active" style="background-image: url('Product Images/Golden Gate Bridge/Front view.jpg');"></div>
+  <div class="hero-slide" style="background-image: url('Product Images/Big Ben Plaque/Front view.jpg');"></div>
   <div class="dots">
     <span class="dot active" data-index="0"></span>
     <span class="dot" data-index="1"></span>
@@ -292,144 +329,151 @@ html, body {
   </div>
 </section>
 
+<!-- TEXT BAR — warm cream -->
 <section class="text-bar">
-  <h1 style="font-family: 'Quicksand', sans-serif; text-align:center; margin-top:20px; font-weight: 300; font-size: 40px;">Welcome to Mozart Laser</h1>
-  <p style="font-size: 21px; font-weight: 200">Custom engravings with precision and style.</p>
+  <h1 style="font-family:'Quicksand',sans-serif; font-weight:300; font-size:40px;">Welcome to Mozart Laser</h1>
+  <p style="font-size:21px; font-weight:200;">Custom engravings with precision and style.</p>
 </section>
 
-<section class="video-section reveal">
+<!-- VIDEO -->
+<section class="video-section">
   <video autoplay muted loop playsinline>
     <source src="videos/laser.mp4" type="video/mp4">
     Your browser does not support the video tag.
   </video>
 </section>
 
-<main class="page-content" id="mainContent" tabindex="-1">
-  <section style="padding: 60px 20px; max-width: 900px; margin: auto; text-align: center;" class="reveal">
-    <h2 style="font-weight: 400; font-size: 32px; margin-bottom: 20px;">Custom Engraving Made Simple</h2>
-    <hr class="section-rule">
-    <p style="font-size: 19px; line-height: 1.7; font-weight: 300;">
+<!-- CUSTOM ENGRAVING — white -->
+<section class="section-white">
+  <div style="max-width:900px; margin:auto;" class="reveal">
+    <h2 style="font-weight:400; font-size:32px; margin-bottom:16px; color:#1a1a1a;">Custom Engraving Made Simple</h2>
+    <hr class="section-rule light">
+    <p style="font-size:19px; line-height:1.7; font-weight:300; color:#444; max-width:800px; margin:auto;">
       Whether you're personalizing a gift, creating décor, or designing something completely unique—Mozart Laser makes it easy.
       Every engraving is crafted with care using professional equipment and clean, modern design workflows.
     </p>
-  </section>
-
-  <div class="button-center reveal">
-    <a href="create.html" class="btn-large btn-black">Create</a>
-    <a href="products.html" class="btn-large btn-white">Products</a>
-  </div>
-
-  <section style="padding: 60px 20px; background: #fafafa;">
-    <div style="max-width: 1100px; margin: auto;">
-      <h2 style="text-align: center; font-weight: 400; font-size: 30px; margin-bottom: 40px;" class="reveal">What We Offer</h2>
-      <ul style="list-style: none; padding: 0; max-width: 800px; margin: auto; font-size: 19px; font-weight: 300; line-height: 1.8;" class="reveal-stagger">
-        <li>• High-quality wood engravings</li>
-        <li>• Personalized gifts for any occasion</li>
-        <li>• Clean, precise graphics created with professional tools</li>
-        <li>• Fully custom projects starting from your idea, sketch, or design</li>
-      </ul>
+    <div class="button-center">
+      
+      <a href="products.html" class="btn-large btn-white">Products</a>
+		<a href="create.html" class="btn-large btn-black">Create</a>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section style="padding: 60px 20px; max-width: 900px; margin: auto; text-align: center;" class="reveal">
-    <h2 style="font-weight: 400; font-size: 30px; margin-bottom: 20px;">How It Works</h2>
-    <hr class="section-rule">
-    <p style="font-size: 19px; line-height: 1.7; font-weight: 300;">
+<!-- WHAT WE OFFER — dark charcoal -->
+<section class="section-dark">
+  <div class="reveal">
+    <h2>What We Offer</h2>
+    <hr class="section-rule dark">
+  </div>
+  <div class="offer-grid reveal-stagger">
+    <div class="offer-card">
+      <span class="offer-icon">🪵</span>
+      <h3>Wood Engravings</h3>
+      <p>High-quality pieces engraved into natural wood with fine detail and lasting finish.</p>
+    </div>
+    <div class="offer-card">
+      <span class="offer-icon">🎁</span>
+      <h3>Personalized Gifts</h3>
+      <p>Meaningful, custom-made gifts for any occasion — birthdays, weddings, holidays, and more.</p>
+    </div>
+    <div class="offer-card">
+      <span class="offer-icon">✏️</span>
+      <h3>Precision Graphics</h3>
+      <p>Clean, professional designs created with industry-standard tools for crisp results every time.</p>
+    </div>
+    <div class="offer-card">
+      <span class="offer-icon">💡</span>
+      <h3>Fully Custom Projects</h3>
+      <p>Start from your own idea, sketch, or design — we'll bring it to life exactly as you envision it.</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS — warm cream -->
+<section class="section-warm">
+  <div style="max-width:900px; margin:auto;" class="reveal">
+    <h2>How It Works</h2>
+    <hr class="section-rule light">
+    <p>
       Pick from pre-designed products or build something from scratch. Our Create tool guides you through choosing your style,
       adding text or graphics, and sending the final design straight to us for engraving.
     </p>
-  </section>
-</main>
+  </div>
+</section>
 
 <script src="js/navbar.js"></script>
 <script src="js/cart.js"></script>
 
 <script>
 const slides = document.querySelectorAll('.hero-slide');
-const dots = document.querySelectorAll('.dot');
+const dots   = document.querySelectorAll('.dot');
 let currentIndex = 0;
 
 function showSlide(index) {
   index = Number(index);
   slides.forEach((s, i) => s.classList.toggle('active', i === index));
-  dots.forEach((d, i) => d.classList.toggle('active', i === index));
+  dots.forEach((d, i)   => d.classList.toggle('active', i === index));
   currentIndex = index;
 }
 
-let interval = setInterval(() => {
-  let next = (currentIndex + 1) % slides.length;
-  showSlide(next);
-}, 4000);
+let interval = setInterval(() => showSlide((currentIndex + 1) % slides.length), 4000);
 
 dots.forEach(dot => {
   dot.addEventListener('click', () => {
     clearInterval(interval);
     showSlide(dot.dataset.index);
-    interval = setInterval(() => {
-      let next = (currentIndex + 1) % slides.length;
-      showSlide(next);
-    }, 4000);
+    interval = setInterval(() => showSlide((currentIndex + 1) % slides.length), 4000);
   });
 });
 
 const sliderContainer = document.querySelector('.hero');
 let startX = 0;
-
 if (sliderContainer) {
-  sliderContainer.addEventListener('touchstart', (e) => {
-    startX = e.touches[0].clientX;
-  });
-
-  sliderContainer.addEventListener('touchend', (e) => {
-    const endX = e.changedTouches[0].clientX;
-    const diff = startX - endX;
-
+  sliderContainer.addEventListener('touchstart', e => { startX = e.touches[0].clientX; });
+  sliderContainer.addEventListener('touchend', e => {
+    const diff = startX - e.changedTouches[0].clientX;
     if (Math.abs(diff) > 50) {
-      if (diff > 0) {
-        let next = (currentIndex + 1) % slides.length;
-        showSlide(next);
-      } else {
-        let prev = (currentIndex - 1 + slides.length) % slides.length;
-        showSlide(prev);
-      }
-
+      showSlide(diff > 0
+        ? (currentIndex + 1) % slides.length
+        : (currentIndex - 1 + slides.length) % slides.length);
       clearInterval(interval);
-      interval = setInterval(() => {
-        let next = (currentIndex + 1) % slides.length;
-        showSlide(next);
-      }, 4000);
+      interval = setInterval(() => showSlide((currentIndex + 1) % slides.length), 4000);
     }
   });
 }
 
 showSlide(0);
 
-/* =====================
-   SCROLL ANIMATION OBSERVER
-   ===================== */
-const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-stagger, .text-bar, .section-rule');
-
+/* SCROLL ANIMATIONS */
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       entry.target.classList.add('visible');
-      /* For section-rule inside a reveal, trigger it too */
       const rule = entry.target.querySelector('.section-rule');
       if (rule) rule.classList.add('visible');
       observer.unobserve(entry.target);
     }
   });
-}, {
-  threshold: 0.15
-});
+}, { threshold: 0.15 });
 
-revealEls.forEach(el => observer.observe(el));
+document.querySelectorAll('.reveal, .reveal-stagger, .text-bar, .section-rule').forEach(el => observer.observe(el));
 
-/* Text bar triggers immediately since it's near top */
+/* Video wipe */
+const videoObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      videoObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+const video = document.querySelector('.video-section');
+if (video) videoObserver.observe(video);
+
+/* Text bar fires shortly after load */
 const textBar = document.querySelector('.text-bar');
-if (textBar) {
-  setTimeout(() => textBar.classList.add('visible'), 100);
-}
+if (textBar) setTimeout(() => textBar.classList.add('visible'), 120);
 </script>
 
 <footer class="site-footer">
