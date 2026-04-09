@@ -54,15 +54,15 @@ function saveCart() {
 // ============================
 // ADD ITEM TO CART
 // ============================
-function addToCart(name, price) {
+function addToCart(name, price, priceId) {
   price = parseFloat(price);
   if (isNaN(price)) return;
 
-  const existingItem = cart.find(item => item.name === name);
+  const existingItem = cart.find(item => item.priceId === priceId);
   if (existingItem) {
     existingItem.quantity++;
   } else {
-    cart.push({ name, price, quantity: 1 });
+    cart.push({ name, price, priceId, quantity: 1 });
   }
 
   showCart();               // show panel instantly
@@ -159,14 +159,15 @@ document.querySelectorAll('.add-to-cart').forEach(button => {
   button.addEventListener('click', () => {
     const name = button.dataset.name;
     const price = parseFloat(button.dataset.price);
+	const priceId = button.dataset.priceId;
 
     if (!name || isNaN(price)) {
-      console.error("Add to cart error — missing name or price", { name, price, button });
+      console.error("Add to cart error — missing name or price", { name, price, priceId, button });
       alert("This product is not properly configured.");
       return;
     }
 
-    addToCart(name, price);
+    addToCart(name, price, priceId);
   });
 });
 

@@ -109,7 +109,7 @@ The warm tones of the wood combined with the detailed engraving create a classic
 
     <div class="buttons">
       <button class="customize-btn" id="customizeThis" data-product="Big Ben Plaque">Customize This Product</button>
-      <button class="buy-now" id="buyNow" data-name="Big Ben Plaque" data-price="16.99">Buy Now</button>
+      <button class="buy-now" id="buyNow" data-name="Big Ben Plaque" data-price="16.99" data-price-id="price_1TKJvp2c5eOyE1cRUD7Y4VLf">Buy Now</button>
       <button class="add-cart" id="addToCart">Add to Cart</button>
     </div>
   </div>
@@ -150,15 +150,21 @@ The warm tones of the wood combined with the detailed engraving create a classic
   });
 
   document.getElementById("addToCart").addEventListener("click", () => {
-    addToCart("Big Ben Plaque", 16.99);
-  });
+  const button = document.getElementById('buyNow');
+  addToCart(
+    button.dataset.name,
+    parseFloat(button.dataset.price),
+    button.dataset.priceId
+  );
+});
 
   document.getElementById('buyNow').addEventListener('click', async () => {
     const button = document.getElementById('buyNow');
     const name = button.dataset.name;
     const price = parseFloat(button.dataset.price);
+	 const priceId = button.dataset.priceId;
     if (!name || isNaN(price)) { alert("This product is not properly configured."); return; }
-    const singleItemCart = [{ name, price, quantity: 1 }];
+   const singleItemCart = [{ name, priceId, quantity: 1 }];
     try {
       const response = await fetch("https://mozart-backend.onrender.com/create-checkout-session", {
         method: "POST",
