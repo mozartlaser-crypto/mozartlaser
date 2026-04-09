@@ -20,7 +20,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;700&display=swap" rel="stylesheet">
 
 <style>
-/* (kept your styles exactly as provided) */
+/* ── CUSTOM SELECT (unchanged) ── */
 .custom-select { position: relative; font-family: Arial; user-select: none; width: 100%; }
 .select-selected { background-color: #eee; padding: 8px 12px; border: 1px solid #ccc; cursor: pointer; color: #333; text-align: left; position: relative; }
 .select-selected.placeholder { color: #aaa; }
@@ -34,34 +34,351 @@
 .select-items { border-radius: 0 0 6px 6px; }
 select.input-field { -webkit-appearance: none !important; -moz-appearance: none !important; appearance: none !important; background-color: #fafafa !important; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23333' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E") !important; background-repeat: no-repeat !important; background-position: right 12px center !important; background-size: 16px !important; padding-right: 44px !important; cursor: pointer !important; }
 select.input-field::-ms-expand { display: none !important; }
-html, body { margin:0; padding:0; height:100%; font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; background-color: #f7f7f7; }
-.builder-container { max-width: 850px; margin: 120px auto; background:#fff; border-radius:16px; box-shadow:0 6px 24px rgba(0,0,0,0.1); padding:40px 60px; text-align:center; transition: all 0.4s ease; }
+
+/* ── BASE ── */
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Quicksand', sans-serif;
+  background: #f5f3ef;
+  color: #1a1a1a;
+}
+
+/* ── PAGE HEADER (dark band, matches site) ── */
+.page-header {
+  background: #1a1a1a;
+  text-align: center;
+  padding: 80px 20px 60px;
+  margin-top: 70px;
+}
+.page-header h1 {
+  font-size: 2.4rem;
+  font-weight: 300;
+  color: #f0ece4;
+  margin: 0 0 10px;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s cubic-bezier(0.22,1,0.36,1) 0.1s,
+              transform 0.8s cubic-bezier(0.22,1,0.36,1) 0.1s;
+}
+.page-header p {
+  font-size: 1.05rem;
+  font-weight: 300;
+  color: #a89f8f;
+  margin: 0;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s cubic-bezier(0.22,1,0.36,1) 0.25s,
+              transform 0.8s cubic-bezier(0.22,1,0.36,1) 0.25s;
+}
+.page-header.visible h1,
+.page-header.visible p {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── BUILDER CONTAINER ── */
+.builder-container {
+  max-width: 780px;
+  margin: 48px auto 80px;
+  background: #fff;
+  border-radius: 18px;
+  border: 1px solid #e8e3dc;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.07);
+  padding: 48px 60px;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(40px) scale(0.98);
+  transition: opacity 0.8s cubic-bezier(0.22,1,0.36,1) 0.15s,
+              transform 0.8s cubic-bezier(0.22,1,0.36,1) 0.15s;
+}
+.builder-container.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* ── STEP TRANSITIONS (original fadeIn kept) ── */
 .step { display: none; }
 .step.active { display: block; animation: fadeIn 0.45s ease; }
-@keyframes fadeIn { from {opacity:0; transform:translateY(15px);} to {opacity:1; transform:translateY(0);} }
-h2 { font-weight: 300; font-size:2rem; margin-bottom:10px; }
-p.step-desc { color:#666; font-size:1rem; margin-bottom:25px; }
-select, input[type="text"], input[type="file"], textarea { width:100%; padding:12px; border-radius:8px; border:1px solid #ccc; margin-top:8px; margin-bottom:20px; font-size:1rem; transition:0.18s; }
-select:focus, input:focus, textarea:focus { border-color:#111; outline:none; }
-button.next-step, button.prev-step, button#add-to-cart-full, button#add-to-cart-custom { background-color:#111; color:#fff; border:none; border-radius:8px; padding:12px 25px; margin:10px; cursor:pointer; font-size:1rem; }
-button.next-step:hover, button.prev-step:hover, button#add-to-cart:hover, button#add-to-cart-custom:hover { background-color:#333; }
-#total-price { font-size:1.3rem; font-weight:500; margin-top:15px; text-align:right; }
-@media (max-width:600px) { .builder-container { padding:30px 20px; } }
-.input-field { width:100%; padding:12px; margin-bottom:16px; border:1px solid #ccc; border-radius:8px; background-color:#fafafa; font-size:1rem; color:#333; transition:border-color 0.18s ease, box-shadow 0.18s ease; appearance:none; }
-.input-field:focus { outline:none; border-color:#5c6bc0; box-shadow:0 0 0 3px rgba(92,107,192,0.12); }
-.error { border-color: #d9534f !important; box-shadow: 0 0 0 4px rgba(217,83,79,0.06) !important; }
-.row { display:flex; gap:12px; align-items:center; justify-content:center; flex-wrap:wrap; }
-.option-card { border: 1px solid #eee; border-radius:10px; padding:14px; width:100%; max-width:380px; cursor:pointer; transition: box-shadow 0.18s, transform 0.12s; text-align:left; }
-.option-card:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.06); transform: translateY(-4px); }
-.option-radio { margin-right:12px; transform: scale(1.15); }
-.option-title { font-weight:600; margin-bottom:6px; }
-.option-desc { color:#666; font-size:0.95rem; }
-textarea.input-field { min-height:90px; resize:vertical; }
-#summary, #summary_custom { min-height: 120px; }
-.select-existing-container { margin-top: 18px; text-align: center; max-width: 480px; margin-left: auto; margin-right: auto; }
-.select-existing-container label { display: block; font-weight: 500; margin-bottom: 6px; }
-@media (max-width: 650px) { .step1-options { flex-direction: column; align-items: center; } .step1-options .option-card { max-width: 100%; } }
-.product-preview { width: 100%; max-width: 400px; margin: 15px auto; display:block; border:1px solid #ccc; border-radius:8px; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── STEP PROGRESS INDICATOR ── */
+.step-indicator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 36px;
+}
+.step-dot {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #e8e3dc;
+  color: #aaa;
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s ease, color 0.3s ease;
+  flex-shrink: 0;
+}
+.step-dot.active {
+  background: #1a1a1a;
+  color: #f0ece4;
+}
+.step-dot.done {
+  background: #c9c0b4;
+  color: #fff;
+}
+.step-line {
+  width: 48px;
+  height: 2px;
+  background: #e8e3dc;
+  transition: background 0.3s ease;
+  flex-shrink: 0;
+}
+.step-line.done {
+  background: #c9c0b4;
+}
+
+/* ── TYPOGRAPHY ── */
+h2 {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 300;
+  font-size: 1.9rem;
+  margin-bottom: 8px;
+  color: #1a1a1a;
+}
+p.step-desc {
+  color: #888;
+  font-size: 0.97rem;
+  margin-bottom: 28px;
+  font-weight: 300;
+}
+
+/* ── SECTION DIVIDER ── */
+.step-rule {
+  width: 60px;
+  height: 2px;
+  background: #e0dbd3;
+  margin: 0 auto 28px;
+}
+
+/* ── FORM ELEMENTS ── */
+label {
+  display: block;
+  text-align: left;
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: #555;
+  margin-bottom: 4px;
+  margin-top: 4px;
+}
+.input-field {
+  width: 100%;
+  padding: 12px 14px;
+  margin-bottom: 18px;
+  border: 1.5px solid #ddd8d0;
+  border-radius: 8px;
+  background: #fafaf8;
+  font-size: 0.97rem;
+  font-family: 'Quicksand', sans-serif;
+  color: #333;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
+  box-sizing: border-box;
+  appearance: none;
+}
+.input-field:focus {
+  outline: none;
+  border-color: #1a1a1a;
+  box-shadow: 0 0 0 3px rgba(26,26,26,0.07);
+}
+select.input-field {
+  background-color: #fafaf8 !important;
+}
+textarea.input-field {
+  min-height: 90px;
+  resize: vertical;
+}
+.error {
+  border-color: #c0392b !important;
+  box-shadow: 0 0 0 3px rgba(192,57,43,0.08) !important;
+}
+
+/* ── OPTION CARDS ── */
+.row {
+  display: flex;
+  gap: 14px;
+  align-items: stretch;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.option-card {
+  border: 1.5px solid #e0dbd3;
+  border-radius: 12px;
+  padding: 18px 20px;
+  width: 100%;
+  max-width: 340px;
+  cursor: pointer;
+  transition: box-shadow 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+  text-align: left;
+  background: #fafaf8;
+}
+.option-card:hover {
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  transform: translateY(-3px);
+  border-color: #bbb;
+}
+.option-radio { margin-right: 12px; transform: scale(1.15); accent-color: #1a1a1a; }
+.option-title { font-weight: 600; margin-bottom: 5px; font-size: 0.97rem; color: #1a1a1a; }
+.option-desc { color: #888; font-size: 0.88rem; font-weight: 300; }
+
+/* ── PRODUCT PREVIEW ── */
+.product-preview {
+  width: 100%;
+  max-width: 340px;
+  margin: 12px auto 20px;
+  display: block;
+  border: 1px solid #e0dbd3;
+  border-radius: 10px;
+  background: #f5f3ef;
+}
+
+/* ── SELECT EXISTING ── */
+.select-existing-container {
+  margin-top: 20px;
+  text-align: center;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.select-existing-container label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 6px;
+  text-align: center;
+  color: #555;
+}
+
+/* ── SUMMARY BOX ── */
+#summary, #summary_custom {
+  min-height: 120px;
+  background: #f5f3ef;
+  border: 1px solid #e0dbd3;
+  border-radius: 10px;
+  padding: 18px 20px;
+  text-align: left;
+  font-size: 0.95rem;
+  font-weight: 300;
+  color: #333;
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+
+/* ── PRICE ── */
+#total-price, #total-price-custom {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-top: 8px;
+  text-align: right;
+  color: #1a1a1a;
+}
+
+/* ── VERIFY SECTION ── */
+.verify-section {
+  margin-top: 20px;
+  text-align: left;
+  background: #f5f3ef;
+  border: 1px solid #e0dbd3;
+  border-radius: 10px;
+  padding: 20px 22px;
+  margin-bottom: 20px;
+}
+
+/* ── BUTTONS ── */
+button.next-step,
+button.prev-step,
+button#add-to-cart-full,
+button#add-to-cart-custom {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 13px 30px;
+  border: none;
+  border-radius: 40px;
+  cursor: pointer;
+  margin: 8px 6px 0;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+button.next-step,
+button#add-to-cart-full,
+button#add-to-cart-custom {
+  background: #1a1a1a;
+  color: #f0ece4;
+}
+button.next-step:hover,
+button#add-to-cart-full:hover,
+button#add-to-cart-custom:hover {
+  background: #333;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+button.prev-step {
+  background: transparent;
+  color: #555;
+  border: 1.5px solid #ccc;
+}
+button.prev-step:hover {
+  background: #f0ece4;
+  border-color: #aaa;
+  transform: translateY(-2px);
+}
+
+/* Delete file button */
+#delete-file, #delete-file-custom {
+  background: #c0392b;
+  color: #fff;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 0.9rem;
+  transition: background 0.2s ease;
+  white-space: nowrap;
+}
+#delete-file:hover, #delete-file-custom:hover { background: #a93226; }
+
+/* Note text */
+.upload-note {
+  font-size: 0.88rem;
+  color: #888;
+  margin-top: 4px;
+  margin-bottom: 16px;
+  line-height: 1.6;
+  text-align: left;
+  font-weight: 300;
+}
+.upload-note strong {
+  color: #555;
+  font-weight: 600;
+}
+
+/* ── MOBILE ── */
+@media (max-width: 650px) {
+  .builder-container { padding: 30px 20px; margin: 32px 16px 60px; }
+  .step1-options { flex-direction: column; align-items: center; }
+  .step1-options .option-card { max-width: 100%; }
+  .page-header { padding: 70px 20px 50px; }
+  .page-header h1 { font-size: 1.9rem; }
+  .step-line { width: 28px; }
+}
 </style>
 </head>
 <body>
@@ -72,9 +389,9 @@ textarea.input-field { min-height:90px; resize:vertical; }
     <a href="index.html"><img src="images/mozartlaserlogo.png" alt="MozartLaser" class="logo"></a>
     <nav class="main-nav">
       <ul>
-        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="index.html">Home</a></li>
         <li><a href="products.html">Products</a></li>
-        <li><a href="create.html">Create</a></li>
+        <li><a href="create.html" class="active">Create</a></li>
         <li><a href="About.html">About</a></li>
       </ul>
     </nav>
@@ -95,13 +412,29 @@ textarea.input-field { min-height:90px; resize:vertical; }
   <button id="close-cart">Close</button>
 </div>
 
+<!-- DARK PAGE HEADER -->
+<div class="page-header" id="pageHeader">
+  <h1>Create Your Engraving</h1>
+  <p>Customize an existing design or start from scratch — we'll bring it to life.</p>
+</div>
+
 <!-- BUILDER -->
 <main>
-  <div class="builder-container">
+  <div class="builder-container" id="builderContainer">
+
+    <!-- STEP PROGRESS DOTS -->
+    <div class="step-indicator" id="stepIndicator">
+      <div class="step-dot active" id="dot1">1</div>
+      <div class="step-line" id="line1"></div>
+      <div class="step-dot" id="dot2">2</div>
+      <div class="step-line" id="line2"></div>
+      <div class="step-dot" id="dot3">3</div>
+    </div>
 
     <!-- STEP 1: CHOOSE FLOW -->
     <div class="step active" id="step1">
-      <h2>Step 1: Select a Product</h2>
+      <h2>Select a Product</h2>
+      <hr class="step-rule">
       <p class="step-desc">Pick an option. "Customize a Product" lets you choose an existing product and request changes. "Create your own" starts the fully-custom flow.</p>
 
       <div class="row step1-options">
@@ -127,7 +460,7 @@ textarea.input-field { min-height:90px; resize:vertical; }
       </div>
 
       <div class="select-existing-container">
-        <label id="select-existing-label" for="select-existing">Please pick a product: <br> (Look at Products Page for reference)</label>
+        <label id="select-existing-label" for="select-existing">Please pick a product:<br><span style="font-weight:300; color:#aaa;">(Look at Products Page for reference)</span></label>
         <select id="select-existing" class="input-field">
           <option value="">-- Select a product to customize --</option>
           <option value="Cross with Scripture">Cross with Scripture — Plaque</option>
@@ -137,13 +470,14 @@ textarea.input-field { min-height:90px; resize:vertical; }
       </div>
 
       <div style="margin-top:20px;">
-        <button type="button" class="next-step" id="step1-next">Next</button>
+        <button type="button" class="next-step" id="step1-next">Next →</button>
       </div>
     </div>
 
     <!-- STEP 2 FULL FLOW -->
     <div class="step" id="step2">
-      <h2>Step 2: Customize Your Engraving</h2>
+      <h2>Customize Your Engraving</h2>
+      <hr class="step-rule">
 
       <p><strong>Selected product:</strong> <span id="selected-product-text-full">None</span></p>
       <img src="images/placeholder.png" id="product-preview-full" class="product-preview" alt="Product Preview">
@@ -177,65 +511,65 @@ textarea.input-field { min-height:90px; resize:vertical; }
 
       <label for="upload-file">Upload Design or Image (optional)</label>
       <div style="display:flex; gap:8px; align-items:center;">
-        <input type="file" id="upload-file" accept="image/*" class="input-field" style="flex:1;">
-        <button type="button" id="delete-file" style="background:#d9534f;color:#fff;border:none;padding:8px 12px;border-radius:6px;cursor:pointer;">Delete</button>
+        <input type="file" id="upload-file" accept="image/*" class="input-field" style="flex:1; margin-bottom:0;">
+        <button type="button" id="delete-file">Delete</button>
       </div>
-      <p style="font-size:0.9em; color:#555; margin-top:5px;">
+      <p class="upload-note">
         Please upload a file only if you want a design or image.<br>
-        <br>
-		  <strong>Images sh/mozartlaserould be simple, with a clear, distinct subject.</strong><br>
-        <strong>Graphic design additional at an additional fee - please email mozartlaser@gmail.com</strong>
+        <strong>Images should be simple, with a clear, distinct subject.</strong><br>
+        <strong>Graphic design at an additional fee — please email <a href="mailto:mozartlaser@gmail.com" style="color:#555;">mozartlaser@gmail.com</a></strong>
       </p>
 
       <label for="file-placement">File Placement (only necessary if you uploaded a file)</label>
       <input type="text" id="file-placement" class="input-field" placeholder="Describe how the design/image should be placed">
 
-      <div class="buttons">
-        <button class="prev-step" data-prev="step1">Back</button>
-        <button class="next-step" data-next="step3">Next</button>
+      <div class="buttons" style="margin-top:8px;">
+        <button class="prev-step" data-prev="step1">← Back</button>
+        <button class="next-step" data-next="step3">Next →</button>
       </div>
     </div>
 
     <!-- STEP 2 CUSTOMIZE FLOW -->
     <div class="step" id="step2_custom">
-      <h2>Step 2: Describe Changes</h2>
+      <h2>Describe Your Changes</h2>
+      <hr class="step-rule">
       <p class="step-desc">Tell us what you'd like changed from the selected product, and upload a design if needed.</p>
 
       <p><strong>Selected product:</strong> <span id="selected-product-text">None</span></p>
       <img src="images/placeholder.png" id="product-preview-custom" class="product-preview" alt="Product Preview">
 
-
       <label for="custom-changes">Requested changes / notes</label>
       <textarea id="custom-changes" class="input-field" rows="4" placeholder="Describe the changes (text edits, size, placement, etc.)"></textarea>
 
-     
       <label for="upload-file-custom">Upload Design or Image (optional)</label>
       <div style="display:flex; gap:8px; align-items:center;">
-        <input type="file" id="upload-file-custom" accept="image/*" class="input-field" style="flex:1;">
-        <button type="button" id="delete-file-custom" style="background:#d9534f;color:#fff;border:none;padding:8px 12px;border-radius:6px;cursor:pointer;">Delete</button>
+        <input type="file" id="upload-file-custom" accept="image/*" class="input-field" style="flex:1; margin-bottom:0;">
+        <button type="button" id="delete-file-custom">Delete</button>
       </div>
-<p style="font-size:0.9em; color:#555; margin-top:5px;">
-        Please upload a file only if you want a design or image.<br><br>
-		 <strong> Images should be simple, with a clear, distinct subject.</strong><br><br>
-        <strong>Graphic design additional at an additional fee - please email mozartlaser@gmail.com</strong>
+      <p class="upload-note">
+        Please upload a file only if you want a design or image.<br>
+        <strong>Images should be simple, with a clear, distinct subject.</strong><br>
+        <strong>Graphic design at an additional fee — please email <a href="mailto:mozartlaser@gmail.com" style="color:#555;">mozartlaser@gmail.com</a></strong>
       </p>
+
       <label for="file-placement-custom">File Placement (optional)</label>
       <input type="text" id="file-placement-custom" class="input-field" placeholder="Describe how the design/image should be placed">
 
-      <div class="buttons">
-        <button type="button" class="prev-step" data-prev="step1">Back</button>
-        <button type="button" class="next-step" data-next="step3_custom">Next</button>
+      <div class="buttons" style="margin-top:8px;">
+        <button type="button" class="prev-step" data-prev="step1">← Back</button>
+        <button type="button" class="next-step" data-next="step3_custom">Next →</button>
       </div>
     </div>
 
     <!-- STEP 3 FULL REVIEW -->
     <div class="step" id="step3">
-      <h2>Step 3: Review & Add to Cart</h2>
+      <h2>Review & Add to Cart</h2>
+      <hr class="step-rule">
       <p class="step-desc">Check your selections below before adding to cart.</p>
-      <div id="summary" style="text-align:left;"></div>
+      <div id="summary"></div>
       <p id="total-price">Total: $0.00</p>
 
-      <div class="verify-section" style="margin-top:20px; text-align:left;">
+      <div class="verify-section">
         <label for="verify-name">Your Full Name</label>
         <input type="text" id="verify-name" class="input-field" placeholder="Enter your full name" required>
         <label for="verify-email">Your Email</label>
@@ -243,18 +577,19 @@ textarea.input-field { min-height:90px; resize:vertical; }
         <label for="verify-email-confirm">Confirm Email</label>
         <input type="email" id="verify-email-confirm" class="input-field" placeholder="Re-enter your email" required>
       </div>
-      <button type="button" class="prev-step" data-prev="step2">Back</button>
+      <button type="button" class="prev-step" data-prev="step2">← Back</button>
       <button type="button" id="add-to-cart-full">Add to Cart</button>
     </div>
 
     <!-- STEP 3 CUSTOM REVIEW -->
     <div class="step" id="step3_custom">
-      <h2>Step 3: Review & Add to Cart</h2>
+      <h2>Review & Add to Cart</h2>
+      <hr class="step-rule">
       <p class="step-desc">Confirm your customizations and add to cart.</p>
-      <div id="summary_custom" style="text-align:left;"></div>
+      <div id="summary_custom"></div>
       <p id="total-price-custom">Total: $0.00</p>
 
-      <div class="verify-section" style="margin-top:20px; text-align:left;">
+      <div class="verify-section">
         <label for="verify-name-custom">Your Full Name</label>
         <input type="text" id="verify-name-custom" class="input-field" placeholder="Enter your full name" required>
         <label for="verify-email-custom">Your Email</label>
@@ -262,17 +597,17 @@ textarea.input-field { min-height:90px; resize:vertical; }
         <label for="verify-email-confirm-custom">Confirm Email</label>
         <input type="email" id="verify-email-confirm-custom" class="input-field" placeholder="Re-enter your email" required>
       </div>
-      <button type="button" class="prev-step" data-prev="step2_custom">Back</button>
+      <button type="button" class="prev-step" data-prev="step2_custom">← Back</button>
       <button type="button" id="add-to-cart-custom">Add to Cart</button>
     </div>
 
-  </div>
+  </div><!-- /builder-container -->
 </main>
 
-<!-- Hidden iframe for form submission -->
+<!-- Hidden iframe -->
 <iframe name="submit-frame" style="display:none;"></iframe>
 
-<!-- Hidden form (FormBackend) -->
+<!-- Hidden form (FormBackend) — untouched -->
 <form id="sendForm" style="display:none;"
       method="POST"
       action="https://www.formbackend.com/f/8a1738ba071ca12a"
@@ -309,9 +644,56 @@ textarea.input-field { min-height:90px; resize:vertical; }
   </div>
 </footer>
 
-<!-- SCRIPTS -->
+<!-- SCRIPTS — original JS files untouched -->
 <script src="js/navbar.js"></script>
 <script src="js/cart.js"></script>
 <script src="js/create.js"></script>
+
+<!-- Step indicator sync (purely visual, does not touch flow logic) -->
+<script>
+/* Page header + builder animate in on load */
+setTimeout(() => document.getElementById('pageHeader').classList.add('visible'), 80);
+setTimeout(() => document.getElementById('builderContainer').classList.add('visible'), 180);
+
+/* Update the step dots whenever a step becomes active.
+   We watch for class changes on .step elements using a MutationObserver
+   so we never interfere with create.js. */
+function getActiveStepId() {
+  const active = document.querySelector('.step.active');
+  return active ? active.id : null;
+}
+
+function updateDots(stepId) {
+  const map = {
+    'step1':        1,
+    'step2':        2,
+    'step2_custom': 2,
+    'step3':        3,
+    'step3_custom': 3,
+  };
+  const current = map[stepId] || 1;
+
+  [1, 2, 3].forEach(n => {
+    const dot = document.getElementById('dot' + n);
+    dot.classList.remove('active', 'done');
+    if (n < current)  dot.classList.add('done');
+    if (n === current) dot.classList.add('active');
+  });
+  [1, 2].forEach(n => {
+    const line = document.getElementById('line' + n);
+    line.classList.toggle('done', n < current);
+  });
+}
+
+/* Observe class changes on all steps */
+document.querySelectorAll('.step').forEach(step => {
+  new MutationObserver(() => {
+    if (step.classList.contains('active')) updateDots(step.id);
+  }).observe(step, { attributes: true, attributeFilter: ['class'] });
+});
+
+updateDots(getActiveStepId());
+</script>
+
 </body>
 </html>

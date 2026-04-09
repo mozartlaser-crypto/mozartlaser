@@ -7,6 +7,7 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
+
   gtag('config', 'G-GNESH4PWH6');
 </script>
   <meta charset="utf-8" />
@@ -27,9 +28,10 @@ html, body {
   padding: 0;
   height: 100%;
   font-family: 'Quicksand', sans-serif;
+  background: #f5f3ef;
 }
 
-/* HERO */
+/* ── HERO ─────────────────────────────────── */
 .hero {
   position: relative;
   width: 100%;
@@ -37,6 +39,7 @@ html, body {
   overflow: hidden;
   margin-top: 70px;
 }
+
 .hero-slide {
   position: absolute;
   top: 0; left: 0;
@@ -44,11 +47,15 @@ html, body {
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
-  background-color: white;
+  background-color: #f5f3ef;
   opacity: 0;
   transition: opacity 1s ease-in-out;
 }
-.hero-slide.active { opacity: 1; z-index: 1; }
+
+.hero-slide.active {
+  opacity: 1;
+  z-index: 1;
+}
 
 /* DOTS */
 .hero .dots {
@@ -57,6 +64,7 @@ html, body {
   width: fit-content;
   left: 50%;
   transform: translateX(-50%);
+  text-align: center;
   z-index: 10;
   background: rgba(0,0,0,0.25);
   padding: 6px 14px;
@@ -72,21 +80,58 @@ html, body {
   cursor: pointer;
   transition: background-color 0.3s;
 }
-.hero .dot.active { background-color: rgba(255,255,255,1); }
+.hero .dot.active {
+  background-color: rgba(255,255,255,1);
+}
 
-/* TEXT BAR — warm cream */
+/* ── TEXT BAR ─────────────────────────────── */
 .text-bar {
   width: 100%;
-  background: #f5f0eb;
-  padding: 28px 0;
+  background: #1a1a1a;
+  padding: 32px 0;
   text-align: center;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.10);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.25);
 }
-.text-bar h1, .text-bar p { margin: 0; line-height: 1.4; }
-.text-bar h1 { margin-bottom: 8px; color: #1a1a1a; }
-.text-bar p { color: #666; }
+.text-bar h1 {
+  margin: 0 0 8px;
+  line-height: 1.4;
+  color: #f0ece4;
+}
+.text-bar p {
+  margin: 0;
+  line-height: 1.4;
+  color: #a89f8f;
+}
 
-/* VIDEO SECTION */
+/* ── BUTTONS — original style, placed right after text bar ── */
+.button-center {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 40px 20px 50px;
+}
+.btn-large {
+  padding: 18px 40px;
+  font-size: 1.4rem;
+  border-radius: 40px;
+  text-decoration: none;
+  display: inline-block;
+  font-weight: 600;
+  font-family: 'Quicksand', sans-serif;
+}
+.btn-black {
+  background: black;
+  color: white;
+}
+.btn-black:hover { opacity: 0.3; }
+.btn-white {
+  background: white;
+  color: black;
+  border: 2px solid black;
+}
+.btn-white:hover { background: grey; }
+
+/* ── VIDEO SECTION ────────────────────────── */
 .video-section {
   width: 100%;
   background: #000;
@@ -103,145 +148,169 @@ html, body {
   object-fit: cover;
 }
 
-/* SECTION: plain white */
-.section-white {
-  padding: 90px 20px;
-  background: #fff;
+/* ── INTRO SECTION ────────────────────────── */
+.section-intro {
+  padding: 70px 20px;
+  max-width: 900px;
+  margin: auto;
   text-align: center;
 }
-
-/* SECTION: dark charcoal */
-.section-dark {
-  padding: 90px 20px;
-  background: #1a1a1a;
-  text-align: center;
-}
-.section-dark h2 {
-  color: #f5f0eb;
+.section-intro h2 {
   font-weight: 400;
-  font-size: 30px;
-  margin-bottom: 12px;
-}
-
-/* SECTION: warm cream */
-.section-warm {
-  padding: 90px 20px;
-  background: #f5f0eb;
-  text-align: center;
-}
-.section-warm h2 {
+  font-size: 32px;
+  margin-bottom: 16px;
   color: #1a1a1a;
-  font-weight: 400;
-  font-size: 30px;
-  margin-bottom: 12px;
 }
-.section-warm p {
-  color: #555;
+.section-intro p {
   font-size: 19px;
   line-height: 1.7;
   font-weight: 300;
+  color: #444;
+}
+
+/* ── WHAT WE OFFER ────────────────────────── */
+.section-offer {
+  padding: 70px 20px;
+  background: #1a1a1a;
+}
+.section-offer h2 {
+  text-align: center;
+  font-weight: 400;
+  font-size: 30px;
+  margin-bottom: 16px;
+  color: #f0ece4;
+}
+.offer-list {
+  list-style: none;
+  padding: 0;
   max-width: 800px;
   margin: auto;
-}
-
-/* OFFER CARDS */
-.offer-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 24px;
-  max-width: 1000px;
-  margin: 40px auto 0;
-}
-.offer-card {
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.11);
-  border-radius: 16px;
-  padding: 40px 24px 32px;
-  text-align: center;
-  transition: background 0.3s ease, transform 0.3s ease;
-}
-.offer-card:hover {
-  background: rgba(255,255,255,0.10);
-  transform: translateY(-4px);
-}
-.offer-card .offer-icon {
-  font-size: 2.2rem;
-  margin-bottom: 16px;
-  display: block;
-}
-.offer-card h3 {
-  color: #f5f0eb;
-  font-weight: 400;
-  font-size: 1.1rem;
-  margin: 0 0 10px;
-}
-.offer-card p {
-  color: #999;
-  font-size: 0.95rem;
-  line-height: 1.65;
+  font-size: 19px;
   font-weight: 300;
-  margin: 0;
+  line-height: 1.8;
+  color: #c8bfb0;
+}
+.offer-list li {
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+.offer-list li:last-child { border-bottom: none; }
+
+/* ── TRUST DETAILS — inside "How It Works" area, clean bullet list ── */
+.trust-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto;
+  max-width: 520px;
+  font-size: 17px;
+  font-weight: 300;
+  color: #555;
+  line-height: 1.9;
+  text-align: left;
+}
+.trust-list li::before {
+  content: '–';
+  margin-right: 10px;
+  color: #aaa;
 }
 
-/* Buttons */
-.button-center {
+/* ── HOW IT WORKS ─────────────────────────── */
+.section-how {
+  padding: 70px 20px;
+  max-width: 900px;
+  margin: auto;
+  text-align: center;
+}
+.section-how h2 {
+  font-weight: 400;
+  font-size: 30px;
+  margin-bottom: 16px;
+  color: #1a1a1a;
+}
+.section-how p {
+  font-size: 19px;
+  line-height: 1.7;
+  font-weight: 300;
+  color: #444;
+  margin-bottom: 32px;
+}
+
+/* ── SOCIAL PROOF ─────────────────────────── */
+.proof-strip {
+  background: #f0ece4;
+  border-top: 1px solid #ddd8d0;
+  border-bottom: 1px solid #ddd8d0;
+  padding: 60px 20px;
+  text-align: center;
+}
+.proof-strip h3 {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 300;
+  font-size: 1.05rem;
+  color: #999;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin: 0 0 36px;
+}
+.proof-quotes {
   display: flex;
   justify-content: center;
-  gap: 20px;
-  margin-top: 48px;
+  gap: 24px;
+  flex-wrap: wrap;
+  max-width: 1000px;
+  margin: auto;
 }
-.btn-large {
-  padding: 18px 40px;
-  font-size: 1.4rem;
-  border-radius: 40px;
-  text-decoration: none;
-  display: inline-block;
+.proof-quote {
+  background: #fff;
+  border: 1px solid #e0dbd3;
+  border-radius: 14px;
+  padding: 28px 28px 22px;
+  max-width: 280px;
+  text-align: left;
+  flex: 1 1 220px;
+}
+.proof-stars {
+  color: #b8934a;
+  font-size: 0.95rem;
+  margin-bottom: 12px;
+  letter-spacing: 2px;
+}
+.proof-quote p {
+  font-size: 1rem;
+  font-weight: 300;
+  color: #333;
+  line-height: 1.65;
+  margin: 0 0 14px;
+}
+.proof-author {
+  font-size: 0.85rem;
   font-weight: 600;
-  transition: transform 0.25s ease, box-shadow 0.25s ease, opacity 0.2s ease, background 0.2s ease;
-}
-.btn-black { background: #1a1a1a; color: white; }
-.btn-black:hover {
-  transform: translateY(-5px) scale(1.05);
-  box-shadow: 0 10px 28px rgba(0,0,0,0.25);
-}
-.btn-white { background: white; color: #1a1a1a; border: 2px solid #1a1a1a; }
-.btn-white:hover {
-  background: #ede8e2;
-  transform: translateY(-5px) scale(1.05);
-  box-shadow: 0 10px 28px rgba(0,0,0,0.12);
+  color: #999;
 }
 
-/* Section dividers */
-.section-rule {
-  width: 0;
-  height: 2px;
-  margin: 0 auto 36px;
-  transition: width 1.1s cubic-bezier(0.22, 1, 0.36, 1);
-}
-.section-rule.light { background: #c8bfb4; }
-.section-rule.dark  { background: rgba(255,255,255,0.18); }
-.section-rule.visible { width: 80px; }
-
-/* MOBILE */
+/* ── MOBILE ───────────────────────────────── */
 @media (max-width: 768px) {
   .hero { height: 500px; padding: 0; }
   .hero-slide {
-    position: absolute; inset: 0;
+    position: absolute;
+    inset: 0;
     background-size: 90% auto;
     background-position: center;
     background-repeat: no-repeat;
   }
-  .hero .dots { bottom: 10px; }
-  .offer-grid { grid-template-columns: 1fr 1fr; }
-}
-@media (max-width: 480px) {
-  .offer-grid { grid-template-columns: 1fr; }
-  .button-center { flex-direction: column; align-items: center; }
+  .hero .dots {
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .proof-quotes { flex-direction: column; align-items: center; }
+  .proof-quote { max-width: 100%; }
 }
 
 /* =====================
    SCROLL ANIMATIONS
    ===================== */
+
 .reveal {
   opacity: 0;
   transform: translateY(60px) scale(0.97);
@@ -255,14 +324,14 @@ html, body {
 
 .reveal-stagger > * {
   opacity: 0;
-  transform: translateY(50px) scale(0.97);
+  transform: translateY(50px);
   transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
               transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.reveal-stagger.visible > *:nth-child(1) { opacity:1; transform:translateY(0) scale(1); transition-delay:0s; }
-.reveal-stagger.visible > *:nth-child(2) { opacity:1; transform:translateY(0) scale(1); transition-delay:0.13s; }
-.reveal-stagger.visible > *:nth-child(3) { opacity:1; transform:translateY(0) scale(1); transition-delay:0.26s; }
-.reveal-stagger.visible > *:nth-child(4) { opacity:1; transform:translateY(0) scale(1); transition-delay:0.39s; }
+.reveal-stagger.visible > *:nth-child(1) { opacity:1; transform:translateY(0); transition-delay:0s; }
+.reveal-stagger.visible > *:nth-child(2) { opacity:1; transform:translateY(0); transition-delay:0.15s; }
+.reveal-stagger.visible > *:nth-child(3) { opacity:1; transform:translateY(0); transition-delay:0.3s; }
+.reveal-stagger.visible > *:nth-child(4) { opacity:1; transform:translateY(0); transition-delay:0.45s; }
 
 /* Text bar */
 .text-bar h1 {
@@ -278,14 +347,60 @@ html, body {
               transform 0.8s cubic-bezier(0.22,1,0.36,1) 0.28s;
 }
 .text-bar.visible h1,
-.text-bar.visible p { opacity:1; transform:translateY(0); }
+.text-bar.visible p {
+  opacity: 1;
+  transform: translateY(0);
+}
 
-/* Video wipe-in */
+/* Buttons */
+.btn-large {
+  transition: transform 0.25s ease, opacity 0.2s ease,
+              background 0.2s ease, box-shadow 0.25s ease;
+}
+.btn-large:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 10px 28px rgba(0,0,0,0.18);
+}
+
+/* Section dividers */
+.section-rule {
+  width: 0;
+  height: 2px;
+  background: #c9c0b4;
+  margin: 0 auto 36px;
+  transition: width 1.1s cubic-bezier(0.22,1,0.36,1);
+}
+.section-rule.visible { width: 80px; }
+
+.section-rule-dark {
+  width: 0;
+  height: 2px;
+  background: rgba(255,255,255,0.15);
+  margin: 0 auto 40px;
+  transition: width 1.1s cubic-bezier(0.22,1,0.36,1);
+}
+.section-rule-dark.visible { width: 80px; }
+
+/* Video wipe */
 .video-section {
   clip-path: inset(100% 0 0 0);
-  transition: clip-path 1s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: clip-path 1s cubic-bezier(0.22,1,0.36,1);
 }
-.video-section.visible { clip-path: inset(0% 0 0 0); }
+.video-section.visible {
+  clip-path: inset(0% 0 0 0);
+}
+
+/* Proof quotes */
+.proof-quote {
+  opacity: 0;
+  transform: translateY(40px) scale(0.97);
+  transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1),
+              transform 0.7s cubic-bezier(0.22,1,0.36,1);
+}
+.proof-quote.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
   </style>
 </head>
 <body>
@@ -329,11 +444,17 @@ html, body {
   </div>
 </section>
 
-<!-- TEXT BAR — warm cream -->
+<!-- TEXT BAR -->
 <section class="text-bar">
   <h1 style="font-family:'Quicksand',sans-serif; font-weight:300; font-size:40px;">Welcome to Mozart Laser</h1>
   <p style="font-size:21px; font-weight:200;">Custom engravings with precision and style.</p>
 </section>
+
+<!-- BUTTONS — right under hero/text bar, high on page -->
+<div class="button-center reveal">
+  <a href="create.html" class="btn-large btn-black">Create</a>
+  <a href="products.html" class="btn-large btn-white">Products</a>
+</div>
 
 <!-- VIDEO -->
 <section class="video-section">
@@ -343,77 +464,81 @@ html, body {
   </video>
 </section>
 
-<!-- CUSTOM ENGRAVING — white -->
-<section class="section-white">
-  <div style="max-width:900px; margin:auto;" class="reveal">
-    <h2 style="font-weight:400; font-size:32px; margin-bottom:16px; color:#1a1a1a;">Custom Engraving Made Simple</h2>
-    <hr class="section-rule light">
-    <p style="font-size:19px; line-height:1.7; font-weight:300; color:#444; max-width:800px; margin:auto;">
+<main class="page-content" id="mainContent" tabindex="-1">
+
+  <div class="section-intro reveal">
+    <h2>Custom Engraving Made Simple</h2>
+    <hr class="section-rule">
+    <p>
       Whether you're personalizing a gift, creating décor, or designing something completely unique—Mozart Laser makes it easy.
       Every engraving is crafted with care using professional equipment and clean, modern design workflows.
     </p>
-    <div class="button-center">
-      
-      <a href="products.html" class="btn-large btn-white">Products</a>
-		<a href="create.html" class="btn-large btn-black">Create</a>
-    </div>
   </div>
-</section>
 
-<!-- WHAT WE OFFER — dark charcoal -->
-<section class="section-dark">
-  <div class="reveal">
-    <h2>What We Offer</h2>
-    <hr class="section-rule dark">
-  </div>
-  <div class="offer-grid reveal-stagger">
-    <div class="offer-card">
-      <span class="offer-icon">🪵</span>
-      <h3>Wood Engravings</h3>
-      <p>High-quality pieces engraved into natural wood with fine detail and lasting finish.</p>
-    </div>
-    <div class="offer-card">
-      <span class="offer-icon">🎁</span>
-      <h3>Personalized Gifts</h3>
-      <p>Meaningful, custom-made gifts for any occasion — birthdays, weddings, holidays, and more.</p>
-    </div>
-    <div class="offer-card">
-      <span class="offer-icon">✏️</span>
-      <h3>Precision Graphics</h3>
-      <p>Clean, professional designs created with industry-standard tools for crisp results every time.</p>
-    </div>
-    <div class="offer-card">
-      <span class="offer-icon">💡</span>
-      <h3>Fully Custom Projects</h3>
-      <p>Start from your own idea, sketch, or design — we'll bring it to life exactly as you envision it.</p>
-    </div>
-  </div>
-</section>
+  <!-- WHAT WE OFFER -->
+  <section class="section-offer">
+    <h2 class="reveal">What We Offer</h2>
+    <hr class="section-rule-dark reveal">
+    <ul class="offer-list reveal-stagger">
+      <li>• High-quality wood engravings</li>
+      <li>• Personalized gifts for any occasion</li>
+      <li>• Clean, precise graphics created with professional tools</li>
+      <li>• Fully custom projects starting from your idea, sketch, or design</li>
+    </ul>
+  </section>
 
-<!-- HOW IT WORKS — warm cream -->
-<section class="section-warm">
-  <div style="max-width:900px; margin:auto;" class="reveal">
+  <!-- HOW IT WORKS + trust details -->
+  <div class="section-how reveal">
     <h2>How It Works</h2>
-    <hr class="section-rule light">
+    <hr class="section-rule">
     <p>
       Pick from pre-designed products or build something from scratch. Our Create tool guides you through choosing your style,
       adding text or graphics, and sending the final design straight to us for engraving.
     </p>
+    <ul class="trust-list">
+      <li>Premium hardwood materials</li>
+      <li>Hand-finished in California</li>
+      <li>Ships within 3–5 business days</li>
+      <li>Custom orders welcome — reach out anytime</li>
+    </ul>
   </div>
-</section>
+
+  <!-- SOCIAL PROOF -->
+  <section class="proof-strip">
+    <h3>What customers say</h3>
+    <div class="proof-quotes">
+      <div class="proof-quote">
+        <div class="proof-stars">★★★★★</div>
+        <p>"The detail on this piece is unreal. It looks like something you'd find in a high-end boutique, not a small business."</p>
+        <p class="proof-author">— Sarah M.</p>
+      </div>
+      <div class="proof-quote">
+        <div class="proof-stars">★★★★★</div>
+        <p>"Bought this as a gift for my dad. He actually teared up. The quality and the scripture on it made it feel really special."</p>
+        <p class="proof-author">— James R.</p>
+      </div>
+      <div class="proof-quote">
+        <div class="proof-stars">★★★★★</div>
+        <p>"Came quickly, packaged beautifully, and the engraving was crisp and clean. Already ordered a second one."</p>
+        <p class="proof-author">— Leah T.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
 
 <script src="js/navbar.js"></script>
 <script src="js/cart.js"></script>
 
 <script>
 const slides = document.querySelectorAll('.hero-slide');
-const dots   = document.querySelectorAll('.dot');
+const dots = document.querySelectorAll('.dot');
 let currentIndex = 0;
 
 function showSlide(index) {
   index = Number(index);
-  slides.forEach((s, i) => s.classList.toggle('active', i === index));
-  dots.forEach((d, i)   => d.classList.toggle('active', i === index));
+  slides.forEach((s,i) => s.classList.toggle('active', i === index));
+  dots.forEach((d,i) => d.classList.toggle('active', i === index));
   currentIndex = index;
 }
 
@@ -445,35 +570,38 @@ if (sliderContainer) {
 
 showSlide(0);
 
-/* SCROLL ANIMATIONS */
+/* ── SCROLL ANIMATIONS ── */
+const revealEls = document.querySelectorAll(
+  '.reveal, .reveal-stagger, .text-bar, .section-rule, .section-rule-dark, .video-section'
+);
+
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       entry.target.classList.add('visible');
-      const rule = entry.target.querySelector('.section-rule');
+      const rule = entry.target.querySelector('.section-rule, .section-rule-dark');
       if (rule) rule.classList.add('visible');
       observer.unobserve(entry.target);
     }
   });
-}, { threshold: 0.15 });
+}, { threshold: 0.1 });
 
-document.querySelectorAll('.reveal, .reveal-stagger, .text-bar, .section-rule').forEach(el => observer.observe(el));
+revealEls.forEach(el => observer.observe(el));
 
-/* Video wipe */
-const videoObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
+const textBar = document.querySelector('.text-bar');
+if (textBar) setTimeout(() => textBar.classList.add('visible'), 100);
+
+/* Proof quotes stagger */
+const proofQuotes = document.querySelectorAll('.proof-quote');
+const proofObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
     if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-      videoObserver.unobserve(entry.target);
+      setTimeout(() => entry.target.classList.add('visible'), i * 150);
+      proofObserver.unobserve(entry.target);
     }
   });
-}, { threshold: 0.1 });
-const video = document.querySelector('.video-section');
-if (video) videoObserver.observe(video);
-
-/* Text bar fires shortly after load */
-const textBar = document.querySelector('.text-bar');
-if (textBar) setTimeout(() => textBar.classList.add('visible'), 120);
+}, { threshold: 0.15 });
+proofQuotes.forEach(q => proofObserver.observe(q));
 </script>
 
 <footer class="site-footer">

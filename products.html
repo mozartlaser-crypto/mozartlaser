@@ -31,153 +31,247 @@
 html, body {
   margin: 0;
   padding: 0;
-  height: 100%;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Quicksand', sans-serif;
+  background: #f5f3ef;
 }
 
 .page-content {
   padding-top: 100px;
 }
 
+/* ── PAGE HEADER ─────────────────────────── */
+.page-header {
+  text-align: center;
+  padding: 10px 20px 30px;
+}
+.page-header h2 {
+  font-weight: 300;
+  font-size: 2.2rem;
+  color: #1a1a1a;
+  margin: 0 0 6px;
+}
+.page-header p {
+  font-size: 1rem;
+  font-weight: 300;
+  color: #777;
+  margin: 0;
+}
+
+/* ── FILTER BAR ──────────────────────────── */
+.filter-bar {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 0 20px 36px;
+}
+.filter-btn {
+  padding: 8px 20px;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border-radius: 30px;
+  border: 1.5px solid #ccc;
+  background: #fff;
+  color: #555;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.filter-btn:hover {
+  border-color: #888;
+  color: #1a1a1a;
+}
+.filter-btn.active {
+  background: #1a1a1a;
+  color: #f0ece4;
+  border-color: #1a1a1a;
+}
+
+/* ── PRODUCT GRID ────────────────────────── */
 .products-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 20px;
-  padding: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 24px;
+  padding: 0 24px 60px;
   max-width: 1200px;
   margin: 0 auto;
 }
 
+/* ── PRODUCT CARD ────────────────────────── */
 .product-card {
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  text-align: center;
-  padding: 15px;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  background: #fff;
+  border-radius: 14px;
+  border: 1px solid #e8e3dc;
+  overflow: hidden;
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.25s cubic-bezier(0.22,1,0.36,1),
+              box-shadow 0.25s cubic-bezier(0.22,1,0.36,1);
+  position: relative;
 }
-
 .product-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 12px 28px rgba(0,0,0,0.15);
+  box-shadow: 0 16px 36px rgba(0,0,0,0.12);
 }
 
-.product-card img {
+/* Fixed-height image container — no more <br> spacers */
+.card-image {
   width: 100%;
-  height: auto;
-  border-radius: 8px;
-  object-fit: cover;
+  height: 220px;
+  overflow: hidden;
+  background: #f5f3ef;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 12px;
+  box-sizing: border-box;
+  transition: transform 0.4s cubic-bezier(0.22,1,0.36,1);
+}
+.product-card:hover .card-image img {
+  transform: scale(1.04);
 }
 
-.product-card h3 {
-  margin: 10px 0 5px;
-  font-size: 1.1rem;
+/* Card body */
+.card-body {
+  padding: 16px 18px 20px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.card-title {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #1a1a1a;
+  margin: 0 0 6px;
+  line-height: 1.4;
+}
+.card-desc {
+  font-size: 0.88rem;
+  font-weight: 300;
+  color: #777;
+  line-height: 1.5;
+  margin: 0 0 14px;
+  flex: 1;
 }
 
-.product-card p {
+/* Price row */
+.card-price {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.price-current {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+.price-original {
   font-size: 0.9rem;
-  color: #555;
+  font-weight: 300;
+  color: #aaa;
+  text-decoration: line-through;
 }
 
+/* Sale badge */
+.sale-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: #1a1a1a;
+  color: #f0ece4;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  padding: 4px 10px;
+  border-radius: 20px;
+  z-index: 2;
+  text-transform: uppercase;
+}
+
+/* Button group */
 .button-group {
   display: flex;
-  gap: 10px;
-  justify-content: center;
-  align-items: center;
+  gap: 8px;
   flex-wrap: wrap;
 }
-
 .button-group > .add-to-cart,
 .button-group > .details-btn {
+  flex: 1;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 44px;
-  padding: 10px 16px;
-  font-size: 0.95rem;
-  border-radius: 6px;
+  min-height: 40px;
+  padding: 9px 14px;
+  font-size: 0.88rem;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 600;
+  border-radius: 8px;
   box-sizing: border-box;
   text-decoration: none;
   cursor: pointer;
-  border: 1px solid;
+  border: 1.5px solid;
   line-height: 1;
+  transition: background 0.18s ease, transform 0.15s ease;
 }
-
 .button-group > .add-to-cart {
-  background-color: #111;
-  color: #fff;
-  border-color: #111;
+  background: #1a1a1a;
+  color: #f0ece4;
+  border-color: #1a1a1a;
 }
-
 .button-group > .add-to-cart:hover {
-  background-color: #333;
+  background: #333;
+  transform: translateY(-1px);
 }
-
 .button-group > .details-btn {
-  background-color: #fff;
-  color: #111;
-  border-color: #ccc;
+  background: transparent;
+  color: #555;
+  border-color: #ddd;
 }
-
 .button-group > .details-btn:hover {
-  background-color: #f3f3f3;
+  background: #f5f3ef;
+  border-color: #bbb;
+  transform: translateY(-1px);
 }
 
 @media (max-width: 480px) {
-  .button-group {
-    flex-direction: column;
-    align-items: stretch;
-  }
-  .button-group > .add-to-cart,
-  .button-group > .details-btn {
-    width: 100%;
-  }
+  .button-group { flex-direction: column; }
 }
 
-#categoryFilter {
-  padding: 6px 10px;
-  font-size: 0.95rem;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-}
-
-.hidden {
-  display: none !important;
-}
+/* ── HIDDEN (filter) ─────────────────────── */
+.hidden { display: none !important; }
 
 /* =====================
    SCROLL ANIMATIONS
    ===================== */
-
 .reveal {
   opacity: 0;
   transform: translateY(40px);
-  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
-              transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1),
+              transform 0.7s cubic-bezier(0.22,1,0.36,1);
 }
 .reveal.visible {
   opacity: 1;
   transform: translateY(0);
 }
 
-/* Product cards: start hidden, animate in when observed */
 .product-card {
   opacity: 0;
   transform: translateY(50px) scale(0.97);
-  /* transition already set above — we extend it here */
-  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
-              transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
-              box-shadow 0.2s ease;
 }
 .product-card.visible {
   opacity: 1;
   transform: translateY(0) scale(1);
 }
-/* Keep hover working after visible */
 .product-card.visible:hover {
   transform: translateY(-6px) scale(1) !important;
-  box-shadow: 0 12px 28px rgba(0,0,0,0.15);
 }
 </style>
 </head>
@@ -192,16 +286,13 @@ html, body {
     <nav class="main-nav">
       <ul>
         <li><a href="index.html">Home</a></li>
-        <li><a href="products.html">Products</a></li>
+        <li><a href="products.html" class="active">Products</a></li>
         <li><a href="create.html">Create</a></li>
         <li><a href="About.html">About</a></li>
       </ul>
     </nav>
-    <div class="hamburger">
-      <span></span><span></span><span></span>
-    </div>
+    <div class="hamburger"><span></span><span></span><span></span></div>
   </div>
-
   <div class="cart-icon" id="cart-icon">
     <img src="images/cart-icon.png" alt="Cart">
     <span id="cart-count">0</span>
@@ -217,180 +308,193 @@ html, body {
 </div>
 
 <main class="page-content" id="mainContent">
-  <h2 style="text-align:center; margin-top:20px; font-weight:100; font-size:32px;" class="reveal">Our Products</h2>
 
-  <div style="text-align:center; margin:20px 0;" class="reveal">
-    <label for="categoryFilter">Filter by:</label>
-    <select id="categoryFilter">
-      <option value="all">All Products</option>
-      <option value="scripture">Scripture</option>
-      <option value="art">Art</option>
-      <option value="landmarks">Landmarks</option>
-      <option value="bookmarks">Bookmarks</option>
-    </select>
+  <div class="page-header reveal">
+    <h2>Our Products</h2>
+    <p>Handcrafted laser engravings, made in California</p>
+  </div>
+
+  <!-- Pill filter buttons replace the dropdown -->
+  <div class="filter-bar reveal">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="scripture">Scripture</button>
+    <button class="filter-btn" data-filter="art">Art</button>
+    <button class="filter-btn" data-filter="landmarks">Landmarks</button>
+    <button class="filter-btn" data-filter="bookmarks">Bookmarks</button>
   </div>
 
   <section class="products-grid">
-	  
-	   <div class="product-card" data-category="landmarks" data-link="Big Ben Plaque.html">
-      <br><br><br><br><br>
-      <img src="Product Images/Big Ben Plaque/Front view.jpg">
-      <br><br><br><br>
-      <h3>Big Ben Plaque</h3>
-		   <span style="color: #999999; text-decoration: line-through;">$19.99</span>
-      <h3>$16.99</h3>
-      <p>A stunning engraving of Big Ben into a wooden poplar wood plaque.</p>
-      <div class="button-group">
-        <button class="add-to-cart" data-id="7" data-name="Big Ben Plaque" data-price="16.99">Add to Cart</button>
-        <a href="Big Ben Plaque.html" class="details-btn">See Details</a>
+
+    <div class="product-card" data-category="landmarks" data-link="Big Ben Plaque.html">
+      <span class="sale-badge">Sale</span>
+      <div class="card-image"><img src="Product Images/Big Ben Plaque/Front view.jpg" alt="Big Ben Plaque"></div>
+      <div class="card-body">
+        <p class="card-title">Big Ben Plaque</p>
+        <p class="card-desc">A stunning engraving of Big Ben into a wooden poplar wood plaque.</p>
+        <div class="card-price">
+          <span class="price-current">$16.99</span>
+          <span class="price-original">$19.99</span>
+        </div>
+        <div class="button-group">
+          <button class="add-to-cart" data-id="7" data-name="Big Ben Plaque" data-price="16.99">Add to Cart</button>
+          <a href="Big Ben Plaque.html" class="details-btn">Details</a>
+        </div>
       </div>
     </div>
 
     <div class="product-card" data-category="bookmarks" data-link="Tolkien bookmark.html">
-      <img src="Product Images/Tolkien bookmark/Front view.jpg">
-      <h3>Tolkien Quote Bookmark</h3>
-      <h3>$7.99</h3>
-      <p>Bookmark with a quote from J.R.R. Tolkiens <em>Lord of the Rings</em>, paired with a quill pen illuminated by the moon.</p>
-      <div class="button-group">
-        <button class="add-to-cart" data-id="10" data-name="Tolkien Quote Bookmark" data-price="7.99">Add to Cart</button>
-        <a href="Tolkien bookmark.html" class="details-btn">See Details</a>
+      <div class="card-image"><img src="Product Images/Tolkien bookmark/Front view.jpg" alt="Tolkien Quote Bookmark"></div>
+      <div class="card-body">
+        <p class="card-title">Tolkien Quote Bookmark</p>
+        <p class="card-desc">A quote from Tolkien's <em>Lord of the Rings</em>, paired with a quill pen illuminated by the moon.</p>
+        <div class="card-price"><span class="price-current">$7.99</span></div>
+        <div class="button-group">
+          <button class="add-to-cart" data-id="10" data-name="Tolkien Quote Bookmark" data-price="7.99">Add to Cart</button>
+          <a href="Tolkien bookmark.html" class="details-btn">Details</a>
+        </div>
       </div>
     </div>
 
     <div class="product-card" data-category="bookmarks" data-link="Jane Austen bookmark.html">
-      <img src="Product Images/Jane Austen bookmark/Front view.jpg">
-      <h3>Jane Austen Quote Bookmark</h3>
-      <h3>$7.99</h3>
-      <p>Bookmark with a literary design and beautiful quote from Jane Austen.</p>
-      <div class="button-group">
-        <button class="add-to-cart" data-id="11" data-name="Jane Austen Quote Bookmark" data-price="7.99">Add to Cart</button>
-        <a href="Jane Austen bookmark.html" class="details-btn">See Details</a>
+      <div class="card-image"><img src="Product Images/Jane Austen bookmark/Front view.jpg" alt="Jane Austen Quote Bookmark"></div>
+      <div class="card-body">
+        <p class="card-title">Jane Austen Quote Bookmark</p>
+        <p class="card-desc">A beautiful literary design with a timeless quote from Jane Austen.</p>
+        <div class="card-price"><span class="price-current">$7.99</span></div>
+        <div class="button-group">
+          <button class="add-to-cart" data-id="11" data-name="Jane Austen Quote Bookmark" data-price="7.99">Add to Cart</button>
+          <a href="Jane Austen bookmark.html" class="details-btn">Details</a>
+        </div>
       </div>
     </div>
 
     <div class="product-card" data-category="bookmarks" data-link="Literary Bookmarks 2 pack.html">
-      <img src="Product Images/Literary Bookmarks 2 pack/Front view.jpg">
-      <h3>Literary Quote Bookmark Pack</h3>
-      <h3>$12.00</h3>
-      <p>Pack of 2 bookmarks with quotes from Tolkien and Jane Austen</p>
-      <div class="button-group">
-        <button class="add-to-cart" data-id="12" data-name="Literary Quote Bookmark Pack" data-price="12.00">Add to Cart</button>
-        <a href="Literary Bookmarks 2 pack.html" class="details-btn">See Details</a>
+      <div class="card-image"><img src="Product Images/Literary Bookmarks 2 pack/Front view.jpg" alt="Literary Quote Bookmark Pack"></div>
+      <div class="card-body">
+        <p class="card-title">Literary Quote Bookmark Pack</p>
+        <p class="card-desc">Pack of 2 — quotes from Tolkien and Jane Austen. Great as a gift.</p>
+        <div class="card-price"><span class="price-current">$12.00</span></div>
+        <div class="button-group">
+          <button class="add-to-cart" data-id="12" data-name="Literary Quote Bookmark Pack" data-price="12.00">Add to Cart</button>
+          <a href="Literary Bookmarks 2 pack.html" class="details-btn">Details</a>
+        </div>
       </div>
     </div>
 
     <div class="product-card" data-category="art" data-link="Moon.html">
-      <img src="Product Images/Moon/Front view.jpg">
-		<br><br><br><br>
-      <h3>Lunar Surface Moon Plaque</h3>
-		<span style="color: #999999; text-decoration: line-through;">$29.99</span>
-      <h3>$19.99</h3>
-      <p>A textured moon relief engraved into natural wood.</p>
-      <div class="button-group">
-        <button class="add-to-cart" data-id="12" data-name="Lunar Surface Moon Plaque – Hand-Finished Laser Engraved Wood" data-price="19.99">Add to Cart</button>
-        <a href="Moon.html" class="details-btn">See Details</a>
+      <span class="sale-badge">Sale</span>
+      <div class="card-image"><img src="Product Images/Moon/Front view.jpg" alt="Lunar Surface Moon Plaque"></div>
+      <div class="card-body">
+        <p class="card-title">Lunar Surface Moon Plaque</p>
+        <p class="card-desc">A textured moon relief engraved into natural wood. Hand-finished.</p>
+        <div class="card-price">
+          <span class="price-current">$19.99</span>
+          <span class="price-original">$29.99</span>
+        </div>
+        <div class="button-group">
+          <button class="add-to-cart" data-id="12" data-name="Lunar Surface Moon Plaque – Hand-Finished Laser Engraved Wood" data-price="19.99">Add to Cart</button>
+          <a href="Moon.html" class="details-btn">Details</a>
+        </div>
       </div>
     </div>
 
     <div class="product-card" data-category="landmarks" data-link="Golden Gate Bridge.html">
-      <br><br><br><br><br>
-      <img src="Product Images/Golden Gate Bridge/Front view.jpg">
-      <br><br><br><br><br><br>
-      <h3>Golden Gate Bridge Plaque</h3>
-		<span style="color: #999999; text-decoration: line-through;">$25.99</span>
-      <h3>$16.99</h3>
-      <p>Detailed Image of the Golden Gate Bridge engraved in Wood</p>
-      <div class="button-group">
-        <button class="add-to-cart" data-id="7" data-name="Golden Gate Bridge Plaque" data-price="16.99">Add to Cart</button>
-        <a href="Golden Gate Bridge.html" class="details-btn">See Details</a>
+      <span class="sale-badge">Sale</span>
+      <div class="card-image"><img src="Product Images/Golden Gate Bridge/Front view.jpg" alt="Golden Gate Bridge Plaque"></div>
+      <div class="card-body">
+        <p class="card-title">Golden Gate Bridge Plaque</p>
+        <p class="card-desc">Detailed engraving of the Golden Gate Bridge, laser-cut into wood.</p>
+        <div class="card-price">
+          <span class="price-current">$16.99</span>
+          <span class="price-original">$25.99</span>
+        </div>
+        <div class="button-group">
+          <button class="add-to-cart" data-id="7" data-name="Golden Gate Bridge Plaque" data-price="16.99">Add to Cart</button>
+          <a href="Golden Gate Bridge.html" class="details-btn">Details</a>
+        </div>
       </div>
     </div>
 
     <div class="product-card" data-category="landmarks" data-link="Catalina.html">
-      <br><br><br><br><br>
-      <img src="Product Images/Catalina/Front view.jpg">
-      <br><br><br><br><br>
-      <h3>Avalon Bay, Catalina Island Laser Engraved Plaque</h3>
-		<span style="color: #999999; text-decoration: line-through;">$25.99</span>
-      <h3>$16.99</h3>
-      <p>Laser Engraved image of Avalon Bay in Catalina Island</p>
-      <div class="button-group">
-        <button class="add-to-cart" data-id="9" data-name="Avalon Bay, Catalina Island Laser Engraved Plaque" data-price="16.99">Add to Cart</button>
-        <a href="Catalina.html" class="details-btn">See Details</a>
+      <span class="sale-badge">Sale</span>
+      <div class="card-image"><img src="Product Images/Catalina/Front view.jpg" alt="Avalon Bay Catalina Plaque"></div>
+      <div class="card-body">
+        <p class="card-title">Avalon Bay, Catalina Island Plaque</p>
+        <p class="card-desc">Laser engraved image of Avalon Bay on Catalina Island.</p>
+        <div class="card-price">
+          <span class="price-current">$16.99</span>
+          <span class="price-original">$25.99</span>
+        </div>
+        <div class="button-group">
+          <button class="add-to-cart" data-id="9" data-name="Avalon Bay, Catalina Island Laser Engraved Plaque" data-price="16.99">Add to Cart</button>
+          <a href="Catalina.html" class="details-btn">Details</a>
+        </div>
       </div>
     </div>
 
     <div class="product-card" data-category="art" data-link="ship.html">
-      <img src="Product Images/Ship/Front view.jpg">
-      <h3>Wooden Cutting Board with Ship</h3>
-      <h3>$74.99</h3>
-      <p>Ornate Acacia Wood Cutting Board with highly detailed ship engraving.</p>
-      <div class="button-group">
-        <button class="add-to-cart" data-id="6" data-name="Train Plaque" data-price="74.99">Add to Cart</button>
-        <a href="ship.html" class="details-btn">See Details</a>
+      <div class="card-image"><img src="Product Images/Ship/Front view.jpg" alt="Wooden Cutting Board with Ship"></div>
+      <div class="card-body">
+        <p class="card-title">Wooden Cutting Board with Ship</p>
+        <p class="card-desc">Ornate Acacia wood cutting board with a highly detailed ship engraving.</p>
+        <div class="card-price"><span class="price-current">$74.99</span></div>
+        <div class="button-group">
+          <button class="add-to-cart" data-id="6" data-name="Wooden Cutting Board with Ship" data-price="74.99">Add to Cart</button>
+          <a href="ship.html" class="details-btn">Details</a>
+        </div>
       </div>
     </div>
 
     <div class="product-card" data-category="art" data-link="Animal Plaque.html">
-      <br><br><br><br>
-      <img src="Product Images/Animal Plaque/Display.JPG">
-      <br><br><br><br>
-      <h3>Custom Animal Plaque</h3>
-      <h3>$24.99</h3>
-      <p>Have a picture of your pet engraved into a custom wooden plaque!</p>
-      <div class="button-group">
-        <br>
-        <a href="Animal Plaque.html" class="details-btn">See Details</a>
+      <div class="card-image"><img src="Product Images/Animal Plaque/Display.JPG" alt="Custom Animal Plaque"></div>
+      <div class="card-body">
+        <p class="card-title">Custom Animal Plaque</p>
+        <p class="card-desc">Have a photo of your pet engraved into a custom wooden plaque. Unique every time.</p>
+        <div class="card-price"><span class="price-current">$24.99</span></div>
+        <div class="button-group">
+          <a href="Animal Plaque.html" class="details-btn" style="flex:1;">See Details</a>
+        </div>
       </div>
     </div>
 
     <div class="product-card" data-category="scripture" data-link="Rose on Cross.html">
-      <br>
-      <img src="Product Images/Rose on Cross/Front view.jpg">
-      <h3>Cross Design with John 14:27</h3>
-      <h3>$15.00</h3>
-      <p>Wooden plaque with an ornate cross and Scripture verse.</p>
-      <div class="button-group">
-        <button class="add-to-cart" data-id="1" data-name="Cross with Scripture" data-price="15.00">Add to Cart</button>
-        <a href="Rose on Cross.html" class="details-btn">See Details</a>
+      <div class="card-image"><img src="Product Images/Rose on Cross/Front view.jpg" alt="Cross Design with John 14:27"></div>
+      <div class="card-body">
+        <p class="card-title">Cross Design with John 14:27</p>
+        <p class="card-desc">Wooden plaque with an ornate cross and Scripture verse.</p>
+        <div class="card-price"><span class="price-current">$15.00</span></div>
+        <div class="button-group">
+          <button class="add-to-cart" data-id="1" data-name="Cross with Scripture" data-price="15.00">Add to Cart</button>
+          <a href="Rose on Cross.html" class="details-btn">Details</a>
+        </div>
       </div>
     </div>
 
     <div class="product-card" data-category="scripture" data-link="Dove.html">
-      <br><br><br>
-      <img src="Product Images/Dove with Psalm/Front view.jpg">
-      <h3>Wooden Dove Plaque - Psalm 46:5</h3>
-      <h3>$16.99</h3>
-      <p>Christian Wall Décor Gift</p>
-      <div class="button-group">
-        <button class="add-to-cart" data-id="3" data-name="Wooden Dove Plaque - Psalm 46:5" data-price="16.99">Add to Cart</button>
-        <a href="Dove.html" class="details-btn">See Details</a>
+      <div class="card-image"><img src="Product Images/Dove with Psalm/Front view.jpg" alt="Wooden Dove Plaque"></div>
+      <div class="card-body">
+        <p class="card-title">Wooden Dove Plaque — Psalm 46:5</p>
+        <p class="card-desc">Christian wall décor. A beautiful gift for any occasion.</p>
+        <div class="card-price"><span class="price-current">$16.99</span></div>
+        <div class="button-group">
+          <button class="add-to-cart" data-id="3" data-name="Wooden Dove Plaque - Psalm 46:5" data-price="16.99">Add to Cart</button>
+          <a href="Dove.html" class="details-btn">Details</a>
+        </div>
       </div>
     </div>
 
-    <div class="product-card" data-category="scripture" data-link="Eagle with Isaiah.html">
-      <br><br><br>
-      <img src="Product Images/Eagle with Isaiah/Front view.jpg">
-      <h3>"Wings Like Eagles" - Isaiah 40:31 Eagle Plaque</h3>
-      <h3>$12.99</h3>
-      <p>Laser Engraved Wooden Scripture Plaque with Eagle and Isaiah 40:31</p>
-      <div class="button-group">
-        <button class="add-to-cart" data-id="4" data-name="Wings Like Eagles - Isaiah 40:31 Wooden Plaque" data-price="12.99">Add to Cart</button>
-        <a href="Eagle with Isaiah.html" class="details-btn">See Details</a>
-      </div>
-    </div>
-
+   
 
     <div class="product-card" data-category="art" data-link="train.html">
-      <br><br><br>
-      <img src="Product Images/Train/Front-view.jpg">
-      <br><br><br><br><br>
-      <h3>Detailed Classic Train Engraving</h3>
-      <h3>$19.99</h3>
-      <p>Wooden Plaque with detailed engraving of a classic steam engine.</p>
-      <div class="button-group">
-        <button class="add-to-cart" data-id="2" data-name="Train Plaque" data-price="19.99">Add to Cart</button>
-        <a href="train.html" class="details-btn">See Details</a>
+      <div class="card-image"><img src="Product Images/Train/Front-view.jpg" alt="Classic Train Engraving"></div>
+      <div class="card-body">
+        <p class="card-title">Detailed Classic Train Engraving</p>
+        <p class="card-desc">Wooden plaque with a detailed engraving of a classic steam engine.</p>
+        <div class="card-price"><span class="price-current">$19.99</span></div>
+        <div class="button-group">
+          <button class="add-to-cart" data-id="2" data-name="Train Plaque" data-price="19.99">Add to Cart</button>
+          <a href="train.html" class="details-btn">Details</a>
+        </div>
       </div>
     </div>
 
@@ -412,29 +516,30 @@ html, body {
 <script src="js/cart.js"></script>
 
 <script>
+/* ── CARD CLICK ── */
 document.querySelectorAll('.product-card').forEach(card => {
   card.addEventListener('click', () => {
     const link = card.dataset.link;
     if (link) window.location.href = link;
   });
 });
-
 document.querySelectorAll('.product-card button, .product-card a').forEach(el => {
   el.addEventListener('click', e => e.stopPropagation());
 });
 
-document.getElementById('categoryFilter').addEventListener('change', function () {
-  const selected = this.value;
-  document.querySelectorAll('.product-card').forEach(card => {
-    card.classList.toggle('hidden', selected !== 'all' && card.dataset.category !== selected);
+/* ── PILL FILTER ── */
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', function () {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+    const selected = this.dataset.filter;
+    document.querySelectorAll('.product-card').forEach(card => {
+      card.classList.toggle('hidden', selected !== 'all' && card.dataset.category !== selected);
+    });
   });
 });
 
-/* =====================
-   SCROLL ANIMATION OBSERVER
-   ===================== */
-
-// Heading + filter bar
+/* ── SCROLL ANIMATIONS ── */
 const revealEls = document.querySelectorAll('.reveal');
 const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
@@ -446,23 +551,23 @@ const revealObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.15 });
 revealEls.forEach(el => revealObserver.observe(el));
 
-// Product cards — staggered by their position in the grid
 const cards = document.querySelectorAll('.product-card');
 const cardObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
-      // Find index among visible (non-hidden) cards in the same row batch
       const card = entry.target;
-      const allCards = [...cards].filter(c => !c.classList.contains('hidden'));
-      const idx = allCards.indexOf(card);
-      const delay = (idx % 4) * 100; // stagger within each row of up to 4
-      setTimeout(() => {
+      const isMobile = window.innerWidth < 600;
+      if (isMobile) {
         card.classList.add('visible');
-      }, delay);
+      } else {
+        const allCards = [...cards].filter(c => !c.classList.contains('hidden'));
+        const idx = allCards.indexOf(card);
+        setTimeout(() => card.classList.add('visible'), (idx % 4) * 80);
+      }
       cardObserver.unobserve(card);
     }
   });
-}, { threshold: 0.1 });
+}, { threshold: 0.05 });
 cards.forEach(card => cardObserver.observe(card));
 </script>
 
