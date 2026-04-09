@@ -317,6 +317,7 @@ html, body {
   <!-- Pill filter buttons replace the dropdown -->
   <div class="filter-bar reveal">
     <button class="filter-btn active" data-filter="all">All</button>
+	   <button class="filter-btn" data-filter="sale">Sale</button>
     <button class="filter-btn" data-filter="scripture">Scripture</button>
     <button class="filter-btn" data-filter="art">Art</button>
     <button class="filter-btn" data-filter="landmarks">Landmarks</button>
@@ -325,7 +326,7 @@ html, body {
 
   <section class="products-grid">
 
-    <div class="product-card" data-category="landmarks" data-link="Big Ben Plaque.html">
+    <div class="product-card" data-category="landmarks sale"  data-link="Big Ben Plaque.html">
       <span class="sale-badge">Sale</span>
       <div class="card-image"><img src="Product Images/Big Ben Plaque/Front view.jpg" alt="Big Ben Plaque"></div>
       <div class="card-body">
@@ -381,7 +382,7 @@ html, body {
       </div>
     </div>
 
-    <div class="product-card" data-category="art" data-link="Moon.html">
+    <div class="product-card" data-category="art sale" data-link="Moon.html">
       <span class="sale-badge">Sale</span>
       <div class="card-image"><img src="Product Images/Moon/Front view.jpg" alt="Lunar Surface Moon Plaque"></div>
       <div class="card-body">
@@ -398,7 +399,7 @@ html, body {
       </div>
     </div>
 
-    <div class="product-card" data-category="landmarks" data-link="Golden Gate Bridge.html">
+    <div class="product-card" data-category="landmarks sale" data-link="Golden Gate Bridge.html">
       <span class="sale-badge">Sale</span>
       <div class="card-image"><img src="Product Images/Golden Gate Bridge/Front view.jpg" alt="Golden Gate Bridge Plaque"></div>
       <div class="card-body">
@@ -415,7 +416,7 @@ html, body {
       </div>
     </div>
 
-    <div class="product-card" data-category="landmarks" data-link="Catalina.html">
+    <div class="product-card" data-category="landmarks sale" data-link="Catalina.html">
       <span class="sale-badge">Sale</span>
       <div class="card-image"><img src="Product Images/Catalina/Front view.jpg" alt="Avalon Bay Catalina Plaque"></div>
       <div class="card-body">
@@ -534,7 +535,10 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
     this.classList.add('active');
     const selected = this.dataset.filter;
     document.querySelectorAll('.product-card').forEach(card => {
-      card.classList.toggle('hidden', selected !== 'all' && card.dataset.category !== selected);
+     card.classList.toggle(
+  'hidden',
+  selected !== 'all' && !card.dataset.category.split(' ').includes(selected)
+);
     });
   });
 });
