@@ -64,13 +64,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // Product prices & images
   // ---------------------
   const existingProductPrices = {
-    "Wooden Dove Plaque - Psalm 46:5": 34.99,
-    "Cross Design with Bible Verse": 34.99,
-    "Detailed Classic Train Engraving": 29.99,
-    "“Wings Like Eagles” - Isaiah 40:31 Wooden Eagle Plaque": 34.99,
-    "“Be Still” Psalm 46:10 – Wooden Sword Scripture Plaque": 24.99,
+    "Wooden Dove Plaque - Psalm 46:5": 19.99,
+    "Cross Design with Bible Verse": 15.99,
+    "Detailed Classic Train Engraving": 18.99,
 	  "Wooden Cutting Board with Ship":79.99,
-	  "Golden Gate Bridge Plaque":41.99,
+	  "Golden Gate Bridge Plaque":21.99,
 	  "Custom Animal Plaque":24.99,
 	  "Avalon Bay, Catalina Island Laser Engraved Plaque": 19.99,
 	  "Big Ben Plaque": 20.99,
@@ -80,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const fullCustomPrices = {
     "Wooden Plaque (Horizontal)": 22.99,
     "Wooden Plaque (Vertical)": 19.99,
-	  "Custom Bookmark": 6.99,
+	  "Custom Bookmark": 10.99,
 	  "Wooden Coaster":8.99,
     "Custom Leather Wallet": 22.99,
   };
