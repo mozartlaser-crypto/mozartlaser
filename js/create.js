@@ -78,9 +78,11 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const fullCustomPrices = {
-    "Wooden Plaque (Horizontal)": 39.99,
-    "Wooden Plaque (Vertical)": 34.99,
-    "Custom Leather Wallet": 44.99
+    "Wooden Plaque (Horizontal)": 22.99,
+    "Wooden Plaque (Vertical)": 19.99,
+	  "Custom Bookmark": 6.99,
+	  "Wooden Coaster":8.99,
+    "Custom Leather Wallet": 22.99,
   };
 
   const productImages = {
@@ -95,9 +97,11 @@ document.addEventListener('DOMContentLoaded', () => {
 	  "Avalon Bay, Catalina Island Laser Engraved Plaque":"Product Images/Catalina/Front view.jpg",
 	  "Big Ben Plaque": "Product Images/Big Ben Plaque/Front view.jpg",
 	  
-    "Wooden Plaque (Horizontal)": "Product Images/Blank Samples/Horizontal.jpg",
-    "Wooden Plaque (Vertical)": "Product Images/Blank Samples/Vertical.jpg",
-    "Custom Leather Wallet": "Product Images/Blank Samples/Wallet.jpg"
+    "Wooden Plaque (Horizontal)": "Product Images/Blank Samples/Horizontal.png",
+    "Wooden Plaque (Vertical)": "Product Images/Blank Samples/Vertical.png",
+	 "Custom Bookmark":"Product Images/Blank Samples/Bookmark.png",
+	  "Wooden Coaster": "Product Images/Blank Samples/Coaster.png",
+    "Custom Leather Wallet": "Product Images/Blank Samples/Wallet.jpg",
   };
 
   // ---------------------
