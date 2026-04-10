@@ -1,0 +1,743 @@
+<!doctype html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GNESH4PWH6"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-GNESH4PWH6');
+</script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Blog – Mozart Laser</title>
+  <meta name="description" content="Tips, stories, and behind-the-scenes from Mozart Laser — custom laser engraving in California." />
+  <meta name="robots" content="index, follow">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/footer.css">
+  <link rel="stylesheet" href="css/cart.css">
+  <script src="https://js.stripe.com/v3/"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;700&display=swap" rel="stylesheet">
+
+  <style>
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Quicksand', sans-serif;
+  background: #f5f3ef;
+}
+
+/* ── PAGE HERO ────────────────────────────── */
+.page-hero {
+  margin-top: 70px;
+  background: #1a1a1a;
+  padding: 64px 20px 52px;
+  text-align: center;
+}
+.page-hero h1 {
+  margin: 0 0 10px;
+  font-weight: 300;
+  font-size: 46px;
+  color: #f0ece4;
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.8s cubic-bezier(0.22,1,0.36,1) 0.05s,
+              transform 0.8s cubic-bezier(0.22,1,0.36,1) 0.05s;
+}
+.page-hero p {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 200;
+  color: #a89f8f;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s cubic-bezier(0.22,1,0.36,1) 0.2s,
+              transform 0.8s cubic-bezier(0.22,1,0.36,1) 0.2s;
+}
+.page-hero.visible h1,
+.page-hero.visible p { opacity: 1; transform: translateY(0); }
+
+.page-hero-rule {
+  width: 0;
+  height: 2px;
+  background: rgba(255,255,255,0.15);
+  margin: 28px auto 0;
+  transition: width 1.1s cubic-bezier(0.22,1,0.36,1);
+}
+.page-hero-rule.visible { width: 80px; }
+
+/* ── BLOG LAYOUT ──────────────────────────── */
+.blog-container {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 64px 24px 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 72px;
+}
+
+/* ── POST ─────────────────────────────────── */
+.post {
+  /* children animate individually — post itself always visible */
+}
+
+.post-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.post-tag {
+  display: inline-block;
+  background: #1a1a1a;
+  color: #f0ece4;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+.post-date {
+  font-size: 0.85rem;
+  font-weight: 300;
+  color: #aaa;
+}
+
+.post h2 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 6px;
+  line-height: 1.3;
+}
+.post .post-subtitle {
+  font-size: 17px;
+  font-weight: 300;
+  color: #888;
+  margin: 0 0 22px;
+  line-height: 1.5;
+}
+
+/* post-rule defined below in animation section */
+
+.post p {
+  font-size: 17px;
+  font-weight: 300;
+  color: #444;
+  line-height: 1.85;
+  margin: 0 0 20px;
+}
+.post p:last-of-type { margin-bottom: 0; }
+
+/* ── INLINE IMAGE ─────────────────────────── */
+/*
+  HOW TO USE — single image:
+  <div class="post-image">
+    <img src="YOUR-IMAGE.jpg" alt="description">
+    <p class="post-image-caption">Optional caption here</p>
+  </div>
+
+  HOW TO USE — two images side by side:
+  <div class="post-image-pair">
+    <div class="post-image"><img src="LEFT.jpg" alt="..."></div>
+    <div class="post-image"><img src="RIGHT.jpg" alt="..."></div>
+  </div>
+*/
+.post-image {
+  margin: 28px 0;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #e8e4de;
+  border: 1px solid #ddd8d0;
+}
+.post-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.post-image-caption {
+  font-size: 0.82rem !important;
+  font-weight: 400 !important;
+  color: #aaa !important;
+  text-align: center;
+  padding: 10px 16px 12px !important;
+  margin: 0 !important;
+  line-height: 1.4 !important;
+  border-top: 1px solid #e0dbd3;
+  background: #faf8f5;
+}
+
+/* Image placeholder (remove once you add a real img) */
+.post-image-placeholder {
+  margin: 28px 0;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #edeae4;
+  border: 2px dashed #d4cfc8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 52px 20px;
+  gap: 10px;
+  color: #b8b0a4;
+  text-align: center;
+}
+.post-image-placeholder svg { opacity: 0.4; }
+.post-image-placeholder span {
+  font-size: 0.85rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+}
+
+/* Two-photo side by side */
+.post-image-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 28px 0;
+}
+.post-image-pair .post-image,
+.post-image-pair .post-image-placeholder {
+  margin: 0;
+}
+
+/* ── VIDEO EMBED ──────────────────────────── */
+/*
+  HOW TO USE:
+  <div class="video-embed-wrapper">
+    <iframe
+      src="https://www.youtube.com/embed/YOUR_VIDEO_ID"
+      title="Video title"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen>
+    </iframe>
+  </div>
+*/
+.video-embed-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 28px 0;
+}
+.video-embed-wrapper video,
+.video-embed-wrapper iframe {
+  width: auto;
+  max-width: 340px;
+  max-height: 600px;
+  height: auto;
+  border-radius: 14px;
+  border: 1px solid #ddd8d0;
+  background: #111;
+  display: block;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+}
+
+/* ── POST SEPARATOR ───────────────────────── */
+.post-separator {
+  border: none;
+  height: 1px;
+  background: linear-gradient(to right, transparent, #d4cfc8 20%, #d4cfc8 80%, transparent);
+  margin: 0;
+  position: relative;
+  overflow: visible;
+}
+
+/* ── READING PROGRESS BAR ─────────────────── */
+#progress-bar {
+  position: fixed;
+  top: 70px;
+  left: 0;
+  height: 2px;
+  width: 0%;
+  background: linear-gradient(90deg, #b8934a, #1a1a1a);
+  z-index: 9999;
+  transition: width 0.1s linear;
+  pointer-events: none;
+}
+
+/* ── PREMIUM SCROLL ANIMATIONS ────────────── */
+
+/* Base hidden state for all animated elements */
+.anim-fade-up {
+  opacity: 0;
+  transform: translateY(48px);
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+.anim-fade-up.in { opacity: 1; transform: translateY(0); }
+
+/* Paragraph-level text fade — softer, faster */
+.anim-text {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+.anim-text.in { opacity: 1; transform: translateY(0); }
+
+/* Image: fade up + very subtle scale */
+.anim-image {
+  opacity: 0;
+  transform: translateY(36px) scale(0.985);
+  transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+.anim-image.in { opacity: 1; transform: translateY(0) scale(1); }
+
+/* Video: wipe up from bottom */
+.anim-video {
+  opacity: 0;
+  transform: translateY(44px) scale(0.98);
+  transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+  clip-path: inset(6% 0 0 0 round 14px);
+  transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 1s cubic-bezier(0.16, 1, 0.3, 1),
+              clip-path 1s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform, clip-path;
+}
+.anim-video.in {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  clip-path: inset(0% 0 0 0 round 14px);
+}
+
+/* Post meta tag — slides in from left */
+.anim-tag {
+  opacity: 0;
+  transform: translateX(-18px);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.anim-tag.in { opacity: 1; transform: translateX(0); }
+
+/* Heading — clip reveal from left */
+.anim-heading {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+.anim-heading.in { opacity: 1; transform: translateY(0); }
+
+/* Rule line — grows from left */
+.post-rule {
+  width: 0;
+  height: 2px;
+  background: #d4cfc8;
+  margin: 0 0 24px;
+  transition: width 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.post-rule.in { width: 50px; }
+
+/* Separator sweep */
+.post-separator {
+  transform-origin: left;
+  transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: scaleX(1); /* always visible — sweep is a bonus */
+}
+
+/* Image pair — stagger children */
+.post-image-pair .anim-image:nth-child(2) {
+  transition-delay: 0.12s;
+}
+
+/* Parallax image inner (applied via JS) */
+.post-image, .post-image-placeholder {
+  overflow: hidden;
+}
+.post-image img {
+  transition: transform 0.1s linear;
+  will-change: transform;
+}
+
+/* Hover lift on images */
+.post-image {
+  transition: box-shadow 0.4s ease, transform 0.4s cubic-bezier(0.16,1,0.3,1);
+}
+.post-image:hover {
+  box-shadow: 0 20px 48px rgba(0,0,0,0.13);
+  transform: translateY(-3px);
+}
+
+/* Post card hover — subtle glow on the left border */
+.post {
+  border-left: 3px solid transparent;
+  padding-left: 0;
+  transition: border-color 0.4s ease;
+}
+.post:hover { border-color: #b8934a; padding-left: 16px; transition: border-color 0.4s ease, padding-left 0.5s cubic-bezier(0.16,1,0.3,1); }
+
+/* Reveal (used on separators) */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1),
+              transform 0.8s cubic-bezier(0.16,1,0.3,1);
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ── MOBILE ───────────────────────────────── */
+@media (max-width: 600px) {
+  .page-hero h1 { font-size: 34px; }
+  .post h2 { font-size: 23px; }
+  .post-image-pair { grid-template-columns: 1fr; }
+  .blog-container { padding: 48px 18px 80px; gap: 56px; }
+  .post:hover { border-color: transparent; padding-left: 0; }
+}
+  </style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<header class="site-header" id="siteHeader">
+  <div class="header-inner">
+    <a href="index.html"><img src="images/mozartlaserlogo.png" alt="MozartLaser" class="logo"></a>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="create.html">Create</a></li>
+        <li><a href="Blog.html" class="active">Blog</a></li>
+        <li><a href="About.html">About</a></li>
+      </ul>
+    </nav>
+    <div class="hamburger"><span></span><span></span><span></span></div>
+  </div>
+  <div class="cart-icon" id="cart-icon">
+    <img src="images/cart-icon.png" alt="Cart">
+    <span id="cart-count">0</span>
+  </div>
+</header>
+
+<div class="cart-panel" id="cart-panel">
+  <h3>Shopping Cart</h3>
+  <ul id="cart-items"></ul>
+  <p>Total: $<span id="cart-total">0.00</span></p>
+  <button id="checkout">Checkout</button>
+  <button id="close-cart">Close</button>
+</div>
+
+<!-- PAGE HERO -->
+<section class="page-hero" id="pageHero">
+  <h1>The Mozart Laser Blog</h1>
+  <p>Behind the scenes, tips, and stories from the shop.</p>
+  <hr class="page-hero-rule" id="heroRule">
+</section>
+
+<div class="blog-container">
+
+  <!-- ══════════════════════════════════════
+       POST 1 — text + image + video
+       ══════════════════════════════════════ -->
+ <article class="post">
+    <div class="post-meta anim-tag">
+      <span class="post-tag">Tips & Ideas</span>
+      <span class="post-date">April 2026</span>
+    </div>
+    <h2 class="anim-heading">How to Give a Gift That Actually Means Something</h2>
+    <p class="post-subtitle anim-text">Most gifts don’t last.</p>
+    <div class="post-rule"></div>
+
+    <p class="anim-text">
+      Not physically—they last. But mentally, they don’t stick. A lot of them end up sitting on a shelf, getting used for a week, or just blending in with everything else.
+
+    </p>
+
+    <p class="anim-text">
+      <strong>That’s not what you want when you give something to someone.</strong> You want them to look at it and remember why they got it. You want it to feel intentional. That’s where engraved pieces hit differently..
+    </p>
+
+    <p class="anim-text">
+      <strong>Why People Actually Keep These:</strong> <br>People hold onto things that feel personal. Not complicated—just personal. A place they recognize. A verse that means something. A design that feels familiar. That’s what makes someone keep something long-term instead of tossing it aside later. That’s the whole idea behind Mozart Laser. Clean designs, real materials, and no shortcuts
+    </p>
+
+    <!-- SIDE-BY-SIDE IMAGES — replace placeholders with real photos -->
+    <div class="post-image-pair">
+     <div class="post-image anim-image">
+  <img src="Product Images/Big Ben Plaque/Front view.jpg" alt="Big Ben Plaque">
+</div>
+      <div class="post-image anim-image">
+  <img src="Product Images/Big Ben Plaque/Display.JPG" alt="Big Ben Plaque">
+</div>
+    </div>
+
+    <p class="anim-text">
+      <strong>The Big Ben Plaque (New Release)</strong> <br>The newest piece is the Big Ben plaque, engraved into poplar wood. It’s beautiful and makes the perfect decoration gift. The detail of the tower comes through clean, and the natural grain of the wood gives it just enough variation to make each one feel slightly different. It doesn’t look mass-produced, because its not.
+    </p>
+
+    <p class="anim-text">
+      <strong>It works well if you want something:</strong><br>	•	Classic without being boring <br>
+	•	Meaningful without needing customization<br>
+	•	Easy to gift without overthinking it
+
+    </p>
+
+    <p class="anim-text">
+      <strong>It’s Also Discounted Right Now!</strong> Since it’s a new release, it’s currently priced lower than it normally will be. No gimmicks—just a good time to grab one if you were already considering it.
+    </p>
+  </article>
+
+  <hr class="post-separator reveal">
+	
+	<!-- ══════════════════════════════════════
+       POST 2 — text-heavy, two side-by-side images
+       ══════════════════════════════════════ -->
+  
+	
+	<article class="post">
+    <div class="post-meta anim-tag">
+      <span class="post-tag">Behind the Scenes</span>
+      <span class="post-date">March 2026</span>
+    </div>
+    <h2 class="anim-heading">How We Made the Golden Gate Bridge Plaque</h2>
+    <p class="post-subtitle anim-text">From sketch to engraving — a full walkthrough of our design process.</p>
+    <div class="post-rule"></div>
+
+    <p class="anim-text">
+      Every plaque starts with a problem: how do you capture something iconic in a few millimeters of burned wood?
+      The Golden Gate Bridge took 3 iterations before we felt like we had it right. The towers needed weight.
+      The cables needed to be visible. The water beneath had to read as water without becoming noise.
+    </p>
+
+    <!-- IMAGE: update src to your actual product photo -->
+    <div class="post-image anim-image">
+      <img src="Product Images/Golden Gate Bridge/Front view.jpg" alt="Golden Gate Bridge plaque front view">
+      <p class="post-image-caption">The finished Golden Gate Bridge plaque — poplar wood, hand-finished in California.</p>
+    </div>
+
+    <p class="anim-text">
+      We start every design in Adobe Illustrator, tracing from reference photos and simplifying down to what the laser
+      can actually render cleanly at small scale. Fine detail looks great on screen and disappears on wood —
+      so the art is really in knowing what to leave out.
+    </p>
+
+    <p class="anim-text">
+      Once the vector is dialed in, we run test burns on scrap pieces of the same wood stock. Every board has a slightly
+      different grain density, which affects how dark the burn comes out. We adjust power and speed until the contrast
+      feels right — not too burnt, not too faint.
+    </p>
+
+    <!-- VIDEO: replace YOUR_VIDEO_ID with the real YouTube video ID -->
+   <!-- VIDEO SECTION -->
+<div class="video-embed-wrapper anim-video">
+  <video class="product-video" autoplay muted loop playsinline controls>
+    <source src="images/Golden Gate Highlight.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+</div>
+
+    <p class="anim-text">
+      The final step is hand-finishing — a light sand to knock back any char smell, then a protective sealing spray to help the engraving last and stay sharp. We only ship it to you when we feel it is good enought to display in our own home. 
+    </p>
+  </article>
+
+  <hr class="post-separator reveal">
+
+ 
+
+  <!-- ══════════════════════════════════════
+       POST 3 — text + two stacked images
+       ══════════════════════════════════════ -->
+  <article class="post">
+    <div class="post-meta anim-tag">
+      <span class="post-tag">Process</span>
+      <span class="post-date">February 2026</span>
+    </div>
+    <h2 class="anim-heading">Wood Types We Use and Why</h2>
+    <p class="post-subtitle anim-text">Not all wood engraves the same. Here's how we choose.</p>
+    <div class="post-rule"></div>
+
+    <p class="anim-text">
+      One of the first questions we get from custom order customers is: "What kind of wood is it?" The honest answer
+      is that it depends — on the design, the use case, and what kind of look we're going for.
+    </p>
+
+    <!-- IMAGE PLACEHOLDER — replace with a photo of your wood samples -->
+   <div class="post-image anim-image">
+  <img src="images/Wood.jpg" alt="Image of Pine Wood">
+</div>
+
+    <p class="anim-text">
+      <strong>Pine Wood</strong> is our go-to for detailed work. It's rich, close-grained, and produces a high-contrast
+      burn that makes fine lines and small text pop cleanly. It's forgiving with the laser and consistent across boards.
+    </p>
+
+    <p class="anim-text">
+      <strong>Poplar</strong> is for pieces that need presence. The light, soft grain means the engraving reads differently — Images engrave very well on it because of its ability to show many different shades, from dark burns to light texture. 
+    </p>
+
+   
+    <!-- IMAGE PLACEHOLDER — replace with a close-up engraving detail shot -->
+   <div class="post-image anim-image">
+  <img src="Product Images/Ship/Side view.jpg" alt="Ship detail">
+</div>
+
+    <p class="anim-text">
+      When you place a custom order, just let us know if you have a preference — or describe what you're going for
+      and we'll make the call. We keep multiple species in stock and can usually match the right wood to the right project.
+    </p>
+  </article>
+
+  <hr class="post-separator reveal">
+
+  <!-- ══════════════════════════════════════
+       POST 4 — text + image + video
+       ══════════════════════════════════════ -->
+  <article class="post">
+    <div class="post-meta anim-tag">
+      <span class="post-tag">Our Story</span>
+      <span class="post-date">January 2026</span>
+    </div>
+    <h2 class="anim-heading">Why We Started Mozart Laser</h2>
+    <p class="post-subtitle anim-text">Built to be kept, not forgotten.</p>
+    <div class="post-rule"></div>
+
+    <p class="anim-text">
+     Mozart Laser started with a simple frustration—most gifts feel temporary. They’re used for a while, then forgotten. We wanted to make something different. Using real wood and precise engraving, each piece is designed to feel intentional from the start.
+    </p>
+
+    <!-- IMAGE PLACEHOLDER — replace with a shop or behind-the-scenes photo -->
+    <div class="post-image anim-image">
+  <img src="images/workshop.jpeg" alt="Photo of Mozart Laser workshop">
+</div>
+     
+
+    <p class="anim-text">
+     The name came from a simple idea: great craft should feel like music. Precise, intentional, and worth sitting
+      with. Mozart wrote pieces that were technically demanding and emotionally immediate at the same time.
+      That's what we want every engraving to be.
+    </p>
+
+    <p class="anim-text">
+     Using real wood and precise engraving, each piece is designed to feel intentional from the start. Every order is handled by hand, refined through testing, and finished carefully so it doesn’t just look good for a moment—it becomes something people hold onto.
+    </p>
+
+    <!-- VIDEO SECTION -->
+<div class="video-embed-wrapper anim-video">
+  <video class="product-video" autoplay muted loop playsinline controls>
+    <source src="images/Lasers are cool.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+</div>
+
+    
+  </article>
+
+  <hr class="post-separator reveal">
+
+  
+</div>
+
+<script src="js/navbar.js"></script>
+<script src="js/cart.js"></script>
+
+<script>
+/* ═══════════════════════════════════════
+   MOZART LASER — SCROLL ANIMATION ENGINE
+   ═══════════════════════════════════════ */
+
+/* 1. READING PROGRESS BAR */
+const progressBar = document.getElementById('progress-bar');
+window.addEventListener('scroll', function() {
+  var scrollTop = window.scrollY;
+  var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  var pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+  if (progressBar) progressBar.style.width = pct + '%';
+}, { passive: true });
+
+/* 2. PAGE HERO ENTRANCE */
+var pageHero = document.getElementById('pageHero');
+var heroRule = document.getElementById('heroRule');
+if (pageHero) {
+  setTimeout(function() {
+    pageHero.classList.add('visible');
+    setTimeout(function() { if (heroRule) heroRule.classList.add('visible'); }, 320);
+  }, 80);
+}
+
+/* 3. GENERIC ONE-SHOT OBSERVER HELPER */
+function watchEls(selector, addCls, threshold, delayMs) {
+  var els = document.querySelectorAll(selector);
+  if (!els.length) return;
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (!entry.isIntersecting) return;
+      var el = entry.target;
+      setTimeout(function() { el.classList.add(addCls); }, delayMs || 0);
+      obs.unobserve(el);
+    });
+  }, { threshold: threshold || 0.08 });
+  els.forEach(function(el) { obs.observe(el); });
+}
+
+/* Tags — slide in from left */
+watchEls('.anim-tag', 'in', 0.01, 0);
+
+/* Headings */
+watchEls('.anim-heading', 'in', 0.05, 80);
+
+/* Images */
+watchEls('.anim-image', 'in', 0.07, 60);
+
+/* Videos */
+watchEls('.anim-video', 'in', 0.06, 80);
+
+/* Post rules (growing line) */
+watchEls('.post-rule', 'in', 0.4, 260);
+
+/* Separators */
+watchEls('.post-separator', 'in', 0.2, 0);
+
+/* Generic .reveal */
+watchEls('.reveal', 'visible', 0.08, 0);
+
+/* Text paragraphs — stagger by index within parent */
+var allTextEls = document.querySelectorAll('.anim-text');
+var textObs = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if (!entry.isIntersecting) return;
+    var el = entry.target;
+    var siblings = Array.from(el.parentElement.querySelectorAll('.anim-text'));
+    var idx = siblings.indexOf(el);
+    setTimeout(function() { el.classList.add('in'); }, 100 + idx * 85);
+    textObs.unobserve(el);
+  });
+}, { threshold: 0.1 });
+allTextEls.forEach(function(el) { textObs.observe(el); });
+
+/* 4. IMAGE PARALLAX */
+var parallaxImages = document.querySelectorAll('.post-image img');
+window.addEventListener('scroll', function() {
+  parallaxImages.forEach(function(img) {
+    var wrapper = img.closest('.post-image');
+    if (!wrapper) return;
+    var rect = wrapper.getBoundingClientRect();
+    var center = rect.top + rect.height / 2;
+    var offset = (window.innerHeight / 2 - center) * 0.04;
+    img.style.transform = 'translateY(' + offset + 'px) scale(1.04)';
+  });
+}, { passive: true });
+</script>
+
+<footer class="site-footer">
+  <div class="footer-content">
+    <div class="social-links">
+      <a href="https://www.facebook.com/profile.php?id=61585614995027" target="_blank" aria-label="Facebook"><img src="images/facebook-icon.png" alt="Facebook"></a>
+      <a href="https://instagram.com/mozartlaser" target="_blank" aria-label="Instagram"><img src="images/instagram-icon.png" alt="Instagram"></a>
+      <a href="https://X.com/mozartlaser" target="_blank" aria-label="X"><img src="images/X-icon.png" alt="X"></a>
+    </div>
+    <p>&copy; 2026 Mozart Laser. All rights reserved.</p>
+  </div>
+</footer>
+
+</body>
+</html>
