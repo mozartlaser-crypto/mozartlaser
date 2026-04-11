@@ -218,21 +218,24 @@ html, body {
   </div>
 */
 .video-embed-wrapper {
-  display: flex;
-  justify-content: center;
-  margin: 28px 0;
-}
-.video-embed-wrapper video,
-.video-embed-wrapper iframe {
-  width: auto;
-  max-width: 340px;
-  max-height: 600px;
-  height: auto;
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  height: 0;
+  overflow: hidden;
   border-radius: 14px;
-  border: 1px solid #ddd8d0;
   background: #111;
-  display: block;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  margin: 28px 0;
+  border: 1px solid #ddd8d0;
+}
+
+.video-embed-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
 }
 
 /* ── POST SEPARATOR ───────────────────────── */
@@ -392,6 +395,16 @@ html, body {
   .blog-container { padding: 48px 18px 80px; gap: 56px; }
   .post:hover { border-color: transparent; padding-left: 0; }
 }
+	  .post-image-small {
+  text-align: center;
+}
+
+.post-image-small img {
+  width: 300px;       /* controls actual size */
+  max-width: 90%;     /* responsive on mobile */
+  height: auto;
+  display: inline-block;
+}
   </style>
 </head>
 <body>
@@ -434,6 +447,65 @@ html, body {
 </section>
 
 <div class="blog-container">
+	
+	<!-- ══════════════════════════════════════
+     POST — DRAGON COIN
+     ══════════════════════════════════════ -->
+<article class="post">
+  <div class="post-meta anim-tag">
+    <span class="post-tag">New Release</span>
+    <span class="post-date">April 2026</span>
+  </div>
+
+  <h2 class="anim-heading">How the Dragon Coin Was Made</h2>
+  <p class="post-subtitle anim-text">A small piece, built with precision from start to finish.</p>
+  <div class="post-rule"></div>
+
+  <p class="anim-text">
+    Most people only see the final product. But what makes something like this worth owning is the process behind it.
+  </p>
+
+  <p class="anim-text">
+    It starts in Adobe Illustrator. The dragon design was carefully created to be as cute as possible. 
+  </p>
+
+  <!-- VIDEO -->
+  <div class="video-embed-wrapper anim-video">
+  <iframe width="560" height="315" src="https://www.youtube.com/embed/G_J8Wvv7XdM?si=D_uxPnbr9jOVOoeW" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+  </div>
+
+  <p class="anim-text">
+    Once the design is ready, it moves into LightBurn. This is where everything gets dialed in—power, speed, and passes. It requires trial and error because every piece of wood and every design turns out differently.
+  </p>
+
+  <p class="anim-text">
+    After that, the coin is cut directly out of a solid plank of wood using the laser. This makes the edges of the coin very smooth and soft to hold, much softer then power tools could ever cut. 
+  </p>
+
+  <p class="anim-text">
+    The coin is then sanded to smooth the surface and prepare it for engraving and remove char marks from the cutting. This step makes sure the final burn comes out clean and consistent.
+  </p>
+
+  <p class="anim-text">
+    Next comes the engraving. With everything calibrated, the laser burns the dragon into the wood, transforming a piece of flat wood into a very cute 3d design.
+  </p>
+
+  <p class="anim-text">
+    Once that’s complete, it’s sanded again and sealed. This final step protects the engraving, enhances the natural tone of the wood, and gives the coin a smooth, finished feel.
+  </p>
+
+  <div class="post-image post-image-small anim-image">
+    <img src="Product Images/Dragon Coin/Front view.jpg" alt="Dragon Coin">
+    <p class="post-image-caption">The finished Dragon Coin</p>
+  </div>
+
+  <p class="anim-text">
+   This little coin it made to sit on your desk, your shelf, or alongside your books to remind you to read them! :-)
+  </p>
+
+</article>
+
+<hr class="post-separator reveal">
 
   <!-- ══════════════════════════════════════
        POST 1 — text + image + video
