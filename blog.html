@@ -237,7 +237,19 @@ html, body {
   height: 100%;
   border: none;
 }
-
+..video-embed-wrapper.portrait {
+  aspect-ratio: 9 / 16;     /* modern, cleaner than padding hack */
+  width: 100%;
+  max-width: 300px;         /* controls width (adjust this!) */
+  margin: 28px auto;
+}
+}
+	  
+	.video-embed-wrapper video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* keeps full video visible */
+}
 /* ── POST SEPARATOR ───────────────────────── */
 .post-separator {
   border: none;
@@ -600,8 +612,8 @@ html, body {
 
     <!-- VIDEO: replace YOUR_VIDEO_ID with the real YouTube video ID -->
    <!-- VIDEO SECTION -->
-<div class="video-embed-wrapper anim-video">
-  <video class="product-video" autoplay muted loop playsinline controls>
+<div class="video-embed-wrapper anim-video" style="max-width: 320px; margin: 28px auto; padding-bottom: 0; height: auto; aspect-ratio: 9/16;">
+  <video style="position: static; width: 100%; height: 100%; object-fit: cover; border-radius: 14px;" autoplay muted loop playsinline controls>
     <source src="images/Golden Gate Highlight.mp4" type="video/mp4">
     Your browser does not support the video tag.
   </video>
@@ -694,8 +706,8 @@ html, body {
     </p>
 
     <!-- VIDEO SECTION -->
-<div class="video-embed-wrapper anim-video">
-  <video class="product-video" autoplay muted loop playsinline controls>
+<div class="video-embed-wrapper anim-video" style="max-width: 320px; margin: 28px auto; padding-bottom: 0; height: auto; aspect-ratio: 9/16;">
+  <video style="position: static; width: 100%; height: 100%; object-fit: cover; border-radius: 14px;" autoplay muted loop playsinline controls>
     <source src="images/Blog Video 2.mp4" type="video/mp4">
     Your browser does not support the video tag.
   </video>
