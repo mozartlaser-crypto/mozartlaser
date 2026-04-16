@@ -331,6 +331,7 @@ File: ${uploadFileInput?.files?.[0]?.name || 'None'}
     hiddenPrice.value = `$${currentPrice}`;
     hiddenEmail.value = email;
     copyFileIntoHiddenInput(uploadFileInput);
+$('#f-name').value = name;
     sendForm?.submit();
 
     alert('Your custom product has been added to the Cart! If you proceed with your order, an email with a sample design of your customization will be sent to you within 1 business day. YOU MUST RESPOND within 3 business days or your order will be automatically refunded!');
@@ -361,6 +362,7 @@ Placement: ${filePlacementCustom?.value || 'None'}
     hiddenPrice.value = `$${currentPrice}`;
     hiddenEmail.value = email;
     copyFileIntoHiddenInput(uploadFileCustom);
+$('#f-name').value = name;
     sendForm?.submit();
 
     alert('Your customization has been added to the Cart! If you proceed with your order, an email with a sample design of your customization will be sent to you within 1 business day. YOU MUST RESPOND within 3 business days or your order will be automatically refunded!');
