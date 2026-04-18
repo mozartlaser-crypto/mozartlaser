@@ -78,6 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const fullCustomPrices = {
     "Wooden Plaque (Horizontal)": 22.99,
     "Wooden Plaque (Vertical)": 19.99,
+	  "Custom Wooden Coin": 6.99,
 	  "Custom Bookmark": 10.99,
 	  "Wooden Coaster":8.99,
     "Custom Leather Wallet": 22.99,
@@ -97,6 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	  
     "Wooden Plaque (Horizontal)": "Product Images/Blank Samples/Horizontal.png",
     "Wooden Plaque (Vertical)": "Product Images/Blank Samples/Vertical.png",
+	  "Custom Wooden Coin": "Product Images/Blank Samples/coin.jpg",
 	 "Custom Bookmark":"Product Images/Blank Samples/Bookmark.png",
 	  "Wooden Coaster": "Product Images/Blank Samples/Coaster.png",
     "Custom Leather Wallet": "Product Images/Blank Samples/Wallet.jpg",
