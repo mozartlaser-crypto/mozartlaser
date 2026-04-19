@@ -1,467 +1,607 @@
 // js/create.js
-// ============================
-// CREATE.JS — Fully Fixed Version
-// ============================
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  // ---------------------
-  // State & helpers
-  // ---------------------
-  let currentPrice = 20;
-  let selectedFont = ''; 
-  const $ = (sel) => document.querySelector(sel);
+  // ─────────────────────────────────────────
+  // State
+  // ─────────────────────────────────────────
+  let currentPrice   = 20;
+  let selectedFont   = '';
+  let orderQty       = 1;
+  let orderQtyCustom = 1;
 
-  function addToCartVisual(productName, price) {
-    if (window.addToCart) window.addToCart(productName, price);
-    else console.warn("cart.js not loaded yet");
-  }
+  // ─────────────────────────────────────────
+  // DOM shortcuts
+  // ─────────────────────────────────────────
+  const qs  = (sel) => document.querySelector(sel);
+  const get = (id)  => document.getElementById(id);
 
-  // ---------------------
-  // Elements
-  // ---------------------
-  const steps = Array.from(document.querySelectorAll('.step'));
-  const modeCustomize = $('#mode-customize');
-  const modeFull = $('#mode-full');
-  const selectExisting = $('#select-existing');
+  const steps               = Array.from(document.querySelectorAll('.step'));
+  const modeCustomize       = get('mode-customize');
+  const modeFull            = get('mode-full');
+  const selectExisting      = get('select-existing');
 
-  const uploadFileInput = $('#upload-file');
-  const uploadFileCustom = $('#upload-file-custom');
-  const deleteFileBtn = $('#delete-file');
-  const deleteFileCustom = $('#delete-file-custom');
+  const uploadFileInput     = get('upload-file');
+  const uploadFileCustom    = get('upload-file-custom');
+  const deleteFileBtn       = get('delete-file');
+  const deleteFileCustomBtn = get('delete-file-custom');
 
-  const filePlacementInput = $('#file-placement');
-  const filePlacementCustom = $('#file-placement-custom');
+  const filePlacementInput  = get('file-placement');
+  const filePlacementCustom = get('file-placement-custom');
 
-  const textField = $('#custom-text');
-  const fontSelect = $('#font-select');
-  const textSizeSelect = $('#font-size-select'); // fixed reference
-  const textLocation = $('#text-location');
-  const customChanges = $('#custom-changes');
+  const textField      = get('custom-text');
+  const fontSelect     = get('font-select');
+  const textSizeSelect = get('font-size-select');
+  const textLocation   = get('text-location');
+  const customChanges  = get('custom-changes');
+  const additionalNotes = get('additional-notes');
 
-  const selectedProductTextFull = $('#selected-product-text-full');
-  const selectedProductTextCustom = $('#selected-product-text');
+  const selectedProductTextFull   = get('selected-product-text-full');
+  const selectedProductTextCustom = get('selected-product-text');
+  const productPreviewFull        = get('product-preview-full');
+  const productPreviewCustom      = get('product-preview-custom');
 
-  const productPreviewFull = $('#product-preview-full');
-  const productPreviewCustom = $('#product-preview-custom');
+  const sendForm = get('sendForm');
 
-  const sendForm = $('#sendForm');
+  const hiddenFlowType            = get('f-flow-type');
+  const hiddenProduct             = get('f-product');
+  const hiddenText                = get('f-text');
+  const hiddenFont                = get('f-font');
+  const hiddenTextSize            = get('f-font-size');
+  const hiddenLocation            = get('f-location');
+  const hiddenFilePlacement       = get('f-file-placement');
+  const hiddenSelectedProduct     = get('f-selected-product');
+  const hiddenCustomChanges       = get('f-custom-changes');
+  const hiddenCustomFilePlacement = get('f-custom-file-placement');
+  const hiddenPrice               = get('f-price');
+  const hiddenEmail               = get('f-email');
+  const hiddenName                = get('f-name');
+  const hiddenQuantity            = get('f-quantity');
+  const hiddenAdditionalNotes     = get('f-additional-notes');
 
-  const hiddenFlowType = $('#f-flow-type');
-  const hiddenProduct = $('#f-product');
-  const hiddenText = $('#f-text');
-  const hiddenFont = $('#f-font');
-  const hiddenTextSize = $('#f-font-size');
-  const hiddenLocation = $('#f-location');
-  const hiddenFilePlacement = $('#f-file-placement');
-  const hiddenSelectedProduct = $('#f-selected-product');
-  const hiddenCustomChanges = $('#f-custom-changes');
-  const hiddenCustomFilePlacement = $('#f-custom-file-placement');
-  const hiddenPrice = $('#f-price');
-  const hiddenEmail = $('#f-email');
+  const orderQtyInput       = get('order-qty');
+  const qtyApplyBtn         = get('qty-apply');
+  const qtyResetBtn         = get('qty-reset');
+  const orderQtyInputCustom = get('order-qty-custom');
+  const qtyApplyBtnCustom   = get('qty-apply-custom');
+  const qtyResetBtnCustom   = get('qty-reset-custom');
 
-  // ---------------------
-  // Product prices & images
-  // ---------------------
+  // ─────────────────────────────────────────
+  // Product data — single source of truth
+  // ─────────────────────────────────────────
   const existingProductPrices = {
-    "Wooden Dove Plaque - Psalm 46:5": 19.99,
-    "Cross Design with Bible Verse": 15.99,
-    "Detailed Classic Train Engraving": 18.99,
-	  "Wooden Cutting Board with Ship":79.99,
-	  "Golden Gate Bridge Plaque":21.99,
-	  "Custom Animal Plaque":24.99,
-	  "Avalon Bay, Catalina Island Laser Engraved Plaque": 19.99,
-	  "Big Ben Plaque": 20.99,
-
+    'Wooden Dove Plaque - Psalm 46:5'                   : 19.99,
+    'Cross Design with Bible Verse'                      : 15.99,
+    'Detailed Classic Train Engraving'                   : 18.99,
+    'Wooden Cutting Board with Ship'                     : 79.99,
+    'Golden Gate Bridge Plaque'                          : 21.99,
+    'Custom Animal Plaque'                               : 24.99,
+    'Avalon Bay, Catalina Island Laser Engraved Plaque'  : 19.99,
+    'Big Ben Plaque'                                     : 20.99,
   };
 
   const fullCustomPrices = {
-    "Wooden Plaque (Horizontal)": 22.99,
-    "Wooden Plaque (Vertical)": 19.99,
-	  "Custom Wooden Coin": 6.99,
-	  "Custom Bookmark": 10.99,
-	  "Wooden Coaster":8.99,
-    "Custom Leather Wallet": 22.99,
+    'Wooden Plaque (Horizontal)' : 22.99,
+    'Wooden Plaque (Vertical)'   : 19.99,
+    'Custom Wooden Coin'         : 6.99,
+    'Custom Bookmark'            : 10.99,
+    'Wooden Coaster'             : 8.99,
+    'Custom Leather Wallet'      : 22.99,
   };
 
   const productImages = {
-   	"Wooden Dove Plaque - Psalm 46:5":"Product Images/Dove with Psalm/Front view.jpg",
-	 "Cross Design with Bible Verse": "Product Images/Rose on Cross/Front view.jpg",
-    "Detailed Classic Train Engraving": "Product Images/Train/Front-view.jpg",
-   "“Wings Like Eagles” - Isaiah 40:31 Wooden Eagle Plaque": "Product Images/Eagle with Isaiah/Front view.jpg",
-	 "“Be Still” Psalm 46:10 – Wooden Sword Scripture Plaque": "Product Images/Sword with Psalm/Front view.jpg",
-	  "Wooden Cutting Board with Ship": "Product Images/Ship/Front view.jpg",
-	  "Golden Gate Bridge Plaque":"Product Images/Golden Gate Bridge/Front view.jpg",
-	  "Custom Animal Plaque": "Product Images/Animal Plaque/Display.JPG",
-	  "Avalon Bay, Catalina Island Laser Engraved Plaque":"Product Images/Catalina/Front view.jpg",
-	  "Big Ben Plaque": "Product Images/Big Ben Plaque/Front view.jpg",
-	  
-    "Wooden Plaque (Horizontal)": "Product Images/Blank Samples/Horizontal.png",
-    "Wooden Plaque (Vertical)": "Product Images/Blank Samples/Vertical.png",
-	  "Custom Wooden Coin": "Product Images/Blank Samples/coin.jpg",
-	 "Custom Bookmark":"Product Images/Blank Samples/Bookmark.png",
-	  "Wooden Coaster": "Product Images/Blank Samples/Coaster.png",
-    "Custom Leather Wallet": "Product Images/Blank Samples/Wallet.jpg",
+    'Wooden Dove Plaque - Psalm 46:5'                   : 'Product Images/Dove with Psalm/Front view.jpg',
+    'Cross Design with Bible Verse'                      : 'Product Images/Rose on Cross/Front view.jpg',
+    'Detailed Classic Train Engraving'                   : 'Product Images/Train/Front-view.jpg',
+    'Wooden Cutting Board with Ship'                     : 'Product Images/Ship/Front view.jpg',
+    'Golden Gate Bridge Plaque'                          : 'Product Images/Golden Gate Bridge/Front view.jpg',
+    'Custom Animal Plaque'                               : 'Product Images/Animal Plaque/Display.JPG',
+    'Avalon Bay, Catalina Island Laser Engraved Plaque'  : 'Product Images/Catalina/Front view.jpg',
+    'Big Ben Plaque'                                     : 'Product Images/Big Ben Plaque/Front view.jpg',
+    'Wooden Plaque (Horizontal)'                         : 'Product Images/Blank Samples/Horizontal.png',
+    'Wooden Plaque (Vertical)'                           : 'Product Images/Blank Samples/Vertical.png',
+    'Custom Wooden Coin'                                 : 'Product Images/Blank Samples/coin.jpg',
+    'Custom Bookmark'                                    : 'Product Images/Blank Samples/Bookmark.png',
+    'Wooden Coaster'                                     : 'Product Images/Blank Samples/Coaster.png',
+    'Custom Leather Wallet'                              : 'Product Images/Blank Samples/Wallet.jpg',
   };
 
-  // ---------------------
-  // Utility functions
-  // ---------------------
-  function showStep(stepId) {
-    steps.forEach(s => s.classList.remove('active'));
-    const el = document.getElementById(stepId);
-    if (el) el.classList.add('active');
-    window.scrollTo(0, 0);
-  }
-
-  function updatePrice() {
-    const product = selectExisting?.value || '';
-    if (modeFull?.checked) currentPrice = fullCustomPrices[product] ?? 34.99;
-    else if (modeCustomize?.checked) currentPrice = existingProductPrices[product] ?? 20.00;
-    else currentPrice = 20.00;
-
-    $('#total-price') && ($('#total-price').textContent = `Total: $${currentPrice}`);
-    $('#total-price-custom') && ($('#total-price-custom').textContent = `Total: $${currentPrice}`);
-  }
-
-  function populateSelectForMode() {
-    if (!selectExisting) return;
-    let html = '';
-    if (modeFull?.checked) {
-      html = '<option value="">-- Choose a Custom Product --</option>';
-      for (const p in fullCustomPrices) html += `<option value="${p}">${p}</option>`;
-    } else if (modeCustomize?.checked) {
-      html = '<option value="">-- Select Product --</option>';
-      for (const p in existingProductPrices) html += `<option value="${p}">${p}</option>`;
-    }
-    selectExisting.innerHTML = html;
-    updatePrice();
-  }
-
-  function updateSelectedProductDisplay() {
-    const name = selectExisting?.value || 'None';
-    if (modeFull?.checked) {
-      selectedProductTextFull.textContent = name;
-      productPreviewFull.src = productImages[name] || 'images/placeholder.png';
-    } else if (modeCustomize?.checked) {
-      selectedProductTextCustom.textContent = name;
-      productPreviewCustom.src = productImages[name] || 'images/placeholder.png';
-    }
-    updatePrice();
+  // ─────────────────────────────────────────
+  // Helpers
+  // ─────────────────────────────────────────
+  function escapeHtml(str) {
+    return String(str || '')
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
   }
 
   function copyFileIntoHiddenInput(input) {
     if (!sendForm) return;
     const fileField = sendForm.querySelector('input[type="file"]');
     if (!fileField) return;
-    if (input?.files?.length > 0) {
-      const dt = new DataTransfer();
-      dt.items.add(input.files[0]);
-      fileField.files = dt.files;
+    if (input && input.files && input.files.length > 0) {
+      try { const dt = new DataTransfer(); dt.items.add(input.files[0]); fileField.files = dt.files; } catch(e) {}
     } else {
-      try { fileField.value = ''; } catch (e) {}
+      try { fileField.value = ''; } catch(e) {}
     }
   }
 
-  function escapeHtml(str) {
-    return String(str || '')
-      .replaceAll('&', '&amp;')
-      .replaceAll('<', '&lt;')
-      .replaceAll('>', '&gt;')
-      .replaceAll('"', '&quot;')
-      .replaceAll("'", '&#039;');
+  // ─────────────────────────────────────────
+  // Step navigation
+  // ─────────────────────────────────────────
+  function showStep(stepId) {
+    steps.forEach(s => s.classList.remove('active'));
+    const el = get(stepId);
+    if (el) el.classList.add('active');
+    window.scrollTo(0, 0);
   }
 
-  // ---------------------
-  // Validation
-  // ---------------------
-  function validateFullStep2() {
-    const text = textField?.value.trim() || '';
-    const font = selectedFont;
-    const size = textSizeSelect?.value || '';
-    const loc = textLocation?.value.trim() || '';
-    const hasFile = uploadFileInput?.files?.length > 0;
-    const filePlacement = filePlacementInput?.value.trim() || '';
+  // ─────────────────────────────────────────
+  // Populate product dropdown based on mode
+  // ─────────────────────────────────────────
+  function populateSelectForMode() {
+    if (!selectExisting) return;
+    const isFullMode  = modeFull && modeFull.checked;
+    const priceMap    = isFullMode ? fullCustomPrices : existingProductPrices;
+    const placeholder = isFullMode
+      ? '-- Choose a Custom Product --'
+      : '-- Select a Product to Customize --';
 
-    if (!text && !hasFile) { alert('Enter text or upload a file.'); return false; }
-    if (text && (!font || !size || !loc)) { alert('Font, size, and placement required for text.'); return false; }
-    if (hasFile && !filePlacement) { alert('Describe where the uploaded file should be placed.'); return false; }
+    let html = `<option value="">${placeholder}</option>`;
+    for (const name in priceMap) {
+      html += `<option value="${name.replace(/"/g, '&quot;')}">${escapeHtml(name)}</option>`;
+    }
+    selectExisting.innerHTML = html;
+    updatePrice();
+  }
+
+  function updateSelectedProductDisplay() {
+    const name = selectExisting ? selectExisting.value : '';
+    const img  = productImages[name] || 'images/placeholder.png';
+    if (modeFull && modeFull.checked) {
+      if (selectedProductTextFull)  selectedProductTextFull.textContent = name || 'None';
+      if (productPreviewFull)       productPreviewFull.src = img;
+    } else {
+      if (selectedProductTextCustom) selectedProductTextCustom.textContent = name || 'None';
+      if (productPreviewCustom)      productPreviewCustom.src = img;
+    }
+    updatePrice();
+  }
+
+  // ─────────────────────────────────────────
+  // Pricing
+  // ─────────────────────────────────────────
+  function updatePrice() {
+    const name = selectExisting ? selectExisting.value : '';
+    currentPrice = (modeFull && modeFull.checked)
+      ? (fullCustomPrices[name] !== undefined ? fullCustomPrices[name] : 34.99)
+      : (existingProductPrices[name] !== undefined ? existingProductPrices[name] : 20.00);
+    renderTotalPrice();
+  }
+
+  function renderTotalPrice() {
+    const elFull = get('total-price');
+    if (elFull) {
+      const total = (currentPrice * orderQty).toFixed(2);
+      elFull.textContent = orderQty > 1
+        ? `Total: $${total} (${orderQty} x $${currentPrice.toFixed(2)})`
+        : `Total: $${currentPrice.toFixed(2)}`;
+    }
+    const elCustom = get('total-price-custom');
+    if (elCustom) {
+      const total = (currentPrice * orderQtyCustom).toFixed(2);
+      elCustom.textContent = orderQtyCustom > 1
+        ? `Total: $${total} (${orderQtyCustom} x $${currentPrice.toFixed(2)})`
+        : `Total: $${currentPrice.toFixed(2)}`;
+    }
+  }
+
+  // ─────────────────────────────────────────
+  // Validation
+  // ─────────────────────────────────────────
+  function validateStep1() {
+    if (!selectExisting || !selectExisting.value) {
+      alert('Please select a product before continuing.');
+      return false;
+    }
+    return true;
+  }
+
+  function validateFullStep2() {
+    const text     = textField       ? textField.value.trim()       : '';
+    const font     = selectedFont;
+    const size     = textSizeSelect  ? textSizeSelect.value         : '';
+    const loc      = textLocation    ? textLocation.value.trim()    : '';
+    const hasFile  = uploadFileInput && uploadFileInput.files && uploadFileInput.files.length > 0;
+    const filePl   = filePlacementInput ? filePlacementInput.value.trim() : '';
+
+    if (!text && !hasFile) { alert('Please enter text to engrave or upload a design file.'); return false; }
+    if (text && !font)     { alert('Please select a font for your text.'); return false; }
+    if (text && !size)     { alert('Please select a font size for your text.'); return false; }
+    if (text && !loc)      { alert('Please describe where the text should be placed.'); return false; }
+    if (hasFile && !filePl){ alert('Please describe where the uploaded design should be placed.'); return false; }
     return true;
   }
 
   function validateCustomStep2() {
-    const selected = selectExisting?.value || '';
-    const changes = customChanges?.value.trim() || '';
-    const hasFile = uploadFileCustom?.files?.length > 0;
-    if (!selected) { alert('Select a product to customize.'); return false; }
-    if (!changes && !hasFile) { alert('Describe changes or upload a file.'); return false; }
+    const changes = customChanges ? customChanges.value.trim() : '';
+    const hasFile = uploadFileCustom && uploadFileCustom.files && uploadFileCustom.files.length > 0;
+    if (!changes && !hasFile) {
+      alert('Please describe your requested changes or upload a design file.');
+      return false;
+    }
     return true;
   }
 
+  // ─────────────────────────────────────────
+  // Step 3 summary
+  // ─────────────────────────────────────────
   function populateStep3Summary() {
-    const s = $('#summary');
-    if (s) {
-      const text = textField?.value.trim() || 'None';
-      const font = selectedFont || 'None';
-      const size = textSizeSelect?.value || 'None';
-      const loc = textLocation?.value.trim() || 'None';
-      const fileName = uploadFileInput?.files?.[0]?.name || 'None';
-      const placementVal = filePlacementInput?.value.trim() || 'None';
-      s.innerHTML = `
+    const summaryEl = get('summary');
+    if (summaryEl) {
+      const text     = textField        ? (textField.value.trim()        || 'None') : 'None';
+      const font     = selectedFont     || 'None';
+      const size     = textSizeSelect   ? (textSizeSelect.value          || 'None') : 'None';
+      const loc      = textLocation     ? (textLocation.value.trim()     || 'None') : 'None';
+      const filePl   = filePlacementInput ? (filePlacementInput.value.trim() || 'None') : 'None';
+      const fileName = (uploadFileInput && uploadFileInput.files && uploadFileInput.files[0])
+                        ? uploadFileInput.files[0].name : 'None';
+      const notes    = additionalNotes ? (additionalNotes.value.trim() || 'None') : 'None';
+      summaryEl.innerHTML = `
+        <p><strong>Product:</strong> ${escapeHtml(selectExisting ? selectExisting.value : '')}</p>
         <p><strong>Engraved Text:</strong> ${escapeHtml(text)}</p>
         <p><strong>Font:</strong> ${escapeHtml(font)}</p>
         <p><strong>Text Size:</strong> ${escapeHtml(size)}</p>
         <p><strong>Text Placement:</strong> ${escapeHtml(loc)}</p>
-        <p><strong>File Placement:</strong> ${escapeHtml(placementVal)}</p>
         <p><strong>Uploaded File:</strong> ${escapeHtml(fileName)}</p>
-        <p><strong>Price:</strong> $${currentPrice}</p>
+        <p><strong>File Placement:</strong> ${escapeHtml(filePl)}</p>
+        <p><strong>Additional Notes:</strong> ${escapeHtml(notes)}</p>
+        <p><strong>Price per item:</strong> $${currentPrice.toFixed(2)}</p>
       `;
     }
 
-    const sc = $('#summary_custom');
-    if (sc) {
-      const sel = selectExisting?.value || 'None';
-      const changes = customChanges?.value.trim() || 'None';
-      const fileName = uploadFileCustom?.files?.[0]?.name || 'None';
-      const placement = filePlacementCustom?.value.trim() || 'None';
-      sc.innerHTML = `
+    const summaryCustomEl = get('summary_custom');
+    if (summaryCustomEl) {
+      const sel      = selectExisting    ? (selectExisting.value           || 'None') : 'None';
+      const changes  = customChanges     ? (customChanges.value.trim()     || 'None') : 'None';
+      const filePl   = filePlacementCustom ? (filePlacementCustom.value.trim() || 'None') : 'None';
+      const fileName = (uploadFileCustom && uploadFileCustom.files && uploadFileCustom.files[0])
+                        ? uploadFileCustom.files[0].name : 'None';
+      summaryCustomEl.innerHTML = `
         <p><strong>Selected Product:</strong> ${escapeHtml(sel)}</p>
         <p><strong>Requested Changes:</strong> ${escapeHtml(changes)}</p>
         <p><strong>Uploaded File:</strong> ${escapeHtml(fileName)}</p>
-        <p><strong>File Placement:</strong> ${escapeHtml(placement)}</p>
-        <p><strong>Price:</strong> $${currentPrice}</p>
+        <p><strong>File Placement:</strong> ${escapeHtml(filePl)}</p>
+        <p><strong>Price per item:</strong> $${currentPrice.toFixed(2)}</p>
       `;
     }
+
+    // Reset qty to 1 when entering step 3
+    orderQty = 1; orderQtyCustom = 1;
+    if (orderQtyInput)       orderQtyInput.value       = 1;
+    if (orderQtyInputCustom) orderQtyInputCustom.value = 1;
+    renderTotalPrice();
   }
 
-  // ---------------------
-  // Step navigation
-  // ---------------------
-  document.addEventListener('click', (ev) => {
-    const btn = ev.target.closest('.next-step, .prev-step');
-    if (!btn) return;
-    ev.preventDefault();
-
-    if (btn.classList.contains('next-step')) {
-      if (btn.id === 'step1-next') {
-        if (!selectExisting?.value) return alert('Select a product.');
-        if (modeCustomize?.checked) showStep('step2_custom');
-        else showStep('step2');
-        return;
-      }
-      const nextId = btn.getAttribute('data-next');
-      if (nextId === 'step3' && !validateFullStep2()) return;
-      if (nextId === 'step3_custom' && !validateCustomStep2()) return;
-      if (nextId) { showStep(nextId); populateStep3Summary(); }
-    }
-
-    if (btn.classList.contains('prev-step')) {
-      const prevId = btn.getAttribute('data-prev');
-      if (prevId) showStep(prevId);
-    }
-  });
-
-  // ---------------------
-  // File delete buttons
-  // ---------------------
-  deleteFileBtn?.addEventListener('click', () => uploadFileInput.value = '');
-  deleteFileCustom?.addEventListener('click', () => uploadFileCustom.value = '');
-
-  // ---------------------
-  // Mode toggle listeners
-  // ---------------------
-  modeCustomize?.addEventListener('change', populateSelectForMode);
-  modeFull?.addEventListener('change', populateSelectForMode);
-  selectExisting?.addEventListener('change', updateSelectedProductDisplay);
-
-  // ---------------------
-  // Add to cart functions
-  // ---------------------
+  // ─────────────────────────────────────────
+  // Reset after cart add
+  // ─────────────────────────────────────────
   function resetAllFields() {
-    textField.value = '';
-    textLocation.value = '';
-    textSizeSelect.value = '';
-    customChanges.value = '';
-    selectExisting.value = '';
-    uploadFileInput.value = '';
-    uploadFileCustom.value = '';
-    filePlacementInput.value = '';
-    filePlacementCustom.value = '';
-    selectedFont = '';
-    $('#verify-email') && ($('#verify-email').value = '');
-    $('#verify-email-confirm') && ($('#verify-email-confirm').value = '');
-    $('#verify-email-custom') && ($('#verify-email-custom').value = '');
-    $('#verify-email-confirm-custom') && ($('#verify-email-confirm-custom').value = '');
-    $('#verify-name') && ($('#verify-name').value = '');
-    $('#verify-name-custom') && ($('#verify-name-custom').value = '');
-    selectedProductTextFull.textContent = 'None';
-    selectedProductTextCustom.textContent = 'None';
-    productPreviewFull.src = 'images/placeholder.png';
-    productPreviewCustom.src = 'images/placeholder.png';
-    $('#summary') && ($('#summary').innerHTML = '');
-    $('#summary_custom') && ($('#summary_custom').innerHTML = '');
-    updatePrice();
+    if (textField)           textField.value           = '';
+    if (textLocation)        textLocation.value        = '';
+    if (textSizeSelect)      textSizeSelect.value      = '';
+    if (customChanges)       customChanges.value       = '';
+    if (filePlacementInput)  filePlacementInput.value  = '';
+    if (filePlacementCustom) filePlacementCustom.value = '';
+    if (additionalNotes)     additionalNotes.value     = '';
+    if (uploadFileInput)     uploadFileInput.value     = '';
+    if (uploadFileCustom)    uploadFileCustom.value    = '';
+    selectedFont = ''; orderQty = 1; orderQtyCustom = 1;
+    if (orderQtyInput)       orderQtyInput.value       = 1;
+    if (orderQtyInputCustom) orderQtyInputCustom.value = 1;
+
+    ['verify-name','verify-email','verify-email-confirm',
+     'verify-name-custom','verify-email-custom','verify-email-confirm-custom']
+      .forEach(id => { const el = get(id); if (el) el.value = ''; });
+
+    if (selectedProductTextFull)   selectedProductTextFull.textContent   = 'None';
+    if (selectedProductTextCustom) selectedProductTextCustom.textContent = 'None';
+    if (productPreviewFull)        productPreviewFull.src   = 'images/placeholder.png';
+    if (productPreviewCustom)      productPreviewCustom.src = 'images/placeholder.png';
+
+    const s1 = get('summary');        if (s1) s1.innerHTML = '';
+    const s2 = get('summary_custom'); if (s2) s2.innerHTML = '';
+
+    // Reset font dropdown display
+    const selDiv = document.querySelector('.custom-select .select-selected');
+    if (selDiv) { selDiv.textContent = '-- Select a Font --'; selDiv.style.fontFamily = ''; }
+    if (fontSelect) fontSelect.value = '';
+
+    populateSelectForMode();
   }
 
-  $('#add-to-cart-full')?.addEventListener('click', () => {
-    const name = $('#verify-name')?.value.trim();
-    const email = $('#verify-email')?.value.trim();
-    const emailConfirm = $('#verify-email-confirm')?.value.trim();
-    if (!name || !email) return alert('Enter name and email.');
-    if (email !== emailConfirm) return alert('Emails do not match.');
-    if (!validateFullStep2()) return;
+  // ─────────────────────────────────────────
+  // Button listeners — Step 1
+  // ─────────────────────────────────────────
+  const step1Next = get('step1-next');
+  if (step1Next) {
+    step1Next.addEventListener('click', () => {
+      if (!validateStep1()) return;
+      showStep(modeCustomize && modeCustomize.checked ? 'step2_custom' : 'step2');
+    });
+  }
 
-    const textSize = textSizeSelect?.value || 'None';
-    const fullCustomizations = `
-Text: ${textField?.value || 'None'},
-Font: ${selectedFont || 'None'},
-Size: ${textSize},
-Placement: ${textLocation?.value || 'None'},
-File Placement: ${filePlacementInput?.value || 'None'},
-File: ${uploadFileInput?.files?.[0]?.name || 'None'}
-`;
+  // ─────────────────────────────────────────
+  // Button listeners — Step 2 full
+  // ─────────────────────────────────────────
+  const step2Next = qs('#step2 .next-step');
+  if (step2Next) {
+    step2Next.addEventListener('click', () => {
+      if (!validateFullStep2()) return;
+      populateStep3Summary();
+      showStep('step3');
+    });
+  }
+  const step2Back = qs('#step2 .prev-step');
+  if (step2Back) step2Back.addEventListener('click', () => showStep('step1'));
 
-    addToCartVisual(`${selectExisting?.value || 'Custom Product'} — ${fullCustomizations}`, currentPrice);
+  // ─────────────────────────────────────────
+  // Button listeners — Step 2 custom
+  // ─────────────────────────────────────────
+  const step2CustomNext = qs('#step2_custom .next-step');
+  if (step2CustomNext) {
+    step2CustomNext.addEventListener('click', () => {
+      if (!validateCustomStep2()) return;
+      populateStep3Summary();
+      showStep('step3_custom');
+    });
+  }
+  const step2CustomBack = qs('#step2_custom .prev-step');
+  if (step2CustomBack) step2CustomBack.addEventListener('click', () => showStep('step1'));
 
-    hiddenFlowType.value = 'create-your-own';
-    hiddenProduct.value = selectExisting?.value || '';
-    hiddenText.value = textField?.value || '';
-    hiddenFont.value = selectedFont || '';
-    hiddenTextSize.value = textSize;
-    hiddenLocation.value = textLocation?.value || '';
-    hiddenFilePlacement.value = filePlacementInput?.value || '';
-    hiddenPrice.value = `$${currentPrice}`;
-    hiddenEmail.value = email;
-    copyFileIntoHiddenInput(uploadFileInput);
-$('#f-name').value = name;
-    sendForm?.submit();
+  // ─────────────────────────────────────────
+  // Button listeners — Step 3 backs
+  // ─────────────────────────────────────────
+  const step3Back = qs('#step3 .prev-step');
+  if (step3Back) step3Back.addEventListener('click', () => showStep('step2'));
 
-    alert('Your custom product has been added to the Cart! If you proceed with your order, an email with a sample design of your customization will be sent to you within 1 business day. YOU MUST RESPOND within 3 business days or your order will be automatically refunded!');
-    resetAllFields();
-    showStep('step1');
-  });
+  const step3CustomBack = qs('#step3_custom .prev-step');
+  if (step3CustomBack) step3CustomBack.addEventListener('click', () => showStep('step2_custom'));
 
-  $('#add-to-cart-custom')?.addEventListener('click', () => {
-    const name = $('#verify-name-custom')?.value.trim();
-    const email = $('#verify-email-custom')?.value.trim();
-    const emailConfirm = $('#verify-email-confirm-custom')?.value.trim();
-    if (!name || !email) return alert('Enter name and email.');
-    if (email !== emailConfirm) return alert('Emails do not match.');
-    if (!validateCustomStep2()) return;
+  // ─────────────────────────────────────────
+  // Quantity buttons
+  // ─────────────────────────────────────────
+  if (qtyApplyBtn) {
+    qtyApplyBtn.addEventListener('click', () => {
+      const val = parseInt(orderQtyInput ? orderQtyInput.value : '1', 10);
+      if (!val || val < 1) { alert('Please enter a valid quantity (1 or more).'); return; }
+      orderQty = val;
+      renderTotalPrice();
+    });
+  }
+  if (qtyResetBtn) {
+    qtyResetBtn.addEventListener('click', () => {
+      orderQty = 1;
+      if (orderQtyInput) orderQtyInput.value = 1;
+      renderTotalPrice();
+    });
+  }
+  if (qtyApplyBtnCustom) {
+    qtyApplyBtnCustom.addEventListener('click', () => {
+      const val = parseInt(orderQtyInputCustom ? orderQtyInputCustom.value : '1', 10);
+      if (!val || val < 1) { alert('Please enter a valid quantity (1 or more).'); return; }
+      orderQtyCustom = val;
+      renderTotalPrice();
+    });
+  }
+  if (qtyResetBtnCustom) {
+    qtyResetBtnCustom.addEventListener('click', () => {
+      orderQtyCustom = 1;
+      if (orderQtyInputCustom) orderQtyInputCustom.value = 1;
+      renderTotalPrice();
+    });
+  }
 
-    const customCustomizations = `
-Changes: ${customChanges?.value || 'None'},
-File: ${uploadFileCustom?.files?.[0]?.name || 'None'},
-Placement: ${filePlacementCustom?.value || 'None'}
-`;
+  // ─────────────────────────────────────────
+  // File delete buttons
+  // ─────────────────────────────────────────
+  if (deleteFileBtn)       deleteFileBtn.addEventListener('click',       () => { if (uploadFileInput)  uploadFileInput.value  = ''; });
+  if (deleteFileCustomBtn) deleteFileCustomBtn.addEventListener('click', () => { if (uploadFileCustom) uploadFileCustom.value = ''; });
 
-    addToCartVisual(`${selectExisting?.value || 'Custom Product'} — ${customCustomizations}`, currentPrice);
+  // ─────────────────────────────────────────
+  // Mode toggle & product select
+  // ─────────────────────────────────────────
+  if (modeCustomize)  modeCustomize.addEventListener('change',  populateSelectForMode);
+  if (modeFull)       modeFull.addEventListener('change',       populateSelectForMode);
+  if (selectExisting) selectExisting.addEventListener('change', updateSelectedProductDisplay);
 
-    hiddenFlowType.value = 'customize';
-    hiddenSelectedProduct.value = selectExisting?.value || '';
-    hiddenCustomChanges.value = customChanges?.value || '';
-    hiddenCustomFilePlacement.value = filePlacementCustom?.value || '';
-    hiddenPrice.value = `$${currentPrice}`;
-    hiddenEmail.value = email;
-    copyFileIntoHiddenInput(uploadFileCustom);
-$('#f-name').value = name;
-    sendForm?.submit();
+  // ─────────────────────────────────────────
+  // Add to Cart — full flow
+  // ─────────────────────────────────────────
+  const addToCartFullBtn = get('add-to-cart-full');
+  if (addToCartFullBtn) {
+    addToCartFullBtn.addEventListener('click', () => {
+      const name         = get('verify-name')          ? get('verify-name').value.trim()          : '';
+      const email        = get('verify-email')         ? get('verify-email').value.trim()         : '';
+      const emailConfirm = get('verify-email-confirm') ? get('verify-email-confirm').value.trim() : '';
 
-    alert('Your customization has been added to the Cart! If you proceed with your order, an email with a sample design of your customization will be sent to you within 1 business day. YOU MUST RESPOND within 3 business days or your order will be automatically refunded!');
-    resetAllFields();
-    showStep('step1');
-  });
+      if (!name || !email)        { alert('Please enter your name and email.'); return; }
+      if (email !== emailConfirm) { alert('Emails do not match.'); return; }
+      if (!validateFullStep2())   return;
 
-  // ---------------------
+      const qty         = orderQty;
+      const totalCost   = (currentPrice * qty).toFixed(2);
+      const textSize    = textSizeSelect ? textSizeSelect.value : 'None';
+      const productName = selectExisting ? selectExisting.value : 'Custom Product';
+      const fileName    = (uploadFileInput && uploadFileInput.files && uploadFileInput.files[0])
+                          ? uploadFileInput.files[0].name : 'None';
+      const desc = [
+        `Text: ${textField ? textField.value || 'None' : 'None'}`,
+        `Font: ${selectedFont || 'None'}`,
+        `Size: ${textSize || 'None'}`,
+        `Placement: ${textLocation ? textLocation.value || 'None' : 'None'}`,
+        `File: ${fileName}`,
+        `File Placement: ${filePlacementInput ? filePlacementInput.value || 'None' : 'None'}`,
+        `Quantity: ${qty} order${qty > 1 ? 's' : ''}`,
+      ].join(', ');
+
+      if (window.addToCart) window.addToCart(`${productName} — ${desc}`, parseFloat(totalCost));
+
+      if (hiddenFlowType)      hiddenFlowType.value      = 'create-your-own';
+      if (hiddenProduct)       hiddenProduct.value       = productName;
+      if (hiddenText)          hiddenText.value          = textField ? textField.value : '';
+      if (hiddenFont)          hiddenFont.value          = selectedFont;
+      if (hiddenTextSize)      hiddenTextSize.value      = textSize;
+      if (hiddenLocation)      hiddenLocation.value      = textLocation ? textLocation.value : '';
+      if (hiddenFilePlacement) hiddenFilePlacement.value = filePlacementInput ? filePlacementInput.value : '';
+      if (hiddenAdditionalNotes) hiddenAdditionalNotes.value = additionalNotes ? additionalNotes.value : '';
+      if (hiddenPrice)         hiddenPrice.value         = `$${totalCost} (${qty} x $${currentPrice.toFixed(2)})`;
+      if (hiddenEmail)         hiddenEmail.value         = email;
+      if (hiddenName)          hiddenName.value          = name;
+      if (hiddenQuantity)      hiddenQuantity.value      = qty;
+      copyFileIntoHiddenInput(uploadFileInput);
+      if (sendForm) sendForm.submit();
+
+      alert('Your custom product has been added to the Cart! If you proceed with your order, an email with a sample design of your customization will be sent to you within 1 business day. YOU MUST RESPOND within 3 business days or your order will be automatically refunded!');
+      resetAllFields();
+      showStep('step1');
+    });
+  }
+
+  // ─────────────────────────────────────────
+  // Add to Cart — customize flow
+  // ─────────────────────────────────────────
+  const addToCartCustomBtn = get('add-to-cart-custom');
+  if (addToCartCustomBtn) {
+    addToCartCustomBtn.addEventListener('click', () => {
+      const name         = get('verify-name-custom')          ? get('verify-name-custom').value.trim()          : '';
+      const email        = get('verify-email-custom')         ? get('verify-email-custom').value.trim()         : '';
+      const emailConfirm = get('verify-email-confirm-custom') ? get('verify-email-confirm-custom').value.trim() : '';
+
+      if (!name || !email)        { alert('Please enter your name and email.'); return; }
+      if (email !== emailConfirm) { alert('Emails do not match.'); return; }
+      if (!validateCustomStep2()) return;
+
+      const qty         = orderQtyCustom;
+      const totalCost   = (currentPrice * qty).toFixed(2);
+      const productName = selectExisting ? selectExisting.value : 'Custom Product';
+      const fileName    = (uploadFileCustom && uploadFileCustom.files && uploadFileCustom.files[0])
+                          ? uploadFileCustom.files[0].name : 'None';
+      const desc = [
+        `Changes: ${customChanges ? customChanges.value || 'None' : 'None'}`,
+        `File: ${fileName}`,
+        `File Placement: ${filePlacementCustom ? filePlacementCustom.value || 'None' : 'None'}`,
+        `Quantity: ${qty} order${qty > 1 ? 's' : ''}`,
+      ].join(', ');
+
+      if (window.addToCart) window.addToCart(`${productName} — ${desc}`, parseFloat(totalCost));
+
+      if (hiddenFlowType)             hiddenFlowType.value             = 'customize';
+      if (hiddenSelectedProduct)      hiddenSelectedProduct.value      = productName;
+      if (hiddenCustomChanges)        hiddenCustomChanges.value        = customChanges ? customChanges.value : '';
+      if (hiddenCustomFilePlacement)  hiddenCustomFilePlacement.value  = filePlacementCustom ? filePlacementCustom.value : '';
+      if (hiddenPrice)                hiddenPrice.value                = `$${totalCost} (${qty} x $${currentPrice.toFixed(2)})`;
+      if (hiddenEmail)                hiddenEmail.value                = email;
+      if (hiddenName)                 hiddenName.value                 = name;
+      if (hiddenQuantity)             hiddenQuantity.value             = qty;
+      copyFileIntoHiddenInput(uploadFileCustom);
+      if (sendForm) sendForm.submit();
+
+      alert('Your customization has been added to the Cart! If you proceed with your order, an email with a sample design of your customization will be sent to you within 1 business day. YOU MUST RESPOND within 3 business days or your order will be automatically refunded!');
+      resetAllFields();
+      showStep('step1');
+    });
+  }
+
+  // ─────────────────────────────────────────
   // Custom font dropdown
-  // ---------------------
+  // ─────────────────────────────────────────
   function createFontDropdown() {
     if (!fontSelect) return;
-    const select = fontSelect;
+
     const container = document.createElement('div');
     container.classList.add('custom-select');
-    select.style.display = 'none';
+    fontSelect.style.display = 'none';
 
     const selectedDiv = document.createElement('div');
     selectedDiv.classList.add('select-selected');
-    selectedDiv.textContent = select.options[select.selectedIndex]?.text || 'Choose a font';
-    selectedFont = select.options[select.selectedIndex]?.text || '';
+    selectedDiv.textContent = '-- Select a Font --';
     container.appendChild(selectedDiv);
 
     const optionsDiv = document.createElement('div');
     optionsDiv.classList.add('select-items', 'select-hide');
 
-    for (let i = 0; i < select.options.length; i++) {
-      const option = select.options[i];
-      const optionDiv = document.createElement('div');
-      optionDiv.textContent = option.text;
-      optionDiv.style.fontFamily = option.value ? (option.value.includes(' ') ? `'${option.value}'` : option.value) : '';
-      if (!option.value) optionDiv.style.color = '#999';
-      optionDiv.addEventListener('click', () => {
-        select.selectedIndex = i;
-        select.value = option.value;
-        selectedDiv.textContent = option.text;
-        selectedDiv.style.fontFamily = option.value ? optionDiv.style.fontFamily : '';
-        selectedFont = option.text; 
+    for (let i = 0; i < fontSelect.options.length; i++) {
+      const opt = fontSelect.options[i];
+      const div = document.createElement('div');
+      div.textContent = opt.text;
+      div.style.fontFamily = opt.value
+        ? (opt.value.includes(' ') ? `'${opt.value}'` : opt.value)
+        : '';
+      if (!opt.value) div.style.color = '#999';
+
+      div.addEventListener('click', () => {
+        fontSelect.selectedIndex     = i;
+        fontSelect.value             = opt.value;
+        selectedDiv.textContent      = opt.text;
+        selectedDiv.style.fontFamily = opt.value ? div.style.fontFamily : '';
+        selectedFont                 = opt.value ? opt.text : '';
         closeAllSelect();
       });
-      optionsDiv.appendChild(optionDiv);
+      optionsDiv.appendChild(div);
     }
 
     container.appendChild(optionsDiv);
-    select.parentNode.insertBefore(container, select.nextSibling);
+    fontSelect.parentNode.insertBefore(container, fontSelect.nextSibling);
 
     selectedDiv.addEventListener('click', (e) => {
       e.stopPropagation();
-      closeAllSelect(selectedDiv);
-      optionsDiv.classList.toggle('select-hide');
-      selectedDiv.classList.toggle('select-arrow-active');
+      const isHidden = optionsDiv.classList.contains('select-hide');
+      closeAllSelect();
+      if (isHidden) {
+        optionsDiv.classList.remove('select-hide');
+        selectedDiv.classList.add('select-arrow-active');
+      }
     });
 
-    function closeAllSelect(except) {
-      document.querySelectorAll('.select-items').forEach(el => { if (el.previousSibling !== except) el.classList.add('select-hide'); });
-      document.querySelectorAll('.select-selected').forEach(el => { if (el !== except) el.classList.remove('select-arrow-active'); });
+    function closeAllSelect() {
+      document.querySelectorAll('.select-items').forEach(el => el.classList.add('select-hide'));
+      document.querySelectorAll('.select-selected').forEach(el => el.classList.remove('select-arrow-active'));
     }
-
     document.addEventListener('click', closeAllSelect);
   }
   createFontDropdown();
-// ---------------------
-// URL bootstrap (IMPORTANT)
-// ---------------------
-function bootstrapFromURL() {
-  const params = new URLSearchParams(window.location.search);
-  const mode = params.get('mode');
-  const product = params.get('product');
-  const step = params.get('step');
 
-  if (mode === 'template') {
-    modeCustomize.checked = true;
-    modeFull.checked = false;
-  } else if (mode === 'full') {
-    modeFull.checked = true;
-    modeCustomize.checked = false;
-  }
+  // ─────────────────────────────────────────
+  // URL bootstrap
+  // ─────────────────────────────────────────
+  function bootstrapFromURL() {
+    const params  = new URLSearchParams(window.location.search);
+    const mode    = params.get('mode');
+    const product = params.get('product');
+    const step    = params.get('step');
 
-  populateSelectForMode();
-
-  if (product && selectExisting) {
-    selectExisting.value = product;
-    updateSelectedProductDisplay();
-  }
-
-  if (step === '2') {
-    if (mode === 'template') {
-      showStep('step2_custom');
+    if (mode === 'full') {
+      if (modeFull)      modeFull.checked      = true;
+      if (modeCustomize) modeCustomize.checked = false;
     } else {
-      showStep('step2');
+      if (modeCustomize) modeCustomize.checked = true;
+      if (modeFull)      modeFull.checked      = false;
     }
-  } else {
-    showStep('step1');
+
+    populateSelectForMode();
+
+    if (product && selectExisting) {
+      selectExisting.value = product;
+      updateSelectedProductDisplay();
+    }
+
+    if (step === '2') {
+      showStep(mode === 'full' ? 'step2' : 'step2_custom');
+    } else {
+      showStep('step1');
+    }
   }
-}
-  // ---------------------
-  // Startup
-  // ---------------------
+
   bootstrapFromURL();
 });

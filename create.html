@@ -7,7 +7,6 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-GNESH4PWH6');
 </script>
 <meta charset="UTF-8" />
@@ -20,355 +19,107 @@
 <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;700&display=swap" rel="stylesheet">
 
 <style>
-/* ── CUSTOM SELECT (unchanged) ── */
+/* ── CUSTOM SELECT ── */
 .custom-select { position: relative; font-family: Arial; user-select: none; width: 100%; }
-.select-selected { background-color: #eee; padding: 8px 12px; border: 1px solid #ccc; cursor: pointer; color: #333; text-align: left; position: relative; }
+.select-selected { background-color: #eee; padding: 8px 12px; border: 1px solid #ccc; cursor: pointer; color: #333; text-align: left; position: relative; border-radius: 6px; }
 .select-selected.placeholder { color: #aaa; }
 .select-selected::after { content: "\25BC"; position: absolute; right: 12px; top: 50%; transform: translateY(-50%); font-size: 0.6em; pointer-events: none; }
 .select-selected.select-arrow-active::after { transform: translateY(-50%) rotate(180deg); }
-.select-items { position: absolute; background-color: #fff; border: 1px solid #ccc; border-top: none; z-index: 99; width: 100%; max-height: 200px; overflow-y: auto; }
+.select-items { position: absolute; background-color: #fff; border: 1px solid #ccc; border-top: none; z-index: 99; width: 100%; max-height: 200px; overflow-y: auto; border-radius: 0 0 6px 6px; }
 .select-items div { padding: 8px 12px; cursor: pointer; text-align: left; }
 .select-items div:hover { background-color: #f1f1f1; }
 .select-hide { display: none; }
-.select-selected { border-radius: 6px; }
-.select-items { border-radius: 0 0 6px 6px; }
 select.input-field { -webkit-appearance: none !important; -moz-appearance: none !important; appearance: none !important; background-color: #fafafa !important; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23333' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E") !important; background-repeat: no-repeat !important; background-position: right 12px center !important; background-size: 16px !important; padding-right: 44px !important; cursor: pointer !important; }
 select.input-field::-ms-expand { display: none !important; }
 
 /* ── BASE ── */
-html, body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Quicksand', sans-serif;
-  background: #f5f3ef;
-  color: #1a1a1a;
-}
+html, body { margin: 0; padding: 0; font-family: 'Quicksand', sans-serif; background: #f5f3ef; color: #1a1a1a; }
 
-/* ── PAGE HEADER (dark band, matches site) ── */
-.page-header {
-  background: #1a1a1a;
-  text-align: center;
-  padding: 80px 20px 60px;
-  margin-top: 70px;
-}
-.page-header h1 {
-  font-size: 2.4rem;
-  font-weight: 300;
-  color: #f0ece4;
-  margin: 0 0 10px;
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.8s cubic-bezier(0.22,1,0.36,1) 0.1s,
-              transform 0.8s cubic-bezier(0.22,1,0.36,1) 0.1s;
-}
-.page-header p {
-  font-size: 1.05rem;
-  font-weight: 300;
-  color: #a89f8f;
-  margin: 0;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.8s cubic-bezier(0.22,1,0.36,1) 0.25s,
-              transform 0.8s cubic-bezier(0.22,1,0.36,1) 0.25s;
-}
-.page-header.visible h1,
-.page-header.visible p {
-  opacity: 1;
-  transform: translateY(0);
-}
+/* ── PAGE HEADER ── */
+.page-header { background: #1a1a1a; text-align: center; padding: 80px 20px 60px; margin-top: 70px; }
+.page-header h1 { font-size: 2.4rem; font-weight: 300; color: #f0ece4; margin: 0 0 10px; opacity: 0; transform: translateY(30px); transition: opacity 0.8s cubic-bezier(0.22,1,0.36,1) 0.1s, transform 0.8s cubic-bezier(0.22,1,0.36,1) 0.1s; }
+.page-header p { font-size: 1.05rem; font-weight: 300; color: #a89f8f; margin: 0; opacity: 0; transform: translateY(20px); transition: opacity 0.8s cubic-bezier(0.22,1,0.36,1) 0.25s, transform 0.8s cubic-bezier(0.22,1,0.36,1) 0.25s; }
+.page-header.visible h1, .page-header.visible p { opacity: 1; transform: translateY(0); }
 
 /* ── BUILDER CONTAINER ── */
-.builder-container {
-  max-width: 780px;
-  margin: 48px auto 80px;
-  background: #fff;
-  border-radius: 18px;
-  border: 1px solid #e8e3dc;
-  box-shadow: 0 8px 40px rgba(0,0,0,0.07);
-  padding: 48px 60px;
-  text-align: center;
-  opacity: 0;
-  transform: translateY(40px) scale(0.98);
-  transition: opacity 0.8s cubic-bezier(0.22,1,0.36,1) 0.15s,
-              transform 0.8s cubic-bezier(0.22,1,0.36,1) 0.15s;
-}
-.builder-container.visible {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-}
+.builder-container { max-width: 780px; margin: 48px auto 80px; background: #fff; border-radius: 18px; border: 1px solid #e8e3dc; box-shadow: 0 8px 40px rgba(0,0,0,0.07); padding: 48px 60px; text-align: center; opacity: 0; transform: translateY(40px) scale(0.98); transition: opacity 0.8s cubic-bezier(0.22,1,0.36,1) 0.15s, transform 0.8s cubic-bezier(0.22,1,0.36,1) 0.15s; }
+.builder-container.visible { opacity: 1; transform: translateY(0) scale(1); }
 
-/* ── STEP TRANSITIONS (original fadeIn kept) ── */
+/* ── STEP TRANSITIONS ── */
 .step { display: none; }
 .step.active { display: block; animation: fadeIn 0.45s ease; }
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(15px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
+@keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
-/* ── STEP PROGRESS INDICATOR ── */
-.step-indicator {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0;
-  margin-bottom: 36px;
-}
-.step-dot {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: #e8e3dc;
-  color: #aaa;
-  font-size: 0.85rem;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.3s ease, color 0.3s ease;
-  flex-shrink: 0;
-}
-.step-dot.active {
-  background: #1a1a1a;
-  color: #f0ece4;
-}
-.step-dot.done {
-  background: #c9c0b4;
-  color: #fff;
-}
-.step-line {
-  width: 48px;
-  height: 2px;
-  background: #e8e3dc;
-  transition: background 0.3s ease;
-  flex-shrink: 0;
-}
-.step-line.done {
-  background: #c9c0b4;
-}
+/* ── STEP PROGRESS ── */
+.step-indicator { display: flex; justify-content: center; align-items: center; gap: 0; margin-bottom: 36px; }
+.step-dot { width: 32px; height: 32px; border-radius: 50%; background: #e8e3dc; color: #aaa; font-size: 0.85rem; font-weight: 600; display: flex; align-items: center; justify-content: center; transition: background 0.3s ease, color 0.3s ease; flex-shrink: 0; }
+.step-dot.active { background: #1a1a1a; color: #f0ece4; }
+.step-dot.done { background: #c9c0b4; color: #fff; }
+.step-line { width: 48px; height: 2px; background: #e8e3dc; transition: background 0.3s ease; flex-shrink: 0; }
+.step-line.done { background: #c9c0b4; }
 
 /* ── TYPOGRAPHY ── */
-h2 {
-  font-family: 'Quicksand', sans-serif;
-  font-weight: 300;
-  font-size: 1.9rem;
-  margin-bottom: 8px;
-  color: #1a1a1a;
-}
-p.step-desc {
-  color: #888;
-  font-size: 0.97rem;
-  margin-bottom: 28px;
-  font-weight: 300;
-}
-
-/* ── SECTION DIVIDER ── */
-.step-rule {
-  width: 60px;
-  height: 2px;
-  background: #e0dbd3;
-  margin: 0 auto 28px;
-}
+h2 { font-family: 'Quicksand', sans-serif; font-weight: 300; font-size: 1.9rem; margin-bottom: 8px; color: #1a1a1a; }
+p.step-desc { color: #888; font-size: 0.97rem; margin-bottom: 28px; font-weight: 300; }
+.step-rule { width: 60px; height: 2px; background: #e0dbd3; margin: 0 auto 28px; }
 
 /* ── FORM ELEMENTS ── */
-label {
-  display: block;
-  text-align: left;
-  font-size: 0.92rem;
-  font-weight: 500;
-  color: #555;
-  margin-bottom: 4px;
-  margin-top: 4px;
-}
-.input-field {
-  width: 100%;
-  padding: 12px 14px;
-  margin-bottom: 18px;
-  border: 1.5px solid #ddd8d0;
-  border-radius: 8px;
-  background: #fafaf8;
-  font-size: 0.97rem;
-  font-family: 'Quicksand', sans-serif;
-  color: #333;
-  transition: border-color 0.18s ease, box-shadow 0.18s ease;
-  box-sizing: border-box;
-  appearance: none;
-}
-.input-field:focus {
-  outline: none;
-  border-color: #1a1a1a;
-  box-shadow: 0 0 0 3px rgba(26,26,26,0.07);
-}
-select.input-field {
-  background-color: #fafaf8 !important;
-}
-textarea.input-field {
-  min-height: 90px;
-  resize: vertical;
-}
-.error {
-  border-color: #c0392b !important;
-  box-shadow: 0 0 0 3px rgba(192,57,43,0.08) !important;
-}
+label { display: block; text-align: left; font-size: 0.92rem; font-weight: 500; color: #555; margin-bottom: 4px; margin-top: 4px; }
+.input-field { width: 100%; padding: 12px 14px; margin-bottom: 18px; border: 1.5px solid #ddd8d0; border-radius: 8px; background: #fafaf8; font-size: 0.97rem; font-family: 'Quicksand', sans-serif; color: #333; transition: border-color 0.18s ease, box-shadow 0.18s ease; box-sizing: border-box; appearance: none; }
+.input-field:focus { outline: none; border-color: #1a1a1a; box-shadow: 0 0 0 3px rgba(26,26,26,0.07); }
+select.input-field { background-color: #fafaf8 !important; }
+textarea.input-field { min-height: 90px; resize: vertical; }
 
 /* ── OPTION CARDS ── */
-.row {
-  display: flex;
-  gap: 14px;
-  align-items: stretch;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-bottom: 10px;
-}
-.option-card {
-  border: 1.5px solid #e0dbd3;
-  border-radius: 12px;
-  padding: 18px 20px;
-  width: 100%;
-  max-width: 340px;
-  cursor: pointer;
-  transition: box-shadow 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
-  text-align: left;
-  background: #fafaf8;
-}
-.option-card:hover {
-  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-  transform: translateY(-3px);
-  border-color: #bbb;
-}
+.row { display: flex; gap: 14px; align-items: stretch; justify-content: center; flex-wrap: wrap; margin-bottom: 10px; }
+.option-card { border: 1.5px solid #e0dbd3; border-radius: 12px; padding: 18px 20px; width: 100%; max-width: 340px; cursor: pointer; transition: box-shadow 0.2s ease, transform 0.2s ease, border-color 0.2s ease; text-align: left; background: #fafaf8; }
+.option-card:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.08); transform: translateY(-3px); border-color: #bbb; }
 .option-radio { margin-right: 12px; transform: scale(1.15); accent-color: #1a1a1a; }
 .option-title { font-weight: 600; margin-bottom: 5px; font-size: 0.97rem; color: #1a1a1a; }
 .option-desc { color: #888; font-size: 0.88rem; font-weight: 300; }
 
 /* ── PRODUCT PREVIEW ── */
-.product-preview {
-  width: 100%;
-  max-width: 340px;
-  margin: 12px auto 20px;
-  display: block;
-  border: 1px solid #e0dbd3;
-  border-radius: 10px;
-  background: #f5f3ef;
-}
+.product-preview { width: 100%; max-width: 340px; margin: 12px auto 20px; display: block; border: 1px solid #e0dbd3; border-radius: 10px; background: #f5f3ef; }
 
-/* ── SELECT EXISTING ── */
-.select-existing-container {
-  margin-top: 20px;
-  text-align: center;
-  max-width: 480px;
-  margin-left: auto;
-  margin-right: auto;
-}
-.select-existing-container label {
-  display: block;
-  font-weight: 500;
-  margin-bottom: 6px;
-  text-align: center;
-  color: #555;
-}
+/* ── SELECT CONTAINER ── */
+.select-existing-container { margin-top: 20px; text-align: center; max-width: 480px; margin-left: auto; margin-right: auto; }
+.select-existing-container label { display: block; font-weight: 500; margin-bottom: 6px; text-align: center; color: #555; }
 
 /* ── SUMMARY BOX ── */
-#summary, #summary_custom {
-  min-height: 120px;
-  background: #f5f3ef;
-  border: 1px solid #e0dbd3;
-  border-radius: 10px;
-  padding: 18px 20px;
-  text-align: left;
-  font-size: 0.95rem;
-  font-weight: 300;
-  color: #333;
-  line-height: 1.7;
-  margin-bottom: 16px;
-}
+#summary, #summary_custom { min-height: 120px; background: #f5f3ef; border: 1px solid #e0dbd3; border-radius: 10px; padding: 18px 20px; text-align: left; font-size: 0.95rem; font-weight: 300; color: #333; line-height: 1.7; margin-bottom: 16px; }
 
 /* ── PRICE ── */
-#total-price, #total-price-custom {
-  font-size: 1.2rem;
-  font-weight: 600;
-  margin-top: 8px;
-  text-align: right;
-  color: #1a1a1a;
-}
+#total-price, #total-price-custom { font-size: 1.2rem; font-weight: 600; margin-top: 8px; text-align: right; color: #1a1a1a; }
 
 /* ── VERIFY SECTION ── */
-.verify-section {
-  margin-top: 20px;
-  text-align: left;
-  background: #f5f3ef;
-  border: 1px solid #e0dbd3;
-  border-radius: 10px;
-  padding: 20px 22px;
-  margin-bottom: 20px;
-}
+.verify-section { margin-top: 20px; text-align: left; background: #f5f3ef; border: 1px solid #e0dbd3; border-radius: 10px; padding: 20px 22px; margin-bottom: 20px; }
+
+/* ── QUANTITY ROW ── */
+.quantity-row { display: flex; align-items: center; gap: 8px; margin-bottom: 18px; }
+.quantity-row input[type="number"] { width: 80px; padding: 10px 12px; border: 1.5px solid #ddd8d0; border-radius: 8px; background: #fafaf8; font-size: 0.97rem; font-family: 'Quicksand', sans-serif; color: #333; text-align: center; box-sizing: border-box; transition: border-color 0.18s ease, box-shadow 0.18s ease; -moz-appearance: textfield; }
+.quantity-row input[type="number"]::-webkit-outer-spin-button,
+.quantity-row input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.quantity-row input[type="number"]:focus { outline: none; border-color: #1a1a1a; box-shadow: 0 0 0 3px rgba(26,26,26,0.07); }
+.qty-btn { font-family: 'Quicksand', sans-serif; font-size: 0.88rem; font-weight: 600; padding: 10px 16px; border: none; border-radius: 8px; cursor: pointer; transition: background 0.2s ease, transform 0.15s ease; white-space: nowrap; }
+.qty-apply { background: #1a1a1a; color: #f0ece4; }
+.qty-apply:hover { background: #333; transform: translateY(-1px); }
+.qty-reset { background: transparent; color: #555; border: 1.5px solid #ccc; }
+.qty-reset:hover { background: #f0ece4; border-color: #aaa; transform: translateY(-1px); }
 
 /* ── BUTTONS ── */
-button.next-step,
-button.prev-step,
-button#add-to-cart-full,
-button#add-to-cart-custom {
-  font-family: 'Quicksand', sans-serif;
-  font-size: 1rem;
-  font-weight: 600;
-  padding: 13px 30px;
-  border: none;
-  border-radius: 40px;
-  cursor: pointer;
-  margin: 8px 6px 0;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-}
-button.next-step,
-button#add-to-cart-full,
-button#add-to-cart-custom {
-  background: #1a1a1a;
-  color: #f0ece4;
-}
-button.next-step:hover,
-button#add-to-cart-full:hover,
-button#add-to-cart-custom:hover {
-  background: #333;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-}
-button.prev-step {
-  background: transparent;
-  color: #555;
-  border: 1.5px solid #ccc;
-}
-button.prev-step:hover {
-  background: #f0ece4;
-  border-color: #aaa;
-  transform: translateY(-2px);
-}
+button.next-step, button.prev-step, button#add-to-cart-full, button#add-to-cart-custom { font-family: 'Quicksand', sans-serif; font-size: 1rem; font-weight: 600; padding: 13px 30px; border: none; border-radius: 40px; cursor: pointer; margin: 8px 6px 0; transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease; }
+button.next-step, button#add-to-cart-full, button#add-to-cart-custom { background: #1a1a1a; color: #f0ece4; }
+button.next-step:hover, button#add-to-cart-full:hover, button#add-to-cart-custom:hover { background: #333; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
+button.prev-step { background: transparent; color: #555; border: 1.5px solid #ccc; }
+button.prev-step:hover { background: #f0ece4; border-color: #aaa; transform: translateY(-2px); }
 
-/* Delete file button */
-#delete-file, #delete-file-custom {
-  background: #c0392b;
-  color: #fff;
-  border: none;
-  padding: 10px 14px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-family: 'Quicksand', sans-serif;
-  font-size: 0.9rem;
-  transition: background 0.2s ease;
-  white-space: nowrap;
-}
+/* ── DELETE FILE BUTTON ── */
+#delete-file, #delete-file-custom { background: #c0392b; color: #fff; border: none; padding: 10px 14px; border-radius: 8px; cursor: pointer; font-family: 'Quicksand', sans-serif; font-size: 0.9rem; transition: background 0.2s ease; white-space: nowrap; }
 #delete-file:hover, #delete-file-custom:hover { background: #a93226; }
 
-/* Note text */
-.upload-note {
-  font-size: 0.88rem;
-  color: #888;
-  margin-top: 4px;
-  margin-bottom: 16px;
-  line-height: 1.6;
-  text-align: left;
-  font-weight: 300;
-}
-.upload-note strong {
-  color: #555;
-  font-weight: 600;
-}
+/* ── UPLOAD NOTE ── */
+.upload-note { font-size: 0.88rem; color: #888; margin-top: 4px; margin-bottom: 16px; line-height: 1.6; text-align: left; font-weight: 300; }
+.upload-note strong { color: #555; font-weight: 600; }
 
 /* ── MOBILE ── */
 @media (max-width: 650px) {
@@ -392,7 +143,7 @@ button.prev-step:hover {
         <li><a href="index.html">Home</a></li>
         <li><a href="products.html">Products</a></li>
         <li><a href="create.html" class="active">Create</a></li>
-		   <li><a href="blog.html">Blog</a></li>
+        <li><a href="blog.html">Blog</a></li>
         <li><a href="About.html">About</a></li>
       </ul>
     </nav>
@@ -413,7 +164,7 @@ button.prev-step:hover {
   <button id="close-cart">Close</button>
 </div>
 
-<!-- DARK PAGE HEADER -->
+<!-- PAGE HEADER -->
 <div class="page-header" id="pageHeader">
   <h1>Create Your Engraving</h1>
   <p>Customize an existing design or start from scratch — we'll bring it to life.</p>
@@ -432,14 +183,16 @@ button.prev-step:hover {
       <div class="step-dot" id="dot3">3</div>
     </div>
 
-    <!-- STEP 1: CHOOSE FLOW -->
+    <!-- ═══════════════════════════════════════ -->
+    <!-- STEP 1: CHOOSE MODE & PRODUCT          -->
+    <!-- ═══════════════════════════════════════ -->
     <div class="step active" id="step1">
       <h2>Select a Product</h2>
       <hr class="step-rule">
       <p class="step-desc">Pick an option. "Customize a Product" lets you choose an existing product and request changes. "Create your own" starts the fully-custom flow.</p>
 
       <div class="row step1-options">
-        <label class="option-card" id="opt-customize" title="Pick this to modify an existing product">
+        <label class="option-card" id="opt-customize">
           <div style="display:flex; align-items:center;">
             <input type="radio" name="create-mode" value="customize" class="option-radio" id="mode-customize" checked>
             <div>
@@ -449,7 +202,7 @@ button.prev-step:hover {
           </div>
         </label>
 
-        <label class="option-card" id="opt-full" title="Pick this to make a fully custom product">
+        <label class="option-card" id="opt-full">
           <div style="display:flex; align-items:center;">
             <input type="radio" name="create-mode" value="full" class="option-radio" id="mode-full">
             <div>
@@ -461,13 +214,12 @@ button.prev-step:hover {
       </div>
 
       <div class="select-existing-container">
-        <label id="select-existing-label" for="select-existing">Please pick a product:<br><span style="font-weight:300; color:#aaa;">(Look at Products Page for reference)</span></label>
-        <select id="select-existing" class="input-field">
-          <option value="">-- Select a product to customize --</option>
-          <option value="Cross with Scripture">Cross with Scripture — Plaque</option>
-          <option value="Train Plaque">Train Plaque — Plaque</option>
-          <option value="Leather Wallet">Leather Wallet</option>
-        </select>
+        <label for="select-existing">
+          Please pick a product:<br>
+          <span style="font-weight:300; color:#aaa;">(Look at the Products page for reference)</span>
+        </label>
+        <!-- Options are populated by create.js based on selected mode — do NOT add options here -->
+        <select id="select-existing" class="input-field"></select>
       </div>
 
       <div style="margin-top:20px;">
@@ -475,7 +227,9 @@ button.prev-step:hover {
       </div>
     </div>
 
-    <!-- STEP 2 FULL FLOW -->
+    <!-- ═══════════════════════════════════════ -->
+    <!-- STEP 2: FULL CUSTOM FLOW               -->
+    <!-- ═══════════════════════════════════════ -->
     <div class="step" id="step2">
       <h2>Customize Your Engraving</h2>
       <hr class="step-rule">
@@ -507,8 +261,8 @@ button.prev-step:hover {
         <option value="Large">Large</option>
       </select>
 
-      <label for="text-location">Text Placement (only necessary if you entered text)</label>
-      <input type="text" id="text-location" class="input-field" placeholder="Describe where the text should be placed">
+      <label for="text-location">Text Placement (required if text entered)</label>
+      <input type="text" id="text-location" class="input-field" placeholder="Describe where and which side the text should engraved on">
 
       <label for="upload-file">Upload Design or Image (optional)</label>
       <div style="display:flex; gap:8px; align-items:center;">
@@ -521,16 +275,21 @@ button.prev-step:hover {
         <strong>Graphic design at an additional fee — please email <a href="mailto:mozartlaser@gmail.com" style="color:#555;">mozartlaser@gmail.com</a></strong>
       </p>
 
-      <label for="file-placement">File Placement (only necessary if you uploaded a file)</label>
-      <input type="text" id="file-placement" class="input-field" placeholder="Describe how the design/image should be placed">
+      <label for="file-placement">File Placement (required if file uploaded)</label>
+      <input type="text" id="file-placement" class="input-field" placeholder="Describe where and which side the design/image should be placed">
+
+      <label for="additional-notes">Additional Notes (optional)</label>
+      <textarea id="additional-notes" class="input-field" rows="3" placeholder="Anything else we should know about your order?"></textarea>
 
       <div class="buttons" style="margin-top:8px;">
-        <button class="prev-step" data-prev="step1">← Back</button>
-        <button class="next-step" data-next="step3">Next →</button>
+        <button type="button" class="prev-step">← Back</button>
+        <button type="button" class="next-step">Next →</button>
       </div>
     </div>
 
-    <!-- STEP 2 CUSTOMIZE FLOW -->
+    <!-- ═══════════════════════════════════════ -->
+    <!-- STEP 2: CUSTOMIZE EXISTING FLOW        -->
+    <!-- ═══════════════════════════════════════ -->
     <div class="step" id="step2_custom">
       <h2>Describe Your Changes</h2>
       <hr class="step-rule">
@@ -539,7 +298,7 @@ button.prev-step:hover {
       <p><strong>Selected product:</strong> <span id="selected-product-text">None</span></p>
       <img src="images/placeholder.png" id="product-preview-custom" class="product-preview" alt="Product Preview">
 
-      <label for="custom-changes">Requested changes / notes</label>
+      <label for="custom-changes">Requested changes / notes (required)</label>
       <textarea id="custom-changes" class="input-field" rows="4" placeholder="Describe the changes (text edits, size, placement, etc.)"></textarea>
 
       <label for="upload-file-custom">Upload Design or Image (optional)</label>
@@ -554,51 +313,75 @@ button.prev-step:hover {
       </p>
 
       <label for="file-placement-custom">File Placement (optional)</label>
-      <input type="text" id="file-placement-custom" class="input-field" placeholder="Describe how the design/image should be placed">
+      <input type="text" id="file-placement-custom" class="input-field" placeholder="Describe where and which side the design/image should be placed on">
 
       <div class="buttons" style="margin-top:8px;">
-        <button type="button" class="prev-step" data-prev="step1">← Back</button>
-        <button type="button" class="next-step" data-next="step3_custom">Next →</button>
+        <button type="button" class="prev-step">← Back</button>
+        <button type="button" class="next-step">Next →</button>
       </div>
     </div>
 
-    <!-- STEP 3 FULL REVIEW -->
+    <!-- ═══════════════════════════════════════ -->
+    <!-- STEP 3: FULL CUSTOM REVIEW             -->
+    <!-- ═══════════════════════════════════════ -->
     <div class="step" id="step3">
-      <h2>Review & Add to Cart</h2>
+      <h2>Review &amp; Add to Cart</h2>
       <hr class="step-rule">
       <p class="step-desc">Check your selections below before adding to cart.</p>
+
       <div id="summary"></div>
+
+      <label style="text-align:left; margin-bottom:6px;">Number of Orders</label>
+      <div class="quantity-row">
+        <input type="number" id="order-qty" value="1" min="1">
+        <button type="button" class="qty-btn qty-apply" id="qty-apply">Apply</button>
+        <button type="button" class="qty-btn qty-reset" id="qty-reset">Reset</button>
+      </div>
+
       <p id="total-price">Total: $0.00</p>
 
       <div class="verify-section">
         <label for="verify-name">Your Full Name</label>
-        <input type="text" id="verify-name" class="input-field" placeholder="Enter your full name" required>
+        <input type="text" id="verify-name" class="input-field" placeholder="Enter your full name">
         <label for="verify-email">Your Email</label>
-        <input type="email" id="verify-email" class="input-field" placeholder="Enter your email" required>
+        <input type="email" id="verify-email" class="input-field" placeholder="Enter your email">
         <label for="verify-email-confirm">Confirm Email</label>
-        <input type="email" id="verify-email-confirm" class="input-field" placeholder="Re-enter your email" required>
+        <input type="email" id="verify-email-confirm" class="input-field" placeholder="Re-enter your email">
       </div>
-      <button type="button" class="prev-step" data-prev="step2">← Back</button>
+
+      <button type="button" class="prev-step">← Back</button>
       <button type="button" id="add-to-cart-full">Add to Cart</button>
     </div>
 
-    <!-- STEP 3 CUSTOM REVIEW -->
+    <!-- ═══════════════════════════════════════ -->
+    <!-- STEP 3: CUSTOMIZE EXISTING REVIEW      -->
+    <!-- ═══════════════════════════════════════ -->
     <div class="step" id="step3_custom">
-      <h2>Review & Add to Cart</h2>
+      <h2>Review &amp; Add to Cart</h2>
       <hr class="step-rule">
       <p class="step-desc">Confirm your customizations and add to cart.</p>
+
       <div id="summary_custom"></div>
+
+      <label style="text-align:left; margin-bottom:6px;">Number of Orders</label>
+      <div class="quantity-row">
+        <input type="number" id="order-qty-custom" value="1" min="1">
+        <button type="button" class="qty-btn qty-apply" id="qty-apply-custom">Apply</button>
+        <button type="button" class="qty-btn qty-reset" id="qty-reset-custom">Reset</button>
+      </div>
+
       <p id="total-price-custom">Total: $0.00</p>
 
       <div class="verify-section">
         <label for="verify-name-custom">Your Full Name</label>
-        <input type="text" id="verify-name-custom" class="input-field" placeholder="Enter your full name" required>
+        <input type="text" id="verify-name-custom" class="input-field" placeholder="Enter your full name">
         <label for="verify-email-custom">Your Email</label>
-        <input type="email" id="verify-email-custom" class="input-field" placeholder="Enter your email" required>
+        <input type="email" id="verify-email-custom" class="input-field" placeholder="Enter your email">
         <label for="verify-email-confirm-custom">Confirm Email</label>
-        <input type="email" id="verify-email-confirm-custom" class="input-field" placeholder="Re-enter your email" required>
+        <input type="email" id="verify-email-confirm-custom" class="input-field" placeholder="Re-enter your email">
       </div>
-      <button type="button" class="prev-step" data-prev="step2_custom">← Back</button>
+
+      <button type="button" class="prev-step">← Back</button>
       <button type="button" id="add-to-cart-custom">Add to Cart</button>
     </div>
 
@@ -608,30 +391,32 @@ button.prev-step:hover {
 <!-- Hidden iframe -->
 <iframe name="submit-frame" style="display:none;"></iframe>
 
-<!-- Hidden form (FormBackend) — untouched -->
+<!-- Hidden form (FormBackend) -->
 <form id="sendForm" style="display:none;"
       method="POST"
       action="https://www.formbackend.com/f/8a1738ba071ca12a"
       enctype="multipart/form-data"
       target="submit-frame">
-  <input type="hidden" name="subject" value="New Custom Order from Mozart Laser">
-  <input type="hidden" name="from_name" value="MozartLaser.com">
-  <input type="hidden" name="flow_type" id="f-flow-type">
-  <input type="hidden" name="product" id="f-product">
-  <input type="hidden" name="shape" id="f-shape">
-  <input type="hidden" name="engraved_text" id="f-text">
-  <input type="hidden" name="font" id="f-font">
-  <input type="hidden" name="font_size" id="f-font-size">
-  <input type="hidden" name="text_location" id="f-location">
-  <input type="hidden" name="file_placement" id="f-file-placement">
+  <input type="hidden" name="subject"              value="New Custom Order from Mozart Laser">
+  <input type="hidden" name="from_name"            value="MozartLaser.com">
+  <input type="hidden" name="flow_type"            id="f-flow-type">
+  <input type="hidden" name="product"              id="f-product">
+  <input type="hidden" name="shape"                id="f-shape">
+  <input type="hidden" name="engraved_text"        id="f-text">
+  <input type="hidden" name="font"                 id="f-font">
+  <input type="hidden" name="font_size"            id="f-font-size">
+  <input type="hidden" name="text_location"        id="f-location">
+  <input type="hidden" name="file_placement"       id="f-file-placement">
   <input type="hidden" name="additional_description" id="f-description">
-  <input type="hidden" name="selected_product" id="f-selected-product">
-  <input type="hidden" name="custom_changes" id="f-custom-changes">
+  <input type="hidden" name="additional_notes"       id="f-additional-notes">
+  <input type="hidden" name="selected_product"     id="f-selected-product">
+  <input type="hidden" name="custom_changes"       id="f-custom-changes">
   <input type="hidden" name="custom_file_placement" id="f-custom-file-placement">
-  <input type="file" name="design_file" id="f-design" style="display:none;">
-  <input type="hidden" name="total_price" id="f-price">
-  <input type="hidden" name="replyto" id="f-email">
-<input type="hidden" name="customer_name" id="f-name">
+  <input type="file"   name="design_file"          id="f-design" style="display:none;">
+  <input type="hidden" name="total_price"          id="f-price">
+  <input type="hidden" name="replyto"              id="f-email">
+  <input type="hidden" name="customer_name"        id="f-name">
+  <input type="hidden" name="order_quantity"       id="f-quantity">
 </form>
 
 <!-- FOOTER -->
@@ -646,48 +431,34 @@ button.prev-step:hover {
   </div>
 </footer>
 
-<!-- SCRIPTS — original JS files untouched -->
 <script src="js/navbar.js"></script>
 <script src="js/cart.js"></script>
 <script src="js/create.js"></script>
 
-<!-- Step indicator sync (purely visual, does not touch flow logic) -->
+<!-- Step indicator sync -->
 <script>
-/* Page header + builder animate in on load */
 setTimeout(() => document.getElementById('pageHeader').classList.add('visible'), 80);
 setTimeout(() => document.getElementById('builderContainer').classList.add('visible'), 180);
 
-/* Update the step dots whenever a step becomes active.
-   We watch for class changes on .step elements using a MutationObserver
-   so we never interfere with create.js. */
 function getActiveStepId() {
   const active = document.querySelector('.step.active');
   return active ? active.id : null;
 }
 
 function updateDots(stepId) {
-  const map = {
-    'step1':        1,
-    'step2':        2,
-    'step2_custom': 2,
-    'step3':        3,
-    'step3_custom': 3,
-  };
+  const map = { 'step1': 1, 'step2': 2, 'step2_custom': 2, 'step3': 3, 'step3_custom': 3 };
   const current = map[stepId] || 1;
-
-  [1, 2, 3].forEach(n => {
+  [1,2,3].forEach(n => {
     const dot = document.getElementById('dot' + n);
-    dot.classList.remove('active', 'done');
-    if (n < current)  dot.classList.add('done');
+    dot.classList.remove('active','done');
+    if (n < current)   dot.classList.add('done');
     if (n === current) dot.classList.add('active');
   });
-  [1, 2].forEach(n => {
-    const line = document.getElementById('line' + n);
-    line.classList.toggle('done', n < current);
+  [1,2].forEach(n => {
+    document.getElementById('line' + n).classList.toggle('done', n < current);
   });
 }
 
-/* Observe class changes on all steps */
 document.querySelectorAll('.step').forEach(step => {
   new MutationObserver(() => {
     if (step.classList.contains('active')) updateDots(step.id);
