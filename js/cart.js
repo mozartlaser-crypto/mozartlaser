@@ -20,24 +20,21 @@ let cart = JSON.parse(localStorage.getItem('cart')) || [];
 // SHOW / HIDE CART PANEL
 // ============================
 function showCart() {
-  cartPanel.classList.add('show');          // show immediately
-  requestAnimationFrame(updateCart);        // update DOM asynchronously
+  cartPanel.classList.add('show');
+  requestAnimationFrame(updateCart);
 }
 
 function hideCart() {
   cartPanel.classList.remove('show');
 }
 
-// Open cart on icon click
 cartIcon.addEventListener('click', (e) => {
   e.stopPropagation();
   showCart();
 });
 
-// Close cart on button click
 closeCartBtn.addEventListener('click', hideCart);
 
-// Hide cart when clicking outside
 document.addEventListener('click', (e) => {
   if (!cartPanel.contains(e.target) && !cartIcon.contains(e.target)) {
     hideCart();
@@ -58,17 +55,21 @@ function addToCart(name, price, priceId) {
   price = parseFloat(price);
   if (isNaN(price)) return;
 
-  const existingItem = cart.find(item => item.priceId === priceId);
-  if (existingItem) {
-    existingItem.quantity++;
-  } else {
-    cart.push({ name, price, priceId, quantity: 1 });
+  // Custom orders from create.js have no priceId.
+  // Never merge them — every custom order is a unique line item.
+  if (priceId) {
+    const existingItem = cart.find(item => item.priceId === priceId);
+    if (existingItem) {
+      existingItem.quantity++;
+      showCart();
+      requestAnimationFrame(() => { saveCart(); });
+      return;
+    }
   }
 
-  showCart();               // show panel instantly
-  requestAnimationFrame(() => {
-    saveCart();
-  });
+  cart.push({ name, price, priceId: priceId || null, quantity: 1 });
+  showCart();
+  requestAnimationFrame(() => { saveCart(); });
 }
 
 // ============================
@@ -83,12 +84,10 @@ function updateCart() {
   cart.forEach((item, index) => {
     const li = document.createElement('li');
 
-    // Item text
     const text = document.createElement('span');
     text.textContent = `${item.name} x${item.quantity} — $${(item.price * item.quantity).toFixed(2)}`;
     li.appendChild(text);
 
-    // Remove button
     const removeBtn = document.createElement('button');
     removeBtn.textContent = 'Remove';
     removeBtn.style.marginLeft = '10px';
@@ -99,12 +98,12 @@ function updateCart() {
     removeBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       if (item.quantity > 1) {
-        item.quantity--;          // decrease quantity by 1
+        item.quantity--;
       } else {
-        cart.splice(index, 1);    // remove completely if quantity is 1
+        cart.splice(index, 1);
       }
       saveCart();
-      requestAnimationFrame(updateCart);  // update asynchronously
+      requestAnimationFrame(updateCart);
     });
 
     li.appendChild(removeBtn);
@@ -118,7 +117,6 @@ function updateCart() {
   cartCount.textContent = itemCount;
 }
 
-// Initial update to show saved cart
 updateCart();
 
 // ============================
@@ -153,13 +151,13 @@ checkoutButton.addEventListener('click', async () => {
 });
 
 // ============================
-// ADD-TO-CART BUTTONS
+// ADD-TO-CART BUTTONS (product pages)
 // ============================
 document.querySelectorAll('.add-to-cart').forEach(button => {
   button.addEventListener('click', () => {
-    const name = button.dataset.name;
-    const price = parseFloat(button.dataset.price);
-	const priceId = button.dataset.priceId;
+    const name    = button.dataset.name;
+    const price   = parseFloat(button.dataset.price);
+    const priceId = button.dataset.priceId;
 
     if (!name || isNaN(price)) {
       console.error("Add to cart error — missing name or price", { name, price, priceId, button });
@@ -171,5 +169,4 @@ document.querySelectorAll('.add-to-cart').forEach(button => {
   });
 });
 
-// Expose addToCart globally if needed
 window.addToCart = addToCart;
