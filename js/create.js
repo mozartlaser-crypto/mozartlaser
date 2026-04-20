@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
     'Wooden Plaque (Vertical)'   : 19.99,
     'Custom Wooden Coin'         : 6.99,
     'Custom Bookmark'            : 10.99,
-    'Wooden Coaster'             : 8.99,
+    'Wooden Coaster'             : 6.99,
     'Custom Leather Wallet'      : 22.99,
   };
 
