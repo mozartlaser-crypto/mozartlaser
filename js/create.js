@@ -89,6 +89,21 @@ document.addEventListener('DOMContentLoaded', () => {
     'Custom Leather Wallet'      : 22.99,
   };
 
+  // ─────────────────────────────────────────
+  // Display names for full custom flow
+  // Edit ONLY the values here to rename what
+  // the customer sees in the dropdown — keys
+  // must stay in sync with fullCustomPrices.
+  // ─────────────────────────────────────────
+  const fullCustomDisplayNames = {
+    'Wooden Plaque (Horizontal)' : 'Custom Horizontal Plaque (10"x8")',
+    'Wooden Plaque (Vertical)'   : 'Custom Vertical Plaque (8"x10")',
+    'Custom Wooden Coin'         : 'Custom Wooden Coin (2"x2")',
+    'Custom Bookmark'            : 'Custom Bookmark (6"x2")',
+    'Wooden Coaster'             : 'Custom Coaster (4"x4")',
+    'Custom Leather Wallet'      : 'Custom Leather Wallet',
+  };
+
   const productImages = {
     'Wooden Dove Plaque - Psalm 46:5'                   : 'Product Images/Dove with Psalm/Front view.jpg',
     'Cross Design with Bible Verse'                      : 'Product Images/Rose on Cross/Front view.jpg',
@@ -148,8 +163,11 @@ document.addEventListener('DOMContentLoaded', () => {
       : '-- Select a Product to Customize --';
 
     let html = `<option value="">${placeholder}</option>`;
-    for (const name in priceMap) {
-      html += `<option value="${name.replace(/"/g, '&quot;')}">${escapeHtml(name)}</option>`;
+    for (const id in priceMap) {
+      // value always holds the internal ID; visible text comes from fullCustomDisplayNames
+      // for full mode, or the ID itself for customize mode.
+      const label = (isFullMode && fullCustomDisplayNames[id]) ? fullCustomDisplayNames[id] : id;
+      html += `<option value="${id.replace(/"/g, '&quot;')}">${escapeHtml(label)}</option>`;
     }
     selectExisting.innerHTML = html;
     updatePrice();
