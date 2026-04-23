@@ -78,6 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
     'Custom Animal Plaque'                               : 24.99,
     'Avalon Bay, Catalina Island Laser Engraved Plaque'  : 19.99,
     'Big Ben Plaque'                                     : 20.99,
+	'Laser Engraved Celtic Cross Wooden Cutting Board': 69.99,
   };
 
   const fullCustomPrices = {
@@ -113,12 +114,14 @@ document.addEventListener('DOMContentLoaded', () => {
     'Custom Animal Plaque'                               : 'Product Images/Animal Plaque/Display.JPG',
     'Avalon Bay, Catalina Island Laser Engraved Plaque'  : 'Product Images/Catalina/Front view.jpg',
     'Big Ben Plaque'                                     : 'Product Images/Big Ben Plaque/Front view.jpg',
+	 'Laser Engraved Celtic Cross Wooden Cutting Board' : 'Product Images/Celtic Cross/Front view.png',
     'Wooden Plaque (Horizontal)'                         : 'Product Images/Blank Samples/Horizontal.png',
     'Wooden Plaque (Vertical)'                           : 'Product Images/Blank Samples/Vertical.png',
     'Custom Wooden Coin'                                 : 'Product Images/Blank Samples/coin.jpg',
     'Custom Bookmark'                                    : 'Product Images/Blank Samples/Bookmark.png',
     'Wooden Coaster'                                     : 'Product Images/Blank Samples/Coaster.png',
     'Custom Leather Wallet'                              : 'Product Images/Blank Samples/Wallet.jpg',
+	
   };
 
   // ─────────────────────────────────────────
