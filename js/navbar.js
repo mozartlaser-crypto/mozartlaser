@@ -2,25 +2,35 @@ document.addEventListener("DOMContentLoaded", function() {
   const header = document.getElementById("siteHeader");
   const hamburger = document.querySelector(".hamburger");
   const nav = document.querySelector(".main-nav");
-
   if (!header || !hamburger || !nav) return;
 
-  const SHRINK_THRESHOLD = 48;
+  // ============================
+  // TRUST BAR
+  // ============================
+  const trustBar = document.createElement('div');
+  trustBar.id = 'trust-bar';
+  trustBar.innerHTML = `
+    <span>&#9733; 4.9 Stars</span>
+    <span>Hand-Finished in California</span>
+    <span>Ships in 3&ndash;5 Days</span>
+    <span>Preview Included</span>
+  `;
+  header.appendChild(trustBar);
+
+  // ============================
+  // SHRINK ON SCROLL
+  // ============================
   let lastScrollY = window.scrollY || window.pageYOffset;
   let ticking = false;
 
   function updateHeader(scrollY) {
     if (scrollY <= 0) {
-      // Top of page → fully expanded
       header.classList.remove("shrink");
     } else if (scrollY > lastScrollY) {
-      // Scrolling down → contracted
       header.classList.add("shrink");
     } else if (scrollY < lastScrollY) {
-      // Scrolling up → fully expanded
       header.classList.remove("shrink");
     }
-
     lastScrollY = scrollY;
     ticking = false;
   }
@@ -36,7 +46,9 @@ document.addEventListener("DOMContentLoaded", function() {
   window.addEventListener("scroll", onScroll, { passive: true });
   updateHeader(lastScrollY);
 
+  // ============================
   // HAMBURGER TOGGLE
+  // ============================
   hamburger.addEventListener("click", function(e) {
     e.stopPropagation();
     nav.classList.toggle("show");

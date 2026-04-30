@@ -150,6 +150,18 @@ checkoutButton.addEventListener('click', async () => {
   }
 });
 
+// Wrap checkout + close buttons, then inject secure note beneath both
+const checkoutWrapper = document.createElement('div');
+checkoutWrapper.style.cssText = 'display:flex; gap:8px; align-items:center;';
+checkoutButton.parentNode.insertBefore(checkoutWrapper, checkoutButton);
+checkoutWrapper.appendChild(checkoutButton);
+checkoutWrapper.appendChild(closeCartBtn);
+
+const secureNote = document.createElement('p');
+secureNote.innerHTML = '&#128274; Secure Checkout &mdash; SSL Encrypted';
+secureNote.style.cssText = 'text-align:center; font-size:0.75rem; margin-top:6px; opacity:0.85;';
+checkoutWrapper.insertAdjacentElement('afterend', secureNote);
+
 // ============================
 // ADD-TO-CART BUTTONS (product pages)
 // ============================
