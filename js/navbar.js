@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", function() {
   const header = document.getElementById("siteHeader");
   const hamburger = document.querySelector(".hamburger");
   const nav = document.querySelector(".main-nav");
+
   if (!header || !hamburger || !nav) return;
 
   // ============================
@@ -13,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function() {
     <span>&#9733; 4.9 Stars</span>
     <span>Hand-Finished in California</span>
     <span>Ships in 3&ndash;5 Days</span>
-    <span>Preview Included</span>
+    
   `;
   header.appendChild(trustBar);
 

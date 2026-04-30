@@ -1,6 +1,6 @@
 :root {
   --header-height: 130px;
-  --header-height-shrink: 100px;
+  --header-height-shrink: 90px;
   --header-padding-x: 20px;
   --transition-fast: 220ms;
   --glass-blur: 10px;
@@ -29,11 +29,9 @@ html, body {
   background-color: rgba(255,255,255,0.8);
   backdrop-filter: blur(var(--glass-blur));
   border-bottom: 1px solid rgba(0,0,0,0.06);
-  overflow: hidden;
   transition: height var(--transition-fast) ease,
               background-color var(--transition-fast) ease,
               box-shadow var(--transition-fast) ease,
-              padding var(--transition-fast) ease,
               transform var(--transition-fast) ease;
 }
 .site-header.shrink {
@@ -54,7 +52,7 @@ html, body {
   margin: 0 auto;
   position: relative;
   padding: 0 20px;
-  height: 72px;
+  height: 70px;
   flex-shrink: 0;
 }
 /* TRUST BAR */
@@ -64,7 +62,7 @@ html, body {
   align-items: center;
   gap: 1.5rem;
   font-size: 0.72rem;
-  padding: 0 16px 8px;
+  padding: 4px 16px 0;
   letter-spacing: 0.04em;
   opacity: 0.75;
   white-space: nowrap;
@@ -72,13 +70,23 @@ html, body {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  flex-shrink: 0;
-  height: 28px;
+  transition: opacity var(--transition-fast) ease,
+              font-size var(--transition-fast) ease,
+              padding var(--transition-fast) ease;
+}
+.site-header.shrink #trust-bar {
+  font-size: 0.62rem;
+  padding: 2px 16px 0;
+  opacity: 0.65;
 }
 /* LOGO */
 .logo {
   height: 50px;
   width: auto;
+  transition: height var(--transition-fast) ease;
+}
+.site-header.shrink .logo {
+  height: 38px;
 }
 /* NAV MENU */
 .main-nav ul {
@@ -95,7 +103,13 @@ html, body {
   border-radius: 8px;
   font-size: 1.15rem;
   font-family: 'Quicksand', sans-serif;
-  transition: background var(--transition-fast);
+  transition: background var(--transition-fast),
+              font-size var(--transition-fast) ease,
+              padding var(--transition-fast) ease;
+}
+.site-header.shrink .main-nav a {
+  font-size: 0.95rem;
+  padding: 4px 8px;
 }
 .main-nav a:hover,
 .main-nav a:focus {
@@ -123,11 +137,11 @@ html, body {
 @media (max-width: 720px) {
   :root {
     --header-height: 110px;
-    --header-height-shrink: 90px;
+    --header-height-shrink: 80px;
     --glass-color: rgba(255,255,255,0.9);
   }
   .header-inner {
-    height: 64px;
+    height: 60px;
   }
   .cart-icon {
     position: absolute;
@@ -160,13 +174,12 @@ html, body {
   .main-nav {
     position: absolute;
     top: 100%;
-    right: 0;
-    width: 200px;
+    left: 0;
+    width: 100%;
     overflow: hidden;
     max-height: 0;
-    transition: max-height 0.2s ease-in-out;
-    background: var(--glass-color);
-    border-radius: 8px;
+    transition: max-height 0.3s ease-in-out;
+    background: rgba(255,255,255,0.97);
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
   }
   .main-nav.show {
@@ -183,16 +196,25 @@ html, body {
     padding: 0;
   }
   .main-nav ul li a {
-    padding: 12px 16px;
+    display: block;
+    padding: 12px 20px;
+    font-size: 1rem;
     border-radius: 0;
+  }
+  .site-header.shrink .main-nav a {
+    font-size: 1rem;
+    padding: 12px 20px;
   }
   #trust-bar {
     gap: 0.75rem;
     font-size: 0.65rem;
     flex-wrap: wrap;
     white-space: normal;
-    height: auto;
-    padding: 0 10px 6px;
+    padding: 4px 10px 0;
+  }
+  .site-header.shrink #trust-bar {
+    font-size: 0.58rem;
+    padding: 2px 10px 0;
   }
 }
 .hamburger { display: none; }
