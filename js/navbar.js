@@ -11,9 +11,10 @@ document.addEventListener("DOMContentLoaded", function() {
   const trustBar = document.createElement('div');
   trustBar.id = 'trust-bar';
   trustBar.innerHTML = `
-    <span>&#9733; 4.9 Stars</span>
-    <span>Hand-Finished in California</span>
+    
+    <span>Handmade in California</span>
     <span>Ships in 3&ndash;5 Days</span>
+	<span>Refund guarantee</span>
     
   `;
   header.appendChild(trustBar);
