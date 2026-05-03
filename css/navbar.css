@@ -13,6 +13,7 @@ html, body {
   height: 100%;
   color: var(--text-color);
 }
+
 /* HEADER */
 .site-header {
   position: fixed;
@@ -42,6 +43,7 @@ html, body {
 .site-header.hide {
   transform: translateY(-40px);
 }
+
 /* INNER HEADER */
 .header-inner {
   display: flex;
@@ -55,6 +57,7 @@ html, body {
   height: 70px;
   flex-shrink: 0;
 }
+
 /* TRUST BAR */
 #trust-bar {
   display: flex;
@@ -79,6 +82,7 @@ html, body {
   padding: 2px 16px 0;
   opacity: 0.65;
 }
+
 /* LOGO */
 .logo {
   height: 50px;
@@ -88,7 +92,8 @@ html, body {
 .site-header.shrink .logo {
   height: 38px;
 }
-/* NAV MENU */
+
+/* ── DESKTOP NAV ── */
 .main-nav ul {
   list-style: none;
   display: flex;
@@ -116,12 +121,14 @@ html, body {
   background: rgba(0,0,0,0.06);
   outline: none;
 }
+
 /* PAGE PADDING */
 .page-content {
   padding-top: calc(var(--header-height) + 16px);
   max-width: 1200px;
   margin: 0 auto;
 }
+
 /* CART ICON */
 .cart-icon {
   position: absolute;
@@ -132,79 +139,145 @@ html, body {
   flex-direction: column;
   align-items: center;
   cursor: pointer;
+  z-index: 1500;
 }
-/* RESPONSIVE */
+
+/* HAMBURGER — hidden on desktop */
+.hamburger { display: none; }
+
+/* ============================================================
+   MOBILE (max-width: 720px)
+   ============================================================ */
 @media (max-width: 720px) {
   :root {
     --header-height: 110px;
     --header-height-shrink: 80px;
-    --glass-color: rgba(255,255,255,0.9);
   }
+
   .header-inner {
     height: 60px;
   }
+
+  /* Move cart left of edge to avoid overlap */
   .cart-icon {
-    position: absolute;
     right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
   }
-  .hamburger {
-    position: absolute;
-    right: 40px;
-    top: 50%;
-    transform: translateY(-50%);
-  }
+
+  /* ── HAMBURGER BUTTON ── */
   .hamburger {
     display: flex;
+    position: absolute;
+    right: 46px;
+    top: 50%;
+    transform: translateY(-50%);
     cursor: pointer;
     flex-direction: column;
-    justify-content: space-between;
-    width: 28px;
-    height: 22px;
+    justify-content: center;
+    align-items: center;
+    width: 32px;
+    height: 32px;
+    background: none;
+    border: none;
+    padding: 0;
+    z-index: 1500;
   }
+
   .hamburger span {
     display: block;
-    height: 3px;
-    width: 100%;
+    position: absolute;
+    height: 2px;
+    width: 22px;
     background: var(--text-color);
     border-radius: 2px;
-    transition: all 0.3s ease;
+    transition: transform 0.38s cubic-bezier(0.23, 1, 0.32, 1),
+                opacity 0.22s ease,
+                top 0.38s cubic-bezier(0.23, 1, 0.32, 1);
   }
-  .main-nav {
-    position: absolute;
-    top: 100%;
-    left: 0;
+  .hamburger span:nth-child(1) { top: 8px; }
+  .hamburger span:nth-child(2) { top: 15px; }
+  .hamburger span:nth-child(3) { top: 22px; }
+
+  /* X state */
+  .hamburger.open span:nth-child(1) {
+    top: 15px;
+    transform: rotate(45deg);
+  }
+  .hamburger.open span:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  .hamburger.open span:nth-child(3) {
+    top: 15px;
+    transform: rotate(-45deg);
+  }
+
+  /* ── FULL-SCREEN MOBILE NAV OVERLAY ── */
+  /* This gets moved to <body> by JS, so position:fixed covers everything */
+  .mobile-nav-overlay {
+    position: fixed;
+    inset: 0;
     width: 100%;
-    overflow: hidden;
-    max-height: 0;
-    transition: max-height 0.3s ease-in-out;
-    background: rgba(255,255,255,0.97);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  }
-  .main-nav.show {
-    max-height: 500px;
-  }
-  .main-nav ul {
+    height: 100%;
+    z-index: 1100;
     display: flex;
     flex-direction: column;
-    margin: 0;
-    padding: 10px 0;
+    justify-content: center;
+    align-items: center;
+    background: rgba(250, 248, 244, 0.72);
+    backdrop-filter: blur(28px) saturate(2.2) brightness(1.08);
+    -webkit-backdrop-filter: blur(28px) saturate(2.2) brightness(1.08);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s cubic-bezier(0.23, 1, 0.32, 1);
   }
-  .main-nav ul li {
+  .mobile-nav-overlay.open {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  /* ── NAV LINKS INSIDE OVERLAY ── */
+  .mobile-nav-overlay ul {
+    list-style: none;
     margin: 0;
     padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
   }
-  .main-nav ul li a {
+  .mobile-nav-overlay ul li {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  .mobile-nav-overlay.open ul li:nth-child(1) { opacity: 1; transform: translateY(0); transition-delay: 0.07s; }
+  .mobile-nav-overlay.open ul li:nth-child(2) { opacity: 1; transform: translateY(0); transition-delay: 0.14s; }
+  .mobile-nav-overlay.open ul li:nth-child(3) { opacity: 1; transform: translateY(0); transition-delay: 0.21s; }
+  .mobile-nav-overlay.open ul li:nth-child(4) { opacity: 1; transform: translateY(0); transition-delay: 0.28s; }
+  .mobile-nav-overlay.open ul li:nth-child(5) { opacity: 1; transform: translateY(0); transition-delay: 0.35s; }
+
+  .mobile-nav-overlay ul li a {
     display: block;
-    padding: 12px 20px;
-    font-size: 1rem;
-    border-radius: 0;
+    padding: 16px 40px;
+    font-size: 2.4rem;
+    font-weight: 500;
+    font-family: 'Quicksand', sans-serif;
+    color: #111;
+    text-decoration: none;
+    text-align: center;
+    letter-spacing: -0.01em;
+    transition: opacity 0.2s;
   }
-  .site-header.shrink .main-nav a {
-    font-size: 1rem;
-    padding: 12px 20px;
+  .mobile-nav-overlay ul li a:hover {
+    opacity: 0.4;
   }
+
+  /* Hide desktop nav on mobile */
+  .main-nav {
+    display: none;
+  }
+
+  /* Trust bar adjustments */
   #trust-bar {
     gap: 0.75rem;
     font-size: 0.65rem;
@@ -216,8 +289,9 @@ html, body {
     font-size: 0.58rem;
     padding: 2px 10px 0;
   }
-}
-.hamburger { display: none; }
-@media (max-width: 720px) {
-  .hamburger { display: flex; }
+
+  /* Lock body scroll when menu open */
+  body.nav-open {
+    overflow: hidden;
+  }
 }
