@@ -87,7 +87,6 @@
   display: flex;
   justify-content: center;  /* center horizontally */
   align-items: center;      /* center vertically */
-  height: 100%;             /* make sure it fills the footer height */
 }
 .site-footer .social-links {
   margin-top: 8px; /* adjust this number until it looks perfect */
