@@ -65,6 +65,10 @@ document.addEventListener("DOMContentLoaded", function () {
     if (e.key === 'Escape') closeMenu();
   });
 
+  // Close when tapping the overlay background (not a link)
+  overlay.addEventListener('click', function (e) {
+    if (e.target === overlay) closeMenu();
+  });
   // ============================
   // SHRINK ON SCROLL
   // ============================
