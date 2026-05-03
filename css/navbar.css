@@ -145,6 +145,11 @@ html, body {
 /* HAMBURGER — hidden on desktop */
 .hamburger { display: none; }
 
+/* Hide mobile overlay on desktop — shown only via JS on mobile */
+.mobile-nav-overlay {
+  display: none;
+}
+
 /* ============================================================
    MOBILE (max-width: 720px)
    ============================================================ */
@@ -158,7 +163,6 @@ html, body {
     height: 60px;
   }
 
-  /* Move cart left of edge to avoid overlap */
   .cart-icon {
     right: 10px;
   }
@@ -212,14 +216,13 @@ html, body {
   }
 
   /* ── FULL-SCREEN MOBILE NAV OVERLAY ── */
-  /* This gets moved to <body> by JS, so position:fixed covers everything */
   .mobile-nav-overlay {
+    display: flex;
     position: fixed;
     inset: 0;
     width: 100%;
     height: 100%;
     z-index: 1100;
-    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -260,7 +263,7 @@ html, body {
     display: block;
     padding: 16px 40px;
     font-size: 2.4rem;
-    font-weight: 500;
+    font-weight: 400;
     font-family: 'Quicksand', sans-serif;
     color: #111;
     text-decoration: none;
