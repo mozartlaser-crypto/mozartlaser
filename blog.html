@@ -121,8 +121,6 @@ html, body {
   line-height: 1.5;
 }
 
-/* post-rule defined below in animation section */
-
 .post p {
   font-size: 17px;
   font-weight: 300;
@@ -133,19 +131,6 @@ html, body {
 .post p:last-of-type { margin-bottom: 0; }
 
 /* ── INLINE IMAGE ─────────────────────────── */
-/*
-  HOW TO USE — single image:
-  <div class="post-image">
-    <img src="YOUR-IMAGE.jpg" alt="description">
-    <p class="post-image-caption">Optional caption here</p>
-  </div>
-
-  HOW TO USE — two images side by side:
-  <div class="post-image-pair">
-    <div class="post-image"><img src="LEFT.jpg" alt="..."></div>
-    <div class="post-image"><img src="RIGHT.jpg" alt="..."></div>
-  </div>
-*/
 .post-image {
   margin: 28px 0;
   border-radius: 14px;
@@ -206,17 +191,6 @@ html, body {
 }
 
 /* ── VIDEO EMBED ──────────────────────────── */
-/*
-  HOW TO USE:
-  <div class="video-embed-wrapper">
-    <iframe
-      src="https://www.youtube.com/embed/YOUR_VIDEO_ID"
-      title="Video title"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowfullscreen>
-    </iframe>
-  </div>
-*/
 .video-embed-wrapper {
   position: relative;
   width: 100%;
@@ -237,19 +211,13 @@ html, body {
   height: 100%;
   border: none;
 }
-..video-embed-wrapper.portrait {
-  aspect-ratio: 9 / 16;     /* modern, cleaner than padding hack */
-  width: 100%;
-  max-width: 300px;         /* controls width (adjust this!) */
-  margin: 28px auto;
-}
-}
-	  
-	.video-embed-wrapper video {
+
+.video-embed-wrapper video {
   width: 100%;
   height: 100%;
-  object-fit: contain; /* keeps full video visible */
+  object-fit: contain;
 }
+
 /* ── POST SEPARATOR ───────────────────────── */
 .post-separator {
   border: none;
@@ -275,7 +243,6 @@ html, body {
 
 /* ── PREMIUM SCROLL ANIMATIONS ────────────── */
 
-/* Base hidden state for all animated elements */
 .anim-fade-up {
   opacity: 0;
   transform: translateY(48px);
@@ -285,7 +252,6 @@ html, body {
 }
 .anim-fade-up.in { opacity: 1; transform: translateY(0); }
 
-/* Paragraph-level text fade — softer, faster */
 .anim-text {
   opacity: 0;
   transform: translateY(22px);
@@ -295,7 +261,6 @@ html, body {
 }
 .anim-text.in { opacity: 1; transform: translateY(0); }
 
-/* Image: fade up + very subtle scale */
 .anim-image {
   opacity: 0;
   transform: translateY(36px) scale(0.985);
@@ -305,12 +270,9 @@ html, body {
 }
 .anim-image.in { opacity: 1; transform: translateY(0) scale(1); }
 
-/* Video: wipe up from bottom */
 .anim-video {
   opacity: 0;
   transform: translateY(44px) scale(0.98);
-  transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 1s cubic-bezier(0.16, 1, 0.3, 1);
   clip-path: inset(6% 0 0 0 round 14px);
   transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1),
               transform 1s cubic-bezier(0.16, 1, 0.3, 1),
@@ -323,7 +285,6 @@ html, body {
   clip-path: inset(0% 0 0 0 round 14px);
 }
 
-/* Post meta tag — slides in from left */
 .anim-tag {
   opacity: 0;
   transform: translateX(-18px);
@@ -332,7 +293,6 @@ html, body {
 }
 .anim-tag.in { opacity: 1; transform: translateX(0); }
 
-/* Heading — clip reveal from left */
 .anim-heading {
   opacity: 0;
   transform: translateY(32px);
@@ -342,7 +302,6 @@ html, body {
 }
 .anim-heading.in { opacity: 1; transform: translateY(0); }
 
-/* Rule line — grows from left */
 .post-rule {
   width: 0;
   height: 2px;
@@ -352,19 +311,16 @@ html, body {
 }
 .post-rule.in { width: 50px; }
 
-/* Separator sweep */
 .post-separator {
   transform-origin: left;
   transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1);
-  transform: scaleX(1); /* always visible — sweep is a bonus */
+  transform: scaleX(1);
 }
 
-/* Image pair — stagger children */
 .post-image-pair .anim-image:nth-child(2) {
   transition-delay: 0.12s;
 }
 
-/* Parallax image inner (applied via JS) */
 .post-image, .post-image-placeholder {
   overflow: hidden;
 }
@@ -373,7 +329,6 @@ html, body {
   will-change: transform;
 }
 
-/* Hover lift on images */
 .post-image {
   transition: box-shadow 0.4s ease, transform 0.4s cubic-bezier(0.16,1,0.3,1);
 }
@@ -382,7 +337,6 @@ html, body {
   transform: translateY(-3px);
 }
 
-/* Post card hover — subtle glow on the left border */
 .post {
   border-left: 3px solid transparent;
   padding-left: 0;
@@ -390,7 +344,6 @@ html, body {
 }
 .post:hover { border-color: #b8934a; padding-left: 16px; transition: border-color 0.4s ease, padding-left 0.5s cubic-bezier(0.16,1,0.3,1); }
 
-/* Reveal (used on separators) */
 .reveal {
   opacity: 0;
   transform: translateY(30px);
@@ -407,13 +360,13 @@ html, body {
   .blog-container { padding: 48px 18px 80px; gap: 56px; }
   .post:hover { border-color: transparent; padding-left: 0; }
 }
-	  .post-image-small {
+
+.post-image-small {
   text-align: center;
 }
-
 .post-image-small img {
-  width: 300px;       /* controls actual size */
-  max-width: 90%;     /* responsive on mobile */
+  width: 300px;
+  max-width: 90%;
   height: auto;
   display: inline-block;
 }
@@ -425,7 +378,7 @@ html, body {
 
 <header class="site-header" id="siteHeader">
   <div class="header-inner">
-    <a href="index.html"><img src="images/mozartlaserlogo.png" alt="MozartLaser" class="logo"></a>
+    <a href="index.html"><img src="images/mozartlaserlogo.png" alt="MozartLaser" class="logo" loading="lazy"></a>
     <nav class="main-nav">
       <ul>
         <li><a href="index.html">Home</a></li>
@@ -438,7 +391,7 @@ html, body {
     <div class="hamburger"><span></span><span></span><span></span></div>
   </div>
   <div class="cart-icon" id="cart-icon">
-    <img src="images/cart-icon.png" alt="Cart">
+    <img src="images/cart-icon.png" alt="Cart" loading="lazy">
     <span id="cart-count">0</span>
   </div>
 </header>
@@ -471,11 +424,12 @@ html, body {
   <h2 class="anim-heading">Introducing the Landmarks of Aviation Coaster Series</h2>
   <p class="post-subtitle anim-text">For the people who love aviation.</p>
   <div class="post-rule"></div>
-<!-- IMAGE — replace with your actual coaster photo -->
+
   <div class="post-image anim-image">
-    <img src="Product Images/Landmarks of Aviation/Front view.jpg" alt="Landmarks of Aviation Coaster Series">
+    <img src="Product Images/Landmarks of Aviation/Front view.jpg" alt="Landmarks of Aviation Coaster Series" loading="lazy">
     <p class="post-image-caption">The Landmarks of Aviation Coaster Series — hand-engraved, sealed, and polished in California.</p>
   </div>
+
   <p class="anim-text">
     Some people have a thing for planes. Not casual interest — a real thing. They know the difference between a 747 and a 777 by silhouette. I'm one of those people. Which is why I made these coasters - if you know someone like that, or if you are someone like that, this series was built for you by a fellow aviation enthusiased.
   </p>
@@ -489,11 +443,9 @@ html, body {
     Pilots and student pilots. Aviation enthusiasts and history buffs. The dad who built model planes as a kid. The coworker who has a tiny aircraft on their desk. The graduate who just got their private certificate. These coasters work as a perfect gift for anyone even remotely interested in aviation — and they're the kind of thing you don't have to explain when you give them, because the person gets it the moment they see it.
   </p>
 
-  <!-- PORTRAIT VIDEO — replace src with your actual video file -->
+  <!-- PORTRAIT VIDEO — lazy loaded -->
   <div class="video-embed-wrapper anim-video" style="max-width: 320px; margin: 28px auto; padding-bottom: 0; height: auto; aspect-ratio: 9/16;">
-    <video style="position: static; width: 100%; height: 100%; object-fit: cover; border-radius: 14px;" autoplay muted loop playsinline controls>
-      <source src="images/Coaster release.mp4" type="video/mp4">
-      Your browser does not support the video tag.
+    <video style="position: static; width: 100%; height: 100%; object-fit: cover; border-radius: 14px;" autoplay muted loop playsinline controls data-src="images/Coaster release.mp4">
     </video>
   </div>
 
@@ -510,8 +462,6 @@ html, body {
     From there, the coasters are sanded smooth before engraving to make sure the burn lands on a clean surface. After engraving, they're sanded again to knock back any char and bring out the grain. Then sealed to lock in the engraving and protect the wood. Then hand-polished to give the finished piece a smooth, solid feel that holds up to actual daily use — because these are coasters, and they should work like coasters.
   </p>
 
-  
-
   <p class="anim-text">
     <strong>Built to Last, Built to Use</strong><br>
     A lot of laser-engraved products look great in photos and feel fragile in person. These don't. The sealing and polishing process means the engravings hold up over time, and the coasters are thick enough to actually protect a surface. They're meant to be used, not just displayed — though plenty of people display them anyway.
@@ -523,8 +473,9 @@ html, body {
 
 </article>
 
-<hr class="post-separator reveal">	
-	<!-- ══════════════════════════════════════
+<hr class="post-separator reveal">
+
+<!-- ══════════════════════════════════════
      POST — DRAGON COIN
      ══════════════════════════════════════ -->
 <article class="post">
@@ -542,12 +493,12 @@ html, body {
   </p>
 
   <p class="anim-text">
-    It starts in Adobe Illustrator. The dragon design was carefully created to be as cute as possible. 
+    It starts in Adobe Illustrator. The dragon design was carefully created to be as cute as possible.
   </p>
 
-  <!-- VIDEO -->
+  <!-- YouTube iframe — lazy loaded via loading="lazy" -->
   <div class="video-embed-wrapper anim-video">
-  <iframe width="560" height="315" src="https://www.youtube.com/embed/G_J8Wvv7XdM?si=D_uxPnbr9jOVOoeW" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    <iframe loading="lazy" width="560" height="315" src="https://www.youtube.com/embed/G_J8Wvv7XdM?si=D_uxPnbr9jOVOoeW" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
   </div>
 
   <p class="anim-text">
@@ -555,7 +506,7 @@ html, body {
   </p>
 
   <p class="anim-text">
-    After that, the coin is cut directly out of a solid plank of wood using the laser. This makes the edges of the coin very smooth and soft to hold, much softer then power tools could ever cut. 
+    After that, the coin is cut directly out of a solid plank of wood using the laser. This makes the edges of the coin very smooth and soft to hold, much softer then power tools could ever cut.
   </p>
 
   <p class="anim-text">
@@ -567,16 +518,16 @@ html, body {
   </p>
 
   <p class="anim-text">
-    Once that’s complete, it’s sanded again and sealed. This final step protects the engraving, enhances the natural tone of the wood, and gives the coin a smooth, finished feel.
+    Once that's complete, it's sanded again and sealed. This final step protects the engraving, enhances the natural tone of the wood, and gives the coin a smooth, finished feel.
   </p>
 
   <div class="post-image post-image-small anim-image">
-    <img src="Product Images/Dragon Coin/Front view.jpg" alt="Dragon Coin">
+    <img src="Product Images/Dragon Coin/Front view.jpg" alt="Dragon Coin" loading="lazy">
     <p class="post-image-caption">The finished Dragon Coin</p>
   </div>
 
   <p class="anim-text">
-   This little coin it made to sit on your desk, your shelf, or alongside your books to remind you to read them! :-)
+    This little coin it made to sit on your desk, your shelf, or alongside your books to remind you to read them! :-)
   </p>
 
 </article>
@@ -584,64 +535,59 @@ html, body {
 <hr class="post-separator reveal">
 
   <!-- ══════════════════════════════════════
-       POST 1 — text + image + video
+       POST — GIFT IDEAS
        ══════════════════════════════════════ -->
- <article class="post">
+  <article class="post">
     <div class="post-meta anim-tag">
       <span class="post-tag">Tips & Ideas</span>
       <span class="post-date">April 2026</span>
     </div>
     <h2 class="anim-heading">How to Give a Gift That Actually Means Something</h2>
-    <p class="post-subtitle anim-text">Most gifts don’t last.</p>
+    <p class="post-subtitle anim-text">Most gifts don't last.</p>
     <div class="post-rule"></div>
 
     <p class="anim-text">
-      Not physically—they last. But mentally, they don’t stick. A lot of them end up sitting on a shelf, getting used for a week, or just blending in with everything else.
-
+      Not physically—they last. But mentally, they don't stick. A lot of them end up sitting on a shelf, getting used for a week, or just blending in with everything else.
     </p>
 
     <p class="anim-text">
-      <strong>That’s not what you want when you give something to someone.</strong> You want them to look at it and remember why they got it. You want it to feel intentional. That’s where engraved pieces hit differently..
+      <strong>That's not what you want when you give something to someone.</strong> You want them to look at it and remember why they got it. You want it to feel intentional. That's where engraved pieces hit differently..
     </p>
 
     <p class="anim-text">
-      <strong>Why People Actually Keep These:</strong> <br>People hold onto things that feel personal. Not complicated—just personal. A place they recognize. A verse that means something. A design that feels familiar. That’s what makes someone keep something long-term instead of tossing it aside later. That’s the whole idea behind Mozart Laser. Clean designs, real materials, and no shortcuts
+      <strong>Why People Actually Keep These:</strong> <br>People hold onto things that feel personal. Not complicated—just personal. A place they recognize. A verse that means something. A design that feels familiar. That's what makes someone keep something long-term instead of tossing it aside later. That's the whole idea behind Mozart Laser. Clean designs, real materials, and no shortcuts
     </p>
 
-    <!-- SIDE-BY-SIDE IMAGES — replace placeholders with real photos -->
     <div class="post-image-pair">
-     <div class="post-image anim-image">
-  <img src="Product Images/Big Ben Plaque/Front view.jpg" alt="Big Ben Plaque">
-</div>
       <div class="post-image anim-image">
-  <img src="Product Images/Big Ben Plaque/Display.JPG" alt="Big Ben Plaque">
-</div>
+        <img src="Product Images/Big Ben Plaque/Front view.jpg" alt="Big Ben Plaque" loading="lazy">
+      </div>
+      <div class="post-image anim-image">
+        <img src="Product Images/Big Ben Plaque/Display.JPG" alt="Big Ben Plaque" loading="lazy">
+      </div>
     </div>
 
     <p class="anim-text">
-      <strong>The Big Ben Plaque (New Release)</strong> <br>The newest piece is the Big Ben plaque, engraved into poplar wood. It’s beautiful and makes the perfect decoration gift. The detail of the tower comes through clean, and the natural grain of the wood gives it just enough variation to make each one feel slightly different. It doesn’t look mass-produced, because its not.
+      <strong>The Big Ben Plaque (New Release)</strong> <br>The newest piece is the Big Ben plaque, engraved into poplar wood. It's beautiful and makes the perfect decoration gift. The detail of the tower comes through clean, and the natural grain of the wood gives it just enough variation to make each one feel slightly different. It doesn't look mass-produced, because its not.
     </p>
 
     <p class="anim-text">
       <strong>It works well if you want something:</strong><br>	•	Classic without being boring <br>
 	•	Meaningful without needing customization<br>
 	•	Easy to gift without overthinking it
-
     </p>
 
     <p class="anim-text">
-      <strong>It’s Also Discounted Right Now!</strong> Since it’s a new release, it’s currently priced lower than it normally will be. No gimmicks—just a good time to grab one if you were already considering it.
+      <strong>It's Also Discounted Right Now!</strong> Since it's a new release, it's currently priced lower than it normally will be. No gimmicks—just a good time to grab one if you were already considering it.
     </p>
   </article>
 
   <hr class="post-separator reveal">
-	
-	<!-- ══════════════════════════════════════
-       POST 2 — text-heavy, two side-by-side images
+
+  <!-- ══════════════════════════════════════
+       POST — GOLDEN GATE
        ══════════════════════════════════════ -->
-  
-	
-	<article class="post">
+  <article class="post">
     <div class="post-meta anim-tag">
       <span class="post-tag">Behind the Scenes</span>
       <span class="post-date">March 2026</span>
@@ -656,9 +602,8 @@ html, body {
       The cables needed to be visible. The water beneath had to read as water without becoming noise.
     </p>
 
-    <!-- IMAGE: update src to your actual product photo -->
     <div class="post-image anim-image">
-      <img src="Product Images/Golden Gate Bridge/Front view.jpg" alt="Golden Gate Bridge plaque front view">
+      <img src="Product Images/Golden Gate Bridge/Front view.jpg" alt="Golden Gate Bridge plaque front view" loading="lazy">
       <p class="post-image-caption">The finished Golden Gate Bridge plaque — poplar wood, hand-finished in California.</p>
     </div>
 
@@ -674,26 +619,21 @@ html, body {
       feels right — not too burnt, not too faint.
     </p>
 
-    <!-- VIDEO: replace YOUR_VIDEO_ID with the real YouTube video ID -->
-   <!-- VIDEO SECTION -->
-<div class="video-embed-wrapper anim-video" style="max-width: 320px; margin: 28px auto; padding-bottom: 0; height: auto; aspect-ratio: 9/16;">
-  <video style="position: static; width: 100%; height: 100%; object-fit: cover; border-radius: 14px;" autoplay muted loop playsinline controls>
-    <source src="images/Golden Gate Highlight.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
-</div>
+    <!-- PORTRAIT VIDEO — lazy loaded -->
+    <div class="video-embed-wrapper anim-video" style="max-width: 320px; margin: 28px auto; padding-bottom: 0; height: auto; aspect-ratio: 9/16;">
+      <video style="position: static; width: 100%; height: 100%; object-fit: cover; border-radius: 14px;" autoplay muted loop playsinline controls data-src="images/Golden Gate Highlight.mp4">
+      </video>
+    </div>
 
     <p class="anim-text">
-      The final step is hand-finishing — a light sand to knock back any char smell, then a protective sealing spray to help the engraving last and stay sharp. We only ship it to you when we feel it is good enought to display in our own home. 
+      The final step is hand-finishing — a light sand to knock back any char smell, then a protective sealing spray to help the engraving last and stay sharp. We only ship it to you when we feel it is good enought to display in our own home.
     </p>
   </article>
 
   <hr class="post-separator reveal">
 
- 
-
   <!-- ══════════════════════════════════════
-       POST 3 — text + two stacked images
+       POST — WOOD TYPES
        ══════════════════════════════════════ -->
   <article class="post">
     <div class="post-meta anim-tag">
@@ -709,10 +649,9 @@ html, body {
       is that it depends — on the design, the use case, and what kind of look we're going for.
     </p>
 
-    <!-- IMAGE PLACEHOLDER — replace with a photo of your wood samples -->
-   <div class="post-image anim-image">
-  <img src="images/Wood.jpg" alt="Image of Pine Wood">
-</div>
+    <div class="post-image anim-image">
+      <img src="images/Wood.jpg" alt="Image of Pine Wood" loading="lazy">
+    </div>
 
     <p class="anim-text">
       <strong>Pine Wood</strong> is our go-to for detailed work. It's rich, close-grained, and produces a high-contrast
@@ -720,14 +659,12 @@ html, body {
     </p>
 
     <p class="anim-text">
-      <strong>Poplar</strong> is for pieces that need presence. The light, soft grain means the engraving reads differently — Images engrave very well on it because of its ability to show many different shades, from dark burns to light texture. 
+      <strong>Poplar</strong> is for pieces that need presence. The light, soft grain means the engraving reads differently — Images engrave very well on it because of its ability to show many different shades, from dark burns to light texture.
     </p>
 
-   
-    <!-- IMAGE PLACEHOLDER — replace with a close-up engraving detail shot -->
-   <div class="post-image anim-image">
-  <img src="Product Images/Ship/Side view.jpg" alt="Ship detail">
-</div>
+    <div class="post-image anim-image">
+      <img src="Product Images/Ship/Side view.jpg" alt="Ship detail" loading="lazy">
+    </div>
 
     <p class="anim-text">
       When you place a custom order, just let us know if you have a preference — or describe what you're going for
@@ -738,7 +675,7 @@ html, body {
   <hr class="post-separator reveal">
 
   <!-- ══════════════════════════════════════
-       POST 4 — text + image + video
+       POST — OUR STORY
        ══════════════════════════════════════ -->
   <article class="post">
     <div class="post-meta anim-tag">
@@ -750,39 +687,33 @@ html, body {
     <div class="post-rule"></div>
 
     <p class="anim-text">
-     Mozart Laser started with a simple frustration—most gifts feel temporary. They’re used for a while, then forgotten. We wanted to make something different. Using real wood and precise engraving, each piece is designed to feel intentional from the start.
+      Mozart Laser started with a simple frustration—most gifts feel temporary. They're used for a while, then forgotten. We wanted to make something different. Using real wood and precise engraving, each piece is designed to feel intentional from the start.
     </p>
 
-    <!-- IMAGE PLACEHOLDER — replace with a shop or behind-the-scenes photo -->
     <div class="post-image anim-image">
-  <img src="images/workshop.jpeg" alt="Photo of Mozart Laser workshop">
-</div>
-     
+      <img src="images/workshop.jpeg" alt="Photo of Mozart Laser workshop" loading="lazy">
+    </div>
 
     <p class="anim-text">
-     The name came from a simple idea: great craft should feel like music. Precise, intentional, and worth sitting
+      The name came from a simple idea: great craft should feel like music. Precise, intentional, and worth sitting
       with. Mozart wrote pieces that were technically demanding and emotionally immediate at the same time.
       That's what we want every engraving to be.
     </p>
 
     <p class="anim-text">
-     Using real wood and precise engraving, each piece is designed to feel intentional from the start. Every order is handled by hand, refined through testing, and finished carefully so it doesn’t just look good for a moment—it becomes something people hold onto.
+      Using real wood and precise engraving, each piece is designed to feel intentional from the start. Every order is handled by hand, refined through testing, and finished carefully so it doesn't just look good for a moment—it becomes something people hold onto.
     </p>
 
-    <!-- VIDEO SECTION -->
-<div class="video-embed-wrapper anim-video" style="max-width: 320px; margin: 28px auto; padding-bottom: 0; height: auto; aspect-ratio: 9/16;">
-  <video style="position: static; width: 100%; height: 100%; object-fit: cover; border-radius: 14px;" autoplay muted loop playsinline controls>
-    <source src="images/Blog Video 2.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
-</div>
+    <!-- PORTRAIT VIDEO — lazy loaded -->
+    <div class="video-embed-wrapper anim-video" style="max-width: 320px; margin: 28px auto; padding-bottom: 0; height: auto; aspect-ratio: 9/16;">
+      <video style="position: static; width: 100%; height: 100%; object-fit: cover; border-radius: 14px;" autoplay muted loop playsinline controls data-src="images/Blog Video 2.mp4">
+      </video>
+    </div>
 
-    
   </article>
 
   <hr class="post-separator reveal">
 
-  
 </div>
 
 <script src="js/navbar.js"></script>
@@ -874,14 +805,34 @@ window.addEventListener('scroll', function() {
     img.style.transform = 'translateY(' + offset + 'px) scale(1.04)';
   });
 }, { passive: true });
+
+/* 5. LAZY-LOAD MP4 VIDEOS */
+/* Videos use data-src instead of a <source> tag so they don't
+   download until they're about to scroll into view.            */
+var lazyVideos = document.querySelectorAll('video[data-src]');
+var videoObs = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if (!entry.isIntersecting) return;
+    var video = entry.target;
+    var src = video.getAttribute('data-src');
+    var source = document.createElement('source');
+    source.src = src;
+    source.type = 'video/mp4';
+    video.appendChild(source);
+    video.load();
+    video.removeAttribute('data-src');
+    videoObs.unobserve(video);
+  });
+}, { rootMargin: '200px' }); /* start loading 200px before visible */
+lazyVideos.forEach(function(v) { videoObs.observe(v); });
 </script>
 
 <footer class="site-footer">
   <div class="footer-content">
     <div class="social-links">
-      <a href="https://www.facebook.com/profile.php?id=61585614995027" target="_blank" aria-label="Facebook"><img src="images/facebook-icon.png" alt="Facebook"></a>
-      <a href="https://instagram.com/mozartlaser" target="_blank" aria-label="Instagram"><img src="images/instagram-icon.png" alt="Instagram"></a>
-      <a href="https://X.com/mozartlaser" target="_blank" aria-label="X"><img src="images/X-icon.png" alt="X"></a>
+      <a href="https://www.facebook.com/profile.php?id=61585614995027" target="_blank" aria-label="Facebook"><img src="images/facebook-icon.png" alt="Facebook" loading="lazy"></a>
+      <a href="https://instagram.com/mozartlaser" target="_blank" aria-label="Instagram"><img src="images/instagram-icon.png" alt="Instagram" loading="lazy"></a>
+      <a href="https://X.com/mozartlaser" target="_blank" aria-label="X"><img src="images/X-icon.png" alt="X" loading="lazy"></a>
     </div>
     <p>&copy; 2026 Mozart Laser. All rights reserved.</p>
   </div>
