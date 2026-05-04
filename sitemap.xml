@@ -154,5 +154,19 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-
+ <loc>https://mozartlaser.com/np_coasters.html</loc>
+    <lastmod>2026-05-2</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+<loc>https://mozartlaser.com/historia_bookmark.html</loc>
+    <lastmod>2026-05-3</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+<loc>https://mozartlaser.com/leaf_bookmark.html</loc>
+    <lastmod>2026-05-3</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>
