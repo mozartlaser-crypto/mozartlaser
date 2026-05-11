@@ -553,6 +553,7 @@ html, body {
 .proof-quotes {
   display: flex;
   justify-content: center;
+  align-items: flex-start;
   gap: 24px;
   flex-wrap: wrap;
   max-width: 1000px;
@@ -584,6 +585,47 @@ html, body {
   font-size: 0.85rem;
   font-weight: 600;
   color: #999;
+}
+
+/* ── SCROLLABLE REVIEW ── */
+.review-scroll-wrap {
+  position: relative;
+}
+.review-scroll-wrap p:first-of-type {
+  max-height: 180px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #d8d3cc transparent;
+  padding-right: 4px;
+  mask-image: linear-gradient(to bottom, black 30%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 30%, transparent 100%);
+}
+.review-scroll-wrap p:first-of-type::-webkit-scrollbar {
+  width: 4px;
+}
+.review-scroll-wrap p:first-of-type::-webkit-scrollbar-track {
+  background: transparent;
+}
+.review-scroll-wrap p:first-of-type::-webkit-scrollbar-thumb {
+  background: #d8d3cc;
+  border-radius: 4px;
+}
+.scroll-hint {
+  position: absolute;
+  bottom: 22px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: #b8934a;
+  opacity: 1;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+.scroll-hint.hidden {
+  opacity: 0;
 }
 
 /* ── GUARANTEE STRIP ── */
@@ -907,7 +949,6 @@ html, body {
         banner.style.marginTop = navbar.offsetHeight + 'px';
       }
     }
-    // Run immediately and again after fonts/layout settle
     offsetBanner();
     window.addEventListener('load', offsetBanner);
     window.addEventListener('resize', offsetBanner);
@@ -917,7 +958,7 @@ html, body {
 <!-- HERO -->
 <section class="hero" aria-label="Featured laser engraved products">
 
- <div class="hero-slide active" style="background-image: url('Product Images/NP Coasters/Front view.png');" aria-label="National Parks Coasters Set">
+  <div class="hero-slide active" style="background-image: url('Product Images/NP Coasters/Front view.png');" aria-label="National Parks Coasters Set">
     <a href="np_coasters.html" class="slide-cover-link" aria-label="National Parks Coasters Set"></a>
     <div class="slide-info">
       <a href="np_coasters.html">
@@ -926,7 +967,7 @@ html, body {
       </a>
     </div>
   </div>
-<div class="hero-slide" style="background-image: url('Product Images/Historia Bookmark/Front view.png'); background-size: auto 70%;" aria-label="Historia Bookmark">
+  <div class="hero-slide" style="background-image: url('Product Images/Historia Bookmark/Front view.png'); background-size: auto 70%;" aria-label="Historia Bookmark">
     <a href="historia_bookmark.html" class="slide-cover-link" aria-label="Historia Bookmark"></a>
     <div class="slide-info">
       <a href="historia_bookmark.html">
@@ -944,7 +985,6 @@ html, body {
       </a>
     </div>
   </div>
-	
 
   <div class="dots">
     <span class="dot active" data-index="0"></span>
@@ -991,7 +1031,7 @@ html, body {
 <section class="featured-products">
   <h2>Featured Products</h2>
   <div class="featured-grid">
- 
+
     <div class="feat-card-wrap">
       <a href="leaf_bookmark.html" class="feat-card">
         <img class="feat-card-img" src="Product Images/Leaf Bookmark/Front view.png" alt="Leaf Bookmark" loading="lazy">
@@ -1021,21 +1061,20 @@ html, body {
         <span class="feat-card-btn">View Product</span>
       </a>
     </div>
-<div class="feat-card-wrap">
+
+    <div class="feat-card-wrap">
       <a href="adventurer's bookmark.html" class="feat-card">
         <img class="feat-card-img" src="Product Images/Adventurer's Bookmark/Front view.png" alt="Adventurer's Bookmark" loading="lazy">
         <div class="feat-card-body">
           <p class="feat-card-name">Adventurer's Bookmark</p>
-          <p class="feat-card-size">A finely crafted wooden bookmark featuring engraved mountain contours and a compass design, made specially for anyone bookish! </p>
+          <p class="feat-card-size">A finely crafted wooden bookmark featuring engraved mountain contours and a compass design, made specially for anyone bookish!</p>
           <div class="feat-card-prices">
             <span class="feat-card-price">$7.99</span>
-     
           </div>
         </div>
         <span class="feat-card-btn">View Product</span>
       </a>
     </div>
-   
 
   </div>
 </section>
@@ -1090,6 +1129,17 @@ html, body {
   <section class="proof-strip">
     <h3>What customers say</h3>
     <div class="proof-quotes">
+
+      <!-- Peyton's review — scrollable with cues -->
+      <div class="proof-quote">
+        <div class="proof-stars">★★★★★</div>
+        <div class="review-scroll-wrap">
+          <p>"I was trying to figure out what to order for Mother's Day, and without even realizing, it was suddenly Saturday. I found Mozart Laser and thought "hey, that's cool, could be sentimental if I get a good photo on it" so I set up a custom order and sent it in. I had selected a horizontal piece of wood, and the owner actually reached out and suggested switching it to vertical to fit the photo better. I had also been worried about shipping it in time for Mother's Day, but they got it done fast and sent over to me in time, which was great. The vertical orientation was perfect and my mom loved the gift. Overall, 10/10, between the carving and the support"</p>
+          <div class="scroll-hint">scroll to read more ↓</div>
+        </div>
+        <p class="proof-author">— Peyton</p>
+      </div>
+
       <div class="proof-quote">
         <div class="proof-stars">★★★★★</div>
         <p>"The detail on this <a href="Golden Gate Bridge.html">Golden Gate Bridge plaque</a> is unreal. It looks like something you'd find in a high-end boutique, not a small business."</p>
@@ -1202,6 +1252,19 @@ const featObserver = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.1 });
 featCards.forEach(c => featObserver.observe(c));
+
+/* Scroll hint — hide once user starts scrolling the review */
+const reviewScrollEl = document.querySelector('.review-scroll-wrap p:first-of-type');
+const scrollHint = document.querySelector('.scroll-hint');
+if (reviewScrollEl && scrollHint) {
+  reviewScrollEl.addEventListener('scroll', function() {
+    if (this.scrollTop > 10) {
+      scrollHint.classList.add('hidden');
+    } else {
+      scrollHint.classList.remove('hidden');
+    }
+  });
+}
 </script>
 
 <!-- EMAIL FLYOUT -->
@@ -1213,7 +1276,7 @@ featCards.forEach(c => featObserver.observe(c));
   <input type="email" id="flyout-email" placeholder="your@email.com" autocomplete="email">
   <p id="flyout-error-msg">Please enter a valid email address.</p>
   <button id="flyout-submit">Subscribe</button>
-  <p id="flyout-success">You've signed up to recieve emails! 🎉 <br> Your 5% off Coupon will be emailed to you within a few hours!  </p>
+  <p id="flyout-success">You've signed up to recieve emails! 🎉 <br> Your 5% off Coupon will be emailed to you within a few hours!</p>
 </div>
 
 <script>
