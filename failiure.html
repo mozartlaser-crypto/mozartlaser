@@ -1,202 +1,435 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
-<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-GNESH4PWH6"></script>
 <script>
-  window.dataLayer = window.dataLayer || [];
+  window.dataLayer=window.dataLayer||[];
   function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-GNESH4PWH6');
+  gtag('js',new Date());gtag('config','G-GNESH4PWH6');
 </script>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Checkout Failed | Mozart Laser</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Quicksand:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="css/navbar.css">
-<link rel="stylesheet" href="css/footer.css">
-<link rel="stylesheet" href="css/cart.css">
-<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;700&display=swap" rel="stylesheet">
-<script src="js/cart.js"></script>
-<script src="https://js.stripe.com/v3/"></script>
-<title>Failiure</title>	
-	<style>
-	.center-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin-top: 40px;
+<style>
+:root{
+  --ink:#0a0908;--ink2:#13100d;--parch:#f5f1eb;
+  --gold:#b8934a;--gold2:#d4aa68;
+  --ash:#7a7269;--ash2:#c4bdb3;
+  --red:#c0392b;
+  --border:rgba(184,147,74,.15);
+  --ease:cubic-bezier(0.16,1,0.3,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{overflow-x:hidden;scroll-behavior:smooth}
+body{background:var(--ink);color:var(--parch);font-family:'Quicksand',sans-serif;overflow-x:hidden;cursor:none;min-height:100vh;display:flex;flex-direction:column;}
+#gl-canvas{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
+.noise{position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.025;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:256px}
+#cur-dot{position:fixed;top:0;left:0;width:7px;height:7px;border-radius:50%;background:var(--gold);pointer-events:none;z-index:99999;transform:translate(-50%,-50%);mix-blend-mode:difference}
+#cur-ring{position:fixed;top:0;left:0;width:40px;height:40px;border-radius:50%;border:1.5px solid rgba(184,147,74,.5);pointer-events:none;z-index:99998;transform:translate(-50%,-50%)}
+@media(hover:none){#cur-dot,#cur-ring{display:none}body{cursor:auto}}
+.pw{position:relative;z-index:2;flex:1;display:flex;flex-direction:column;}
+.content{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:140px 24px 80px;}
+.x-ring{
+  width:96px;height:96px;border-radius:50%;
+  border:2px solid rgba(192,57,43,.6);
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 36px;
+  box-shadow:0 0 40px rgba(192,57,43,.2);
+}
+.x-ring svg{stroke:#e07070;}
+h1{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(42px,6vw,80px);
+  font-weight:300;line-height:1;letter-spacing:-.02em;
+  color:var(--parch);margin-bottom:20px;
+}
+h1 em{font-style:italic;color:#e07070;}
+.subtitle{
+  font-size:15px;font-weight:300;color:var(--ash2);
+  line-height:1.75;max-width:480px;margin:0 auto 12px;
+}
+.subtitle a{color:var(--gold);text-decoration:none;}
+.subtitle a:hover{text-decoration:underline;}
+.rule{width:80px;height:1px;background:linear-gradient(90deg,transparent,rgba(192,57,43,.5),transparent);margin:32px auto;}
+.btn-group{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:8px;}
+.btn-primary,.btn-secondary,.btn-retry{
+  display:inline-flex;align-items:center;justify-content:center;
+  padding:14px 32px;border-radius:50px;border:none;
+  font-family:'Quicksand',sans-serif;font-size:13px;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;
+  text-decoration:none;cursor:none;
+  transition:transform .4s var(--ease),box-shadow .4s var(--ease),background .3s;
+}
+.btn-primary{background:var(--gold);color:var(--ink);}
+.btn-primary:hover{transform:translateY(-4px);box-shadow:0 14px 36px rgba(184,147,74,.5);background:var(--gold2);}
+.btn-secondary{background:rgba(255,255,255,.05);color:var(--parch);border:1px solid rgba(196,189,179,.25);}
+.btn-secondary:hover{transform:translateY(-4px);background:rgba(255,255,255,.1);border-color:rgba(196,189,179,.5);}
+.btn-retry{background:rgba(192,57,43,.15);color:#e07070;border:1px solid rgba(192,57,43,.35);}
+.btn-retry:hover{transform:translateY(-4px);background:rgba(192,57,43,.28);border-color:rgba(192,57,43,.6);}
+.site-footer{background:var(--ink);border-top:1px solid var(--border);padding:44px 48px;position:relative;z-index:2;}
+.footer-content{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;}
+.site-footer p{color:var(--ash);font-size:12px;letter-spacing:.08em;}
+.social-links{display:flex;gap:20px;align-items:center;}
+.social-links a{color:rgba(196,189,179,.5);transition:color .3s;display:flex;align-items:center;}
+.social-links a:hover{color:rgba(196,189,179,.9);}
+@media(max-width:560px){.site-footer{padding:36px 20px}.btn-group{flex-direction:column;align-items:center;}}
+
+/* ── ICON MEDALLION ── */
+.icon-wrap{
+  perspective:500px;
+  perspective-origin:50% 50%;
+  width:120px;height:120px;
+  margin:0 auto 40px;
+  cursor:none;
+}
+.x-ring{
+  width:120px;height:120px;
+  border-radius:50%;
+  border:3px solid rgba(192,57,43,.7);
+  display:flex;align-items:center;justify-content:center;
+  transform-style:preserve-3d;
+  will-change:transform;
+  position:relative;
+  background:radial-gradient(circle at 38% 38%, rgba(192,57,43,.15) 0%, rgba(192,57,43,.04) 60%, transparent 100%);
+  box-shadow:
+    0 0 0 1px rgba(192,57,43,.12),
+    0 0 40px rgba(192,57,43,.2),
+    inset 0 1px 0 rgba(255,255,255,.1),
+    inset 0 -1px 0 rgba(0,0,0,.3);
+  transition:box-shadow .3s;
+}
+.x-ring::before{
+  content:'';position:absolute;inset:0;border-radius:50%;
+  background:radial-gradient(circle at var(--sx,38%) var(--sy,30%), rgba(255,255,255,.15) 0%, transparent 55%);
+  pointer-events:none;transition:background .05s;
+}
+.x-ring::after{
+  content:'';
+  position:absolute;inset:-4px;border-radius:50%;
+  border:1px solid rgba(192,57,43,.08);
+  pointer-events:none;
+  transform:translateZ(-6px);
 }
 
-.button {
-  font-family: 'Quicksand', sans-serif;
-  padding: 12px 28px;
-  border-radius: 6px;
-  font-weight: 500;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+/* ── BUTTON ANIMATIONS ── */
+.btn-primary,.btn-secondary,.btn-retry{
+  position:relative;overflow:hidden;
+  transition:transform .45s var(--ease),box-shadow .45s var(--ease),background .3s,color .3s,border-color .3s,letter-spacing .3s;
 }
-
-.white-button {
-  background: #fff;
-  color: #000;
-  border: 1px solid #000;
+/* Shimmer sweep */
+.btn-primary::after,.btn-secondary::after,.btn-retry::after{
+  content:'';position:absolute;inset:0;border-radius:inherit;
+  background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.22) 50%,transparent 65%);
+  transform:translateX(-100%);
+  transition:transform .5s var(--ease);
+  pointer-events:none;
 }
-
-.white-button:hover {
-  background: #000;
-  color: #fff;
+.btn-primary:hover::after,.btn-secondary:hover::after,.btn-retry:hover::after{
+  transform:translateX(100%);
 }
-
-.black-button {
-  background: #000;
-  color: #fff;
-  border: 1px solid #000;
+/* Letter spacing breathe on hover */
+.btn-primary:hover,.btn-secondary:hover,.btn-retry:hover{
+  letter-spacing:.16em;
 }
-
-.black-button:hover {
-  background: #fff;
-  color: #000;
+/* Magnetic sink on click */
+.btn-primary:active,.btn-secondary:active,.btn-retry:active{
+  transform:translateY(0) scale(.97)!important;
+  box-shadow:0 2px 8px rgba(0,0,0,.3)!important;
+  transition:transform .1s,box-shadow .1s;
 }
-	
-.center-buttons {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 15px;
-  margin-top: 40px;
-}
-
-.center-buttons .button {
-  padding: 12px 25px;
-  font-size: 1rem;
-  border-radius: 999px;
-  text-decoration: none;
-  font-family: 'Poppins', sans-serif;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: inline-block;
-}
-
-.center-buttons .add-cart {
-  background: white;
-  color: black;
-  border: 1px solid black;
-}
-
-.center-buttons .add-cart:hover {
-  background: #eee;
-}
-
-.center-buttons .buy-now {
-  background: black;
-  color: white;
-}
-
-.center-buttons .buy-now:hover {
-  background: #333;
-}
-
-/* Mobile layout: stack vertically */
-@media (max-width: 768px) {
-  .center-buttons {
-    flex-direction: column;
-    gap: 12px;
-  }
-}	
-	
-	</style>	
+</style>
 </head>
-	<header class="site-header" id="siteHeader">
+<body>
+<canvas id="gl-canvas" aria-hidden="true"></canvas>
+<div class="noise" aria-hidden="true"></div>
+<div id="cur-dot" aria-hidden="true"></div>
+<div id="cur-ring" aria-hidden="true"></div>
+
+<header class="site-header" id="siteHeader">
   <div class="header-inner">
-    <a href="index.html">
-  <img src="images/mozartlaserlogo.png" alt="MozartLaser" class="logo">
-</a>
-    
-    <nav class="main-nav">
+    <a href="index.html"><img src="images/mozartlaserlogo.png" alt="Mozart Laser" class="logo"></a>
+    <nav class="main-nav" aria-label="Main navigation">
       <ul>
         <li><a href="index.html">Home</a></li>
         <li><a href="products.html">Products</a></li>
         <li><a href="create.html">Create</a></li>
-		   <li><a href="blog.html">Blog</a></li>
+        <li><a href="blog.html">Blog</a></li>
         <li><a href="About.html">About</a></li>
       </ul>
     </nav>
-
-    <!-- hamburger -->
-    <div class="hamburger">
-      <span></span>
-      <span></span>
-      <span></span>
+    <div class="header-right">
+      <div class="cart-icon" id="cart-icon" role="button" tabindex="0" aria-label="Open cart">
+        <img src="images/cart-icon.png" alt="Cart">
+        <span id="cart-count">0</span>
+      </div>
+      <div class="hamburger" role="button" tabindex="0" aria-label="Open navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </div>
     </div>
   </div>
-	<!-- inside header-inner -->
-<div class="cart-icon" id="cart-icon">
-  <img src="images/cart-icon.png" alt="Cart">
-  <span id="cart-count">0</span>
-</div>
-	</header>
+</header>
 
-<!-- CART PANEL -->
-<div class="cart-panel" id="cart-panel">
+<div class="cart-panel" id="cart-panel" aria-label="Shopping cart">
   <h3>Shopping Cart</h3>
   <ul id="cart-items"></ul>
   <p>Total: $<span id="cart-total">0.00</span></p>
   <button id="checkout">Checkout</button>
   <button id="close-cart">Close</button>
 </div>
-	<br><br><br><br><br><br><br><br><br>
-<h1 style="text-align: center; font-family: 'Quicksand', sans-serif; font-weight: 400;">Failiure. Please check your network connection and try again.</h1>
-	<div class="center-buttons">
-  <a href="index.html" class="button white-button">Home</a>
-  <button id="retry-checkout" class="button black-button">Retry Checkout</button>
-</div>
-	<br><br><br><br><br><br><br><br><br>
-	<!-- FOOTER -->
-<footer class="site-footer">
-  <div class="footer-content">
-    <div class="social-links">
-      <a href="https://www.facebook.com/profile.php?id=61585614995027" target="_blank" aria-label="Facebook"><img src="images/facebook-icon.png" alt="Facebook"></a>
-	<a href="https://instagram.com/mozartlaser" target="_blank" aria-label="Instagram"><img src="images/instagram-icon.png" alt="Instagram"></a>
-      <a href="https://x.com/mozartlaser" target="_blank" aria-label="X"><img src="images/X-icon.png" alt="X"></a>
-      
+
+<div class="pw">
+  <div class="content">
+    <div class="icon-wrap">
+    <div class="x-ring">
+      <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
     </div>
-    <p>&copy; 2026 Mozart Laser. All rights reserved.</p>
+    </div>
+    <h1>Checkout <em>Failed</em></h1>
+    <p class="subtitle">Something went wrong. Please check your network connection and try again.</p>
+    <p class="subtitle">If the problem persists, reach out at <a href="mailto:mozartlaser@gmail.com">mozartlaser@gmail.com</a> — your cart is still intact.</p>
+    <div class="rule"></div>
+    <div class="btn-group">
+      <a href="index.html" class="btn-secondary">Home</a>
+      <button id="retry-checkout" class="btn-retry">Retry Checkout</button>
+      <a href="products.html" class="btn-primary">Shop</a>
+    </div>
   </div>
-</footer>
+
+  <footer class="site-footer">
+    <div class="footer-content">
+      <div class="social-links">
+        <a href="https://www.facebook.com/profile.php?id=61585614995027" target="_blank" rel="noopener" aria-label="Facebook"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+        <a href="https://instagram.com/mozartlaser" target="_blank" rel="noopener" aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+        <a href="https://x.com/mozartlaser" target="_blank" rel="noopener" aria-label="X"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+      </div>
+      <p>&copy; 2026 Mozart Laser. All rights reserved.</p>
+    </div>
+  </footer>
+</div>
+
+<script src="js/navbar.js"></script>
+<script src="js/safari-fix.js"></script>
+<script src="js/cart.js"></script>
 <script>
-const retryButton = document.getElementById('retry-checkout');
+/* Retry checkout using cart from localStorage */
+document.getElementById('retry-checkout').addEventListener('click', async function() {
+  var stored = localStorage.getItem('cart');
+  var cart = stored ? JSON.parse(stored) : [];
+  if (!cart.length) { alert('Your cart is empty.'); return; }
+  try {
+    var res = await fetch('https://mozart-backend.onrender.com/create-checkout-session', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ items: cart })
+    });
+    var session = await res.json();
+    if (session.url) { window.location.href = session.url; }
+    else { alert('Checkout failed. Please try again.'); }
+  } catch(e) { alert('Something went wrong during checkout.'); }
+});
 
-if (retryButton) {
-  retryButton.addEventListener('click', async () => {
-    if (cart.length === 0) {
-      alert("Your cart is empty!");
-      return;
-    }
+/* WebGL */
+(function(){
+  var canvas=document.getElementById('gl-canvas');
+  var gl=canvas.getContext('webgl')||canvas.getContext('experimental-webgl');
+  if(!gl){canvas.style.display='none';return;}
+  var W,H;
+  function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;gl.viewport(0,0,W,H);}
+  resize();window.addEventListener('resize',resize,{passive:true});
+  var VS='attribute vec3 aPos;attribute float aSize;attribute float aAlpha;uniform vec2 uMouse;uniform float uTime;varying float vAlpha;varying float vDepth;void main(){float z=aPos.z;float px=aPos.x+uMouse.x*(1.0-z)*0.28;float py=aPos.y+uMouse.y*(1.0-z)*0.2;float fov=1.8;float p=fov/(fov+z);gl_Position=vec4(px*p,py*p,0.0,1.0);gl_PointSize=aSize*p*2.2;vAlpha=aAlpha*p*(0.5+0.5*sin(uTime*0.9+aPos.x*4.0));vDepth=p;}';
+  var FS='precision mediump float;varying float vAlpha;varying float vDepth;void main(){vec2 c=gl_PointCoord-0.5;float d=length(c)*2.0;float a=vAlpha*smoothstep(1.0,0.05,d);vec3 col=mix(vec3(0.72,0.58,0.29),vec3(0.88,0.74,0.42),vDepth);gl_FragColor=vec4(col,a*0.6);}';
+  function mkS(t,s){var x=gl.createShader(t);gl.shaderSource(x,s);gl.compileShader(x);return x;}
+  var prog=gl.createProgram();
+  gl.attachShader(prog,mkS(gl.VERTEX_SHADER,VS));gl.attachShader(prog,mkS(gl.FRAGMENT_SHADER,FS));
+  gl.linkProgram(prog);gl.useProgram(prog);
+  var N=window.innerWidth<768?80:180;
+  var pos=new Float32Array(N*3),sz=new Float32Array(N),al=new Float32Array(N);
+  for(var i=0;i<N;i++){pos[i*3]=(Math.random()-.5)*2.2;pos[i*3+1]=(Math.random()-.5)*2.4;pos[i*3+2]=Math.random()*2;sz[i]=Math.random()*3+0.8;al[i]=Math.random()*.4+.06;}
+  function mkB(d){var b=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,b);gl.bufferData(gl.ARRAY_BUFFER,d,gl.STATIC_DRAW);return b;}
+  function mkA(n,b,s){var l=gl.getAttribLocation(prog,n);gl.bindBuffer(gl.ARRAY_BUFFER,b);gl.enableVertexAttribArray(l);gl.vertexAttribPointer(l,s,gl.FLOAT,false,0,0);}
+  mkA('aPos',mkB(pos),3);mkA('aSize',mkB(sz),1);mkA('aAlpha',mkB(al),1);
+  var uM=gl.getUniformLocation(prog,'uMouse'),uT=gl.getUniformLocation(prog,'uTime');
+  gl.enable(gl.BLEND);gl.blendFunc(gl.SRC_ALPHA,gl.ONE);
+  var mx=0,my=0,tmx=0,tmy=0,t=0;
+  document.addEventListener('mousemove',function(e){mx=(e.clientX/W-.5)*2;my=-(e.clientY/H-.5)*2;},{passive:true});
+  (function loop(){requestAnimationFrame(loop);t+=.006;tmx+=(mx-tmx)*.035;tmy+=(my-tmy)*.035;gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT);gl.uniform2f(uM,tmx,tmy);gl.uniform1f(uT,t);gl.drawArrays(gl.POINTS,0,N);})();
+})();
 
-    try {
-      const response = await fetch("https://mozart-backend.onrender.com/create-checkout-session", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ items: cart })
-      });
+/* Cursor */
+(function(){
+  var dot=document.getElementById('cur-dot'),ring=document.getElementById('cur-ring');
+  if(!dot||!ring)return;
+  dot.style.willChange='transform';ring.style.willChange='transform';
+  dot.style.top='0';dot.style.left='0';ring.style.top='0';ring.style.left='0';
+  var mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;dot.style.transform='translate('+(mx-4)+'px,'+(my-4)+'px)';},{passive:true});
+  (function loop(){rx+=(mx-rx)*.35;ry+=(my-ry)*.35;ring.style.transform='translate('+(rx-18)+'px,'+(ry-18)+'px)';requestAnimationFrame(loop);})();
+})();
 
-      const session = await response.json();
+/* ── ICON 3D MEDALLION TILT ── */
+(function(){
+  var wrap = document.querySelector('.icon-wrap');
+  var ring = wrap && wrap.querySelector('.check-ring, .x-ring');
+  if(!wrap || !ring) return;
 
-      if (session.url) {
-        window.location.href = session.url;
-      } else {
-        console.error("Stripe session error:", session);
-        alert("Checkout failed. Please try again.");
+  var targetRX = 0, targetRY = 0;
+  var currentRX = 0, currentRY = 0;
+  var targetSX = 38, targetSY = 30;
+  var currentSX = 38, currentSY = 30;
+  var rafId = null;
+  var interacting = false; /* true when mouse/touch is active on the element */
+  var idleT = 0;           /* drives the ambient idle animation */
+  var idleRafId = null;
+
+  function lerp(a, b, t){ return a + (b - a) * t; }
+
+  function applyTransform(){
+    var scale = interacting ? 1.06 : 1.0;
+    ring.style.transform =
+      'rotateX(' + currentRX + 'deg) rotateY(' + currentRY + 'deg) scale(' + scale + ')';
+    ring.style.setProperty('--sx', currentSX + '%');
+    ring.style.setProperty('--sy', currentSY + '%');
+    var depth = Math.sqrt(currentRX*currentRX + currentRY*currentRY) / 40;
+    var isCheck = ring.classList.contains('check-ring');
+    var shadowColor = isCheck
+      ? 'rgba(184,147,74,' + (0.25 + depth*0.4) + ')'
+      : 'rgba(192,57,43,'  + (0.2  + depth*0.35) + ')';
+    var offsetX = -currentRY * 0.4;
+    var offsetY =  currentRX * 0.4;
+    ring.style.boxShadow =
+      '0 0 0 1px rgba(255,255,255,.04),' +
+      offsetX + 'px ' + (offsetY + 8) + 'px ' + (24 + depth*40) + 'px ' + shadowColor + ',' +
+      'inset 0 1px 0 rgba(255,255,255,.12),' +
+      'inset 0 -1px 0 rgba(0,0,0,.3)';
+  }
+
+  /* ── Interaction RAF ── */
+  function animate(){
+    currentRX = lerp(currentRX, targetRX, 0.07);
+    currentRY = lerp(currentRY, targetRY, 0.07);
+    currentSX = lerp(currentSX, targetSX, 0.1);
+    currentSY = lerp(currentSY, targetSY, 0.1);
+    applyTransform();
+    var settled = Math.abs(currentRX-targetRX) + Math.abs(currentRY-targetRY) < 0.04;
+    if(!settled){
+      rafId = requestAnimationFrame(animate);
+    } else {
+      rafId = null;
+      if(!interacting){
+        currentRX = 0; currentRY = 0;
+        ring.style.transform = '';
+        startIdleAnimation();
       }
-
-    } catch (error) {
-      console.error("Checkout error:", error);
-      alert("Something went wrong during checkout.");
     }
+  }
+
+  function startRAF(){
+    stopIdleAnimation();
+    if(!rafId) rafId = requestAnimationFrame(animate);
+  }
+
+  /* ── Idle ambient animation ── */
+  /* Gentle figure-8 / lemniscate path so it demonstrates the 3D subtly */
+  function idleFrame(){
+    idleT += 0.012;
+    /* Lemniscate of Bernoulli in angle space */
+    var rx = Math.sin(idleT)       * 9;   /* ±9° tilt X */
+    var ry = Math.sin(idleT * 2)   * 12;  /* ±12° tilt Y, twice the freq */
+    /* Specular follows */
+    var sx = 50 - (ry / 12) * 40;
+    var sy = 50 - (rx / 9)  * 40;
+    currentRX = lerp(currentRX, rx, 0.05);
+    currentRY = lerp(currentRY, ry, 0.05);
+    currentSX = lerp(currentSX, sx, 0.07);
+    currentSY = lerp(currentSY, sy, 0.07);
+    applyTransform();
+    idleRafId = requestAnimationFrame(idleFrame);
+  }
+
+  function startIdleAnimation(){
+    if(!idleRafId && !interacting && !rafId) idleRafId = requestAnimationFrame(idleFrame);
+  }
+
+  function stopIdleAnimation(){
+    if(idleRafId){ cancelAnimationFrame(idleRafId); idleRafId = null; }
+  }
+
+  /* ── Shared pointer handler ── */
+  function onPointerMove(clientX, clientY){
+    var r = wrap.getBoundingClientRect();
+    var xR = (clientX - r.left) / r.width  - 0.5;
+    var yR = (clientY - r.top)  / r.height - 0.5;
+    targetRX = yR * -38;
+    targetRY = xR *  38;
+    targetSX = 50 - xR * 80;
+    targetSY = 50 - yR * 80;
+    startRAF();
+  }
+
+  function onPointerStart(clientX, clientY){
+    interacting = true;
+    onPointerMove(clientX, clientY);
+  }
+
+  function onPointerEnd(){
+    interacting = false;
+    targetRX = 0; targetRY = 0;
+    targetSX = 38; targetSY = 30;
+    startRAF();
+  }
+
+  /* ── Mouse events ── */
+  wrap.addEventListener('mouseenter', function(){ interacting = true; startRAF(); });
+  wrap.addEventListener('mousemove',  function(e){ onPointerMove(e.clientX, e.clientY); });
+  wrap.addEventListener('mouseleave', function(){ onPointerEnd(); });
+
+  /* ── Touch events (mobile drag) ── */
+  wrap.addEventListener('touchstart', function(e){
+    e.preventDefault();
+    onPointerStart(e.touches[0].clientX, e.touches[0].clientY);
+  }, {passive:false});
+
+  wrap.addEventListener('touchmove', function(e){
+    e.preventDefault();
+    onPointerMove(e.touches[0].clientX, e.touches[0].clientY);
+  }, {passive:false});
+
+  wrap.addEventListener('touchend', function(e){
+    e.preventDefault();
+    onPointerEnd();
+  }, {passive:false});
+
+  /* ── Start idle on load ── */
+  /* Small delay so it doesn't fight the page load animation */
+  setTimeout(startIdleAnimation, 900);
+})();
+
+/* ── MAGNETIC BUTTONS ── */
+(function(){
+  document.querySelectorAll('.btn-primary,.btn-secondary,.btn-retry').forEach(function(btn){
+    btn.addEventListener('mousemove', function(e){
+      var r   = btn.getBoundingClientRect();
+      var xR  = (e.clientX - r.left) / r.width  - 0.5;
+      var yR  = (e.clientY - r.top)  / r.height - 0.5;
+      var tx  = xR * 10;
+      var ty  = yR * 6;
+      btn.style.transform = 'translateY(-4px) translate(' + tx + 'px,' + ty + 'px) scale(1.04)';
+      btn.style.transition = 'transform .08s linear, box-shadow .4s, letter-spacing .3s';
+    });
+    btn.addEventListener('mouseleave', function(){
+      btn.style.transform = '';
+      btn.style.transition = 'transform .5s cubic-bezier(0.34,1.56,0.64,1), box-shadow .4s, letter-spacing .3s';
+    });
   });
-}
-</script>	
-<body>
+})();
+
+</script>
 </body>
 </html>

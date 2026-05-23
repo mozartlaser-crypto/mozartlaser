@@ -1,310 +1,603 @@
 <!doctype html>
 <html lang="en">
 <head>
-<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-GNESH4PWH6"></script>
 <script>
-  window.dataLayer = window.dataLayer || [];
+  window.dataLayer=window.dataLayer||[];
   function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-GNESH4PWH6');
+  gtag('js',new Date());gtag('config','G-GNESH4PWH6');
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Laser Engraved Gifts & Wood Plaques | Shop – Mozart Laser</title>
-<meta name="description" content="Shop handcrafted laser engraved wood plaques, bookmarks, coasters, and personalized gifts. Scripture designs, landmarks, literary bookmarks & more — hand-finished in California." />
-<meta name="keywords" content="laser engraved wood plaques, personalized wood gifts, custom engraved bookmarks, laser engraved coasters, scripture wood plaque, engraved landmark plaque, personalized gifts California, custom laser engraving shop, wood engraving gifts" />
+<title>Shop Laser Engraved Wood Gifts & Plaques | Mozart Laser – California</title>
+<meta name="description" content="Shop handcrafted laser engraved wood plaques, bookmarks, coasters, and personalized gifts from Mozart Laser. Free personalization. Hand-finished in California. Ships in 3–5 days."/>
 <meta name="robots" content="index, follow">
-<link rel="canonical" href="https://mozartlaser.com/products.html" />
-
-<meta property="og:title" content="Laser Engraved Gifts & Wood Plaques | Shop – Mozart Laser">
-<meta property="og:description" content="Shop handcrafted laser engraved wood plaques, bookmarks, coasters, and personalized gifts. Hand-finished in California.">
+<meta name="author" content="Mozart Laser">
+<meta name="geo.region" content="US-CA">
+<link rel="canonical" href="https://mozartlaser.com/products.html"/>
+<meta property="og:title" content="Shop Laser Engraved Wood Gifts & Plaques | Mozart Laser">
+<meta property="og:description" content="Handcrafted laser engraved wood plaques, bookmarks, coasters, and personalized gifts. Free personalization. Hand-finished in California.">
 <meta property="og:image" content="https://mozartlaser.com/images/mozartlaserlogo.png">
 <meta property="og:url" content="https://mozartlaser.com/products.html">
 <meta property="og:type" content="website">
-
-<!-- Product listing structured data -->
+<meta property="og:site_name" content="Mozart Laser">
+<meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "CollectionPage",
-  "name": "Laser Engraved Gifts & Wood Plaques",
-  "description": "Handcrafted laser engraved wood plaques, bookmarks, coasters, and personalized gifts. Hand-finished in California.",
-  "url": "https://mozartlaser.com/products.html",
-  "provider": {
-    "@type": "LocalBusiness",
-    "name": "Mozart Laser",
-    "url": "https://mozartlaser.com"
-  }
-}
+{"@context":"https://schema.org","@type":"CollectionPage","name":"Shop Laser Engraved Wood Gifts","url":"https://mozartlaser.com/products.html","provider":{"@type":"LocalBusiness","name":"Mozart Laser","url":"https://mozartlaser.com","logo":"https://mozartlaser.com/images/mozartlaserlogo.png","address":{"@type":"PostalAddress","addressRegion":"CA","addressCountry":"US"},"priceRange":"$$","areaServed":"US"},"offers":{"@type":"AggregateOffer","priceCurrency":"USD","lowPrice":"5.99","highPrice":"64.99"}}
 </script>
-
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Quicksand:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="css/navbar.css">
-<link rel="stylesheet" href="css/footer.css">
-<link rel="stylesheet" href="css/cart.css">
-<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;700&display=swap" rel="stylesheet">
 <script src="js/cart-send.js"></script>
 <script src="https://js.stripe.com/v3/"></script>
 
 <style>
-html, body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Quicksand', sans-serif;
-  background: #f5f3ef;
+/* ============================================================
+   TOKENS
+   ============================================================ */
+:root {
+  --ink:      #0a0908;
+  --ink2:     #13100d;
+  --parch:    #f5f1eb;
+  --gold:     #b8934a;
+  --gold2:    #d4aa68;
+  --ash:      #6a6259;
+  --ash2:     #c0b8ae;
+  --ease:     cubic-bezier(0.16,1,0.3,1);
+  --ease-back:cubic-bezier(0.34,1.56,0.64,1);
 }
 
-.page-content {
-  padding-top: 100px;
+/* ============================================================
+   BASE
+   ============================================================ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{
+  background:var(--ink);
+  color:var(--parch);
+  font-family:'Quicksand',sans-serif;
+  overflow-x:hidden;
+  cursor:none;
 }
 
-/* ── PAGE HEADER ─────────────────────────── */
-.page-header {
-  text-align: center;
-  padding: 10px 20px 30px;
-}
-.page-header h2 {
-  font-weight: 300;
-  font-size: 2.2rem;
-  color: #1a1a1a;
-  margin: 0 0 6px;
-}
-.page-header p {
-  font-size: 1rem;
-  font-weight: 300;
-  color: #777;
-  margin: 0;
+/* ============================================================
+   WEBGL CANVAS — full-page depth field
+   ============================================================ */
+#gl-canvas{
+  position:fixed;
+  inset:0;
+  width:100%;height:100%;
+  pointer-events:none;
+  z-index:0;
 }
 
-/* ── FILTER BAR ──────────────────────────── */
-.filter-bar {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  flex-wrap: wrap;
-  padding: 0 20px 36px;
-}
-.filter-btn {
-  padding: 8px 20px;
-  font-family: 'Quicksand', sans-serif;
-  font-size: 0.9rem;
-  font-weight: 500;
-  border-radius: 30px;
-  border: 1.5px solid #ccc;
-  background: #fff;
-  color: #555;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-.filter-btn:hover {
-  border-color: #888;
-  color: #1a1a1a;
-}
-.filter-btn.active {
-  background: #1a1a1a;
-  color: #f0ece4;
-  border-color: #1a1a1a;
+/* ============================================================
+   NOISE
+   ============================================================ */
+.noise{
+  position:fixed;inset:0;
+  pointer-events:none;z-index:1;
+  opacity:.028;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:256px 256px;
 }
 
-/* ── PRODUCT GRID ────────────────────────── */
-.products-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 24px;
-  padding: 0 24px 60px;
-  max-width: 1200px;
-  margin: 0 auto;
+/* ============================================================
+   CURSOR
+   ============================================================ */
+#cur-dot{
+  position:fixed;top:0;left:0;
+  width:7px;height:7px;
+  border-radius:50%;
+  background:var(--gold);
+  pointer-events:none;z-index:99999;
+  transform:translate(-50%,-50%);
+  transition:width .25s var(--ease),height .25s var(--ease),background .25s,opacity .3s;
+  mix-blend-mode:difference;
+}
+#cur-ring{
+  position:fixed;top:0;left:0;
+  width:40px;height:40px;
+  border-radius:50%;
+  border:1.5px solid rgba(184,147,74,.6);
+  pointer-events:none;z-index:99998;
+  transform:translate(-50%,-50%);
+  transition:width .5s var(--ease),height .5s var(--ease),border-color .3s,opacity .3s;
+}
+#cur-label{ display:none; }
+body.c-hover  #cur-ring{width:64px;height:64px;border-color:rgba(184,147,74,.9);}
+body.c-btn    #cur-dot {width:3px;height:3px;background:#fff;}
+body.c-btn    #cur-ring{width:52px;height:52px;border-color:rgba(255,255,255,.55);}
+body.c-view   #cur-ring{ display:none; }
+@media(hover:none){#cur-dot,#cur-ring,#cur-label{display:none}body{cursor:auto}}
+
+/* ============================================================
+   PAGE WRAPPER (above canvas)
+   ============================================================ */
+.pw{position:relative;z-index:2;}
+
+/* ============================================================
+   PAGE HEADER
+   ============================================================ */
+.ph{
+  padding:130px 40px 70px;
+  text-align:center;
+  position:relative;
+}
+.ph-eye{
+  display:block;
+  font-size:10px;letter-spacing:.26em;text-transform:uppercase;
+  color:var(--gold);font-weight:600;margin-bottom:18px;
+  opacity:0;transform:translateY(16px);
+  transition:opacity .9s var(--ease),transform .9s var(--ease);
+}
+.ph-eye.in{opacity:1;transform:none;}
+.ph h1{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(48px,7vw,96px);
+  font-weight:300;line-height:.95;
+  letter-spacing:-.02em;
+  color:var(--parch);
+  opacity:0;transform:translateY(32px);
+  transition:opacity 1.1s var(--ease) .15s,transform 1.1s var(--ease) .15s;
+}
+.ph h1 em{font-style:italic;color:var(--gold);}
+.ph h1.in{opacity:1;transform:none;}
+.ph p{
+  font-size:15px;font-weight:300;color:var(--ash2);
+  letter-spacing:.04em;line-height:1.7;margin-top:18px;
+  opacity:0;transform:translateY(16px);
+  transition:opacity .9s var(--ease) .3s,transform .9s var(--ease) .3s;
+}
+.ph p.in{opacity:1;transform:none;}
+
+/* animated rule */
+.ph-rule{
+  width:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  margin:28px auto 0;
+  transition:width 1.4s var(--ease) .4s;
+}
+.ph-rule.in{width:160px;}
+
+/* ============================================================
+   FILTER BAR
+   ============================================================ */
+.filter-bar{
+  display:flex;justify-content:center;
+  gap:8px;flex-wrap:wrap;
+  padding:0 32px 56px;
+  max-width:900px;margin:0 auto;
+}
+.filter-btn{
+  padding:10px 24px;
+  font-family:'Quicksand',sans-serif;
+  font-size:11px;font-weight:600;
+  letter-spacing:.12em;text-transform:uppercase;
+  border-radius:40px;
+  border:1px solid rgba(184,147,74,.2);
+  background:transparent;
+  color:var(--ash2);
+  cursor:none;
+  transition:all .35s var(--ease);
+  position:relative;overflow:hidden;
+}
+.filter-btn::after{
+  content:'';position:absolute;
+  inset:0;border-radius:inherit;
+  background:var(--gold);
+  transform:scaleX(0);transform-origin:left;
+  transition:transform .35s var(--ease);
+  z-index:0;
+}
+.filter-btn span{position:relative;z-index:1;transition:color .35s;}
+.filter-btn:hover{border-color:rgba(184,147,74,.5);transform:translateY(-2px);}
+.filter-btn:hover span{color:var(--parch);}
+.filter-btn.active{border-color:var(--gold);box-shadow:0 6px 28px rgba(184,147,74,.3);}
+.filter-btn.active::after{transform:scaleX(1);}
+.filter-btn.active span{color:var(--ink);}
+
+/* ============================================================
+   GRID META
+   ============================================================ */
+.grid-meta{
+  max-width:1440px;margin:0 auto;
+  padding:0 32px 16px;
+  display:flex;align-items:center;gap:16px;
+}
+.gm-count{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ash);white-space:nowrap;}
+.gm-line{flex:1;height:1px;background:rgba(184,147,74,.12);}
+
+/* ============================================================
+   PRODUCTS GRID
+   ============================================================ */
+.products-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+  gap:1px;
+  max-width:1440px;
+  margin:0 auto;
+  padding-bottom:120px;
+  background:rgba(184,147,74,.08);/* gap lines */
 }
 
-/* ── PRODUCT CARD ────────────────────────── */
-.product-card {
-  background: #fff;
-  border-radius: 14px;
-  border: 1px solid #e8e3dc;
-  overflow: hidden;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  transition: transform 0.25s cubic-bezier(0.22,1,0.36,1),
-              box-shadow 0.25s cubic-bezier(0.22,1,0.36,1);
-  position: relative;
+/* ============================================================
+   PRODUCT CARD
+   The 3-D effect lives entirely on this element.
+   perspective is set on the card itself so each card
+   has its own vanishing point.
+   ============================================================ */
+.product-card{
+  background:var(--ink2);
+  display:flex;flex-direction:column;
+  position:relative;
+  cursor:none;
+  overflow:hidden;
+
+  /* Reveal state */
+  opacity:0;
+  transform:translateY(50px);
+  transition:
+    opacity  .8s var(--ease),
+    transform .8s var(--ease),
+    box-shadow .4s var(--ease);
 }
-.product-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 16px 36px rgba(0,0,0,0.12);
+.product-card.visible{opacity:1;transform:none;}
+
+/* Ambient glow that follows cursor inside card */
+.product-card::before{
+  content:'';
+  position:absolute;
+  width:260px;height:260px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(184,147,74,.13) 0%,transparent 70%);
+  pointer-events:none;z-index:1;
+  transform:translate(-50%,-50%);
+  left:var(--cx,50%);top:var(--cy,50%);
+  transition:left .12s,top .12s,opacity .4s;
+  opacity:0;
+}
+.product-card:hover::before{opacity:1;}
+
+/* Scanning laser line */
+.product-card::after{
+  content:'';
+  position:absolute;
+  left:0;right:0;height:1.5px;
+  background:linear-gradient(90deg,transparent,rgba(184,147,74,.7),transparent);
+  top:0;
+  transform:translateY(-100%);
+  transition:none;
+  z-index:6;
+  pointer-events:none;
+  opacity:0;
+}
+.product-card:hover::after{
+  opacity:1;
+  animation:laserScan 1.1s var(--ease) forwards;
+}
+@keyframes laserScan{
+  0%  {transform:translateY(-2px);opacity:0;}
+  10% {opacity:1;}
+  90% {opacity:.6;}
+  100%{transform:translateY(var(--card-h,300px));opacity:0;}
 }
 
-/* Fixed-height image container */
-.card-image {
-  width: 100%;
-  height: 220px;
-  overflow: hidden;
-  background: #f5f3ef;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
+/* ── IMAGE ── */
+.card-image{
+  width:100%;height:260px;
+  overflow:hidden;background:#0a0908;
+  flex-shrink:0;position:relative;
+  transform-style:preserve-3d;
 }
-.card-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  padding: 12px;
-  box-sizing: border-box;
-  transition: transform 0.4s cubic-bezier(0.22,1,0.36,1);
+/* Depth layer: darkened duplicate behind the main image */
+.card-image::before{
+  content:'';
+  position:absolute;inset:0;
+  background:inherit;
+  transform:translateZ(-20px) scale(1.02);
+  filter:blur(6px) brightness(.4);
+  opacity:0;
+  transition:opacity .4s;
 }
-.product-card:hover .card-image img {
-  transform: scale(1.04);
+.product-card:hover .card-image::before{opacity:1;}
+
+.card-image img{
+  width:100%;height:100%;
+  object-fit:contain;
+  padding:18px;
+  display:block;
+  filter:saturate(.8) brightness(.9);
+  transition:
+    transform 1s var(--ease),
+    filter    .5s;
+  transform-origin:50% 60%;
+  will-change:transform;
+}
+.product-card:hover .card-image img{
+  transform:scale(1.1) translateZ(0);
+  filter:saturate(1.1) brightness(1.05);
 }
 
-/* Card body */
-.card-body {
-  padding: 16px 18px 20px;
-  display: flex;
-  flex-direction: column;
-  flex: 1;
+/* Vignette */
+.card-vignette{
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse 90% 90% at 50% 50%,transparent 45%,rgba(10,9,8,.6) 100%);
+  pointer-events:none;z-index:2;
+  opacity:0;transition:opacity .4s;
 }
-.card-title {
-  font-size: 1rem;
-  font-weight: 500;
-  color: #1a1a1a;
-  margin: 0 0 6px;
-  line-height: 1.4;
-}
-.card-desc {
-  font-size: 0.88rem;
-  font-weight: 300;
-  color: #777;
-  line-height: 1.5;
-  margin: 0 0 14px;
-  flex: 1;
+.product-card:hover .card-vignette{opacity:1;}
+
+/* ── CARD BODY ── */
+.card-body{
+  padding:22px 24px 26px;
+  display:flex;flex-direction:column;flex:1;
+  position:relative;z-index:3;
 }
 
-/* Price row */
-.card-price {
-  display: flex;
-  align-items: baseline;
-  gap: 8px;
-  margin-bottom: 14px;
+/* gold rule that draws in on hover */
+.card-rule{
+  width:0;height:1px;
+  background:linear-gradient(90deg,var(--gold),var(--gold2),transparent);
+  margin-bottom:14px;
+  transition:width .55s var(--ease);
 }
-.price-current {
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: #1a1a1a;
+.product-card:hover .card-rule{width:100%;}
+
+.card-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:20px;font-weight:400;
+  color:var(--parch);line-height:1.3;
+  letter-spacing:.01em;
+  margin-bottom:8px;
+  transition:color .3s,transform .4s var(--ease);
 }
-.price-original {
-  font-size: 0.9rem;
-  font-weight: 300;
-  color: #aaa;
-  text-decoration: line-through;
+.product-card:hover .card-title{
+  color:#fff;
+  transform:translateX(3px);
 }
 
-/* Sale badge */
-.sale-badge {
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  background: #1a1a1a;
-  color: #f0ece4;
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  padding: 4px 10px;
-  border-radius: 20px;
-  z-index: 2;
-  text-transform: uppercase;
+.card-desc{
+  font-size:13px;font-weight:300;
+  color:var(--ash);line-height:1.65;
+  flex:1;margin-bottom:18px;
+  transition:color .3s;
+}
+.product-card:hover .card-desc{color:var(--ash2);}
+
+/* price */
+.card-price{
+  display:flex;align-items:baseline;gap:10px;
+  margin-bottom:18px;
+}
+.price-current{
+  font-family:'Cormorant Garamond',serif;
+  font-size:26px;font-weight:300;
+  color:var(--gold);letter-spacing:.02em;
+}
+.price-original{
+  font-size:13px;font-weight:300;
+  color:var(--ash);text-decoration:line-through;
 }
 
-/* Button group */
-.button-group {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
+/* sale badge */
+.sale-badge{
+  position:absolute;top:14px;left:14px;
+  background:var(--gold);color:var(--ink);
+  font-size:10px;font-weight:700;
+  letter-spacing:.12em;text-transform:uppercase;
+  padding:4px 12px;border-radius:20px;
+  z-index:7;
+  box-shadow:0 4px 20px rgba(184,147,74,.5);
+  animation:badgePulse 3s ease-in-out infinite;
 }
-.button-group > .add-to-cart,
-.button-group > .details-btn {
-  flex: 1;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 40px;
-  padding: 9px 14px;
-  font-size: 0.88rem;
-  font-family: 'Quicksand', sans-serif;
-  font-weight: 600;
-  border-radius: 8px;
-  box-sizing: border-box;
-  text-decoration: none;
-  cursor: pointer;
-  border: 1.5px solid;
-  line-height: 1;
-  transition: background 0.18s ease, transform 0.15s ease;
-}
-.button-group > .add-to-cart {
-  background: #1a1a1a;
-  color: #f0ece4;
-  border-color: #1a1a1a;
-}
-.button-group > .add-to-cart:hover {
-  background: #333;
-  transform: translateY(-1px);
-}
-.button-group > .details-btn {
-  background: transparent;
-  color: #555;
-  border-color: #ddd;
-}
-.button-group > .details-btn:hover {
-  background: #f5f3ef;
-  border-color: #bbb;
-  transform: translateY(-1px);
+@keyframes badgePulse{
+  0%,100%{box-shadow:0 4px 20px rgba(184,147,74,.5);}
+  50%{box-shadow:0 4px 28px rgba(184,147,74,.8);}
 }
 
-@media (max-width: 480px) {
-  .button-group { flex-direction: column; }
+/* buttons */
+.button-group{display:flex;gap:8px;flex-wrap:wrap;}
+.button-group>.add-to-cart,
+.button-group>.details-btn{
+  flex:1;
+  display:inline-flex;align-items:center;justify-content:center;
+  min-height:44px;padding:11px 16px;
+  font-size:11px;font-family:'Quicksand',sans-serif;
+  font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  border-radius:6px;border:1px solid;
+  text-decoration:none;cursor:none;
+  position:relative;overflow:hidden;
+  transition:transform .4s var(--ease),box-shadow .4s var(--ease),color .25s,background .25s,border-color .25s;
+}
+/* Ripple on click */
+.button-group>.add-to-cart::before,
+.button-group>.details-btn::before{
+  content:'';position:absolute;
+  width:0;height:0;border-radius:50%;
+  background:rgba(255,255,255,.25);
+  left:50%;top:50%;
+  transform:translate(-50%,-50%);
+  transition:width .5s,height .5s,opacity .5s;
+  opacity:0;
+}
+.button-group>.add-to-cart:active::before,
+.button-group>.details-btn:active::before{
+  width:200px;height:200px;opacity:0;
+}
+.button-group>.add-to-cart{
+  background:var(--gold);color:var(--ink);border-color:var(--gold);
+}
+.button-group>.add-to-cart:hover{
+  transform:translateY(-4px);
+  box-shadow:0 12px 32px rgba(184,147,74,.45);
+  background:var(--gold2);border-color:var(--gold2);
+}
+.button-group>.details-btn{
+  background:transparent;color:var(--ash2);
+  border-color:rgba(184,147,74,.18);
+}
+.button-group>.details-btn:hover{
+  background:rgba(184,147,74,.07);
+  border-color:rgba(184,147,74,.4);
+  color:var(--parch);
+  transform:translateY(-4px);
+}
+@media(max-width:480px){.button-group{flex-direction:column;}}
+
+/* ── ADD TO CART SUCCESS ── */
+@keyframes cartRing{
+  0%  {box-shadow:0 0 0 0   rgba(184,147,74,.8);}
+  70% {box-shadow:0 0 0 14px rgba(184,147,74,0);}
+  100%{box-shadow:0 0 0 0   rgba(184,147,74,0);}
+}
+.add-to-cart.flashing{animation:cartRing .55s ease;}
+
+/* ── HIDDEN ── */
+.hidden{display:none!important;}
+
+/* ============================================================
+   EASTER EGG — Konami code overlay
+   ============================================================ */
+#konami-overlay{
+  position:fixed;inset:0;z-index:99990;
+  background:radial-gradient(ellipse at 50% 50%, #1a0f00 0%, #080604 100%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;
+  transition:opacity .8s var(--ease);
+  gap:24px;
+}
+#konami-overlay.show{opacity:1;pointer-events:all;}
+#konami-overlay canvas{position:absolute;inset:0;pointer-events:none;}
+.konami-text{
+  position:relative;z-index:2;text-align:center;
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(32px,5vw,64px);
+  font-weight:300;color:#f5f1eb;
+  line-height:1.2;
+  text-shadow:0 0 40px rgba(184,147,74,.6);
+}
+.konami-text em{font-style:italic;color:var(--gold);}
+.konami-sub{
+  position:relative;z-index:2;
+  font-size:13px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--ash2);
+}
+.konami-close{
+  position:absolute;top:28px;right:36px;
+  background:none;border:none;
+  font-size:28px;color:var(--ash2);cursor:none;z-index:3;
+  transition:color .25s;
+}
+.konami-close:hover{color:var(--parch);}
+
+/* ============================================================
+   FLOATING LASER TOOLTIP (appears on any card hover)
+   ============================================================ */
+#laser-tip{
+  position:fixed;
+  pointer-events:none;z-index:9990;
+  background:rgba(14,13,11,.9);
+  border:1px solid rgba(184,147,74,.25);
+  border-radius:6px;
+  padding:8px 14px;
+  font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--gold);
+  opacity:0;transform:translateY(6px);
+  transition:opacity .25s,transform .25s;
+  backdrop-filter:blur(8px);
+  white-space:nowrap;
+}
+#laser-tip.show{opacity:1;transform:translateY(0);}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.site-footer{
+  background:var(--ink);
+  border-top:1px solid rgba(184,147,74,.1);
+  padding:44px 48px;
+  position:relative;z-index:2;
+}
+.footer-content{
+  max-width:1200px;margin:0 auto;
+  display:flex;align-items:center;
+  justify-content:space-between;gap:24px;flex-wrap:wrap;
+}
+.site-footer p{color:var(--ash);font-size:12px;letter-spacing:.08em;}
+.social-links{display:flex;gap:20px;align-items:center;}
+.social-links a{color:rgba(196,189,179,.5);transition:color .3s;display:flex;align-items:center;}
+.social-links a:hover{color:rgba(196,189,179,.9);}
+
+/* ============================================================
+   SCROLL REVEAL
+   ============================================================ */
+.rv{opacity:0;transform:translateY(36px);transition:opacity .9s var(--ease),transform .9s var(--ease);}
+.rv.in{opacity:1;transform:none;}
+.rv.d1{transition-delay:.1s;}.rv.d2{transition-delay:.2s;}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media(max-width:900px){
+  .products-grid{grid-template-columns:repeat(2,1fr);}
+}
+@media(max-width:560px){
+  .products-grid{grid-template-columns:1fr;}
+  .ph{padding:100px 20px 48px;}
+  .filter-bar{padding:0 16px 40px;gap:6px;}
+  .filter-btn{padding:8px 16px;font-size:10px;}
+  .site-footer{padding:36px 20px;}
 }
 
-/* ── HIDDEN (filter) ─────────────────────── */
-.hidden { display: none !important; }
-
-/* =====================
-   SCROLL ANIMATIONS
-   ===================== */
-.reveal {
-  opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1),
-              transform 0.7s cubic-bezier(0.22,1,0.36,1);
+/* ============================================================
+   SCATTERED ENGRAVING SPARKS on Add-to-Cart
+   ============================================================ */
+.spark{
+  position:fixed;
+  width:4px;height:4px;
+  border-radius:50%;
+  background:var(--gold);
+  pointer-events:none;
+  z-index:9999;
+  animation:sparkFly var(--dur,.6s) var(--ease) forwards;
 }
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.product-card {
-  opacity: 0;
-  transform: translateY(50px) scale(0.97);
-}
-.product-card.visible {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-}
-.product-card.visible:hover {
-  transform: translateY(-6px) scale(1) !important;
+@keyframes sparkFly{
+  0%  {opacity:1;transform:translate(0,0) scale(1);}
+  100%{opacity:0;transform:translate(var(--tx,20px),var(--ty,-40px)) scale(0);}
 }
 </style>
 </head>
-
 <body>
 
+<!-- WebGL depth canvas -->
+<canvas id="gl-canvas" aria-hidden="true"></canvas>
+<div class="noise" aria-hidden="true"></div>
+
+<!-- Custom cursor -->
+<div id="cur-dot"  aria-hidden="true"></div>
+<div id="cur-ring" aria-hidden="true"></div>
+<div id="cur-label" aria-hidden="true">View</div>
+
+<!-- Laser tooltip -->
+<div id="laser-tip" aria-hidden="true"></div>
+
+<!-- Konami Easter Egg -->
+<div id="konami-overlay" role="dialog" aria-label="Secret unlocked">
+  <canvas id="konami-canvas" aria-hidden="true"></canvas>
+  <button class="konami-close" id="konamiClose" aria-label="Close">✕</button>
+  <div class="konami-text">Every piece is a<br><em>small act of fire.</em></div>
+  <div class="konami-sub">↑ ↑ ↓ ↓ ← → ← → B A — secret unlocked</div>
+</div>
+
+<!-- NAVBAR -->
 <header class="site-header" id="siteHeader">
   <div class="header-inner">
     <a href="index.html">
-      <img src="images/mozartlaserlogo.png" alt="MozartLaser" class="logo" loading="lazy">
+      <img src="images/mozartlaserlogo.png" alt="Mozart Laser" class="logo" loading="lazy">
     </a>
-    <nav class="main-nav">
+    <nav class="main-nav" aria-label="Main navigation">
       <ul>
         <li><a href="index.html">Home</a></li>
         <li><a href="products.html" class="active">Products</a></li>
@@ -313,15 +606,19 @@ html, body {
         <li><a href="About.html">About</a></li>
       </ul>
     </nav>
-    <div class="hamburger"><span></span><span></span><span></span></div>
-  </div>
-  <div class="cart-icon" id="cart-icon">
-    <img src="images/cart-icon.png" alt="Cart" loading="lazy">
-    <span id="cart-count">0</span>
+    <div class="header-right">
+      <div class="cart-icon" id="cart-icon" role="button" tabindex="0" aria-label="Open cart">
+        <img src="images/cart-icon.png" alt="Cart">
+        <span id="cart-count">0</span>
+      </div>
+      <div class="hamburger" role="button" tabindex="0" aria-label="Open navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
   </div>
 </header>
 
-<div class="cart-panel" id="cart-panel">
+<div class="cart-panel" id="cart-panel" aria-label="Shopping cart">
   <h3>Shopping Cart</h3>
   <ul id="cart-items"></ul>
   <p>Total: $<span id="cart-total">0.00</span></p>
@@ -329,35 +626,45 @@ html, body {
   <button id="close-cart">Close</button>
 </div>
 
-<main class="page-content" id="mainContent">
-<br><br>
-  <div class="page-header reveal">
-    <h2>Our Products</h2>
-    <p>Handcrafted laser engravings, made in California</p>
+<div class="pw">
+<main id="mainContent">
+
+  <!-- PAGE HEADER -->
+  <div class="ph">
+    <span class="ph-eye">Mozart Laser &nbsp;·&nbsp; Hand-finished in California</span>
+    <h1>Our <em>Products</em></h1>
+    <p>Handcrafted laser engravings. Each piece unique, precise, and built to last.</p>
+    <div class="ph-rule"></div>
   </div>
 
-  <!-- Pill filter buttons -->
-  <div class="filter-bar reveal">
-    <button class="filter-btn active" data-filter="all">All</button>
-    <button class="filter-btn" data-filter="sale">Sale</button>
-    <button class="filter-btn" data-filter="coasters">Coasters</button>
-    <button class="filter-btn" data-filter="coins">Coins</button>
-    <button class="filter-btn" data-filter="scripture">Scripture</button>
-    <button class="filter-btn" data-filter="art">Art</button>
-    <button class="filter-btn" data-filter="landmarks">Landmarks</button>
-    <button class="filter-btn" data-filter="bookmarks">Bookmarks</button>
+  <!-- FILTER -->
+  <div class="filter-bar rv" role="group" aria-label="Filter products">
+    <button class="filter-btn active" data-filter="all"><span>All</span></button>
+    <button class="filter-btn" data-filter="sale"><span>Sale</span></button>
+    <button class="filter-btn" data-filter="coasters"><span>Coasters</span></button>
+    <button class="filter-btn" data-filter="coins"><span>Coins</span></button>
+    <button class="filter-btn" data-filter="scripture"><span>Scripture</span></button>
+    <button class="filter-btn" data-filter="art"><span>Art</span></button>
+    <button class="filter-btn" data-filter="landmarks"><span>Landmarks</span></button>
+    <button class="filter-btn" data-filter="bookmarks"><span>Bookmarks</span></button>
   </div>
 
-  <section class="products-grid">
+  <!-- GRID META -->
+  <div class="grid-meta">
+    <span class="gm-count" id="gridCount">20 pieces</span>
+    <div class="gm-line"></div>
+  </div>
 
-    <div class="product-card" data-category="coasters" data-link="np_coasters.html">
-      <div class="card-image"><img src="Product Images/NP Coasters/Front view.png" alt="National Parks Coaster Set" loading="lazy"></div>
+  <!-- PRODUCTS -->
+  <section class="products-grid" id="productsGrid" aria-label="Product listing">
+
+    <div class="product-card" data-category="coasters" data-link="np_coasters.html" data-tip="Coaster Set">
+      <div class="card-image"><img src="Product Images/NP Coasters/Front view.png" alt="National Parks Coaster Set — laser engraved wood" loading="lazy"><div class="card-vignette"></div></div>
       <div class="card-body">
+        <div class="card-rule"></div>
         <p class="card-title">National Parks Coaster Set</p>
-        <p class="card-desc">Bring the timeless beauty of America's most iconic national parks into your home with this handcrafted set of four premium wooden coasters featuring Yosemite, Yellowstone, Grand Canyon, and Zion.</p>
-        <div class="card-price">
-          <span class="price-current">$24.99</span>
-        </div>
+        <p class="card-desc">Yosemite, Yellowstone, Grand Canyon, and Zion — four iconic parks engraved on premium hardwood coasters.</p>
+        <div class="card-price"><span class="price-current">$24.99</span></div>
         <div class="button-group">
           <button class="add-to-cart" data-id="17" data-name="National Parks Coaster Set" data-price="24.99" data-price-id="price_1TSnhT2c5eOyE1cR86EYui75">Add to Cart</button>
           <a href="np_coasters.html" class="details-btn">Details</a>
@@ -365,14 +672,13 @@ html, body {
       </div>
     </div>
 
-    <div class="product-card" data-category="bookmarks" data-link="adventurer's bookmark.html">
-      <div class="card-image"><img src="Product Images/Adventurer's Bookmark/Front view.png" alt="Adventurer's Bookmark" loading="lazy"></div>
+    <div class="product-card" data-category="bookmarks" data-link="adventurer's bookmark.html" data-tip="Wooden Bookmark">
+      <div class="card-image"><img src="Product Images/Adventurer's Bookmark/Front view.png" alt="Adventurer's Bookmark — laser engraved wood" loading="lazy"><div class="card-vignette"></div></div>
       <div class="card-body">
+        <div class="card-rule"></div>
         <p class="card-title">Adventurer's Bookmark</p>
-        <p class="card-desc">A finely crafted wooden bookmark featuring engraved mountain contours and a compass design, made for those who crave adventure and timeless style.</p>
-        <div class="card-price">
-          <span class="price-current">$7.99</span>
-        </div>
+        <p class="card-desc">Mountain contours and compass design. Made for those who crave adventure and timeless style.</p>
+        <div class="card-price"><span class="price-current">$7.99</span></div>
         <div class="button-group">
           <button class="add-to-cart" data-id="16" data-name="Adventurer's Bookmark" data-price="7.99" data-price-id="price_1TQGXs2c5eOyE1cRh5Xkv0Lm">Add to Cart</button>
           <a href="adventurer's bookmark.html" class="details-btn">Details</a>
@@ -380,14 +686,13 @@ html, body {
       </div>
     </div>
 
-    <div class="product-card" data-category="bookmarks" data-link="leaf_bookmark.html">
-      <div class="card-image"><img src="Product Images/Leaf Bookmark/Front view.png" alt="Leaf Bookmark" loading="lazy"></div>
+    <div class="product-card" data-category="bookmarks" data-link="leaf_bookmark.html" data-tip="Walnut Wood">
+      <div class="card-image"><img src="Product Images/Leaf Bookmark/Front view.png" alt="Leaf Bookmark — laser engraved walnut" loading="lazy"><div class="card-vignette"></div></div>
       <div class="card-body">
+        <div class="card-rule"></div>
         <p class="card-title">Leaf Bookmark</p>
-        <p class="card-desc">The Leaf Bookmark — a striking wooden bookmark with a bold layered leaf design engraved into rich walnut wood.</p>
-        <div class="card-price">
-          <span class="price-current">$12.99</span>
-        </div>
+        <p class="card-desc">Bold layered leaf design engraved into rich walnut wood.</p>
+        <div class="card-price"><span class="price-current">$12.99</span></div>
         <div class="button-group">
           <button class="add-to-cart" data-id="19" data-name="Leaf Bookmark" data-price="12.99" data-price-id="price_1TTADF2c5eOyE1cR9MQmiZPs">Add to Cart</button>
           <a href="leaf_bookmark.html" class="details-btn">Details</a>
@@ -395,14 +700,13 @@ html, body {
       </div>
     </div>
 
-    <div class="product-card" data-category="art" data-link="celtic cross.html">
-      <div class="card-image"><img src="Product Images/Celtic Cross/Front view.png" alt="Laser Engraved Celtic Cross Wooden Cutting Board" loading="lazy"></div>
+    <div class="product-card" data-category="art" data-link="celtic cross.html" data-tip="Cutting Board">
+      <div class="card-image"><img src="Product Images/Celtic Cross/Front view.png" alt="Celtic Cross Wooden Cutting Board — laser engraved" loading="lazy"><div class="card-vignette"></div></div>
       <div class="card-body">
-        <p class="card-title">Laser Engraved Celtic Cross Wooden Cutting Board</p>
-        <p class="card-desc">A finely laser-engraved wooden cutting board featuring a detailed Celtic cross design that blends craftsmanship and everyday function.</p>
-        <div class="card-price">
-          <span class="price-current">$64.99</span>
-        </div>
+        <div class="card-rule"></div>
+        <p class="card-title">Celtic Cross Cutting Board</p>
+        <p class="card-desc">A detailed Celtic cross laser-engraved into a wooden cutting board — craftsmanship meets everyday function.</p>
+        <div class="card-price"><span class="price-current">$64.99</span></div>
         <div class="button-group">
           <button class="add-to-cart" data-id="15" data-name="Laser Engraved Celtic Cross Wooden Cutting Board" data-price="64.99" data-price-id="price_1TPQEU2c5eOyE1cRhwNYZFyI">Add to Cart</button>
           <a href="landmarks of aviation.html" class="details-btn">Details</a>
@@ -410,14 +714,13 @@ html, body {
       </div>
     </div>
 
-    <div class="product-card" data-category="bookmarks" data-link="historia_bookmark.html">
-      <div class="card-image"><img src="Product Images/Historia Bookmark/Front view.png" alt="Historia Bookmark" loading="lazy"></div>
+    <div class="product-card" data-category="bookmarks" data-link="historia_bookmark.html" data-tip="Wooden Bookmark">
+      <div class="card-image"><img src="Product Images/Historia Bookmark/Front view.png" alt="Historia Bookmark — laser engraved wood" loading="lazy"><div class="card-vignette"></div></div>
       <div class="card-body">
+        <div class="card-rule"></div>
         <p class="card-title">Historia Bookmark</p>
-        <p class="card-desc">A finely crafted wooden bookmark featuring engraved mountain contours and a compass design, made for those who crave adventure and timeless style.</p>
-        <div class="card-price">
-          <span class="price-current">$9.99</span>
-        </div>
+        <p class="card-desc">Engraved mountain contours and compass design — for the discerning reader.</p>
+        <div class="card-price"><span class="price-current">$9.99</span></div>
         <div class="button-group">
           <button class="add-to-cart" data-id="18" data-name="Historia Bookmark" data-price="9.99" data-price-id="price_1TT9im2c5eOyE1cR1NzaVYJ2">Add to Cart</button>
           <a href="historia_bookmark.html" class="details-btn">Details</a>
@@ -425,14 +728,13 @@ html, body {
       </div>
     </div>
 
-    <div class="product-card" data-category="coasters" data-link="landmarks of aviation.html">
-      <div class="card-image"><img src="Product Images/Landmarks of Aviation/Front view.jpg" alt="Landmarks of Aviation laser engraved coaster set" loading="lazy"></div>
+    <div class="product-card" data-category="coasters" data-link="landmarks of aviation.html" data-tip="Coaster Set">
+      <div class="card-image"><img src="Product Images/Landmarks of Aviation/Front view.png" alt="Landmarks of Aviation coaster set — laser engraved" loading="lazy"><div class="card-vignette"></div></div>
       <div class="card-body">
-        <p class="card-title">Landmarks of Aviation - Coaster set</p>
-        <p class="card-desc">A set of three coasters depicting some of the most remarkable aircraft in aviation history. Iconic as a gift, for household use, or display.</p>
-        <div class="card-price">
-          <span class="price-current">$15.00</span>
-        </div>
+        <div class="card-rule"></div>
+        <p class="card-title">Landmarks of Aviation — Coaster Set</p>
+        <p class="card-desc">Three coasters depicting the most remarkable aircraft in aviation history.</p>
+        <div class="card-price"><span class="price-current">$15.00</span></div>
         <div class="button-group">
           <button class="add-to-cart" data-id="14" data-name="Landmarks of Aviation - Coaster set" data-price="15.00" data-price-id="price_1TLbIz2c5eOyE1cRgptBrHol">Add to Cart</button>
           <a href="landmarks of aviation.html" class="details-btn">Details</a>
@@ -440,11 +742,12 @@ html, body {
       </div>
     </div>
 
-    <div class="product-card" data-category="art coins" data-link="dragon coin.html">
-      <div class="card-image"><img src="Product Images/Dragon Coin/Front view.png" alt="Book Dragon laser engraved wood coin" loading="lazy"></div>
+    <div class="product-card" data-category="art coins" data-link="dragon coin.html" data-tip="Wood Coin">
+      <div class="card-image"><img src="Product Images/Dragon Coin/Front view.png" alt="Book Dragon laser engraved wood coin" loading="lazy"><div class="card-vignette"></div></div>
       <div class="card-body">
+        <div class="card-rule"></div>
         <p class="card-title">Book Dragon Coin</p>
-        <p class="card-desc">Bring a little warmth and imagination into your space with this charming Book Dragon coin. Carefully laser-engraved onto natural wood, this piece features an adorable dragon design with "Book Dragon" on the backside.</p>
+        <p class="card-desc">Laser-engraved onto natural wood — adorable dragon with "Book Dragon" on the backside.</p>
         <div class="card-price"><span class="price-current">$5.99</span></div>
         <div class="button-group">
           <button class="add-to-cart" data-id="13" data-name="Dragon Coin" data-price="5.99" data-price-id="price_1TKkrY2c5eOyE1cRTlnQi4rd">Add to Cart</button>
@@ -453,16 +756,14 @@ html, body {
       </div>
     </div>
 
-    <div class="product-card" data-category="landmarks sale" data-link="Big Ben Plaque.html">
+    <div class="product-card" data-category="landmarks sale" data-link="Big Ben Plaque.html" data-tip="Wood Plaque">
       <span class="sale-badge">Sale</span>
-      <div class="card-image"><img src="Product Images/Big Ben Plaque/Front view.png" alt="Big Ben laser engraved wood plaque" loading="lazy"></div>
+      <div class="card-image"><img src="Product Images/Big Ben Plaque/Front view.png" alt="Big Ben laser engraved wood plaque" loading="lazy"><div class="card-vignette"></div></div>
       <div class="card-body">
+        <div class="card-rule"></div>
         <p class="card-title">Big Ben Plaque</p>
-        <p class="card-desc">A stunning engraving of Big Ben into a wooden poplar wood plaque.</p>
-        <div class="card-price">
-          <span class="price-current">$16.99</span>
-          <span class="price-original">$19.99</span>
-        </div>
+        <p class="card-desc">A stunning engraving of Big Ben into a poplar wood plaque.</p>
+        <div class="card-price"><span class="price-current">$16.99</span><span class="price-original">$19.99</span></div>
         <div class="button-group">
           <button class="add-to-cart" data-id="1" data-name="Big Ben Plaque" data-price="16.99" data-price-id="price_1TKJvp2c5eOyE1cRUD7Y4VLf">Add to Cart</button>
           <a href="Big Ben Plaque.html" class="details-btn">Details</a>
@@ -470,16 +771,14 @@ html, body {
       </div>
     </div>
 
-    <div class="product-card" data-category="art landmarks sale" data-link="Stone, Steel, and Sky.html">
+    <div class="product-card" data-category="art landmarks sale" data-link="Stone, Steel, and Sky.html" data-tip="Triptych Set">
       <span class="sale-badge">Sale</span>
-      <div class="card-image"><img src="Product Images/Stone, Steel, and Sky/Front view.png" alt="Stone Steel and Sky laser engraved triptych set" loading="lazy"></div>
+      <div class="card-image"><img src="Product Images/Stone, Steel, and Sky/Front view.png" alt="Stone Steel and Sky laser engraved triptych set" loading="lazy"><div class="card-vignette"></div></div>
       <div class="card-body">
-        <p class="card-title">Stone, Steel, and Sky - Triptych</p>
-        <p class="card-desc">A curated set of three engraved plaques — the moon, the Golden Gate Bridge, and Big Ben — designed to be displayed together or on their own.</p>
-        <div class="card-price">
-          <span class="price-current">$39.99</span>
-          <span class="price-original">$54.99</span>
-        </div>
+        <div class="card-rule"></div>
+        <p class="card-title">Stone, Steel, and Sky — Triptych</p>
+        <p class="card-desc">Moon, Golden Gate Bridge, Big Ben — three plaques designed to be displayed together or apart.</p>
+        <div class="card-price"><span class="price-current">$39.99</span><span class="price-original">$54.99</span></div>
         <div class="button-group">
           <button class="add-to-cart" data-id="2" data-name="Stone, Steel, and Sky - Triptych" data-price="39.99" data-price-id="price_1TKKIV2c5eOyE1cRkrylS6ES">Add to Cart</button>
           <a href="Stone, Steel, and Sky.html" class="details-btn">Details</a>
@@ -487,9 +786,10 @@ html, body {
       </div>
     </div>
 
-    <div class="product-card" data-category="bookmarks" data-link="Tolkien bookmark.html">
-      <div class="card-image"><img src="Product Images/Tolkien bookmark/Front view.png" alt="Tolkien Lord of the Rings laser engraved wood bookmark" loading="lazy"></div>
+    <div class="product-card" data-category="bookmarks" data-link="Tolkien bookmark.html" data-tip="Literary Bookmark">
+      <div class="card-image"><img src="Product Images/Tolkien bookmark/Front view.png" alt="Tolkien Lord of the Rings laser engraved bookmark" loading="lazy"><div class="card-vignette"></div></div>
       <div class="card-body">
+        <div class="card-rule"></div>
         <p class="card-title">Tolkien Quote Bookmark</p>
         <p class="card-desc">A quote from Tolkien's <em>Lord of the Rings</em>, paired with a quill pen illuminated by the moon.</p>
         <div class="card-price"><span class="price-current">$7.99</span></div>
@@ -500,9 +800,10 @@ html, body {
       </div>
     </div>
 
-    <div class="product-card" data-category="bookmarks" data-link="Jane Austen bookmark.html">
-      <div class="card-image"><img src="Product Images/Jane Austen bookmark/Front view.png" alt="Jane Austen laser engraved wood bookmark gift" loading="lazy"></div>
+    <div class="product-card" data-category="bookmarks" data-link="Jane Austen bookmark.html" data-tip="Literary Bookmark">
+      <div class="card-image"><img src="Product Images/Jane Austen bookmark/Front view.png" alt="Jane Austen laser engraved bookmark" loading="lazy"><div class="card-vignette"></div></div>
       <div class="card-body">
+        <div class="card-rule"></div>
         <p class="card-title">Jane Austen Quote Bookmark</p>
         <p class="card-desc">A beautiful literary design with a timeless quote from Jane Austen.</p>
         <div class="card-price"><span class="price-current">$7.99</span></div>
@@ -513,11 +814,12 @@ html, body {
       </div>
     </div>
 
-    <div class="product-card" data-category="bookmarks" data-link="Literary Bookmarks 2 pack.html">
-      <div class="card-image"><img src="Product Images/Literary Bookmarks 2 pack/Front view.png" alt="Literary quote laser engraved bookmark gift pack" loading="lazy"></div>
+    <div class="product-card" data-category="bookmarks" data-link="Literary Bookmarks 2 pack.html" data-tip="2-Pack Gift">
+      <div class="card-image"><img src="Product Images/Literary Bookmarks 2 pack/Front view.png" alt="Literary quote bookmark gift pack — 2 pack" loading="lazy"><div class="card-vignette"></div></div>
       <div class="card-body">
+        <div class="card-rule"></div>
         <p class="card-title">Literary Quote Bookmark Pack</p>
-        <p class="card-desc">Pack of 2 — quotes from Tolkien and Jane Austen. Great as a gift.</p>
+        <p class="card-desc">Pack of 2 — Tolkien and Jane Austen. A perfect gift for the book lover.</p>
         <div class="card-price"><span class="price-current">$12.00</span></div>
         <div class="button-group">
           <button class="add-to-cart" data-id="5" data-name="Literary Quote Bookmark Pack" data-price="12.00" data-price-id="price_1TKKdX2c5eOyE1cRaxRKklq9">Add to Cart</button>
@@ -526,11 +828,12 @@ html, body {
       </div>
     </div>
 
-    <div class="product-card" data-category="art" data-link="ship.html">
-      <div class="card-image"><img src="Product Images/Ship/Front view.jpg" alt="Personalized acacia wood cutting board with ship engraving" loading="lazy"></div>
+    <div class="product-card" data-category="art" data-link="ship.html" data-tip="Acacia Wood">
+      <div class="card-image"><img src="Product Images/Ship/Front view.png" alt="Acacia wood cutting board with ship engraving" loading="lazy"><div class="card-vignette"></div></div>
       <div class="card-body">
+        <div class="card-rule"></div>
         <p class="card-title">Wooden Cutting Board with Ship</p>
-        <p class="card-desc">Ornate Acacia wood cutting board with a highly detailed ship engraving.</p>
+        <p class="card-desc">Ornate acacia wood cutting board with a highly detailed ship engraving.</p>
         <div class="card-price"><span class="price-current">$59.99</span></div>
         <div class="button-group">
           <button class="add-to-cart" data-id="9" data-name="Wooden Cutting Board with Ship" data-price="59.99" data-price-id="price_1TOocs2c5eOyE1cRHBCgHnm4">Add to Cart</button>
@@ -539,16 +842,14 @@ html, body {
       </div>
     </div>
 
-    <div class="product-card" data-category="art sale" data-link="Moon.html">
+    <div class="product-card" data-category="art sale" data-link="Moon.html" data-tip="Hand-Finished">
       <span class="sale-badge">Sale</span>
-      <div class="card-image"><img src="Product Images/Moon/Front view.jpg" alt="Lunar surface moon laser engraved wood plaque" loading="lazy"></div>
+      <div class="card-image"><img src="Product Images/Moon/Front view.png" alt="Lunar surface moon laser engraved wood plaque" loading="lazy"><div class="card-vignette"></div></div>
       <div class="card-body">
+        <div class="card-rule"></div>
         <p class="card-title">Lunar Surface Moon Plaque</p>
-        <p class="card-desc">A textured moon relief engraved into natural wood. Hand-finished.</p>
-        <div class="card-price">
-          <span class="price-current">$19.99</span>
-          <span class="price-original">$29.99</span>
-        </div>
+        <p class="card-desc">Textured moon relief engraved into natural wood. Hand-finished.</p>
+        <div class="card-price"><span class="price-current">$19.99</span><span class="price-original">$29.99</span></div>
         <div class="button-group">
           <button class="add-to-cart" data-id="6" data-name="Lunar Surface Moon Plaque – Hand-Finished Laser Engraved Wood" data-price="19.99" data-price-id="price_1TKKhB2c5eOyE1cRco2C90pL">Add to Cart</button>
           <a href="Moon.html" class="details-btn">Details</a>
@@ -556,16 +857,14 @@ html, body {
       </div>
     </div>
 
-    <div class="product-card" data-category="landmarks sale" data-link="Golden Gate Bridge.html">
+    <div class="product-card" data-category="landmarks sale" data-link="Golden Gate Bridge.html" data-tip="California Icon">
       <span class="sale-badge">Sale</span>
-      <div class="card-image"><img src="Product Images/Golden Gate Bridge/Front view.png" alt="Golden Gate Bridge laser engraved wood plaque California gift" loading="lazy"></div>
+      <div class="card-image"><img src="Product Images/Golden Gate Bridge/Front view.png" alt="Golden Gate Bridge laser engraved wood plaque" loading="lazy"><div class="card-vignette"></div></div>
       <div class="card-body">
+        <div class="card-rule"></div>
         <p class="card-title">Golden Gate Bridge Plaque</p>
         <p class="card-desc">Detailed engraving of the Golden Gate Bridge, laser-cut into wood.</p>
-        <div class="card-price">
-          <span class="price-current">$16.99</span>
-          <span class="price-original">$25.99</span>
-        </div>
+        <div class="card-price"><span class="price-current">$16.99</span><span class="price-original">$25.99</span></div>
         <div class="button-group">
           <button class="add-to-cart" data-id="7" data-name="Golden Gate Bridge Plaque" data-price="16.99" data-price-id="price_1TKKjC2c5eOyE1cRO43oSuLL">Add to Cart</button>
           <a href="Golden Gate Bridge.html" class="details-btn">Details</a>
@@ -573,16 +872,14 @@ html, body {
       </div>
     </div>
 
-    <div class="product-card" data-category="landmarks sale" data-link="Catalina.html">
+    <div class="product-card" data-category="landmarks sale" data-link="Catalina.html" data-tip="California Icon">
       <span class="sale-badge">Sale</span>
-      <div class="card-image"><img src="Product Images/Catalina/Front view.jpg" alt="Avalon Bay Catalina Island laser engraved wood plaque" loading="lazy"></div>
+      <div class="card-image"><img src="Product Images/Catalina/Front view.png" alt="Avalon Bay Catalina Island laser engraved plaque" loading="lazy"><div class="card-vignette"></div></div>
       <div class="card-body">
+        <div class="card-rule"></div>
         <p class="card-title">Avalon Bay, Catalina Island Plaque</p>
         <p class="card-desc">Laser engraved image of Avalon Bay on Catalina Island.</p>
-        <div class="card-price">
-          <span class="price-current">$16.99</span>
-          <span class="price-original">$25.99</span>
-        </div>
+        <div class="card-price"><span class="price-current">$16.99</span><span class="price-original">$25.99</span></div>
         <div class="button-group">
           <button class="add-to-cart" data-id="8" data-name="Avalon Bay, Catalina Island Laser Engraved Plaque" data-price="16.99" data-price-id="price_1TKKkt2c5eOyE1cRYIXmum51">Add to Cart</button>
           <a href="Catalina.html" class="details-btn">Details</a>
@@ -590,9 +887,10 @@ html, body {
       </div>
     </div>
 
-    <div class="product-card" data-category="art" data-link="Animal Plaque.html">
-      <div class="card-image"><img src="Product Images/Animal Plaque/Display.JPG" alt="Custom pet photo laser engraved wood plaque personalized gift" loading="lazy"></div>
+    <div class="product-card" data-category="art" data-link="Animal Plaque.html" data-tip="Custom Order">
+      <div class="card-image"><img src="Product Images/Animal Plaque/Front view.png" alt="Custom pet photo laser engraved wood plaque" loading="lazy"><div class="card-vignette"></div></div>
       <div class="card-body">
+        <div class="card-rule"></div>
         <p class="card-title">Custom Animal Plaque</p>
         <p class="card-desc">Have a photo of your pet engraved into a custom wooden plaque. Unique every time.</p>
         <div class="card-price"><span class="price-current">$24.99</span></div>
@@ -602,9 +900,10 @@ html, body {
       </div>
     </div>
 
-    <div class="product-card" data-category="scripture" data-link="Rose on Cross.html">
-      <div class="card-image"><img src="Product Images/Rose on Cross/Front view.jpg" alt="Cross with John 14:27 scripture laser engraved wood plaque Christian gift" loading="lazy"></div>
+    <div class="product-card" data-category="scripture" data-link="Rose on Cross.html" data-tip="Scripture Art">
+      <div class="card-image"><img src="Product Images/Rose on Cross/Front view.png" alt="Cross with John 14:27 scripture laser engraved plaque" loading="lazy"><div class="card-vignette"></div></div>
       <div class="card-body">
+        <div class="card-rule"></div>
         <p class="card-title">Cross Design with John 14:27</p>
         <p class="card-desc">Wooden plaque with an ornate cross and Scripture verse.</p>
         <div class="card-price"><span class="price-current">$15.00</span></div>
@@ -615,9 +914,10 @@ html, body {
       </div>
     </div>
 
-    <div class="product-card" data-category="scripture" data-link="Dove.html">
-      <div class="card-image"><img src="Product Images/Dove with Psalm/Front view.jpg" alt="Wooden dove Psalm 46:5 scripture laser engraved Christian wall decor gift" loading="lazy"></div>
+    <div class="product-card" data-category="scripture" data-link="Dove.html" data-tip="Scripture Art">
+      <div class="card-image"><img src="Product Images/Dove with Psalm/Front view.png" alt="Wooden dove Psalm 46:5 scripture laser engraved Christian decor" loading="lazy"><div class="card-vignette"></div></div>
       <div class="card-body">
+        <div class="card-rule"></div>
         <p class="card-title">Wooden Dove Plaque — Psalm 46:5</p>
         <p class="card-desc">Christian wall décor. A beautiful gift for any occasion.</p>
         <div class="card-price"><span class="price-current">$16.99</span></div>
@@ -628,9 +928,10 @@ html, body {
       </div>
     </div>
 
-    <div class="product-card" data-category="art" data-link="train.html">
-      <div class="card-image"><img src="Product Images/Train/Front-view.jpg" alt="Classic steam train laser engraved wood plaque" loading="lazy"></div>
+    <div class="product-card" data-category="art" data-link="train.html" data-tip="Steam Engine">
+      <div class="card-image"><img src="Product Images/Train/Front-view.png" alt="Classic steam train laser engraved wood plaque" loading="lazy"><div class="card-vignette"></div></div>
       <div class="card-body">
+        <div class="card-rule"></div>
         <p class="card-title">Detailed Classic Train Engraving</p>
         <p class="card-desc">Wooden plaque with a detailed engraving of a classic steam engine.</p>
         <div class="card-price"><span class="price-current">$10.99</span></div>
@@ -641,81 +942,536 @@ html, body {
       </div>
     </div>
 
+    <div class="product-card" data-category="coasters" data-link="custom coaster.html" data-tip="Custom Order">
+      <div class="card-image"><img src="Product Images/Blank Samples/Coaster.png" alt="Custom laser engraved wood coaster" loading="lazy"><div class="card-vignette"></div></div>
+      <div class="card-body">
+        <div class="card-rule"></div>
+        <p class="card-title">Custom Wood Coaster</p>
+        <p class="card-desc">Bring your own logo, artwork, or design — laser engraved on pine wood with a protective seal.</p>
+        <div class="card-price"><span class="price-current">$6.99</span></div>
+        <div class="button-group">
+          <a href="custom coaster.html" class="details-btn" style="flex:1;">Customize</a>
+        </div>
+      </div>
+    </div>
+
   </section>
 </main>
 
 <footer class="site-footer">
   <div class="footer-content">
     <div class="social-links">
-      <a href="https://www.facebook.com/profile.php?id=61585614995027"><img src="images/facebook-icon.png" alt="Facebook" loading="lazy"></a>
-      <a href="https://instagram.com/mozartlaser"><img src="images/instagram-icon.png" alt="Instagram" loading="lazy"></a>
-      <a href="https://X.com/mozartlaser"><img src="images/X-icon.png" alt="X" loading="lazy"></a>
+      <a href="https://www.facebook.com/profile.php?id=61585614995027" target="_blank" rel="noopener" aria-label="Facebook">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+      </a>
+      <a href="https://instagram.com/mozartlaser" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+      </a>
+      <a href="https://X.com/mozartlaser" target="_blank" rel="noopener" aria-label="X">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      </a>
     </div>
     <p>&copy; 2026 Mozart Laser. All rights reserved.</p>
   </div>
 </footer>
+</div>
 
 <script src="js/navbar.js"></script>
+<script src="js/safari-fix.js"></script>
 <script src="js/cart.js"></script>
 
 <script>
-/* ── CARD CLICK ── */
-document.querySelectorAll('.product-card').forEach(card => {
-  card.addEventListener('click', () => {
-    const link = card.dataset.link;
-    if (link) window.location.href = link;
-  });
-});
-document.querySelectorAll('.product-card button, .product-card a').forEach(el => {
-  el.addEventListener('click', e => e.stopPropagation());
-});
+/* ============================================================
+   WEBGL DEPTH BACKGROUND
+   Draws a 3-D starfield of tiny wood-tone particles with
+   perspective depth — closer ones are larger & brighter.
+   Mouse movement parallaxes the camera.
+   ============================================================ */
+(function(){
+  var canvas = document.getElementById('gl-canvas');
+  var gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+  if(!gl){ canvas.style.display='none'; return; }
 
-/* ── PILL FILTER ── */
-document.querySelectorAll('.filter-btn').forEach(btn => {
-  btn.addEventListener('click', function () {
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    this.classList.add('active');
-    const selected = this.dataset.filter;
-    document.querySelectorAll('.product-card').forEach(card => {
-      card.classList.toggle(
-        'hidden',
-        selected !== 'all' && !card.dataset.category.split(' ').includes(selected)
-      );
+  var W,H;
+  function resize(){ W=canvas.width=window.innerWidth; H=canvas.height=window.innerHeight; gl.viewport(0,0,W,H); }
+  resize();
+  window.addEventListener('resize',resize,{passive:true});
+
+  /* Vertex shader: projects particles in 3-D with perspective */
+  var VS = `
+    attribute vec3 aPos;
+    attribute float aSize;
+    attribute float aAlpha;
+    uniform vec2 uMouse;
+    uniform float uTime;
+    varying float vAlpha;
+    varying float vDepth;
+    void main(){
+      float z = aPos.z;
+      // Parallax shift based on mouse
+      float px = aPos.x + uMouse.x * (1.0 - z) * 0.4;
+      float py = aPos.y + uMouse.y * (1.0 - z) * 0.3;
+      // Perspective divide
+      float fov = 1.8;
+      float perspective = fov / (fov + z);
+      gl_Position = vec4(px * perspective, py * perspective, 0.0, 1.0);
+      gl_PointSize = aSize * perspective * 2.2;
+      vAlpha = aAlpha * perspective * (0.6 + 0.4 * sin(uTime * 1.2 + aPos.x * 6.0));
+      vDepth = perspective;
+    }
+  `;
+  /* Fragment shader: soft circular points */
+  var FS = `
+    precision mediump float;
+    varying float vAlpha;
+    varying float vDepth;
+    void main(){
+      vec2 c = gl_PointCoord - 0.5;
+      float d = length(c) * 2.0;
+      float a = vAlpha * smoothstep(1.0, 0.1, d);
+      // Gold tone
+      vec3 col = mix(vec3(0.72,0.58,0.29), vec3(0.9,0.76,0.45), vDepth);
+      gl_FragColor = vec4(col, a);
+    }
+  `;
+
+  function shader(type, src){
+    var s = gl.createShader(type);
+    gl.shaderSource(s, src);
+    gl.compileShader(s);
+    return s;
+  }
+  var prog = gl.createProgram();
+  gl.attachShader(prog, shader(gl.VERTEX_SHADER, VS));
+  gl.attachShader(prog, shader(gl.FRAGMENT_SHADER, FS));
+  gl.linkProgram(prog);
+  gl.useProgram(prog);
+
+  var COUNT = window.innerWidth < 768 ? 180 : 380;
+  var pos   = new Float32Array(COUNT * 3);
+  var sizes = new Float32Array(COUNT);
+  var alphas= new Float32Array(COUNT);
+
+  for(var i=0;i<COUNT;i++){
+    pos[i*3]   = (Math.random()-0.5)*2.2;  // x  -1.1 to 1.1
+    pos[i*3+1] = (Math.random()-0.5)*2.2;  // y
+    pos[i*3+2] = Math.random() * 2.0;       // z  depth 0-2
+    sizes[i]   = Math.random()*3.5+0.8;
+    alphas[i]  = Math.random()*0.55+0.08;
+  }
+
+  function buf(data){
+    var b=gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER,b);
+    gl.bufferData(gl.ARRAY_BUFFER,data,gl.STATIC_DRAW);
+    return b;
+  }
+  function attrib(prog,name,b,size){
+    var loc=gl.getAttribLocation(prog,name);
+    gl.bindBuffer(gl.ARRAY_BUFFER,b);
+    gl.enableVertexAttribArray(loc);
+    gl.vertexAttribPointer(loc,size,gl.FLOAT,false,0,0);
+  }
+
+  attrib(prog,'aPos',buf(pos),3);
+  attrib(prog,'aSize',buf(sizes),1);
+  attrib(prog,'aAlpha',buf(alphas),1);
+
+  var uMouse = gl.getUniformLocation(prog,'uMouse');
+  var uTime  = gl.getUniformLocation(prog,'uTime');
+
+  gl.enable(gl.BLEND);
+  gl.blendFunc(gl.SRC_ALPHA, gl.ONE); /* additive — real depth glow */
+
+  var mx=0,my=0,tmx=0,tmy=0;
+  document.addEventListener('mousemove',function(e){
+    mx = (e.clientX/window.innerWidth -0.5)*2;
+    my = -(e.clientY/window.innerHeight-0.5)*2;
+  },{passive:true});
+
+  var t=0;
+  (function loop(){
+    requestAnimationFrame(loop);
+    t+=0.008;
+    tmx+=(mx-tmx)*0.04;
+    tmy+=(my-tmy)*0.04;
+    gl.clearColor(0,0,0,0);
+    gl.clear(gl.COLOR_BUFFER_BIT);
+    gl.uniform2f(uMouse,tmx,tmy);
+    gl.uniform1f(uTime,t);
+    gl.drawArrays(gl.POINTS,0,COUNT);
+  })();
+})();
+
+/* ============================================================
+   CURSOR
+   ============================================================ */
+(function(){
+  var dot  = document.getElementById('cur-dot');
+  var ring = document.getElementById('cur-ring');
+  var lbl  = document.getElementById('cur-label');
+  if(!dot||!ring) return;
+  var mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove',function(e){
+    mx=e.clientX; my=e.clientY;
+    dot.style.transform='translate('+(mx-4)+'px,'+(my-4)+'px)';
+    lbl.style.transform='translate('+(mx+12)+'px,'+(my-6)+'px)';
+  },{passive:true});
+  (function loop(){ rx+=(mx-rx)*.35; ry+=(my-ry)*.35; ring.style.transform='translate('+(rx-18)+'px,'+(ry-18)+'px)'; requestAnimationFrame(loop); })();
+  document.querySelectorAll('.product-card').forEach(function(c){
+    c.addEventListener('mouseenter',function(){ document.body.classList.add('c-hover'); });
+    c.addEventListener('mouseleave',function(){ document.body.classList.remove('c-hover'); });
+  });
+  document.querySelectorAll('button,.filter-btn,.add-to-cart,.details-btn').forEach(function(b){
+    b.addEventListener('mouseenter',function(){ document.body.classList.remove('c-hover','c-view'); document.body.classList.add('c-btn'); });
+    b.addEventListener('mouseleave',function(){ document.body.classList.remove('c-btn'); });
+  });
+})();
+
+/* ============================================================
+   CARD 3-D TILT + CURSOR-TRACKED AMBIENT GLOW
+   Each card independently tilts up to 14° using its own
+   perspective so the vanishing point is inside the card.
+   ============================================================ */
+(function(){
+  if(window.matchMedia('(hover:none)').matches) return;
+  var tip = document.getElementById('laser-tip');
+
+  document.querySelectorAll('.product-card').forEach(function(card){
+    var h = card.offsetHeight;
+
+    card.addEventListener('mouseenter',function(){
+      h = card.offsetHeight;
+      card.style.setProperty('--card-h', h+'px');
+      /* Show material tooltip */
+      var t = card.dataset.tip || '';
+      if(t){ tip.textContent = t; tip.classList.add('show'); }
+    });
+
+    card.addEventListener('mousemove',function(e){
+      var r   = card.getBoundingClientRect();
+      var xR  = (e.clientX - r.left) / r.width;   /* 0-1 */
+      var yR  = (e.clientY - r.top)  / r.height;
+      var rx  = (yR - 0.5) * -14;  /* tilt X */
+      var ry  = (xR - 0.5) *  14;  /* tilt Y */
+
+      /* Perspective set on card itself = each card has own VP */
+      card.style.transform =
+        'perspective(700px) rotateX('+rx+'deg) rotateY('+ry+'deg) scale3d(1.02,1.02,1.02)';
+      card.style.transition = 'transform .08s linear, box-shadow .4s, opacity .8s, background .4s';
+
+      /* Glow follows cursor */
+      card.style.setProperty('--cx', (xR*100)+'%');
+      card.style.setProperty('--cy', (yR*100)+'%');
+
+      /* Box shadow shifts opposite to tilt = fake light source */
+      var sx = (xR-0.5)*-16;
+      var sy = (yR-0.5)*-16;
+      card.style.boxShadow = sx+'px '+sy+'px 40px rgba(184,147,74,.22), 0 0 0 1px rgba(184,147,74,.12)';
+
+      /* Position tooltip near cursor */
+      if(tip.classList.contains('show')){
+        tip.style.left = (e.clientX+18)+'px';
+        tip.style.top  = (e.clientY-10)+'px';
+      }
+    });
+
+    card.addEventListener('mouseleave',function(){
+      card.style.transition = 'transform .7s cubic-bezier(0.34,1.56,0.64,1), box-shadow .5s, opacity .8s, background .4s';
+      card.style.transform  = 'perspective(700px) rotateX(0) rotateY(0) scale3d(1,1,1)';
+      card.style.boxShadow  = '';
+      tip.classList.remove('show');
     });
   });
+})();
+
+/* ============================================================
+   SPARK BURST on Add-to-Cart
+   Emits 12 gold sparks from the button on click
+   ============================================================ */
+function spawnSparks(x,y){
+  for(var i=0;i<14;i++){
+    var s = document.createElement('div');
+    s.className='spark';
+    var angle = Math.random()*Math.PI*2;
+    var dist  = 30 + Math.random()*60;
+    s.style.left = x+'px';
+    s.style.top  = y+'px';
+    s.style.setProperty('--tx', Math.cos(angle)*dist+'px');
+    s.style.setProperty('--ty', Math.sin(angle)*dist+'px');
+    s.style.setProperty('--dur', (.4+Math.random()*.4)+'s');
+    s.style.width = s.style.height = (2+Math.random()*3)+'px';
+    document.body.appendChild(s);
+    s.addEventListener('animationend',function(){ this.remove(); });
+  }
+}
+
+document.querySelectorAll('.add-to-cart').forEach(function(btn){
+  btn.addEventListener('click',function(e){
+    spawnSparks(e.clientX, e.clientY);
+    btn.classList.remove('flashing');
+    void btn.offsetWidth;
+    btn.classList.add('flashing');
+    btn.addEventListener('animationend',function(){ btn.classList.remove('flashing'); },{once:true});
+  });
 });
 
-/* ── SCROLL ANIMATIONS ── */
-const revealEls = document.querySelectorAll('.reveal');
-const revealObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-      revealObserver.unobserve(entry.target);
-    }
+/* ============================================================
+   CARD CLICK — navigate (original logic preserved)
+   ============================================================ */
+document.querySelectorAll('.product-card').forEach(function(card){
+  card.addEventListener('click',function(){
+    var link = card.dataset.link;
+    if(link) window.location.href = link;
   });
-}, { threshold: 0.15 });
-revealEls.forEach(el => revealObserver.observe(el));
+});
+document.querySelectorAll('.product-card button,.product-card a').forEach(function(el){
+  el.addEventListener('click',function(e){ e.stopPropagation(); });
+});
 
-const cards = document.querySelectorAll('.product-card');
-const cardObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      const card = entry.target;
-      const isMobile = window.innerWidth < 600;
-      if (isMobile) {
-        card.classList.add('visible');
-      } else {
-        const allCards = [...cards].filter(c => !c.classList.contains('hidden'));
-        const idx = allCards.indexOf(card);
-        setTimeout(() => card.classList.add('visible'), (idx % 4) * 80);
+/* ============================================================
+   PILL FILTER (original logic preserved exactly)
+   ============================================================ */
+document.querySelectorAll('.filter-btn').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.filter-btn').forEach(function(b){ b.classList.remove('active'); });
+    this.classList.add('active');
+    var sel = this.dataset.filter;
+    document.querySelectorAll('.product-card').forEach(function(card){
+      card.classList.toggle('hidden', sel!=='all' && !card.dataset.category.split(' ').includes(sel));
+    });
+    var v = document.querySelectorAll('.product-card:not(.hidden)').length;
+    var el = document.getElementById('gridCount');
+    if(el) el.textContent = v+' piece'+(v===1?'':'s');
+  });
+});
+
+/* ============================================================
+   SCROLL REVEAL
+   ============================================================ */
+(function(){
+  /* Page header */
+  var ph = document.querySelector('.ph');
+  if(ph){
+    var obs = new IntersectionObserver(function(entries){
+      if(entries[0].isIntersecting){
+        ph.querySelectorAll('.ph-eye,.ph h1,.ph p').forEach(function(el){ el.classList.add('in'); });
+        ph.querySelector('.ph-rule').classList.add('in');
+        obs.disconnect();
       }
-      cardObserver.unobserve(card);
+    },{threshold:.1});
+    obs.observe(ph);
+  }
+
+  /* .rv elements */
+  var rvObs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); rvObs.unobserve(e.target); } });
+  },{threshold:.15});
+  document.querySelectorAll('.rv').forEach(function(el){ rvObs.observe(el); });
+
+  /* Cards — staggered by grid column */
+  var cols = window.innerWidth > 900 ? 3 : window.innerWidth > 560 ? 2 : 1;
+  var cardObs = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        var card = entry.target;
+        var all  = Array.from(document.querySelectorAll('.product-card:not(.hidden)'));
+        var idx  = all.indexOf(card);
+        var delay= (idx % cols) * 100;
+        setTimeout(function(){ card.classList.add('visible'); }, delay);
+        cardObs.unobserve(card);
+      }
+    });
+  },{threshold:.07});
+  document.querySelectorAll('.product-card').forEach(function(c){ cardObs.observe(c); });
+})();
+
+/* ============================================================
+   EASTER EGG 1 — KONAMI CODE
+   ↑↑↓↓←→←→BA triggers a full-screen cinematic moment
+   ============================================================ */
+(function(){
+  var SEQ = [38,38,40,40,37,39,37,39,66,65];
+  var buf = [];
+  document.addEventListener('keydown',function(e){
+    buf.push(e.keyCode);
+    if(buf.length > SEQ.length) buf.shift();
+    if(buf.join(',')=== SEQ.join(',')){
+      showKonami();
     }
   });
-}, { threshold: 0.05 });
-cards.forEach(card => cardObserver.observe(card));
-</script>
 
+  var overlay   = document.getElementById('konami-overlay');
+  var closeBtn  = document.getElementById('konamiClose');
+  var kCanvas   = document.getElementById('konami-canvas');
+
+  closeBtn.addEventListener('click',function(){
+    overlay.classList.remove('show');
+  });
+  overlay.addEventListener('click',function(e){
+    if(e.target===overlay) overlay.classList.remove('show');
+  });
+
+  function showKonami(){
+    overlay.classList.add('show');
+    startKonamiParticles();
+  }
+
+  var kAnim = null;
+  function startKonamiParticles(){
+    if(kAnim) return;
+    var ctx = kCanvas.getContext('2d');
+    kCanvas.width  = window.innerWidth;
+    kCanvas.height = window.innerHeight;
+
+    /* Shower of gold sparks falling like embers from a laser */
+    var embers = [];
+    for(var i=0;i<120;i++){
+      embers.push({
+        x: Math.random()*kCanvas.width,
+        y: Math.random()*kCanvas.height,
+        vx:(Math.random()-0.5)*1.5,
+        vy:Math.random()*1.8+0.4,
+        r: Math.random()*2.5+0.5,
+        a: Math.random()*.8+.2,
+        life: Math.random()
+      });
+    }
+
+    (function loop(){
+      if(!overlay.classList.contains('show')){ kAnim=null; return; }
+      kAnim = requestAnimationFrame(loop);
+      ctx.clearRect(0,0,kCanvas.width,kCanvas.height);
+      embers.forEach(function(p){
+        p.x+=p.vx; p.y+=p.vy;
+        p.life+=0.006;
+        if(p.y>kCanvas.height+10){ p.y=-5; p.x=Math.random()*kCanvas.width; }
+        var a = p.a*(0.6+0.4*Math.sin(p.life*4));
+        ctx.beginPath();
+        ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+        ctx.fillStyle='rgba(184,147,74,'+a+')';
+        ctx.fill();
+        /* trail */
+        ctx.beginPath();
+        ctx.moveTo(p.x,p.y);
+        ctx.lineTo(p.x-p.vx*6,p.y-p.vy*6);
+        ctx.strokeStyle='rgba(212,170,104,'+(a*.4)+')';
+        ctx.lineWidth=p.r*.7;
+        ctx.stroke();
+      });
+    })();
+  }
+})();
+
+/* ============================================================
+   EASTER EGG 2 — TRIPLE-CLICK any card title
+   Shows a secret engraving "blueprint" view of that product
+   (inverts the image and adds scanlines = laser preview mode)
+   ============================================================ */
+(function(){
+  document.querySelectorAll('.card-title').forEach(function(title){
+    var clicks=0, timer=null;
+    title.addEventListener('click',function(e){
+      e.stopPropagation();
+      clicks++;
+      clearTimeout(timer);
+      timer = setTimeout(function(){ clicks=0; }, 500);
+      if(clicks>=3){
+        clicks=0;
+        var card = title.closest('.product-card');
+        var img  = card.querySelector('.card-image img');
+        if(!img) return;
+        var active = card.classList.contains('blueprint');
+        card.classList.toggle('blueprint', !active);
+        /* inject/remove scanline overlay */
+        if(!active){
+          var sl = document.createElement('div');
+          sl.className='scanlines';
+          sl.style.cssText='position:absolute;inset:0;z-index:5;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(0,255,180,.04) 0px,rgba(0,255,180,.04) 1px,transparent 1px,transparent 3px);animation:scanMove 4s linear infinite;';
+          card.querySelector('.card-image').appendChild(sl);
+          img.style.cssText='filter:invert(1) hue-rotate(130deg) saturate(3) brightness(1.4);transition:filter .4s;';
+          /* small tooltip */
+          var msg = document.createElement('div');
+          msg.style.cssText='position:absolute;bottom:8px;left:0;right:0;text-align:center;font-size:10px;letter-spacing:.14em;color:rgba(0,255,180,.8);z-index:6;text-transform:uppercase;pointer-events:none;';
+          msg.textContent='Laser Blueprint Mode';
+          msg.className='blueprint-msg';
+          card.querySelector('.card-image').appendChild(msg);
+        } else {
+          var sl2 = card.querySelector('.scanlines');
+          var msg2= card.querySelector('.blueprint-msg');
+          if(sl2) sl2.remove();
+          if(msg2) msg2.remove();
+          img.style.cssText='';
+        }
+      }
+    });
+  });
+
+  /* inject scanline keyframe */
+  var st = document.createElement('style');
+  st.textContent='@keyframes scanMove{0%{background-position:0 0;}100%{background-position:0 100px;}}';
+  document.head.appendChild(st);
+})();
+
+/* ============================================================
+   EASTER EGG 3 — LONG PRESS any product image (500ms)
+   Reveals material info burned onto the card as if the laser
+   just engraved it in real time
+   ============================================================ */
+(function(){
+  var materials = {
+    'coasters':   'Hardwood · Food-safe finish · 3.5" diameter',
+    'bookmarks':  'Walnut · 0.15" thick · 6" × 1.25"',
+    'art':        'Poplar · Hand-sanded · UV-coated',
+    'landmarks':  'Poplar · 8×10 in · Hand-finished',
+    'scripture':  'Maple · 8×10 in · Satin finish',
+    'coins':      'Basswood · 2" diameter · Double-sided',
+    'default':    'Premium Hardwood · Hand-finished in California'
+  };
+
+  document.querySelectorAll('.product-card').forEach(function(card){
+    var timer=null, reveal=null;
+    var img = card.querySelector('.card-image');
+
+    function start(e){
+      timer = setTimeout(function(){
+        /* Create the burned-in text */
+        var cats = (card.dataset.category||'').split(' ');
+        var mat = materials.default;
+        cats.forEach(function(c){ if(materials[c]) mat=materials[c]; });
+
+        reveal = document.createElement('div');
+        reveal.style.cssText = [
+          'position:absolute;inset:0;z-index:8;',
+          'display:flex;align-items:center;justify-content:center;',
+          'background:rgba(10,9,8,.82);',
+          'font-family:"Quicksand",sans-serif;',
+          'font-size:11px;letter-spacing:.16em;text-transform:uppercase;',
+          'color:rgba(184,147,74,.9);text-align:center;padding:16px;',
+          'line-height:1.9;',
+          'animation:burnIn .6s cubic-bezier(0.16,1,0.3,1) forwards;'
+        ].join('');
+        reveal.innerHTML = '<div>&#9650; Material Specs<br><span style="color:#f5f1eb;font-size:12px;letter-spacing:.04em;text-transform:none;">'+mat+'</span><br><span style="font-size:10px;color:#7a7269;">Hold to inspect · Release to dismiss</span></div>';
+        img.appendChild(reveal);
+      }, 480);
+    }
+    function end(){
+      clearTimeout(timer);
+      if(reveal){ reveal.remove(); reveal=null; }
+    }
+
+    img.addEventListener('mousedown', start);
+    img.addEventListener('mouseup',   end);
+    img.addEventListener('mouseleave',end);
+    img.addEventListener('touchstart',start,{passive:true});
+    img.addEventListener('touchend',  end);
+  });
+
+  /* inject burnIn keyframe */
+  var st = document.createElement('style');
+  st.textContent='@keyframes burnIn{0%{opacity:0;clip-path:inset(0 100% 0 0);}100%{opacity:1;clip-path:inset(0 0% 0 0);}}';
+  document.head.appendChild(st);
+})();
+</script>
 </body>
 </html>

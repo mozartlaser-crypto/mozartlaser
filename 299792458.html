@@ -1,101 +1,213 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<style>/* dino compat */</style>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <title>🦖 Secret Page</title>
+  <title>🦖 Secret Page — Mozart Laser</title>
   <meta name="robots" content="noindex, nofollow">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Quicksand:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="css/navbar.css">
-  <link rel="stylesheet" href="css/footer.css">
-  <link rel="stylesheet" href="css/cart.css">
   <link rel="stylesheet" href="css/dino.css">
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;700&display=swap" rel="stylesheet">
+
   <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background: #f7f7f7;
-      font-family: 'Quicksand', sans-serif;
-    }
-    .secret-header {
-      text-align: center;
-      padding: 60px 20px 10px;
-    }
-    .secret-header h1 {
-      font-size: 1.8rem;
-      margin: 0 0 8px;
-      letter-spacing: 2px;
-    }
-    .secret-header p {
-      font-size: 0.95rem;
-      color: #555;
-      margin: 0;
-    }
-    .game-wrapper {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px 20px 60px;
-    }
-    /* Force the canvas area to be visible */
-    .interstitial-wrapper {
-      width: 600px;
-      max-width: 90vw;
-    }
+  :root{
+    --ink:#0a0908;--ink2:#13100d;--parch:#f5f1eb;
+    --gold:#b8934a;--gold2:#d4aa68;
+    --ash:#7a7269;--ash2:#c4bdb3;
+    --border:rgba(184,147,74,.15);
+    --ease:cubic-bezier(0.16,1,0.3,1);
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{overflow-x:hidden;}
+
+  body{
+    background:var(--ink);
+    color:var(--parch);
+    font-family:'Quicksand',sans-serif;
+    overflow-x:hidden;
+    cursor:none;
+    min-height:100vh;
+  }
+
+  /* ── WebGL canvas ── */
+  #gl-canvas{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;}
+  .noise{position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.025;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:256px}
+
+  /* ── Cursor ── */
+  #cur-dot{position:fixed;top:0;left:0;width:7px;height:7px;border-radius:50%;background:var(--gold);pointer-events:none;z-index:99999;transform:translate(-50%,-50%);mix-blend-mode:difference;}
+  #cur-ring{position:fixed;top:0;left:0;width:40px;height:40px;border-radius:50%;border:1.5px solid rgba(184,147,74,.5);pointer-events:none;z-index:99998;transform:translate(-50%,-50%);}
+  @media(hover:none){#cur-dot,#cur-ring{display:none;}body{cursor:auto;}}
+
+  /* ── Page wrapper ── */
+  .pw{position:relative;z-index:2;}
+
+  /* ── Secret header ── */
+  .secret-header{
+    text-align:center;
+    padding:110px 20px 32px;
+  }
+  .secret-eyebrow{
+    display:block;
+    font-size:10px;letter-spacing:.26em;text-transform:uppercase;
+    color:var(--gold);font-weight:600;margin-bottom:16px;
+  }
+  .secret-header h1{
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(36px,5vw,64px);
+    font-weight:300;line-height:1.05;letter-spacing:-.01em;
+    color:var(--parch);margin-bottom:16px;
+  }
+  .secret-header h1 em{font-style:italic;color:var(--gold);}
+  .secret-header p{
+    font-size:13px;font-weight:300;letter-spacing:.06em;
+    color:var(--ash2);
+  }
+  .secret-header p strong{color:var(--parch);font-weight:600;}
+  .ph-rule{
+    width:0;height:1px;
+    background:linear-gradient(90deg,transparent,var(--gold),transparent);
+    margin:24px auto 0;
+    transition:width 1.4s var(--ease) .3s;
+  }
+  .ph-rule.in{width:120px;}
+
+  /* ── Game wrapper ── */
+  .game-wrapper{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:28px 20px 80px;
+  }
+
+  /* The dino game canvas/container — give it a dark card treatment */
+  .interstitial-wrapper{
+    width:600px;
+    max-width:90vw;
+    background:var(--ink2);
+    border:1px solid var(--border);
+    border-radius:16px;
+    overflow:hidden;
+    box-shadow:
+      0 0 0 1px rgba(184,147,74,.06),
+      0 24px 80px rgba(0,0,0,.6);
+    position:relative;
+  }
+  /* Top gold scan line */
+  .interstitial-wrapper::before{
+    content:'';position:absolute;top:0;left:10%;right:10%;height:1px;
+    background:linear-gradient(90deg,transparent,rgba(184,147,74,.5),transparent);
+    z-index:10;pointer-events:none;
+  }
+
+  /* Override dino.css background so game blends into dark card */
+  .offline #main-content,
+  #main-content{
+    background:var(--ink2) !important;
+  }
+
+  /* ── Footer ── */
+  .site-footer{background:var(--ink);border-top:1px solid var(--border);padding:44px 48px;position:relative;z-index:2;}
+  .footer-content{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;}
+  .site-footer p{color:var(--ash);font-size:12px;letter-spacing:.08em;}
+  .social-links{display:flex;gap:20px;align-items:center;}
+  .social-links a{color:rgba(196,189,179,.5);transition:color .3s;display:flex;align-items:center;}
+  .social-links a:hover{color:rgba(196,189,179,.9);}
+  @media(max-width:560px){.site-footer{padding:36px 20px;}}
+
+
+  /* ── DINO.CSS MINIMAL OVERRIDES ── */
+  body.main-page { background: var(--ink) !important; }
+  html, body { color: var(--parch) !important; }
+
+  /* Contain the absolutely-positioned runner inside the wrapper card */
+  .interstitial-wrapper {
+    position: relative !important;
+    min-height: 185px;
+    overflow: hidden;
+  }
+  /* dino.css adds padding-top:100px — remove it */
+  .offline .interstitial-wrapper {
+    padding-top: 0 !important;
+    margin: 0 !important;
+  }
+  /* Canvas bg — cleared pixels show dark color */
+  .runner-canvas { background: #13100d !important; }
+
+  /* Controller overlay: relative to wrapper, transparent */
+  .offline .controller {
+    position: absolute !important;
+    background: transparent !important;
+  }
+
   </style>
+
   <script>
     /* Prevent spacebar from scrolling */
     document.documentElement.addEventListener("keydown", function(e) {
       (e.keyCode || e.which) == 32 && e.preventDefault();
     }, false);
-
-    /* Disable sound loading entirely by patching it out */
+    /* Disable sound loading */
     window.addEventListener("load", function() {
       if (window.Runner && Runner.instance_) {
         Runner.instance_.loadSounds = function() {};
       }
     });
-	   window.devicePixelRatio = 1;
+    window.devicePixelRatio = 1;
   </script>
 </head>
 
 <body class="offline main-page" id="t">
 
-  <!-- HEADER -->
-  <header class="site-header" id="siteHeader">
-    <div class="header-inner">
-      <a href="index.html"><img src="images/mozartlaserlogo.png" alt="MozartLaser" class="logo"></a>
-      <nav class="main-nav">
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="products.html">Products</a></li>
-          <li><a href="create.html">Create</a></li>
-			 <li><a href="blog.html">Blog</a></li>
-          <li><a href="About.html">About</a></li>
-        </ul>
-      </nav>
-      <div class="hamburger"><span></span><span></span><span></span></div>
-    </div>
-    <div class="cart-icon" id="cart-icon">
-      <img src="images/cart-icon.png" alt="Cart">
-      <span id="cart-count">0</span>
-    </div>
-  </header>
+<canvas id="gl-canvas" aria-hidden="true"></canvas>
+<div class="noise" aria-hidden="true"></div>
+<div id="cur-dot" aria-hidden="true"></div>
+<div id="cur-ring" aria-hidden="true"></div>
 
-  <!-- CART PANEL -->
-  <div class="cart-panel" id="cart-panel">
-    <h3>Shopping Cart</h3>
-    <ul id="cart-items"></ul>
-    <p>Total: $<span id="cart-total">0.00</span></p>
-    <button id="checkout">Checkout</button>
-    <button id="close-cart">Close</button>
+<!-- NAVBAR -->
+<header class="site-header" id="siteHeader">
+  <div class="header-inner">
+    <a href="index.html"><img src="images/mozartlaserlogo.png" alt="Mozart Laser" class="logo"></a>
+    <nav class="main-nav" aria-label="Main navigation">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="create.html">Create</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="About.html">About</a></li>
+      </ul>
+    </nav>
+    <div class="header-right">
+      <div class="cart-icon" id="cart-icon" role="button" tabindex="0" aria-label="Open cart">
+        <img src="images/cart-icon.png" alt="Cart">
+        <span id="cart-count">0</span>
+      </div>
+      <div class="hamburger" role="button" tabindex="0" aria-label="Open navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
   </div>
+</header>
 
-  <!-- SECRET  -->
+<div class="cart-panel" id="cart-panel" aria-label="Shopping cart">
+  <h3>Shopping Cart</h3>
+  <ul id="cart-items"></ul>
+  <p>Total: $<span id="cart-total">0.00</span></p>
+  <button id="checkout">Checkout</button>
+  <button id="close-cart">Close</button>
+</div>
+
+<div class="pw">
+
   <div class="secret-header">
-    <h1>🦖 You found the secret!</h1>
+    <span class="secret-eyebrow">Mozart Laser &nbsp;·&nbsp; Secret Page</span>
+    <h1>You Found the <em>Secret</em></h1>
     <p>Press <strong>Space</strong> to start &nbsp;·&nbsp; <strong>↓</strong> to duck &nbsp;·&nbsp; <strong>↑</strong> to jump</p>
+    <div class="ph-rule" id="phRule"></div>
   </div>
 
   <div class="game-wrapper">
@@ -110,30 +222,72 @@
     <template id="audio-resources"></template>
   </section>
 
-  <!-- FOOTER -->
   <footer class="site-footer">
     <div class="footer-content">
       <div class="social-links">
-        <a href="https://www.facebook.com/profile.php?id=61585614995027" target="_blank" aria-label="Facebook"><img src="images/facebook-icon.png" alt="Facebook"></a>
-        <a href="https://instagram.com/mozartlaser" target="_blank" aria-label="Instagram"><img src="images/instagram-icon.png" alt="Instagram"></a>
-        <a href="https://X.com/mozartlaser" target="_blank" aria-label="X"><img src="images/X-icon.png" alt="X"></a>
+        <a href="https://www.facebook.com/profile.php?id=61585614995027" target="_blank" rel="noopener" aria-label="Facebook"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+        <a href="https://instagram.com/mozartlaser" target="_blank" rel="noopener" aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+        <a href="https://X.com/mozartlaser" target="_blank" rel="noopener" aria-label="X"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
       </div>
       <p>&copy; 2026 Mozart Laser. All rights reserved.</p>
     </div>
   </footer>
+</div>
 
-  <script src="js/navbar.js"></script>
-  <script src="js/cart.js"></script>
-  <!-- Patch loadSounds before dino.js runs -->
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      var originalRunner = window.Runner;
-      if (originalRunner && originalRunner.prototype) {
-        originalRunner.prototype.loadSounds = function() {};
-      }
-    });
-  </script>
-  <script src="js/dino.js"></script>
+<script src="js/navbar.js"></script>
+<script src="js/safari-fix.js"></script>
+<script src="js/cart.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    if (window.Runner && Runner.prototype) {
+      Runner.prototype.loadSounds = function() {};
+    }
+    /* Animate the rule */
+    setTimeout(function(){ var r=document.getElementById('phRule'); if(r) r.classList.add('in'); }, 200);
+  });
+</script>
+
+<script src="js/dino.js"></script>
+
+<script>
+/* WebGL */
+(function(){
+  var canvas=document.getElementById('gl-canvas');
+  var gl=canvas.getContext('webgl')||canvas.getContext('experimental-webgl');
+  if(!gl){canvas.style.display='none';return;}
+  var W,H;
+  function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;gl.viewport(0,0,W,H);}
+  resize();window.addEventListener('resize',resize,{passive:true});
+  var VS='attribute vec3 aPos;attribute float aSize;attribute float aAlpha;uniform vec2 uMouse;uniform float uTime;varying float vAlpha;varying float vDepth;void main(){float z=aPos.z;float px=aPos.x+uMouse.x*(1.0-z)*0.28;float py=aPos.y+uMouse.y*(1.0-z)*0.2;float fov=1.8;float p=fov/(fov+z);gl_Position=vec4(px*p,py*p,0.0,1.0);gl_PointSize=aSize*p*2.2;vAlpha=aAlpha*p*(0.5+0.5*sin(uTime*0.9+aPos.x*4.0));vDepth=p;}';
+  var FS='precision mediump float;varying float vAlpha;varying float vDepth;void main(){vec2 c=gl_PointCoord-0.5;float d=length(c)*2.0;float a=vAlpha*smoothstep(1.0,0.05,d);vec3 col=mix(vec3(0.72,0.58,0.29),vec3(0.88,0.74,0.42),vDepth);gl_FragColor=vec4(col,a*0.6);}';
+  function mkS(t,s){var x=gl.createShader(t);gl.shaderSource(x,s);gl.compileShader(x);return x;}
+  var prog=gl.createProgram();
+  gl.attachShader(prog,mkS(gl.VERTEX_SHADER,VS));gl.attachShader(prog,mkS(gl.FRAGMENT_SHADER,FS));
+  gl.linkProgram(prog);gl.useProgram(prog);
+  var N=window.innerWidth<768?80:180;
+  var pos=new Float32Array(N*3),sz=new Float32Array(N),al=new Float32Array(N);
+  for(var i=0;i<N;i++){pos[i*3]=(Math.random()-.5)*2.2;pos[i*3+1]=(Math.random()-.5)*2.4;pos[i*3+2]=Math.random()*2;sz[i]=Math.random()*3+0.8;al[i]=Math.random()*.4+.06;}
+  function mkB(d){var b=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,b);gl.bufferData(gl.ARRAY_BUFFER,d,gl.STATIC_DRAW);return b;}
+  function mkA(n,b,s){var l=gl.getAttribLocation(prog,n);gl.bindBuffer(gl.ARRAY_BUFFER,b);gl.enableVertexAttribArray(l);gl.vertexAttribPointer(l,s,gl.FLOAT,false,0,0);}
+  mkA('aPos',mkB(pos),3);mkA('aSize',mkB(sz),1);mkA('aAlpha',mkB(al),1);
+  var uM=gl.getUniformLocation(prog,'uMouse'),uT=gl.getUniformLocation(prog,'uTime');
+  gl.enable(gl.BLEND);gl.blendFunc(gl.SRC_ALPHA,gl.ONE);
+  var mx=0,my=0,tmx=0,tmy=0,t=0;
+  document.addEventListener('mousemove',function(e){mx=(e.clientX/W-.5)*2;my=-(e.clientY/H-.5)*2;},{passive:true});
+  (function loop(){requestAnimationFrame(loop);t+=.006;tmx+=(mx-tmx)*.035;tmy+=(my-tmy)*.035;gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT);gl.uniform2f(uM,tmx,tmy);gl.uniform1f(uT,t);gl.drawArrays(gl.POINTS,0,N);})();
+})();
+
+/* Cursor */
+(function(){
+  var dot=document.getElementById('cur-dot'),ring=document.getElementById('cur-ring');
+  if(!dot||!ring)return;
+  dot.style.willChange='transform';ring.style.willChange='transform';
+  dot.style.top='0';dot.style.left='0';ring.style.top='0';ring.style.left='0';
+  var mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;dot.style.transform='translate('+(mx-4)+'px,'+(my-4)+'px)';},{passive:true});
+  (function loop(){rx+=(mx-rx)*.35;ry+=(my-ry)*.35;ring.style.transform='translate('+(rx-18)+'px,'+(ry-18)+'px)';requestAnimationFrame(loop);})();
+})();
+</script>
 
 </body>
 </html>

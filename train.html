@@ -1,83 +1,145 @@
-/mozartlaser<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-GNESH4PWH6"></script>
 <script>
-  window.dataLayer = window.dataLayer || [];
+  window.dataLayer=window.dataLayer||[];
   function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-GNESH4PWH6');
+  gtag('js',new Date());gtag('config','G-GNESH4PWH6');
 </script>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mozart Laser Product Details - Train Engraving</title>
-  <link rel="stylesheet" href="products/style.css">
-  <meta name="description" content="High-quality custom laser engravings by Mozart Laser. Personal, professional, and precision-crafted designs." />
-  <meta name="keywords" content="laser engraving, custom engravings, Mozart Laser, personalized gifts, wood engravings" />
-  <meta name="robots" content="index, follow">
-  <meta property="og:title" content="Mozart Laser">
-  <meta property="og:description" content="Custom laser engravings, built to last.">
-  <meta property="og:url" content="https://mozartlaser.com/">
-  <meta property="og:type" content="website">
-  <link rel="stylesheet" href="css/navbar.css">
-  <link rel="stylesheet" href="css/footer.css">
-  <link rel="stylesheet" href="css/cart.css">
-	<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;700&display=swap" rel="stylesheet">
-  <script src="https://js.stripe.com/v3/"></script>
-
-
-  <script src="https://js.stripe.com/v3/"></script>
-  <style>
-    body { font-family: 'Poppins', sans-serif; margin:0; padding:0; background:#f9f9f9; color:#111; }
-    .product-container { display:flex; flex-wrap:wrap; align-items:center; justify-content:center; padding:60px 20px; gap:40px; max-width:1200px; margin:auto; margin-top: 130px; }
-    .product-images { position:relative; width:500px; height:600px; max-width:90vw; display:flex; align-items:center; justify-content:center; overflow:hidden; border-radius:12px; background:#f0f0f0; }
-    .product-images img { max-width:100%; max-height:100%; object-fit:contain; border-radius:10px; transition:transform 0.4s ease; }
-    .dots { position:absolute; bottom:15px; width:100%; display:flex; justify-content:center; z-index:10; }
-    .dots::before { content:""; position:absolute; bottom:-7px; width:100px; height:28px; background:rgba(0,0,0,0.4); border-radius:999px; z-index:-1; }
-    .dot { width:12px; height:12px; margin:0 5px; background:rgba(255,255,255,0.5); border-radius:50%; cursor:pointer; transition:background-color 0.3s; }
-    .dot.active { background:white; }
-    .product-info { flex:1; max-width:500px; text-align:left; }
-    .product-info h1 { font-size:2rem; margin-bottom:10px; }
-    .product-info h3 { margin-bottom:15px; }
-    .product-info p { line-height:1.6; margin-bottom:30px; }
-    .buttons { display:flex; gap:15px; flex-wrap:wrap; }
-    .buttons button { padding:12px 25px; font-size:1rem; border:none; border-radius:999px; cursor:pointer; transition:all 0.3s; }
-    .buy-now { background:black; color:white; }
-    .buy-now:hover { background:#333; }
-    .add-cart, .customize-btn { background:white; color:black; border:1px solid black; }
-    .add-cart:hover, .customize-btn:hover { background:#eee; }
-    @media(max-width:768px){.product-container{flex-direction:column;text-align:center;}.product-info{text-align:center;}.buttons{justify-content:center;}.product-images{width:90vw;height:90vw;}.dots::before{width:80px;height:26px;}}
-  </style>
-
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Detailed Classic Train Engraving | Mozart Laser</title>
+<meta name="description" content="Buy the Detailed Classic Train Engraving. Hand-finished in California. Ships in 3-5 days."/>
+<meta name="robots" content="index,follow">
+<meta property="og:title" content="Detailed Classic Train Engraving | Mozart Laser">
+<meta property="og:image" content="https://mozartlaser.com/Product Images/Train/Front-view.png">
+<meta property="og:type" content="product">
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Quicksand:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="css/navbar.css">
+<script src="https://js.stripe.com/v3/"></script>
+<style>
+:root{
+  --ink:#0a0908;--ink2:#13100d;--parch:#f5f1eb;
+  --gold:#b8934a;--gold2:#d4aa68;
+  --ash:#7a7269;--ash2:#c4bdb3;
+  --border:rgba(184,147,74,.15);
+  --ease:cubic-bezier(0.16,1,0.3,1);
+  --ease-back:cubic-bezier(0.34,1.56,0.64,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{overflow-x:hidden;scroll-behavior:smooth}
+body{background:var(--ink);color:var(--parch);font-family:'Quicksand',sans-serif;overflow-x:hidden;cursor:none;min-height:100vh}
+#gl-canvas{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
+.noise{position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.025;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:256px}
+#cur-dot{position:fixed;top:0;left:0;width:7px;height:7px;border-radius:50%;background:var(--gold);pointer-events:none;z-index:99999;transform:translate(-50%,-50%);transition:width .25s var(--ease),height .25s var(--ease);mix-blend-mode:difference}
+#cur-ring{position:fixed;top:0;left:0;width:40px;height:40px;border-radius:50%;border:1.5px solid rgba(184,147,74,.5);pointer-events:none;z-index:99998;transform:translate(-50%,-50%);transition:width .45s var(--ease),height .45s var(--ease),border-color .3s}
+body.c-hover #cur-ring{width:56px;height:56px;border-color:rgba(184,147,74,.85)}
+body.c-btn #cur-dot{width:3px;height:3px;background:#fff}
+body.c-btn #cur-ring{width:48px;height:48px;border-color:rgba(255,255,255,.5)}
+@media(hover:none){#cur-dot,#cur-ring{display:none}body{cursor:auto}}
+.pw{position:relative;z-index:2}
+.product-page{display:grid;grid-template-columns:1fr 1fr;max-width:1360px;margin:0 auto;padding:100px 48px 80px;gap:80px;align-items:start}
+@media(max-width:900px){.product-page{grid-template-columns:1fr;gap:48px;padding:90px 20px 60px}}
+.img-panel{position:sticky;top:100px}
+.img-stage{position:relative;border-radius:16px;overflow:hidden;background:var(--ink2);border:1px solid var(--border);aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;box-shadow:0 24px 80px rgba(0,0,0,.55);cursor:none}
+.img-stage::before{content:'';position:absolute;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(184,147,74,.7),transparent);top:-2px;pointer-events:none;z-index:5;opacity:0}
+.img-stage:hover::before{opacity:1;animation:stageScan 1.2s var(--ease) forwards}
+@keyframes stageScan{0%{top:-2px;opacity:0}5%{opacity:1}95%{opacity:.5}100%{top:100%;opacity:0}}
+#product-img{width:100%;height:100%;object-fit:contain;padding:28px;display:block;filter:saturate(.85) brightness(.92);transition:transform .8s var(--ease),filter .4s,opacity .35s ease}
+.img-stage:hover #product-img{transform:scale(1.04) translateY(-6px);filter:saturate(1.05) brightness(1.02)}
+.img-thumbs{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+.thumb{width:68px;height:68px;object-fit:contain;border-radius:8px;background:var(--ink2);border:1px solid var(--border);padding:6px;cursor:none;filter:saturate(.6) brightness(.8);transition:filter .3s,border-color .3s,transform .3s var(--ease)}
+.thumb.active{filter:saturate(1) brightness(1);border-color:var(--gold)}
+.thumb:hover{filter:saturate(1) brightness(.95);transform:translateY(-2px)}
+.sale-ribbon{position:absolute;top:16px;left:16px;z-index:4;background:var(--gold);color:var(--ink);font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:5px 14px;border-radius:20px}
+.info-panel{display:flex;flex-direction:column;gap:28px;padding-top:8px}
+.product-tags{display:flex;gap:8px;flex-wrap:wrap}
+.tag{font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(184,147,74,.3);padding:4px 12px;border-radius:20px;background:rgba(184,147,74,.06)}
+.product-title{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4.5vw,54px);font-weight:300;line-height:1.05;letter-spacing:-.01em;color:var(--parch);opacity:0;transform:translateY(24px);transition:opacity 1s var(--ease) .1s,transform 1s var(--ease) .1s}
+.product-title.in{opacity:1;transform:none}
+.price-row{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;opacity:0;transform:translateY(18px);transition:opacity .9s var(--ease) .2s,transform .9s var(--ease) .2s}
+.price-row.in{opacity:1;transform:none}
+.price-current{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--gold);letter-spacing:.01em}
+.price-original{font-size:20px;font-weight:300;color:var(--ash2);text-decoration:line-through}
+.sale-badge{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:rgba(184,147,74,.15);color:var(--gold);padding:4px 12px;border-radius:20px;border:1px solid rgba(184,147,74,.3)}
+.material-badge{display:inline-flex;align-items:center;gap:8px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ash2);border:1px solid var(--border);border-radius:8px;padding:10px 16px;background:rgba(255,255,255,.03);opacity:0;transform:translateY(14px);transition:opacity .9s var(--ease) .28s,transform .9s var(--ease) .28s}
+.material-badge.in{opacity:1;transform:none}
+.info-rule{width:0;height:1px;background:linear-gradient(90deg,var(--gold),var(--gold2),transparent);transition:width 1s var(--ease) .3s}
+.info-rule.in{width:80px}
+.product-desc{font-size:15px;font-weight:300;color:var(--ash2);line-height:1.85;opacity:0;transform:translateY(16px);transition:opacity .9s var(--ease) .35s,transform .9s var(--ease) .35s}
+.product-desc.in{opacity:1;transform:none}
+.product-bullets{list-style:none;display:flex;flex-direction:column;gap:10px;opacity:0;transform:translateY(16px);transition:opacity .9s var(--ease) .42s,transform .9s var(--ease) .42s}
+.product-bullets.in{opacity:1;transform:none}
+.product-bullets li{display:flex;align-items:flex-start;gap:10px;font-size:14px;font-weight:400;color:var(--ash2);line-height:1.55}
+.bullet-icon{color:var(--gold);font-size:7px;margin-top:5px;flex-shrink:0}
+.btn-group{display:flex;gap:10px;flex-wrap:wrap;opacity:0;transform:translateY(16px);transition:opacity .9s var(--ease) .5s,transform .9s var(--ease) .5s}
+.btn-group.in{opacity:1;transform:none}
+.btn-primary,.btn-secondary,.btn-ghost{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:15px 28px;font-family:'Quicksand',sans-serif;font-size:13px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;border-radius:50px;border:none;cursor:none;position:relative;overflow:hidden;text-decoration:none;transition:transform .4s var(--ease-back),box-shadow .4s var(--ease),background .3s,color .3s,border-color .3s}
+.btn-primary::before,.btn-secondary::before,.btn-ghost::before{content:'';position:absolute;inset:0;border-radius:inherit;background:linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent);transform:translateX(-100%);transition:transform .55s var(--ease)}
+.btn-primary:hover::before,.btn-secondary:hover::before,.btn-ghost:hover::before{transform:translateX(100%)}
+.btn-primary{background:var(--gold);color:var(--ink)}
+.btn-primary:hover{transform:translateY(-4px) scale(1.02);box-shadow:0 14px 36px rgba(184,147,74,.5);background:var(--gold2)}
+.btn-primary:active{transform:translateY(-1px)}
+.btn-secondary{background:rgba(255,255,255,.05);color:var(--parch);border:1px solid rgba(196,189,179,.25)}
+.btn-secondary:hover{transform:translateY(-4px) scale(1.02);background:rgba(255,255,255,.1);border-color:rgba(196,189,179,.55);box-shadow:0 10px 28px rgba(0,0,0,.35)}
+.btn-ghost{background:transparent;color:var(--ash2);border:1px solid rgba(184,147,74,.2)}
+.btn-ghost:hover{transform:translateY(-4px);background:rgba(184,147,74,.08);border-color:rgba(184,147,74,.45);color:var(--parch)}
+.btn-note{font-size:11px;letter-spacing:.08em;color:var(--ash);opacity:0;transform:translateY(10px);transition:opacity .9s var(--ease) .58s,transform .9s var(--ease) .58s}
+.btn-note.in{opacity:1;transform:none}
+.trust-strip{display:flex;gap:0;flex-wrap:wrap;border:1px solid var(--border);border-radius:10px;overflow:hidden;opacity:0;transform:translateY(14px);transition:opacity .9s var(--ease) .64s,transform .9s var(--ease) .64s}
+.trust-strip.in{opacity:1;transform:none}
+.trust-item{flex:1;min-width:130px;padding:16px 12px;background:var(--ink2);text-align:center;position:relative;transition:background .3s}
+.trust-item:not(:last-child)::after{content:'';position:absolute;top:20%;right:0;height:60%;width:1px;background:var(--border)}
+.trust-item:hover{background:rgba(184,147,74,.06)}
+.trust-icon{font-size:18px;color:var(--gold);display:block;margin-bottom:4px}
+.trust-label{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ash2)}
+.spark{position:fixed;width:4px;height:4px;border-radius:50%;background:var(--gold);pointer-events:none;z-index:9999;animation:sparkFly var(--dur,.6s) var(--ease) forwards}
+@keyframes sparkFly{0%{opacity:1;transform:translate(0,0) scale(1)}100%{opacity:0;transform:translate(var(--tx,20px),var(--ty,-40px)) scale(0)}}
+.site-footer{background:var(--ink);border-top:1px solid var(--border);padding:44px 48px;position:relative;z-index:2}
+.footer-content{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.site-footer p{color:var(--ash);font-size:12px;letter-spacing:.08em}
+.social-links{display:flex;gap:20px;align-items:center}
+.social-links a{color:rgba(196,189,179,.5);transition:color .3s;display:flex;align-items:center}
+.social-links a:hover{color:rgba(196,189,179,.9)}
+@media(max-width:560px){.site-footer{padding:36px 20px}.btn-group{flex-direction:column}.trust-strip{flex-direction:column}.trust-item:not(:last-child)::after{display:none}}
+</style>
 </head>
 <body>
-<!-- HEADER -->
+
+<canvas id="gl-canvas" aria-hidden="true"></canvas>
+<div class="noise" aria-hidden="true"></div>
+<div id="cur-dot"  aria-hidden="true"></div>
+<div id="cur-ring" aria-hidden="true"></div>
+
 <header class="site-header" id="siteHeader">
   <div class="header-inner">
-    <a href="index.html">
-      <img src="images/mozartlaserlogo.png" alt="MozartLaser" class="logo">
-    </a>
-    <nav class="main-nav">
+    <a href="index.html"><img src="images/mozartlaserlogo.png" alt="Mozart Laser" class="logo"></a>
+    <nav class="main-nav" aria-label="Main navigation">
       <ul>
-        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="index.html">Home</a></li>
         <li><a href="products.html">Products</a></li>
         <li><a href="create.html">Create</a></li>
-		   <li><a href="blog.html">Blog</a></li>
+        <li><a href="blog.html">Blog</a></li>
         <li><a href="About.html">About</a></li>
       </ul>
     </nav>
-    <div class="hamburger"><span></span><span></span><span></span></div>
-  </div>
-  <div class="cart-icon" id="cart-icon">
-    <img src="images/cart-icon.png" alt="Cart">
-    <span id="cart-count">0</span>
+    <div class="header-right">
+      <div class="cart-icon" id="cart-icon" role="button" tabindex="0" aria-label="Open cart">
+        <img src="images/cart-icon.png" alt="Cart">
+        <span id="cart-count">0</span>
+      </div>
+      <div class="hamburger" role="button" tabindex="0" aria-label="Open navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
   </div>
 </header>
 
-<!-- CART PANEL -->
-<div class="cart-panel" id="cart-panel">
+<div class="cart-panel" id="cart-panel" aria-label="Shopping cart">
   <h3>Shopping Cart</h3>
   <ul id="cart-items"></ul>
   <p>Total: $<span id="cart-total">0.00</span></p>
@@ -85,154 +147,210 @@
   <button id="close-cart">Close</button>
 </div>
 
-  <div class="product-container">
-    <!-- Image Section -->
-    <div class="product-images" id="imageContainer">
-      <img id="product-img" src="Product Images/Train/Front-view.jpg" alt="Product Image - train engraving">
-      <div class="dots">
-        <span class="dot active" data-index="0"></span>
-        <span class="dot" data-index="1"></span>
-        <span class="dot" data-index="2"></span>
+<div class="pw">
+  <div class="product-page">
+    <div class="img-panel">
+      <div class="img-stage" id="imageContainer">
+        
+        <img id="product-img" src="Product Images/Train/Front-view.png" alt="Detailed Classic Train Engraving">
       </div>
+      <div class="img-thumbs" id="imgThumbs"><img src="Product Images/Train/Front-view.png" class="thumb active" data-index="0" alt="View 1" loading="lazy"><img src="Product Images/Train/Side-view.JPG" class="thumb " data-index="1" alt="View 2" loading="lazy"><img src="Product Images/Train/Display.JPG" class="thumb " data-index="2" alt="View 3" loading="lazy"></div>
     </div>
-
-    <!-- Info Section -->
-    <div class="product-info">
-      <h1>Detailed Classic Train Engraving</h1>
-		<h3>$10.99</h3>
-      <p>This engraved train plaque has a quiet kind of presence to it. The locomotive is drawn with incredible precision—every bolt, pipe, and curve is there—but it doesn’t feel cluttered. The lines are clean enough that your eye can actually follow the shape of the engine, which matters a lot on something this size. Up close, you notice the craftsmanship. From a few feet away, it just looks solid and striking.<br>
-
-The natural wood plays a big role in why it works so well. The grain shows through the engraving just enough to give it warmth, so it doesn’t feel cold or overly mechanical. Each plaque ends up a little different because of that, which gives it more character than a printed piece ever could. The rounded corners and smooth finish tie it together so it feels finished and intentional, not rough or experimental.
-<br>
-<strong>Perfect for:</strong>
-<br>
-* People who genuinely like trains, not just as a theme but as a piece of history<br>
-* Anyone into machinery, engineering, or detailed mechanical design<br>
-* Offices, workshops, or rooms with a rustic or industrial feel<br>
-* Gifts that feel thoughtful and a step above something generic</p>
-
-      <div class="buttons">
-		 <button class="customize-btn" id="customizeThis" data-product="Detailed Classic Train Engraving">
-  Customize This Product
-</button>
-        <button class="buy-now" id="buyNow" data-name="Detailed Classic Train Engraving" data-price="10.99"data-price-id="price_1TT7OK2c5eOyE1cRDJAl5UVE">Buy Now</button>
-        <button class="add-cart" id="addToCart">Add to Cart</button>
+    <div class="info-panel" id="infoPanel">
+      <div class="product-tags"><span class="tag">Art</span></div>
+      <h1 class="product-title">Detailed Classic Train Engraving</h1>
+      <div class="price-row"><span class="price-current">$10.99</span></div>
+      <div class="material-badge">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Poplar wood · Hand-finished · ~8x10 in
+      </div>
+      <div class="info-rule"></div>
+      <p class="product-desc">This engraved train plaque has a quiet kind of presence. The locomotive is drawn with incredible precision — every bolt, pipe, and curve rendered clearly without feeling cluttered. The natural wood grain shows through the engraving just enough to give it warmth. Each plaque ends up a little different because of that.</p>
+      <ul class="product-bullets"><li><span class="bullet-icon">&#9670;</span>Highly precise locomotive — every bolt and pipe visible</li><li><span class="bullet-icon">&#9670;</span>Natural poplar grain adds warmth to every piece</li><li><span class="bullet-icon">&#9670;</span>Ideal for offices, workshops, or rooms with a rustic feel</li></ul>
+      <div class="btn-group"><button class="btn-primary" id="buyNow" data-name="Train Plaque" data-price="10.99" data-price-id="price_1TT7OK2c5eOyE1cRDJAl5UVE">Buy Now</button><button class="btn-secondary" id="addToCart">Add to Cart</button><button class="btn-ghost" id="customizeThis">Customize</button></div><p class="btn-note">Free personalization &middot; Design preview &middot; Ships in 3&ndash;5 days</p>
+      <div class="trust-strip">
+        <div class="trust-item"><span class="trust-icon">&#10022;</span><span class="trust-label">Hand-finished in CA</span></div>
+        <div class="trust-item"><span class="trust-icon">&#9676;</span><span class="trust-label">Design preview</span></div>
+        <div class="trust-item"><span class="trust-icon">&#8634;</span><span class="trust-label">Satisfaction guarantee</span></div>
+        <div class="trust-item"><span class="trust-icon">&#10230;</span><span class="trust-label">Ships 3&ndash;5 days</span></div>
       </div>
     </div>
   </div>
-
-  <script>
-    const images = ["Product Images/Train/Front-view.jpg", "Product Images/Train/Side-view.JPG", "Product Images/Train/Display.JPG"];
-    const imgEl = document.getElementById('product-img');
-    const dots = document.querySelectorAll('.dot');
-    const imageContainer = document.getElementById('imageContainer');
-    let currentIndex = 0;
-
-    // --- Dot click handling ---
-    dots.forEach((dot, index) => {
-      dot.addEventListener('click', () => {
-        changeImage(index);
-      });
-    });
-
-    // --- Function to change image ---
-    function changeImage(index) {
-      imgEl.src = images[index];
-      document.querySelector('.dot.active').classList.remove('active');
-      dots[index].classList.add('active');
-      currentIndex = index;
-    }
-
-    // --- Swipe gesture support ---
-    let startX = 0;
-
-    imageContainer.addEventListener('touchstart', (e) => {
-      startX = e.touches[0].clientX;
-    });
-
-    imageContainer.addEventListener('touchend', (e) => {
-      const endX = e.changedTouches[0].clientX;
-      const diff = startX - endX;
-
-      if (Math.abs(diff) > 50) {
-        if (diff > 0) {
-          // Swipe left
-          currentIndex = (currentIndex + 1) % images.length;
-        } else {
-          // Swipe right
-          currentIndex = (currentIndex - 1 + images.length) % images.length;
-        }
-        changeImage(currentIndex);
-      }
-    });
-
-    // --- Add to Cart ---
-   document.getElementById("addToCart").addEventListener("click", () => {
-  const button = document.getElementById('buyNow');
-  addToCart(
-    button.dataset.name,
-    parseFloat(button.dataset.price),
-    button.dataset.priceId
-  );
-});
-
-
-    // --- Buy Now ---
-   document.getElementById('buyNow').addEventListener('click', async () => {
-  const button = document.getElementById('buyNow');
-  const name = button.dataset.name;
-  const price = parseFloat(button.dataset.price);
-	   const priceId = button.dataset.priceId;
-
-  if (!name || isNaN(price)) {
-    alert("This product is not properly configured.");
-    return;
-  }
-
-  // Create a temporary cart with just this product
-const singleItemCart = [{ name, priceId, quantity: 1 }];
-
-  try {
-    const response = await fetch("https://mozart-backend.onrender.com/create-checkout-session", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ items: singleItemCart })
-    });
-
-    const session = await response.json();
-
-    if (session.url) {
-      window.location.href = session.url; // go straight to Stripe checkout
-    } else {
-      console.error("Stripe session error:", session);
-      alert("Checkout failed. Please try again.");
-    }
-  } catch (error) {
-    console.error("Checkout error:", error);
-    alert("Something went wrong during checkout.");
-  }
-});
-  </script>
-	<script>
-document.getElementById("customizeThis").addEventListener("click", () => {
-  const productName = "Detailed Classic Train Engraving";
-  window.location.href = `create.html?mode=template&product=${encodeURIComponent(productName)}&step=2`;
-});
-</script>
-<!-- FOOTER -->
-<footer class="site-footer">
-  <div class="footer-content">
-    <div class="social-links">
-      <a href="https://www.facebook.com/profile.php?id=61585614995027" target="_blank" aria-label="Facebook"><img src="images/facebook-icon.png" alt="Facebook"></a>
-	 <a href="https://instagram.com/mozartlaser" target="_blank" aria-label="Instagram"><img src="images/instagram-icon.png" alt="Instagram"></a>
-      <a href="https://X.com/mozartlaser" target="_blank" aria-label="X"><img src="images/X-icon.png" alt="X"></a>
-     
+  <footer class="site-footer">
+    <div class="footer-content">
+      <div class="social-links">
+        <a href="https://www.facebook.com/profile.php?id=61585614995027" target="_blank" rel="noopener" aria-label="Facebook"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+        <a href="https://instagram.com/mozartlaser" target="_blank" rel="noopener" aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+        <a href="https://X.com/mozartlaser" target="_blank" rel="noopener" aria-label="X"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+      </div>
+      <p>&copy; 2026 Mozart Laser. All rights reserved.</p>
     </div>
-    <p>&copy; 2026 Mozart Laser. All rights reserved.</p>
-  </div>
-</footer>
+  </footer>
+</div>
+
 <script src="js/navbar.js"></script>
 <script src="js/cart.js"></script>
+<script>
+/* WEBGL */
+(function() {
+  var canvas = document.getElementById('gl-canvas');
+  var gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+  if (!gl) { canvas.style.display = 'none'; return; }
+  var W, H;
+  function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; gl.viewport(0,0,W,H); }
+  resize();
+  window.addEventListener('resize', resize, {passive:true});
+  var VS = 'attribute vec3 aPos;attribute float aSize;attribute float aAlpha;uniform vec2 uMouse;uniform float uTime;varying float vAlpha;varying float vDepth;void main(){float z=aPos.z;float px=aPos.x+uMouse.x*(1.0-z)*0.28;float py=aPos.y+uMouse.y*(1.0-z)*0.2;float fov=1.8;float p=fov/(fov+z);gl_Position=vec4(px*p,py*p,0.0,1.0);gl_PointSize=aSize*p*2.2;vAlpha=aAlpha*p*(0.5+0.5*sin(uTime*0.9+aPos.x*4.0));vDepth=p;}';
+  var FS = 'precision mediump float;varying float vAlpha;varying float vDepth;void main(){vec2 c=gl_PointCoord-0.5;float d=length(c)*2.0;float a=vAlpha*smoothstep(1.0,0.05,d);vec3 col=mix(vec3(0.72,0.58,0.29),vec3(0.88,0.74,0.42),vDepth);gl_FragColor=vec4(col,a*0.6);}';
+  function mkS(t,s){ var x=gl.createShader(t); gl.shaderSource(x,s); gl.compileShader(x); return x; }
+  var prog = gl.createProgram();
+  gl.attachShader(prog, mkS(gl.VERTEX_SHADER, VS));
+  gl.attachShader(prog, mkS(gl.FRAGMENT_SHADER, FS));
+  gl.linkProgram(prog); gl.useProgram(prog);
+  var N = window.innerWidth < 768 ? 80 : 180;
+  var pos=new Float32Array(N*3), sz=new Float32Array(N), al=new Float32Array(N);
+  for (var i=0;i<N;i++) { pos[i*3]=(Math.random()-.5)*2.2; pos[i*3+1]=(Math.random()-.5)*2.4; pos[i*3+2]=Math.random()*2; sz[i]=Math.random()*3+0.8; al[i]=Math.random()*.4+.06; }
+  function mkB(d) { var b=gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER,b); gl.bufferData(gl.ARRAY_BUFFER,d,gl.STATIC_DRAW); return b; }
+  function mkA(n,b,s) { var l=gl.getAttribLocation(prog,n); gl.bindBuffer(gl.ARRAY_BUFFER,b); gl.enableVertexAttribArray(l); gl.vertexAttribPointer(l,s,gl.FLOAT,false,0,0); }
+  mkA('aPos',mkB(pos),3); mkA('aSize',mkB(sz),1); mkA('aAlpha',mkB(al),1);
+  var uM=gl.getUniformLocation(prog,'uMouse'), uT=gl.getUniformLocation(prog,'uTime');
+  gl.enable(gl.BLEND); gl.blendFunc(gl.SRC_ALPHA,gl.ONE);
+  var mx=0,my=0,tmx=0,tmy=0,t=0;
+  document.addEventListener('mousemove',function(e){mx=(e.clientX/W-.5)*2;my=-(e.clientY/H-.5)*2;},{passive:true});
+  (function loop() { requestAnimationFrame(loop); t+=.006; tmx+=(mx-tmx)*.035; tmy+=(my-tmy)*.035; gl.clearColor(0,0,0,0); gl.clear(gl.COLOR_BUFFER_BIT); gl.uniform2f(uM,tmx,tmy); gl.uniform1f(uT,t); gl.drawArrays(gl.POINTS,0,N); })();
+})();
 
+/* CURSOR */
+(function() {
+  var dot=document.getElementById('cur-dot'), ring=document.getElementById('cur-ring');
+  if (!dot||!ring) return;
+  var mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;dot.style.left=mx+'px';dot.style.top=my+'px';},{passive:true});
+  (function loop(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop);})();
+  document.querySelectorAll('.img-stage,.trust-item').forEach(function(el){
+    el.addEventListener('mouseenter',function(){document.body.classList.add('c-hover');});
+    el.addEventListener('mouseleave',function(){document.body.classList.remove('c-hover');});
+  });
+  document.querySelectorAll('button,.btn-primary,.btn-secondary,.btn-ghost,.thumb').forEach(function(el){
+    el.addEventListener('mouseenter',function(){document.body.classList.remove('c-hover');document.body.classList.add('c-btn');});
+    el.addEventListener('mouseleave',function(){document.body.classList.remove('c-btn');});
+  });
+})();
+
+  /* IMAGE GALLERY */
+  (function() {
+    var images = ["Product Images/Train/Front-view.png", "Product Images/Train/Side-view.JPG", "Product Images/Train/Display.JPG"];
+    var imgEl  = document.getElementById('product-img');
+    var thumbs = document.querySelectorAll('.thumb');
+    var stage  = document.getElementById('imageContainer');
+    var idx    = 0;
+
+    function changeImage(i) {
+      imgEl.style.opacity = '0';
+      setTimeout(function() {
+        imgEl.src = images[i];
+        imgEl.style.opacity = '1';
+      }, 180);
+      thumbs.forEach(function(t, n) { t.classList.toggle('active', n === i); });
+      idx = i;
+    }
+
+    thumbs.forEach(function(thumb, i) {
+      thumb.addEventListener('click', function() { changeImage(i); });
+    });
+
+    /* Swipe */
+    var startX = 0;
+    stage.addEventListener('touchstart', function(e) { startX = e.touches[0].clientX; }, {passive: true});
+    stage.addEventListener('touchend', function(e) {
+      var diff = startX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 50) {
+        idx = diff > 0
+          ? (idx + 1) % images.length
+          : (idx - 1 + images.length) % images.length;
+        changeImage(idx);
+      }
+    });
+  })();
+
+
+/* REVEAL */
+(function() {
+  var panel = document.getElementById('infoPanel');
+  if (!panel) return;
+  setTimeout(function() {
+    panel.querySelectorAll('.product-title,.price-row,.material-badge,.info-rule,.product-desc,.product-bullets,.btn-group,.btn-note,.trust-strip').forEach(function(el) {
+      el.classList.add('in');
+    });
+  }, 120);
+})();
+
+/* IMAGE PARALLAX */
+(function() {
+  var img=document.getElementById('product-img');
+  var stage=document.getElementById('imageContainer');
+  if (!img||!stage) return;
+  stage.addEventListener('mousemove',function(e){
+    var r=stage.getBoundingClientRect();
+    var x=((e.clientX-r.left)/r.width-0.5)*8;
+    var y=((e.clientY-r.top)/r.height-0.5)*8;
+    img.style.transform='scale(1.04) translate('+x+'px,'+(y-3)+'px)';
+    img.style.transition='transform .12s linear';
+  });
+  stage.addEventListener('mouseleave',function(){
+    img.style.transition='transform .8s var(--ease)';
+    img.style.transform='';
+  });
+})();
+
+/* SPARKS */
+function spawnSparks(x,y) {
+  for (var i=0;i<14;i++) {
+    var s=document.createElement('div'); s.className='spark';
+    var angle=Math.random()*Math.PI*2, dist=30+Math.random()*60;
+    s.style.left=x+'px'; s.style.top=y+'px';
+    s.style.setProperty('--tx',Math.cos(angle)*dist+'px');
+    s.style.setProperty('--ty',Math.sin(angle)*dist+'px');
+    s.style.setProperty('--dur',(.4+Math.random()*.4)+'s');
+    s.style.width=s.style.height=(2+Math.random()*3)+'px';
+    document.body.appendChild(s);
+    s.addEventListener('animationend',function(){this.remove();});
+  }
+}
+
+  /* BUY NOW */
+  document.getElementById('buyNow').addEventListener('click', async function() {
+    var btn = this;
+    var name = btn.dataset.name;
+    var price = parseFloat(btn.dataset.price);
+    var priceId = btn.dataset.priceId;
+    if (!name || isNaN(price)) { alert('Product not configured.'); return; }
+    try {
+      var res = await fetch('https://mozart-backend.onrender.com/create-checkout-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ items: [{ name: name, priceId: priceId, quantity: 1 }] })
+      });
+      var s = await res.json();
+      if (s.url) { window.location.href = s.url; }
+      else { alert('Checkout failed. Please try again.'); }
+    } catch (e) {
+      alert('Something went wrong during checkout.');
+    }
+  });
+
+  /* ADD TO CART */
+  document.getElementById('addToCart').addEventListener('click', function() {
+    var btn = document.getElementById('buyNow');
+    addToCart(btn.dataset.name, parseFloat(btn.dataset.price), btn.dataset.priceId);
+    var r = this.getBoundingClientRect();
+    spawnSparks(r.left + r.width/2, r.top + r.height/2);
+  });
+
+  /* CUSTOMIZE */
+  document.getElementById('customizeThis').addEventListener('click', function() {
+    window.location.href = 'create.html?mode=template&product=Detailed%20Classic%20Train%20Engraving&step=2';
+  });
+</script>
 </body>
 </html>

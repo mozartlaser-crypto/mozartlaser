@@ -78,7 +78,15 @@ document.addEventListener('DOMContentLoaded', () => {
     'Custom Animal Plaque'                               : 24.99,
     'Avalon Bay, Catalina Island Laser Engraved Plaque'  : 19.99,
     'Big Ben Plaque'                                     : 20.99,
-	'Laser Engraved Celtic Cross Wooden Cutting Board': 69.99,
+    'Adventurers Bookmark'                               : 10.99,
+    'Leaf Bookmark'                                      : 15.99,
+    'Historia Bookmark'                                  : 12.99,
+    'Celtic Cross Cutting Board'                         : 72.99,
+    'Tolkien Quote Bookmark'                             : 10.99,
+    'Laser Engraved Celtic Cross Wooden Cutting Board'   : 69.99,
+    'Landmarks of Aviation Coasters'                     : 19.99,
+    'Dragon Coin'                                        : 8.99,
+    'Jane Austen Quote Bookmark'                         : 10.99,
   };
 
   const fullCustomPrices = {
@@ -90,12 +98,6 @@ document.addEventListener('DOMContentLoaded', () => {
     'Custom Leather Wallet'      : 22.99,
   };
 
-  // ─────────────────────────────────────────
-  // Display names for full custom flow
-  // Edit ONLY the values here to rename what
-  // the customer sees in the dropdown — keys
-  // must stay in sync with fullCustomPrices.
-  // ─────────────────────────────────────────
   const fullCustomDisplayNames = {
     'Wooden Plaque (Horizontal)' : 'Custom Horizontal Plaque (10"x8")',
     'Wooden Plaque (Vertical)'   : 'Custom Vertical Plaque (8"x10")',
@@ -106,22 +108,28 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const productImages = {
-    'Wooden Dove Plaque - Psalm 46:5'                   : 'Product Images/Dove with Psalm/Front view.jpg',
-    'Cross Design with Bible Verse'                      : 'Product Images/Rose on Cross/Front view.jpg',
-    'Detailed Classic Train Engraving'                   : 'Product Images/Train/Front-view.jpg',
-    'Wooden Cutting Board with Ship'                     : 'Product Images/Ship/Front view.jpg',
-    'Golden Gate Bridge Plaque'                          : 'Product Images/Golden Gate Bridge/Front view.jpg',
-    'Custom Animal Plaque'                               : 'Product Images/Animal Plaque/Display.JPG',
-    'Avalon Bay, Catalina Island Laser Engraved Plaque'  : 'Product Images/Catalina/Front view.jpg',
-    'Big Ben Plaque'                                     : 'Product Images/Big Ben Plaque/Front view.jpg',
-	 'Laser Engraved Celtic Cross Wooden Cutting Board' : 'Product Images/Celtic Cross/Front view.png',
+    'Wooden Dove Plaque - Psalm 46:5'                   : 'Product Images/Dove with Psalm/Front view.png',
+    'Cross Design with Bible Verse'                      : 'Product Images/Rose on Cross/Front view.png',
+    'Detailed Classic Train Engraving'                   : 'Product Images/Train/Front-view.png',
+    'Wooden Cutting Board with Ship'                     : 'Product Images/Ship/Front view.png',
+    'Golden Gate Bridge Plaque'                          : 'Product Images/Golden Gate Bridge/Front view.png',
+    'Custom Animal Plaque'                               : 'Product Images/Animal Plaque/Front view.png',
+    'Avalon Bay, Catalina Island Laser Engraved Plaque'  : 'Product Images/Catalina/Front view.png',
+    'Adventurers Bookmark'                               : "Product Images/Adventurer's Bookmark/Front view.png",
+    'Leaf Bookmark'                                      : "Product Images/Leaf Bookmark/Front view.png",
+    'Historia Bookmark'                                  : "Product Images/Historia Bookmark/Front view.png",
+    'Tolkien Quote Bookmark'                             : "Product Images/Tolkien bookmark/Front view.png",
+    'Big Ben Plaque'                                     : 'Product Images/Big Ben Plaque/Front view.png',
+    'Celtic Cross Cutting Board'                         : 'Product Images/Celtic Cross/Front view.png',
+    'Landmarks of Aviation Coasters'                     : 'Product Images/Landmarks of Aviation/Front view.png',
+    'Dragon Coin'                                        : 'Product Images/Dragon Coin/Front view.png',
+    'Jane Austen Quote Bookmark'                         : 'Product Images/Jane Austen bookmark/Front view.png',
     'Wooden Plaque (Horizontal)'                         : 'Product Images/Blank Samples/Horizontal.png',
     'Wooden Plaque (Vertical)'                           : 'Product Images/Blank Samples/Vertical.png',
     'Custom Wooden Coin'                                 : 'Product Images/Blank Samples/coin.jpg',
     'Custom Bookmark'                                    : 'Product Images/Blank Samples/Bookmark.png',
     'Wooden Coaster'                                     : 'Product Images/Blank Samples/Coaster.png',
     'Custom Leather Wallet'                              : 'Product Images/Blank Samples/Wallet.jpg',
-	
   };
 
   // ─────────────────────────────────────────
@@ -142,6 +150,20 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       try { fileField.value = ''; } catch(e) {}
     }
+  }
+
+  // ─────────────────────────────────────────
+  // Bulk discount — fully custom flow only
+  // 10% off when qty > 20
+  // ─────────────────────────────────────────
+  const BULK_THRESHOLD = 20;
+  const BULK_DISCOUNT  = 0.10;
+
+  function getEffectivePrice(basePrice, qty, isFullMode) {
+    if (isFullMode && qty >= BULK_THRESHOLD) {
+      return basePrice * (1 - BULK_DISCOUNT);
+    }
+    return basePrice;
   }
 
   // ─────────────────────────────────────────
@@ -167,8 +189,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let html = `<option value="">${placeholder}</option>`;
     for (const id in priceMap) {
-      // value always holds the internal ID; visible text comes from fullCustomDisplayNames
-      // for full mode, or the ID itself for customize mode.
       const label = (isFullMode && fullCustomDisplayNames[id]) ? fullCustomDisplayNames[id] : id;
       html += `<option value="${id.replace(/"/g, '&quot;')}">${escapeHtml(label)}</option>`;
     }
@@ -201,13 +221,22 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function renderTotalPrice() {
+    const isFullMode = modeFull && modeFull.checked;
+
     const elFull = get('total-price');
     if (elFull) {
-      const total = (currentPrice * orderQty).toFixed(2);
-      elFull.textContent = orderQty > 1
-        ? `Total: $${total} (${orderQty} x $${currentPrice.toFixed(2)})`
-        : `Total: $${currentPrice.toFixed(2)}`;
+      const effectivePrice = getEffectivePrice(currentPrice, orderQty, isFullMode);
+      const total = (effectivePrice * orderQty).toFixed(2);
+      const discountNote = (isFullMode && orderQty >= BULK_THRESHOLD)
+        ? ' <span style="color:var(--gold);font-size:.8em;">(10% bulk discount applied)</span>'
+        : '';
+      if (orderQty > 1) {
+        elFull.innerHTML = `Total: $${total} (${orderQty} x $${effectivePrice.toFixed(2)})${discountNote}`;
+      } else {
+        elFull.innerHTML = `Total: $${effectivePrice.toFixed(2)}${discountNote}`;
+      }
     }
+
     const elCustom = get('total-price-custom');
     if (elCustom) {
       const total = (currentPrice * orderQtyCustom).toFixed(2);
@@ -258,6 +287,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // Step 3 summary
   // ─────────────────────────────────────────
   function populateStep3Summary() {
+    const isFullMode = modeFull && modeFull.checked;
+
     const summaryEl = get('summary');
     if (summaryEl) {
       const text     = textField        ? (textField.value.trim()        || 'None') : 'None';
@@ -268,6 +299,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const fileName = (uploadFileInput && uploadFileInput.files && uploadFileInput.files[0])
                         ? uploadFileInput.files[0].name : 'None';
       const notes    = additionalNotes ? (additionalNotes.value.trim() || 'None') : 'None';
+      const effectivePrice = getEffectivePrice(currentPrice, orderQty, isFullMode);
+      const bulkNote = (isFullMode && orderQty >= BULK_THRESHOLD)
+        ? `<p><strong>Bulk Discount:</strong> 10% off (${orderQty} units over ${BULK_THRESHOLD})</p>` : '';
       summaryEl.innerHTML = `
         <p><strong>Product:</strong> ${escapeHtml(selectExisting ? selectExisting.value : '')}</p>
         <p><strong>Engraved Text:</strong> ${escapeHtml(text)}</p>
@@ -277,7 +311,8 @@ document.addEventListener('DOMContentLoaded', () => {
         <p><strong>Uploaded File:</strong> ${escapeHtml(fileName)}</p>
         <p><strong>File Placement:</strong> ${escapeHtml(filePl)}</p>
         <p><strong>Additional Notes:</strong> ${escapeHtml(notes)}</p>
-        <p><strong>Price per item:</strong> $${currentPrice.toFixed(2)}</p>
+        ${bulkNote}
+        <p><strong>Price per item:</strong> $${effectivePrice.toFixed(2)}</p>
       `;
     }
 
@@ -297,10 +332,6 @@ document.addEventListener('DOMContentLoaded', () => {
       `;
     }
 
-    // Reset qty to 1 when entering step 3
-    orderQty = 1; orderQtyCustom = 1;
-    if (orderQtyInput)       orderQtyInput.value       = 1;
-    if (orderQtyInputCustom) orderQtyInputCustom.value = 1;
     renderTotalPrice();
   }
 
@@ -333,7 +364,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const s1 = get('summary');        if (s1) s1.innerHTML = '';
     const s2 = get('summary_custom'); if (s2) s2.innerHTML = '';
 
-    // Reset font dropdown display
     const selDiv = document.querySelector('.custom-select .select-selected');
     if (selDiv) { selDiv.textContent = '-- Select a Font --'; selDiv.style.fontFamily = ''; }
     if (fontSelect) fontSelect.value = '';
@@ -359,6 +389,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (step2Next) {
     step2Next.addEventListener('click', () => {
       if (!validateFullStep2()) return;
+      orderQty = 1; if (orderQtyInput) orderQtyInput.value = 1;
       populateStep3Summary();
       showStep('step3');
     });
@@ -373,6 +404,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (step2CustomNext) {
     step2CustomNext.addEventListener('click', () => {
       if (!validateCustomStep2()) return;
+      orderQtyCustom = 1; if (orderQtyInputCustom) orderQtyInputCustom.value = 1;
       populateStep3Summary();
       showStep('step3_custom');
     });
@@ -390,7 +422,8 @@ document.addEventListener('DOMContentLoaded', () => {
   if (step3CustomBack) step3CustomBack.addEventListener('click', () => showStep('step2_custom'));
 
   // ─────────────────────────────────────────
-  // Quantity buttons
+  // Quantity buttons — re-render on apply so
+  // discount triggers live
   // ─────────────────────────────────────────
   if (qtyApplyBtn) {
     qtyApplyBtn.addEventListener('click', () => {
@@ -398,6 +431,9 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!val || val < 1) { alert('Please enter a valid quantity (1 or more).'); return; }
       orderQty = val;
       renderTotalPrice();
+      // Re-populate summary so bulk note and price update
+      const summaryEl = get('summary');
+      if (summaryEl && summaryEl.innerHTML) populateStep3Summary();
     });
   }
   if (qtyResetBtn) {
@@ -450,12 +486,14 @@ document.addEventListener('DOMContentLoaded', () => {
       if (email !== emailConfirm) { alert('Emails do not match.'); return; }
       if (!validateFullStep2())   return;
 
-      const qty         = orderQty;
-      const totalCost   = (currentPrice * qty).toFixed(2);
-      const textSize    = textSizeSelect ? textSizeSelect.value : 'None';
-      const productName = selectExisting ? selectExisting.value : 'Custom Product';
-      const fileName    = (uploadFileInput && uploadFileInput.files && uploadFileInput.files[0])
-                          ? uploadFileInput.files[0].name : 'None';
+      const qty            = orderQty;
+      const effectivePrice = getEffectivePrice(currentPrice, qty, true);
+      const totalCost      = (effectivePrice * qty).toFixed(2);
+      const textSize       = textSizeSelect ? textSizeSelect.value : 'None';
+      const productName    = selectExisting ? selectExisting.value : 'Custom Product';
+      const fileName       = (uploadFileInput && uploadFileInput.files && uploadFileInput.files[0])
+                             ? uploadFileInput.files[0].name : 'None';
+      const bulkNote       = qty >= BULK_THRESHOLD ? `, Bulk discount: 10%` : '';
       const desc = [
         `Text: ${textField ? textField.value || 'None' : 'None'}`,
         `Font: ${selectedFont || 'None'}`,
@@ -463,7 +501,7 @@ document.addEventListener('DOMContentLoaded', () => {
         `Placement: ${textLocation ? textLocation.value || 'None' : 'None'}`,
         `File: ${fileName}`,
         `File Placement: ${filePlacementInput ? filePlacementInput.value || 'None' : 'None'}`,
-        `Quantity: ${qty} order${qty > 1 ? 's' : ''}`,
+        `Quantity: ${qty} order${qty > 1 ? 's' : ''}${bulkNote}`,
       ].join(', ');
 
       if (window.addToCart) window.addToCart(`${productName} — ${desc}`, parseFloat(totalCost));
@@ -476,7 +514,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (hiddenLocation)      hiddenLocation.value      = textLocation ? textLocation.value : '';
       if (hiddenFilePlacement) hiddenFilePlacement.value = filePlacementInput ? filePlacementInput.value : '';
       if (hiddenAdditionalNotes) hiddenAdditionalNotes.value = additionalNotes ? additionalNotes.value : '';
-      if (hiddenPrice)         hiddenPrice.value         = `$${totalCost} (${qty} x $${currentPrice.toFixed(2)})`;
+      if (hiddenPrice)         hiddenPrice.value         = `$${totalCost} (${qty} x $${effectivePrice.toFixed(2)}${qty >= BULK_THRESHOLD ? ', 10% bulk discount' : ''})`;
       if (hiddenEmail)         hiddenEmail.value         = email;
       if (hiddenName)          hiddenName.value          = name;
       if (hiddenQuantity)      hiddenQuantity.value      = qty;
