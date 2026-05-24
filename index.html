@@ -91,7 +91,7 @@ body.cursor-hover #cursor-ring { width: 58px; height: 58px; border-color: rgba(1
   align-items: center;
   justify-content: center;
   gap: 32px;
-  transition: opacity .9s var(--ease), visibility .9s;
+  transition: opacity 1.2s var(--ease) .1s, visibility 1.2s var(--ease) .1s;
 }
 #loader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
 
@@ -452,7 +452,7 @@ body.cursor-hover #cursor-ring { width: 58px; height: 58px; border-color: rgba(1
   <div class="marquee-inner" id="marqueeInner">
     <span class="marquee-item">Handcrafted in California<span class="marquee-dot"></span></span>
     <span class="marquee-item">Custom Laser Engraving<span class="marquee-dot"></span></span>
-    <span class="marquee-item">Personalization Available<span class="marquee-dot"></span></span>
+    <span class="marquee-item">Free Personalization<span class="marquee-dot"></span></span>
     <span class="marquee-item">Ships in 3–5 Days<span class="marquee-dot"></span></span>
     <span class="marquee-item">Satisfaction Guaranteed<span class="marquee-dot"></span></span>
     <span class="marquee-item">Design Preview Included<span class="marquee-dot"></span></span>
@@ -470,16 +470,15 @@ body.cursor-hover #cursor-ring { width: 58px; height: 58px; border-color: rgba(1
     <a href="products.html" class="products-view-all reveal-up delay-2">View all products →</a>
   </div>
   <div class="products-grid">
-	    <a href="historia_bookmark.html" class="prod-card reveal-up delay-3">
-      <img class="prod-card-img" src="Product Images/Historia Bookmark/Front view.png" alt="Historia Bookmark" loading="lazy">
+    <a href="dragon coin.html" class="prod-card reveal-up delay-5">
+      <img class="prod-card-img" src="Product Images/Dragon Coin/Front view.png" alt="Book Dragon Coin" loading="lazy">
       <div class="prod-card-overlay"></div>
       <div class="prod-card-info">
-        <p class="prod-card-name">Historia Bookmark</p>
-        <p class="prod-card-price">$9.99</p>
+        <p class="prod-card-name">Book Dragon Coin</p>
+        <p class="prod-card-price">$5.99</p>
         <span class="prod-card-cta">View Product</span>
       </div>
     </a>
-   
     <a href="np_coasters.html" class="prod-card reveal-up delay-1">
       <img class="prod-card-img" src="Product Images/NP Coasters/Front view.png" alt="National Parks Coasters Set" loading="lazy">
       <div class="prod-card-overlay"></div>
@@ -507,22 +506,21 @@ body.cursor-hover #cursor-ring { width: 58px; height: 58px; border-color: rgba(1
         <span class="prod-card-cta">View Product</span>
       </div>
     </a>
-  
+    <a href="historia_bookmark.html" class="prod-card reveal-up delay-3">
+      <img class="prod-card-img" src="Product Images/Historia Bookmark/Front view.png" alt="Historia Bookmark" loading="lazy">
+      <div class="prod-card-overlay"></div>
+      <div class="prod-card-info">
+        <p class="prod-card-name">Historia Bookmark</p>
+        <p class="prod-card-price">$9.99</p>
+        <span class="prod-card-cta">View Product</span>
+      </div>
+    </a>
     <a href="adventurer's bookmark.html" class="prod-card reveal-up delay-4">
       <img class="prod-card-img" src="Product Images/Adventurer's Bookmark/Front view.png" alt="Adventurer's Bookmark" loading="lazy">
       <div class="prod-card-overlay"></div>
       <div class="prod-card-info">
         <p class="prod-card-name">Adventurer's Bookmark</p>
         <p class="prod-card-price">$7.99</p>
-        <span class="prod-card-cta">View Product</span>
-      </div>
-    </a>
-	   <a href="dragon coin.html" class="prod-card reveal-up delay-5">
-      <img class="prod-card-img" src="Product Images/Dragon Coin/Front view.png" alt="Book Dragon Coin" loading="lazy">
-      <div class="prod-card-overlay"></div>
-      <div class="prod-card-info">
-        <p class="prod-card-name">Book Dragon Coin</p>
-        <p class="prod-card-price">$5.99</p>
         <span class="prod-card-cta">View Product</span>
       </div>
     </a>
@@ -631,7 +629,7 @@ body.cursor-hover #cursor-ring { width: 58px; height: 58px; border-color: rgba(1
 <section id="cta">
   <div class="cta-inner">
     <h2 class="cta-heading reveal-up">Ready to<br><em>Create?</em></h2>
-    <p class="cta-sub reveal-up delay-1">Tell us your idea — we handle everything else. Custom gifts starting at $5.99. Personalization Available on most products.</p>
+    <p class="cta-sub reveal-up delay-1">Tell us your idea — we handle everything else. Custom gifts starting at $5.99. Free personalization on every order.</p>
     <div class="reveal-up delay-2"><a href="create.html" class="btn-primary-dark">Start Your Custom Order</a></div>
     <p class="cta-reassurance reveal-up delay-3">Or <a href="products.html">browse ready-made products</a></p>
   </div>
@@ -721,95 +719,159 @@ var LOGO_DATA_URI = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAdUAAAB/CAYAA
      6. Short pause after sweep, then fade loader & show hero.
    ============================================================ */
 (function () {
-  var loader  = document.getElementById('loader');
-  var canvas  = document.getElementById('loader-canvas');
-  var fillBar = document.getElementById('loader-fill');
+  var loader      = document.getElementById('loader');
+  var canvas      = document.getElementById('loader-canvas');
+  var fillBar     = document.getElementById('loader-fill');
+  var heroContent = document.getElementById('heroContent');
   if (!loader || !canvas) return;
 
   var ctx = canvas.getContext('2d');
-  var W=0, H=0;
-  var DURATION = 1600;  /* ms — feel free to adjust */
-  var GLOW     = 36;    /* px — gold glow spread at the edge */
+  var W=0, H=0, PAD=0;
+
+  /* Timing */
+  var DURATION    = 1800;  /* sweep duration ms */
+  var HOLD        = 900;   /* pause at full logo before fading out */
+  var GLOW_W      = 52;    /* horizontal spread of the glow column */
+  var GLOW_H_PAD  = 40;    /* vertical bleed above/below logo in glow */
+
   var startTime = null;
-  var heroContent = document.getElementById('heroContent');
+  var phase = 'sweep'; /* sweep → hold → done */
 
   function dismiss() {
     loader.classList.add('hidden');
     if (heroContent) heroContent.classList.add('loaded');
   }
 
-  /* Safety net */
-  var safety = setTimeout(dismiss, 5500);
+  var safety = setTimeout(dismiss, 6000);
 
-  function easeInOut(t) {
-    return t < 0.5 ? 2*t*t : -1+(4-2*t)*t;
-  }
+  function easeInOut(t) { return t<0.5 ? 2*t*t : -1+(4-2*t)*t; }
 
   function frame(now) {
     if (!startTime) startTime = now;
-    var t = Math.min((now - startTime) / DURATION, 1);
-    var e = easeInOut(t);
+    var elapsed = now - startTime;
 
-    fillBar.style.width = (e * 100) + '%';
+    if (phase === 'sweep') {
+      var t = Math.min(elapsed / DURATION, 1);
+      var e = easeInOut(t);
+      fillBar.style.width = (e * 100) + '%';
+      var revealX = e * W;
 
-    var revealX = e * W;
+      /* Clear full padded canvas */
+      ctx.clearRect(0, 0, W, H + PAD*2);
 
-    ctx.clearRect(0, 0, W, H);
-
-    /* 1 — ghost (the whole logo, very faint) */
-    ctx.save();
-    ctx.globalAlpha = 0.07;
-    ctx.drawImage(img, 0, 0, W, H);
-    ctx.restore();
-
-    /* 2 — revealed portion, fully opaque, clipped left→right */
-    if (revealX > 0) {
+      /* 1 — ghost logo (full width, very faint) */
       ctx.save();
-      ctx.beginPath();
-      ctx.rect(0, 0, revealX, H);
-      ctx.clip();
-      ctx.globalAlpha = 1;
-      ctx.drawImage(img, 0, 0, W, H);
+      ctx.globalAlpha = 0.06;
+      ctx.drawImage(img, 0, PAD, W, H);
       ctx.restore();
-    }
 
-    /* 3 — gold glow at sweep edge */
-    if (revealX > 1 && revealX < W - 1) {
-      var g = ctx.createLinearGradient(revealX - GLOW, 0, revealX + GLOW * 0.3, 0);
-      g.addColorStop(0,    'rgba(184,147,74,0)');
-      g.addColorStop(0.4,  'rgba(200,160,80,0.7)');
-      g.addColorStop(0.75, 'rgba(220,175,90,0.3)');
-      g.addColorStop(1,    'rgba(184,147,74,0)');
-      ctx.save();
-      ctx.globalCompositeOperation = 'lighter';
-      ctx.fillStyle = g;
-      ctx.fillRect(revealX - GLOW, 0, GLOW * 1.35, H);
-      ctx.restore();
-    }
+      /* 2 — revealed portion clipped left→right */
+      if (revealX > 0) {
+        ctx.save();
+        ctx.beginPath();
+        ctx.rect(0, 0, revealX, H + PAD*2);
+        ctx.clip();
+        ctx.globalAlpha = 1;
+        ctx.drawImage(img, 0, PAD, W, H);
+        ctx.restore();
+      }
 
-    if (t < 1) {
-      requestAnimationFrame(frame);
-    } else {
-      clearTimeout(safety);
-      setTimeout(dismiss, 300);
+      /* 3 — brush stroke glow
+             Rendered as a grid of small pixels so we can apply both
+             horizontal and vertical falloff independently — giving a
+             true oval/brush shape with no hard edges anywhere.
+             We draw it onto an offscreen canvas then composite. */
+      if (revealX > 1 && revealX < W + GLOW_W * 2) {
+        var cx   = revealX - GLOW_W * 0.15;
+        var cy   = (H + PAD * 2) / 2;
+        var canH = H + PAD * 2;
+
+        /* Build offscreen once per frame — small so it's fast */
+        var off = document.createElement('canvas');
+        var OW  = Math.ceil(GLOW_W * 2.4);
+        var OH  = canH;
+        off.width  = OW;
+        off.height = OH;
+        var octx = off.getContext('2d');
+        var id   = octx.createImageData(OW, OH);
+        var d    = id.data;
+
+        for (var py = 0; py < OH; py++) {
+          /* Vertical falloff: 1 at centre, 0 at top/bottom — smooth cosine */
+          var vy = (py - cy) / (cy * 0.92);   /* normalised -1..1 */
+          var va = Math.max(0, 1 - vy * vy);  /* parabolic, soft ends */
+          va = va * va;                         /* square for extra softness */
+
+          for (var px = 0; px < OW; px++) {
+            /* Horizontal falloff: peaked just left of centre, fades both ways */
+            var vx = (px / OW);               /* 0..1 across the strip */
+            var ha;
+            if (vx < 0.45) {
+              ha = vx / 0.45;                  /* ramp up */
+            } else {
+              ha = Math.max(0, 1 - (vx - 0.45) / 0.55); /* ramp down */
+            }
+            ha = ha * ha * 0.72;               /* peak opacity */
+
+            var alpha = va * ha;
+            var idx = (py * OW + px) * 4;
+            d[idx]     = 218;   /* R gold */
+            d[idx + 1] = 174;   /* G */
+            d[idx + 2] = 88;    /* B */
+            d[idx + 3] = Math.round(alpha * 255);
+          }
+        }
+        octx.putImageData(id, 0, 0);
+
+        ctx.save();
+        ctx.globalCompositeOperation = 'lighter';
+        ctx.drawImage(off, cx - GLOW_W * 1.1, 0);
+        ctx.restore();
+      }
+
+      if (t >= 1) {
+        /* Sweep done — hold the completed logo */
+        phase = 'hold';
+        startTime = now;
+        requestAnimationFrame(frame);
+      } else {
+        requestAnimationFrame(frame);
+      }
+
+    } else if (phase === 'hold') {
+      /* Draw static completed logo during hold, then fade loader out */
+      ctx.clearRect(0, 0, W, H + PAD*2);
+
+      if (elapsed < HOLD) {
+        /* Full opacity hold */
+        ctx.globalAlpha = 1;
+        ctx.drawImage(img, 0, PAD, W, H);
+        requestAnimationFrame(frame);
+      } else {
+        /* Fade out the entire loader via its CSS transition —
+           just add .hidden which triggers opacity:0 + visibility:hidden */
+        clearTimeout(safety);
+        dismiss();
+      }
     }
   }
 
   var img = new Image();
   img.onload = function () {
-    var maxW = Math.min(380, window.innerWidth * 0.78);
+    var maxW  = Math.min(380, window.innerWidth * 0.78);
     var scale = maxW / img.naturalWidth;
-    W = Math.round(img.naturalWidth  * scale);
-    H = Math.round(img.naturalHeight * scale);
-    canvas.width  = W;
-    canvas.height = H;
-    canvas.style.width  = W + 'px';
-    canvas.style.height = H + 'px';
-    /* Small delay so page has painted once before we start */
-    setTimeout(function() { requestAnimationFrame(frame); }, 80);
+    W   = Math.round(img.naturalWidth  * scale);
+    H   = Math.round(img.naturalHeight * scale);
+    PAD = Math.round(H * 0.18); /* vertical breathing room so glow isn't clipped */
+
+    canvas.width         = W;
+    canvas.height        = H + PAD * 2;
+    canvas.style.width   = W + 'px';
+    canvas.style.height  = (H + PAD * 2) + 'px';
+
+    setTimeout(function () { requestAnimationFrame(frame); }, 120);
   };
   img.onerror = function () {
-    /* Fallback: skip canvas, show text, run bar */
     canvas.style.display = 'none';
     var fb = document.createElement('div');
     fb.style.cssText = 'font-family:"Cormorant Garamond",serif;font-size:32px;font-weight:300;letter-spacing:0.2em;color:#f5f1eb;text-transform:uppercase;';
@@ -817,11 +879,10 @@ var LOGO_DATA_URI = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAdUAAAB/CAYAA
     loader.insertBefore(fb, canvas.nextSibling);
     var p = 0;
     (function tick(){
-      p += Math.random()*16+5;
-      if (p>100) p=100;
-      fillBar.style.width=p+'%';
+      p += Math.random()*16+5; if(p>100) p=100;
+      fillBar.style.width = p + '%';
       if(p<100) setTimeout(tick, 70+Math.random()*50);
-      else { clearTimeout(safety); setTimeout(dismiss,300); }
+      else { clearTimeout(safety); setTimeout(dismiss, 900); }
     })();
   };
   img.src = LOGO_DATA_URI;
