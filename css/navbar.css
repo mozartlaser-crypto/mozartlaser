@@ -317,7 +317,7 @@
    ============================================================ */
 .cart-panel {
   position: fixed;
-  top: 0; right: -360px;
+  top: 0; right: 0;
   width: 340px;
   height: 100%;
   background: #131210;
@@ -328,10 +328,14 @@
   overflow-y: auto;
   font-family: 'Quicksand', sans-serif;
   color: #f5f1eb;
-  transition: right 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  /* Use transform instead of right — GPU composited, no layout recalc.
+     This fixes Safari desktop freeze before transition starts. */
+  transform: translateX(100%);
+  will-change: transform;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.cart-panel.show { right: 0; }
+.cart-panel.show { transform: translateX(0); }
 
 .cart-panel h3 {
   font-family: 'Cormorant Garamond', serif;
