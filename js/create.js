@@ -96,6 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
     'Custom Bookmark'            : 10.99,
     'Wooden Coaster'             : 6.99,
     'Custom Leather Wallet'      : 22.99,
+	 'Custom Slate Coaster': 12.99,
   };
 
   const fullCustomDisplayNames = {
@@ -105,6 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
     'Custom Bookmark'            : 'Custom Bookmark (6"x2")',
     'Wooden Coaster'             : 'Custom Coaster (4"x4")',
     'Custom Leather Wallet'      : 'Custom Leather Wallet',
+	  'Custom Slate Coaster': 'Custom Slate Coaster (4"x4")',
   };
 
   const productImages = {
@@ -130,6 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
     'Custom Bookmark'                                    : 'Product Images/Blank Samples/Bookmark.png',
     'Wooden Coaster'                                     : 'Product Images/Blank Samples/Coaster.png',
     'Custom Leather Wallet'                              : 'Product Images/Blank Samples/Wallet.jpg',
+	  'Custom Slate Coaster': 'Product Images/Blank Samples/1slatedesign.png',
   };
 
   // ─────────────────────────────────────────
