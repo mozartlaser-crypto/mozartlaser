@@ -917,13 +917,29 @@ var LOGO_DATA_URI = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAdUAAAB/CAYAA
   var pts = new THREE.Points(geo, mat);
   scene.add(pts);
   var mx=0,my=0,tx=0,ty=0,t=0;
+  var gx=0,gy=0,gyroActive=false;
 
-  /* Detect touch-primary devices — these use gyro, not mouse */
+  /* ── DIAGNOSTIC OVERLAY (mobile only) ──────────────────────────────
+     Shows permission state and live gyro values so you can see
+     exactly what iOS is doing. Remove once confirmed working.
+  ─────────────────────────────────────────────────────────────────── */
   var isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+  var dbg, dbgLog;
+  if (isTouch) {
+    dbg = document.createElement('div');
+    dbg.style.cssText = [
+      'position:fixed','bottom:120px','left:50%','transform:translateX(-50%)',
+      'z-index:99999','background:rgba(0,0,0,.85)','color:#b8934a',
+      'font:12px/1.6 monospace','padding:12px 16px','border-radius:8px',
+      'border:1px solid #b8934a','max-width:90vw','text-align:center',
+      'pointer-events:none'
+    ].join(';');
+    document.body.appendChild(dbg);
+    dbgLog = function(msg){ dbg.innerHTML = msg; };
+    dbgLog('Gyro: checking…');
+  }
 
-  /* Desktop only: mouse parallax.
-     Skipped on touch devices because mobile browsers fire mousemove
-     on drag, which fights with the gyroscope. */
+  /* Desktop: mouse parallax (skipped on touch to avoid drag interference) */
   if (!isTouch) {
     document.addEventListener('mousemove', function(e){
       mx = (e.clientX / window.innerWidth  - 0.5) * 2;
@@ -931,38 +947,60 @@ var LOGO_DATA_URI = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAdUAAAB/CAYAA
     });
   }
 
-  /* Mobile: gyroscope parallax
-     We keep raw gyro values in gx/gy and smooth them each animation
-     frame so the camera glide matches the existing lerp feel exactly. */
-  var gx = 0, gy = 0;          /* raw gyro targets */
-  var gyroActive = false;
-
+  /* Mobile: gyroscope via explicit button (most reliable on iOS) */
   function enableGyro() {
     gyroActive = true;
-    window.addEventListener('deviceorientation', function(e) {
-      var g = e.gamma || 0;   /* left/right tilt  –90…+90  */
-      var b = e.beta  || 0;   /* forward/back tilt  0…180  */
-
-      /* Divide by 25 (was 45) for a noticeably stronger effect.
-         Subtract 70 from beta so "phone held upright" = centre. */
+    if (dbgLog) dbgLog('✅ Permission granted<br>Waiting for gyro events…');
+    window.addEventListener('deviceorientation', function(e){
+      var g = e.gamma || 0;
+      var b = e.beta  || 0;
       gx = Math.max(-1, Math.min(1,  g        / 25));
       gy = Math.max(-1, Math.min(1, (b - 70)  / 25));
+      if (dbgLog) {
+        dbgLog('✅ Gyro active<br>γ=' + g.toFixed(1) + '° β=' + b.toFixed(1) + '°<br>mx=' + gx.toFixed(2) + ' my=' + gy.toFixed(2));
+      }
     }, false);
   }
 
   if (isTouch && window.DeviceOrientationEvent) {
     if (typeof DeviceOrientationEvent.requestPermission === 'function') {
-      /* iOS 13+ — permission must be triggered by a user gesture */
-      document.addEventListener('touchstart', function askGyro() {
-        document.removeEventListener('touchstart', askGyro);
+      /* iOS 13+ — MUST be a button click, not touchstart on document */
+      dbgLog('iOS detected — tap button to enable gyro');
+
+      var motionBtn = document.createElement('button');
+      motionBtn.textContent = '⟳ Enable Tilt Effect';
+      motionBtn.style.cssText = [
+        'position:fixed','bottom:72px','left:50%','transform:translateX(-50%)',
+        'z-index:99999','background:#b8934a','color:#0e0d0b',
+        'font:600 12px/1 Quicksand,sans-serif','letter-spacing:.1em',
+        'text-transform:uppercase','padding:12px 24px',
+        'border:none','border-radius:60px','cursor:pointer'
+      ].join(';');
+      document.body.appendChild(motionBtn);
+
+      motionBtn.addEventListener('click', function() {
+        dbgLog('Requesting permission…');
         DeviceOrientationEvent.requestPermission()
-          .then(function(state) { if (state === 'granted') enableGyro(); })
-          .catch(function() {});
-      }, { once: true });
+          .then(function(state) {
+            dbgLog('Permission state: ' + state);
+            motionBtn.remove();
+            if (state === 'granted') {
+              enableGyro();
+            } else {
+              dbgLog('❌ Permission denied or dismissed');
+            }
+          })
+          .catch(function(err) {
+            dbgLog('❌ Error: ' + err);
+          });
+      });
     } else {
-      /* Android & older iOS — fires without permission */
+      /* Android & older iOS — no permission needed */
+      dbgLog('No permission needed — enabling gyro…');
       enableGyro();
     }
+  } else if (isTouch) {
+    dbgLog('❌ DeviceOrientationEvent not available');
   }
   (function loop(){
     requestAnimationFrame(loop);
