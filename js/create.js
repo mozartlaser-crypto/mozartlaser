@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
     'Landmarks of Aviation Coasters'                     : 19.99,
     'Dragon Coin'                                        : 8.99,
     'Jane Austen Quote Bookmark'                         : 10.99,
-  };
+	  'Wanderer Bookmark' :10.99,  };
 
   const fullCustomPrices = {
     'Wooden Plaque (Horizontal)' : 22.99,
@@ -118,6 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
     'Custom Animal Plaque'                               : 'Product Images/Animal Plaque/Front view.png',
     'Avalon Bay, Catalina Island Laser Engraved Plaque'  : 'Product Images/Catalina/Front view.png',
     'Adventurers Bookmark'                               : "Product Images/Adventurer's Bookmark/Front view.png",
+	  'Wanderer Bookmark'                                :"Product Images/Wanderer Bookmark/Front view.png",
     'Leaf Bookmark'                                      : "Product Images/Leaf Bookmark/Front view.png",
     'Historia Bookmark'                                  : "Product Images/Historia Bookmark/Front view.png",
     'Tolkien Quote Bookmark'                             : "Product Images/Tolkien bookmark/Front view.png",
