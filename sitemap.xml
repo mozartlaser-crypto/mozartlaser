@@ -169,4 +169,11 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+
+<loc>https://mozartlaser.com/wanderer bookmark.html</loc>
+    <lastmod>2026-06-5</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+</urlset>
 </urlset>
