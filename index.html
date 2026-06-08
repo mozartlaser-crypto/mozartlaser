@@ -361,20 +361,6 @@ body.cursor-hover #cursor-ring { width: 58px; height: 58px; border-color: rgba(1
    ============================================================ */
 .noise-overlay { position:fixed; inset:0; pointer-events:none; z-index:9990; opacity:.025; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); background-size:200px 200px; }
 
-/* ============================================================
-   GYRO LIGHTING OVERLAY — lives inside #hero, scrolls with it.
-   z-index 6: above canvas (no z-index) and overlay, below
-   hero-content (z-index 10) so text stays crisp on top.
-   ============================================================ */
-#gyro-light {
-  position: absolute; inset: 0;
-  pointer-events: none;
-  z-index: 6;
-  opacity: 0;
-  transition: opacity 1.5s ease;
-}
-#gyro-light.active { opacity: 1; }
-
 @media (max-width:480px) {
   #products { padding:60px 16px; }
   .products-header { flex-direction:column; align-items:flex-start; }
@@ -446,7 +432,6 @@ body.cursor-hover #cursor-ring { width: 58px; height: 58px; border-color: rgba(1
 <section id="hero" aria-label="Hero">
   <canvas id="hero-canvas" aria-hidden="true"></canvas>
   <div class="hero-overlay" aria-hidden="true"></div>
-  <div id="gyro-light"     aria-hidden="true"></div>
   <div class="hero-content" id="heroContent">
     <p class="hero-eyebrow">Hand-finished in California &nbsp;·&nbsp; Est. 2024</p>
     <h1 class="hero-title">Precision<br><em>Laser</em><br>Engraved</h1>
@@ -689,176 +674,133 @@ body.cursor-hover #cursor-ring { width: 58px; height: 58px; border-color: rgba(1
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.min.js';
 
 {
-  var canvas   = document.getElementById('hero-canvas');
-  var renderer = new THREE.WebGLRenderer({canvas:canvas, alpha:true, antialias:false});
+  const canvas   = document.getElementById('hero-canvas');
+  const renderer = new THREE.WebGLRenderer({canvas, alpha:true, antialias:false});
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.setClearColor(0x000000, 0);
-  var scene  = new THREE.Scene();
-  var camera = new THREE.PerspectiveCamera(60, window.innerWidth/window.innerHeight, 0.1, 100);
+
+  const scene  = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(60, window.innerWidth/window.innerHeight, 0.1, 100);
   camera.position.z = 5;
-  /* More dots on mobile so the effect is clearly visible */
-  var COUNT = window.innerWidth<768 ? 2200 : 1400;
-  var geo   = new THREE.BufferGeometry();
-  var pos   = new Float32Array(COUNT*3);
-  var spd   = new Float32Array(COUNT);
-  for(var i=0;i<COUNT;i++){
-    pos[i*3]   = (Math.random()-.5)*14;
-    pos[i*3+1] = (Math.random()-.5)*10;
-    pos[i*3+2] = (Math.random()-.5)*8;
-    spd[i]     = Math.random()*.4+.1;
+
+  const COUNT = window.innerWidth < 768 ? 2200 : 1400;
+  const geo   = new THREE.BufferGeometry();
+  const pos   = new Float32Array(COUNT * 3);
+  const spd   = new Float32Array(COUNT);
+  for (let i = 0; i < COUNT; i++) {
+    pos[i*3]   = (Math.random() - 0.5) * 14;
+    pos[i*3+1] = (Math.random() - 0.5) * 10;
+    pos[i*3+2] = (Math.random() - 0.5) * 8;
+    spd[i]     = Math.random() * 0.4 + 0.1;
   }
-  geo.setAttribute('position', new THREE.BufferAttribute(pos,3));
-  var mat = new THREE.PointsMaterial({color:0xb8934a, size:.028, transparent:true, opacity:.55, sizeAttenuation:true, blending:THREE.AdditiveBlending, depthWrite:false});
-  var pts = new THREE.Points(geo, mat);
+  geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  const mat = new THREE.PointsMaterial({
+    color: 0xb8934a, size: .028, transparent: true, opacity: .55,
+    sizeAttenuation: true, blending: THREE.AdditiveBlending, depthWrite: false
+  });
+  const pts = new THREE.Points(geo, mat);
   scene.add(pts);
-  var mx=0,my=0,tx=0,ty=0,t=0;
-  var gx=0,gy=0,gyroActive=false;
-  var lightEl = document.getElementById('gyro-light');
 
-  /* ── DIAGNOSTIC OVERLAY (mobile only) ──────────────────────────────
-     Shows permission state and live gyro values so you can see
-     exactly what iOS is doing. Remove once confirmed working.
-  ─────────────────────────────────────────────────────────────────── */
-  var isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
-  var dbg, dbgLog;
-  if (isTouch) {
-    dbg = document.createElement('div');
-    dbg.style.cssText = [
-      'position:fixed','bottom:120px','left:50%','transform:translateX(-50%)',
-      'z-index:99999','background:rgba(0,0,0,.85)','color:#b8934a',
-      'font:12px/1.6 monospace','padding:12px 16px','border-radius:8px',
-      'border:1px solid #b8934a','max-width:90vw','text-align:center',
-      'pointer-events:none'
-    ].join(';');
-    document.body.appendChild(dbg);
-    dbgLog = function(msg){ dbg.innerHTML = msg; };
-    dbgLog('Gyro: checking…');
-  }
+  /* ── Input targets: both mouse and gyro write into these ── */
+  let targetX = 0, targetY = 0;
 
-  /* Desktop: mouse parallax (skipped on touch to avoid drag interference) */
+  /* ── Desktop: mouse ── */
+  const isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
   if (!isTouch) {
-    document.addEventListener('mousemove', function(e){
-      mx = (e.clientX / window.innerWidth  - 0.5) * 2;
-      my = (e.clientY / window.innerHeight - 0.5) * 2;
+    document.addEventListener('mousemove', e => {
+      targetX = (e.clientX / window.innerWidth  - 0.5) * 2;
+      targetY = (e.clientY / window.innerHeight - 0.5) * 2;
     });
   }
 
-  /* Mobile: gyroscope via explicit button (most reliable on iOS) */
-  var prodCards  = [];
+  /* ── Mobile: gyroscope ── */
+  let gyroActive = false;
+  let prodCards  = [];
+
   function enableGyro() {
     gyroActive = true;
-    document.body.classList.add('gyro-ready');
-    prodCards  = Array.prototype.slice.call(document.querySelectorAll('.prod-card'));
-    if (lightEl) lightEl.classList.add('active');
-    if (dbgLog) dbgLog('✅ Permission granted<br>Waiting for gyro events…');
-    window.addEventListener('deviceorientation', function(e){
-      var g = e.gamma || 0;
-      var b = e.beta  || 0;
-      gx = Math.max(-1, Math.min(1,  g        / 25));
-      gy = Math.max(-1, Math.min(1, (b - 70)  / 25));
-      if (dbgLog) {
-        dbgLog('✅ Gyro active<br>γ=' + g.toFixed(1) + '° β=' + b.toFixed(1) + '°<br>gx=' + gx.toFixed(2) + ' gy=' + gy.toFixed(2));
-      }
-    }, false);
+    prodCards = Array.from(document.querySelectorAll('.prod-card'));
+    window.addEventListener('deviceorientation', e => {
+      const g = e.gamma || 0;
+      const b = e.beta  || 0;
+      targetX = Math.max(-1, Math.min(1,  g       / 28));
+      targetY = Math.max(-1, Math.min(1, (b - 70) / 28));
+    });
   }
 
+  /* Diagnostic overlay + button — remove once happy */
   if (isTouch && window.DeviceOrientationEvent) {
+    const dbg = document.createElement('div');
+    dbg.style.cssText = 'position:fixed;bottom:120px;left:50%;transform:translateX(-50%);z-index:99999;background:rgba(0,0,0,.85);color:#b8934a;font:12px/1.6 monospace;padding:10px 16px;border-radius:8px;border:1px solid #b8934a;max-width:88vw;text-align:center;pointer-events:none';
+    document.body.appendChild(dbg);
+    const log = msg => dbg.innerHTML = msg;
+
     if (typeof DeviceOrientationEvent.requestPermission === 'function') {
-      /* iOS 13+ — MUST be a button click, not touchstart on document */
-      dbgLog('iOS detected — tap button to enable gyro');
-
-      var motionBtn = document.createElement('button');
-      motionBtn.textContent = '⟳ Enable Tilt Effect';
-      motionBtn.style.cssText = [
-        'position:fixed','bottom:72px','left:50%','transform:translateX(-50%)',
-        'z-index:99999','background:#b8934a','color:#0e0d0b',
-        'font:600 12px/1 Quicksand,sans-serif','letter-spacing:.1em',
-        'text-transform:uppercase','padding:12px 24px',
-        'border:none','border-radius:60px','cursor:pointer'
-      ].join(';');
-      document.body.appendChild(motionBtn);
-
-      motionBtn.addEventListener('click', function() {
-        dbgLog('Requesting permission…');
+      log('iOS — tap to enable tilt');
+      const btn = document.createElement('button');
+      btn.textContent = '⟳ Enable Tilt Effect';
+      btn.style.cssText = 'position:fixed;bottom:72px;left:50%;transform:translateX(-50%);z-index:99999;background:#b8934a;color:#0e0d0b;font:600 12px/1 Quicksand,sans-serif;letter-spacing:.1em;text-transform:uppercase;padding:12px 24px;border:none;border-radius:60px;cursor:pointer';
+      document.body.appendChild(btn);
+      btn.addEventListener('click', () => {
         DeviceOrientationEvent.requestPermission()
-          .then(function(state) {
-            dbgLog('Permission state: ' + state);
-            motionBtn.remove();
+          .then(state => {
+            btn.remove();
             if (state === 'granted') {
               enableGyro();
+              log('✅ Tilt active');
             } else {
-              dbgLog('❌ Permission denied or dismissed');
+              log('❌ Permission denied');
             }
           })
-          .catch(function(err) {
-            dbgLog('❌ Error: ' + err);
-          });
+          .catch(err => log('❌ ' + err));
       });
     } else {
-      /* Android & older iOS — no permission needed */
-      dbgLog('No permission needed — enabling gyro…');
+      log('Enabling gyro…');
       enableGyro();
+      log('✅ Tilt active');
     }
-  } else if (isTouch) {
-    dbgLog('❌ DeviceOrientationEvent not available');
   }
-  (function loop(){
+
+  /* ── Animation loop ── */
+  let cx = 0, cy = 0, t = 0;  /* smoothed camera position */
+
+  (function loop() {
     requestAnimationFrame(loop);
-    t += .004;
+    t += 0.004;
 
-    if (gyroActive) {
-      /* INSTANT response: set camera directly from gyro, no lerp at all.
-         Gyro events already arrive smoothly at ~60 Hz from the sensor. */
-      mx = gx;
-      my = gy;
-      camera.position.x = mx * 0.5;
-      camera.position.y = -my * 0.4;
+    /* Lerp camera toward target — fast enough to feel instant,
+       slow enough to hide any jump when iOS resumes gyro after scroll */
+    cx += (targetX * 0.45 - cx) * 0.18;
+    cy += (-targetY * 0.35 - cy) * 0.18;
+    camera.position.x = cx;
+    camera.position.y = cy;
 
-      /* ── LIGHTING EFFECTS driven by tilt ───────────────────────── */
-      /* 1. Light blob — lives inside #hero, scrolls away naturally.
-            Keep it tight and high-contrast so it feels like a real
-            directional source, not a wash. */
-      var lx = (50 + mx * 50).toFixed(1);
-      var ly = (50 - my * 38).toFixed(1);
-      if (lightEl) {
-        lightEl.style.background =
-          'radial-gradient(ellipse 55% 55% at ' + lx + '% ' + ly + '%, ' +
-          'rgba(220,175,90,0.38) 0%, rgba(184,147,74,0.10) 50%, transparent 72%)';
-      }
-
-      /* 2. Subtle directional glow on product cards only.
-            Small offset, tight blur, low opacity — clean not messy. */
-      var sx = (-mx * 10).toFixed(0);
-      var sy = ( my * 10).toFixed(0);
-      var cardShadow = sx + 'px ' + sy + 'px 18px rgba(184,147,74,0.22)';
-      for (var ci = 0; ci < prodCards.length; ci++) {
-        prodCards[ci].style.boxShadow = cardShadow;
-      }
-
-    } else {
-      /* Desktop mouse: use lerp for silky parallax */
-      tx += (mx * 0.5 - tx) * 0.06;
-      ty += (-my * 0.4 - ty) * 0.06;
-      camera.position.x = tx;
-      camera.position.y = ty;
+    /* Subtle directional card shadow — only while gyro is active */
+    if (gyroActive && prodCards.length) {
+      const sx = (-targetX * 8).toFixed(1);
+      const sy = ( targetY * 8).toFixed(1);
+      const shadow = `${sx}px ${sy}px 16px rgba(184,147,74,0.18)`;
+      for (const card of prodCards) card.style.boxShadow = shadow;
     }
 
-    var a = geo.attributes.position.array;
-    for (var i = 0; i < COUNT; i++) {
-      a[i*3+1] += spd[i] * .003;
+    /* Drift particles */
+    const a = geo.attributes.position.array;
+    for (let i = 0; i < COUNT; i++) {
+      a[i*3+1] += spd[i] * 0.003;
       if (a[i*3+1] > 5) a[i*3+1] = -5;
-      a[i*3] += Math.sin(t + i*.1) * .001;
+      a[i*3] += Math.sin(t + i * 0.1) * 0.001;
     }
     geo.attributes.position.needsUpdate = true;
-    pts.rotation.y = t * .04;
-    pts.rotation.x = t * .015;
+    pts.rotation.y = t * 0.04;
+    pts.rotation.x = t * 0.015;
     renderer.render(scene, camera);
   })();
-  window.addEventListener('resize',function(){
-    camera.aspect=window.innerWidth/window.innerHeight;
+
+  window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth,window.innerHeight);
+    renderer.setSize(window.innerWidth, window.innerHeight);
   });
 }
 </script>
