@@ -362,14 +362,14 @@ body.cursor-hover #cursor-ring { width: 58px; height: 58px; border-color: rgba(1
 .noise-overlay { position:fixed; inset:0; pointer-events:none; z-index:9990; opacity:.025; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); background-size:200px 200px; }
 
 /* ============================================================
-   GYRO LIGHTING OVERLAY
-   Simple fixed div — JS drives the gradient position each frame.
-   No mix-blend-mode (unreliable on iOS Safari with fixed elements).
+   GYRO LIGHTING OVERLAY — lives inside #hero, scrolls with it.
+   z-index 6: above canvas (no z-index) and overlay, below
+   hero-content (z-index 10) so text stays crisp on top.
    ============================================================ */
 #gyro-light {
-  position: fixed; inset: 0;
+  position: absolute; inset: 0;
   pointer-events: none;
-  z-index: 55;
+  z-index: 6;
   opacity: 0;
   transition: opacity 1.5s ease;
 }
@@ -387,7 +387,6 @@ body.cursor-hover #cursor-ring { width: 58px; height: 58px; border-color: rgba(1
 <body>
 
 <div class="noise-overlay" aria-hidden="true"></div>
-<div id="gyro-light"     aria-hidden="true"></div>
 <div id="cursor-dot"  aria-hidden="true"></div>
 <div id="cursor-ring" aria-hidden="true"></div>
 
@@ -447,6 +446,7 @@ body.cursor-hover #cursor-ring { width: 58px; height: 58px; border-color: rgba(1
 <section id="hero" aria-label="Hero">
   <canvas id="hero-canvas" aria-hidden="true"></canvas>
   <div class="hero-overlay" aria-hidden="true"></div>
+  <div id="gyro-light"     aria-hidden="true"></div>
   <div class="hero-content" id="heroContent">
     <p class="hero-eyebrow">Hand-finished in California &nbsp;·&nbsp; Est. 2024</p>
     <h1 class="hero-title">Precision<br><em>Laser</em><br>Engraved</h1>
@@ -746,13 +746,10 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.m
 
   /* Mobile: gyroscope via explicit button (most reliable on iOS) */
   var prodCards  = [];
-  var testiCards = [];
   function enableGyro() {
     gyroActive = true;
     document.body.classList.add('gyro-ready');
-    /* Cache card/section refs once so the loop doesn't query DOM every frame */
     prodCards  = Array.prototype.slice.call(document.querySelectorAll('.prod-card'));
-    testiCards = Array.prototype.slice.call(document.querySelectorAll('.testi-card'));
     if (lightEl) lightEl.classList.add('active');
     if (dbgLog) dbgLog('✅ Permission granted<br>Waiting for gyro events…');
     window.addEventListener('deviceorientation', function(e){
@@ -819,32 +816,24 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.m
       camera.position.y = -my * 0.4;
 
       /* ── LIGHTING EFFECTS driven by tilt ───────────────────────── */
-      /* 1. Full-page warm-gold light source blob that moves with tilt */
-      var lx = (50 + mx * 50).toFixed(1);  /* 0–100% */
-      var ly = (50 - my * 40).toFixed(1);
+      /* 1. Light blob — lives inside #hero, scrolls away naturally.
+            Keep it tight and high-contrast so it feels like a real
+            directional source, not a wash. */
+      var lx = (50 + mx * 50).toFixed(1);
+      var ly = (50 - my * 38).toFixed(1);
       if (lightEl) {
         lightEl.style.background =
-          'radial-gradient(ellipse 75vw 65vw at ' + lx + '% ' + ly + '%, ' +
-          'rgba(210,165,75,0.28) 0%, rgba(184,147,74,0.10) 45%, transparent 70%)';
+          'radial-gradient(ellipse 55% 55% at ' + lx + '% ' + ly + '%, ' +
+          'rgba(220,175,90,0.38) 0%, rgba(184,147,74,0.10) 50%, transparent 72%)';
       }
 
-      /* 2. Directional box-shadow on every product card —
-            shadow offset shifts opposite to light source,
-            inner glow on the lit face. */
-      var sx = (-mx * 28).toFixed(0);
-      var sy = ( my * 28).toFixed(0);
-      var cardShadow =
-        sx + 'px ' + sy + 'px 40px rgba(184,147,74,0.45), ' +
-        'inset ' + (-sx * 0.4).toFixed(0) + 'px ' + (-sy * 0.4).toFixed(0) + 'px 18px rgba(212,170,88,0.18)';
+      /* 2. Subtle directional glow on product cards only.
+            Small offset, tight blur, low opacity — clean not messy. */
+      var sx = (-mx * 10).toFixed(0);
+      var sy = ( my * 10).toFixed(0);
+      var cardShadow = sx + 'px ' + sy + 'px 18px rgba(184,147,74,0.22)';
       for (var ci = 0; ci < prodCards.length; ci++) {
         prodCards[ci].style.boxShadow = cardShadow;
-      }
-
-      /* 3. Softer glow on testimonial cards */
-      var testiShadow =
-        sx + 'px ' + sy + 'px 30px rgba(184,147,74,0.25)';
-      for (var ti = 0; ti < testiCards.length; ti++) {
-        testiCards[ti].style.boxShadow = testiShadow;
       }
 
     } else {
