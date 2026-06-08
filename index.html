@@ -820,6 +820,10 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.m
 
     /* Subtle directional card shadow — only while gyro is active */
     if (gyroActive && prodCards.length) {
+      /* Share smoothed values so other scripts can drive their own effects */
+      window._gyroX = cx / 0.45;
+      window._gyroY = cy / -0.35;
+
       const sx = (-targetX * 8).toFixed(1);
       const sy = ( targetY * 8).toFixed(1);
       const shadow = `${sx}px ${sy}px 16px rgba(184,147,74,0.18)`;
@@ -1116,6 +1120,50 @@ var LOGO_DATA_URI = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAdUAAAB/CAYAA
     });
     card.addEventListener('mouseleave',function(){card.style.transform='';});
   });
+})();
+
+/* ============================================================
+   GYRO PAGE TILT — mobile only
+   Reads the smoothed gyro values exposed by the Three.js module
+   and applies the same perspective-rotate effect the desktop
+   mouse hover uses, across all cards and about-grid images.
+   ============================================================ */
+(function(){
+  if(!window.matchMedia('(hover:none)').matches) return; /* desktop uses mouse */
+
+  var prodCards   = Array.prototype.slice.call(document.querySelectorAll('.prod-card'));
+  var testiCards  = Array.prototype.slice.call(document.querySelectorAll('.testi-card'));
+  var aboutImgs   = Array.prototype.slice.call(document.querySelectorAll('.about-visual-img'));
+  var allElements = prodCards.concat(testiCards).concat(aboutImgs);
+  if(!allElements.length) return;
+
+  /* Strip any CSS transition on transform so gyro feels instant */
+  allElements.forEach(function(el){
+    el.style.transition = el.style.transition
+      ? el.style.transition.replace(/transform[^,]*/g,'') + ',transform 0.05s linear'
+      : 'transform 0.05s linear';
+  });
+
+  var lx = 0, ly = 0; /* locally smoothed values */
+
+  (function loop(){
+    requestAnimationFrame(loop);
+    var gx = window._gyroX || 0;
+    var gy = window._gyroY || 0;
+
+    /* Gentle lerp — smooth but responsive */
+    lx += (gx - lx) * 0.12;
+    ly += (gy - ly) * 0.12;
+
+    /* Same perspective tilt the desktop mouse code uses */
+    var rx = (-ly * 8).toFixed(2);  /* tilt forward/back */
+    var ry = ( lx * 8).toFixed(2);  /* tilt left/right   */
+    var t  = 'perspective(700px) rotateX('+rx+'deg) rotateY('+ry+'deg)';
+
+    for(var i=0;i<allElements.length;i++){
+      allElements[i].style.transform = t;
+    }
+  })();
 })();
 
 /* ============================================================
