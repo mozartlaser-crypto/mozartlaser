@@ -729,36 +729,21 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.m
     });
   }
 
-  /* Diagnostic overlay + button — remove once happy */
   if (isTouch && window.DeviceOrientationEvent) {
-    const dbg = document.createElement('div');
-    dbg.style.cssText = 'position:fixed;bottom:120px;left:50%;transform:translateX(-50%);z-index:99999;background:rgba(0,0,0,.85);color:#b8934a;font:12px/1.6 monospace;padding:10px 16px;border-radius:8px;border:1px solid #b8934a;max-width:88vw;text-align:center;pointer-events:none';
-    document.body.appendChild(dbg);
-    const log = msg => dbg.innerHTML = msg;
-
     if (typeof DeviceOrientationEvent.requestPermission === 'function') {
-      log('iOS — tap to enable tilt');
-      const btn = document.createElement('button');
-      btn.textContent = '⟳ Enable Tilt Effect';
-      btn.style.cssText = 'position:fixed;bottom:72px;left:50%;transform:translateX(-50%);z-index:99999;background:#b8934a;color:#0e0d0b;font:600 12px/1 Quicksand,sans-serif;letter-spacing:.1em;text-transform:uppercase;padding:12px 24px;border:none;border-radius:60px;cursor:pointer';
-      document.body.appendChild(btn);
-      btn.addEventListener('click', () => {
+      /* iOS 13+ — permission must come from a user gesture.
+         We listen for the user's first touchend anywhere on the page
+         and silently request then. The native iOS dialog appears
+         and if granted, gyro activates immediately. */
+      document.addEventListener('touchend', function askOnFirstTouch() {
+        document.removeEventListener('touchend', askOnFirstTouch);
         DeviceOrientationEvent.requestPermission()
-          .then(state => {
-            btn.remove();
-            if (state === 'granted') {
-              enableGyro();
-              log('✅ Tilt active');
-            } else {
-              log('❌ Permission denied');
-            }
-          })
-          .catch(err => log('❌ ' + err));
-      });
+          .then(state => { if (state === 'granted') enableGyro(); })
+          .catch(() => {});
+      }, { once: true, passive: true });
     } else {
-      log('Enabling gyro…');
+      /* Android & older iOS — no permission needed, enable immediately */
       enableGyro();
-      log('✅ Tilt active');
     }
   }
 
