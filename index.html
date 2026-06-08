@@ -1156,8 +1156,8 @@ var LOGO_DATA_URI = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAdUAAAB/CAYAA
     ly += (gy - ly) * 0.12;
 
     /* Same perspective tilt the desktop mouse code uses */
-    var rx = (-ly * 8).toFixed(2);  /* tilt forward/back */
-    var ry = ( lx * 8).toFixed(2);  /* tilt left/right   */
+    var rx = ( ly * 8).toFixed(2);  /* tilt forward/back */
+    var ry = (-lx * 8).toFixed(2);  /* tilt left/right   */
     var t  = 'perspective(700px) rotateX('+rx+'deg) rotateY('+ry+'deg)';
 
     for(var i=0;i<allElements.length;i++){
