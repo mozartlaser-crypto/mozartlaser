@@ -361,6 +361,58 @@ body.cursor-hover #cursor-ring { width: 58px; height: 58px; border-color: rgba(1
    ============================================================ */
 .noise-overlay { position:fixed; inset:0; pointer-events:none; z-index:9990; opacity:.025; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); background-size:200px 200px; }
 
+/* ============================================================
+   GYRO LIGHTING — full-page light source driven by tilt
+   mix-blend-mode:overlay means it brightens darks and warms
+   lights, giving a genuine directional-light feel.
+   ============================================================ */
+#gyro-light {
+  position: fixed; inset: 0;
+  pointer-events: none;
+  z-index: 60;
+  opacity: 0;
+  mix-blend-mode: overlay;
+  transition: opacity 2s ease;
+  will-change: background;
+}
+#gyro-light.active { opacity: 1; }
+
+/* Specular card shimmer — driven by --lx / --ly CSS custom props */
+.prod-card::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(
+    ellipse 80% 80% at var(--lx, 50%) var(--ly, 50%),
+    rgba(212,170,88,0.22) 0%,
+    transparent 65%
+  );
+  pointer-events: none;
+  z-index: 3;
+  opacity: 0;
+  transition: opacity 2s ease;
+}
+body.gyro-ready .prod-card::after { opacity: 1; }
+
+/* Section shimmer on dark panels */
+#products::before, #process::before, #about::before, #guarantee::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(
+    ellipse 70% 60% at var(--lx, 50%) var(--ly, 50%),
+    rgba(184,147,74,0.07) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 2s ease;
+}
+body.gyro-ready #products::before,
+body.gyro-ready #process::before,
+body.gyro-ready #about::before,
+body.gyro-ready #guarantee::before { opacity: 1; }
+#products, #process, #about, #guarantee { position: relative; }
+
 @media (max-width:480px) {
   #products { padding:60px 16px; }
   .products-header { flex-direction:column; align-items:flex-start; }
@@ -373,6 +425,7 @@ body.cursor-hover #cursor-ring { width: 58px; height: 58px; border-color: rgba(1
 <body>
 
 <div class="noise-overlay" aria-hidden="true"></div>
+<div id="gyro-light"     aria-hidden="true"></div>
 <div id="cursor-dot"  aria-hidden="true"></div>
 <div id="cursor-ring" aria-hidden="true"></div>
 
@@ -902,7 +955,8 @@ var LOGO_DATA_URI = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAdUAAAB/CAYAA
   var scene  = new THREE.Scene();
   var camera = new THREE.PerspectiveCamera(60, window.innerWidth/window.innerHeight, 0.1, 100);
   camera.position.z = 5;
-  var COUNT = window.innerWidth<768 ? 600 : 1400;
+  /* More dots on mobile so the effect is clearly visible */
+  var COUNT = window.innerWidth<768 ? 2200 : 1400;
   var geo   = new THREE.BufferGeometry();
   var pos   = new Float32Array(COUNT*3);
   var spd   = new Float32Array(COUNT);
@@ -918,6 +972,8 @@ var LOGO_DATA_URI = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAdUAAAB/CAYAA
   scene.add(pts);
   var mx=0,my=0,tx=0,ty=0,t=0;
   var gx=0,gy=0,gyroActive=false;
+  var lightEl   = document.getElementById('gyro-light');
+  var rootStyle = document.documentElement.style;
 
   /* ── DIAGNOSTIC OVERLAY (mobile only) ──────────────────────────────
      Shows permission state and live gyro values so you can see
@@ -950,10 +1006,14 @@ var LOGO_DATA_URI = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAdUAAAB/CAYAA
   /* Mobile: gyroscope via explicit button (most reliable on iOS) */
   function enableGyro() {
     gyroActive = true;
+    document.body.classList.add('gyro-ready');
+    if (lightEl) lightEl.classList.add('active');
     if (dbgLog) dbgLog('✅ Permission granted<br>Waiting for gyro events…');
     window.addEventListener('deviceorientation', function(e){
       var g = e.gamma || 0;
       var b = e.beta  || 0;
+      /* Direct assignment — single lerp in animation loop handles smoothing.
+         Dividing by 25° gives a strong, instant-feeling response. */
       gx = Math.max(-1, Math.min(1,  g        / 25));
       gy = Math.max(-1, Math.min(1, (b - 70)  / 25));
       if (dbgLog) {
@@ -1005,14 +1065,26 @@ var LOGO_DATA_URI = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAdUAAAB/CAYAA
   (function loop(){
     requestAnimationFrame(loop);
     t+=.004;
-    /* On mobile blend raw gyro into mx/my smoothly each frame,
-       so the camera lerp feels identical to the mouse version. */
-    if (gyroActive) {
-      mx += (gx - mx) * 0.08;
-      my += (gy - my) * 0.08;
-    }
-    tx+=(mx*.4-tx)*.05; ty+=(-my*.3-ty)*.05;
+
+    /* On mobile: push gyro values directly into mx/my.
+       Single lerp below provides all the smoothing needed. */
+    if (gyroActive) { mx = gx; my = gy; }
+
+    /* Lerp factor 0.12 (was 0.05) — much snappier response */
+    tx+=(mx*.4-tx)*.12; ty+=(-my*.3-ty)*.12;
     camera.position.x=tx; camera.position.y=ty;
+
+    /* Update gyro-light overlay and CSS custom props for card shimmer.
+       lx/ly are 0-100% light source position. */
+    if (gyroActive && lightEl) {
+      var lx = (50 + mx * 55).toFixed(1);
+      var ly = (50 - my * 45).toFixed(1);
+      lightEl.style.background =
+        'radial-gradient(ellipse 70vw 70vw at ' + lx + '% ' + ly + '%, ' +
+        'rgba(200,160,80,0.22) 0%, rgba(184,147,74,0.06) 40%, transparent 70%)';
+      rootStyle.setProperty('--lx', lx + '%');
+      rootStyle.setProperty('--ly', ly + '%');
+    }
     var a=geo.attributes.position.array;
     for(var i=0;i<COUNT;i++){
       a[i*3+1]+=spd[i]*.003;
