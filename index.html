@@ -799,11 +799,6 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.m
           .catch(() => {});
       });
 
-      document.getElementById('gyro-dismiss').addEventListener('click', e => {
-        e.stopPropagation();
-        dismissPrompt();
-      });
-
       /* Show after a short delay so the page has settled */
       setTimeout(() => document.body.appendChild(prompt), 1800);
 
